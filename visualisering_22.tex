@@ -117,7 +117,7 @@
 
 \title{Visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-04-18}
+\date{Last updated: 2022-04-19}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.90609090  0.05821260 -0.43478517 -0.67311898  0.76225970 -0.46247756
-##  [7] -1.47096411 -0.99046223 -0.60989575  0.91875039 -0.75151410 -0.12694845
-## [13] -1.25291491 -0.03947172 -0.99295217 -0.40695592 -0.92854639 -0.42981552
-## [19] -0.98555782 -1.30306883 -1.45794728  0.56296556  0.02386769  0.72016616
-## [25]  0.34474707
+##  [1] -1.0440854595 -1.5836304803 -2.2062951316 -0.1392173856  0.1104545770
+##  [6] -0.1094446921 -0.1920487480  0.2173292113 -0.5213377990  0.1473074304
+## [11]  0.3798456482  1.2152130678 -0.0083709831 -1.0521367664 -0.1026550713
+## [16]  1.0927110729 -1.2805451324 -0.1594601855  1.1832648467  0.1019146819
+## [21]  0.8618660899 -0.0009564068  0.3502409817  0.5256683545  0.0928287448
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,14 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.9060909  0.0582126 {-}0.4347852 {-}0.6731190  0.7622597 {-}0.4624776}
+\DocumentationTok{\#\# [1] {-}1.0440855 {-}1.5836305 {-}2.2062951 {-}0.1392174  0.1104546 {-}0.1094447}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}1.30306883 {-}1.45794728  0.56296556  0.02386769  0.72016616  0.34474707}
+\DocumentationTok{\#\# [1]  0.1019146819  0.8618660899 {-}0.0009564068  0.3502409817  0.5256683545}
+\DocumentationTok{\#\# [6]  0.0928287448}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.9060909}
+\DocumentationTok{\#\# [1] {-}1.044085}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.3447471}
+\DocumentationTok{\#\# [1] 0.09282874}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +666,8 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.3608135 -0.4347852  0.9187504 -1.4709641  0.5611780  0.7491181
+## [1] -0.0848615814 -0.0009564068  1.2152130678 -2.2062951316  0.7027359954
+## [6]  0.8382935020
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +679,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.47096 -0.98556 -0.43479 -0.36081  0.05821  0.91875
+##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+## -2.2062951 -0.1920487 -0.0009564 -0.0848616  0.3502410  1.2152131
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -1267,9 +1269,9 @@ Alle bør lave quizzen men ellers vælg øvelser efter egen erfaring:
 \item
   2-7 er meget grundlæggende og de fleste kan springer over hvis nogenlunde tryg med base-R
 \item
-  8-14 anbefaler jeg som en god måde at tjekke viden på
+  8-14 anbefaler jeg til alle som en god måde at tjekke viden på
 \item
-  15-18 øver hvordan man laver variansanalyse/regression i R - regression kommer jeg ind på igen senere men det hjælper meget hvis du er tryg med brugen af funktionen \texttt{lm} til at lave modeller i ANOVA/simpel lineær regression.
+  15-18 øver hvordan man laver variansanalyse/regression i R - regression kommer jeg ind på igen senere men det hjælper hvis du er tryg med brugen af funktionen \texttt{lm} til at lave modeller i ANOVA/simpel lineær regression.
 \end{itemize}
 
 \hypertarget{quiz---basics}{%
@@ -1306,8 +1308,11 @@ Husk at den nemmeste måde at køre kode er ved at trykke CMD+ENTER (Mac) eller 
 \FunctionTok{rnorm}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{)}
 \FunctionTok{log10}\NormalTok{(}\DecValTok{100}\NormalTok{)}
 \NormalTok{y }\OtherTok{\textless{}{-}}  \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\FunctionTok{class}\NormalTok{(y)}
+\FunctionTok{class}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"c"}\NormalTok{))}
 \FunctionTok{mean}\NormalTok{(y)}
 \FunctionTok{sd}\NormalTok{(y)}
+\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{13}\NormalTok{,}\AttributeTok{by=}\DecValTok{3}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1322,7 +1327,7 @@ Husk at den nemmeste måde at køre kode er ved at trykke CMD+ENTER (Mac) eller 
 \begin{itemize}
 \tightlist
 \item
-  Prøve \texttt{head()}, \texttt{summary()} osv.
+  Prøve \texttt{head()}, \texttt{nrow()}, \texttt{summary()} osv.
 \item
   Prøve også fk. \texttt{?cars} for at se en beskrivelse.
 \end{itemize}
@@ -1345,7 +1350,7 @@ Husk at den nemmeste måde at køre kode er ved at trykke CMD+ENTER (Mac) eller 
 \setcounter{enumi}{3}
 \tightlist
 \item
-  (\textbf{baserende plots}) Lad os lave plotter i `baseR'. Jeg giver nogle muligheder for datasættet ``iris''. Afprøve dem for nogle af de andre ovenstående indbygget datasæt, som du indlæst.
+  (\textbf{baserende plots}) Jeg giver nogle muligheder for datasættet ``iris''. Afprøve funktionerne for nogle af de andre ovenstående indbygget datasæt, som du indlæst.
 \end{enumerate}
 
 \begin{Shaded}
@@ -1356,14 +1361,14 @@ Husk at den nemmeste måde at køre kode er ved at trykke CMD+ENTER (Mac) eller 
 \end{Highlighting}
 \end{Shaded}
 
-Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne osv. Prøve \texttt{?plot} for at se nogle muligheder, og tilføje \texttt{ylab}, \texttt{xlab}, \texttt{main} (titel) i én af plotterne. Leg også med \texttt{col} (farver).
+Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne osv. Prøve \texttt{?plot} for at se nogle muligheder, og tilføje \texttt{ylab}, \texttt{xlab}, \texttt{main} (titel) i én af plotterne. Leg også med \texttt{col} (farver). Bemærk dog, at vi kommer til at ændre måden at lave plotter på når vi starter \texttt{ggplot2}.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
 \setcounter{enumi}{4}
 \tightlist
 \item
-  (\textbf{dataframes}) Brug datasættet \texttt{cars} til at:
+  (\textbf{dataframes}) Brug datasættet \texttt{cars} (\texttt{data(cars)}) til at:
 \end{enumerate}
 
 \begin{itemize}
@@ -1371,7 +1376,7 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
 \item
   Lav et scatter plot med speed på x-aksen og dist på y-aksen
 \item
-  Tilføj en ny kolon:
+  Tilføj en ny kolon med følgende kode:
 \end{itemize}
 
 \begin{Shaded}
@@ -1383,7 +1388,9 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
 \begin{itemize}
 \tightlist
 \item
-  Beregn gennemsnitsværdien af variablen \texttt{dist} for hurtige biler og ikke-hurtige biler hver for sig (brug funktionen \texttt{tapply}). Gem resultatet.
+  Brug \texttt{mean} på den nye variabel til at finde ud af proportionen af biler, der er hurtige
+\item
+  Beregn gennemsnitsværdien af variablen \texttt{dist} for hurtige biler og ikke-hurtige biler hver for sig (brug funktionen \texttt{tapply}). Gem resultatet med \texttt{\textless{}-}.
 \item
   Brug \texttt{barplot} til at lave et plot af den gennemsnitlige \texttt{dist} for hurtige og ikke-hurtige biler.
 \end{itemize}
@@ -1452,7 +1459,7 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
 \item
   Hvor mange unikke værdier er der i variablen \texttt{dose} (brug funktionen \texttt{unique}) ?
 \item
-  Find delmængden af datasættet \texttt{ToothGrowth}, hvor variablen \texttt{dose} er 0.5 eller 1.5 og \texttt{supp} er ``VC''.
+  Find delmængden af datasættet \texttt{ToothGrowth}, hvor variablen \texttt{dose} er 0.5 eller 1.5 (hint: brug \texttt{\%in\%} eller \texttt{\textbar{}}) og \texttt{supp} er ``VC''.
 \item
   Beregn den gennemsnitlige længde for observationerne i delmængden.
 \end{itemize}

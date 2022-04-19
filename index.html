@@ -210,7 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Visualisering af biologiske datasæt - 2022</h1>
 <p class="author"><em>Sarah Rennie</em></p>
-<p class="date"><em>Last updated: 2022-04-18</em></p>
+<p class="date"><em>Last updated: 2022-04-19</em></p>
 </div>
 <div id="basics" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Grundlæggende R<a href="#basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -522,20 +522,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Man kan nemt lave sin egne ‘fake’ data ved at simulere det fra en fordeling, der vil typiske være den normale fordeling, idet den normale fordeling opstår mest hyppigt i den virkelige verden (husk den klassiske klokke-form). I R kan man bruge funktionen <code>rnorm</code> til at simulere data - først angiver man, hvor mange observationer man vil have, og dernæst den mean og standard deviation (sd), som er de to nødvendige parametre for at beskrive en normal fordeling</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>,<span class="at">mean=</span><span class="dv">0</span>,<span class="at">sd=</span><span class="dv">1</span>) <span class="co">#standard normal distribution</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>x <span class="co">#så har vi 25 værdier fra en normal distribution med mean=0 og standard deviation=1.</span></span></code></pre></div>
-<pre><code>##  [1] -1.32713452 -1.70769766 -1.03200631  1.41756329  0.53234548  0.47392281
-##  [7]  0.16893196 -0.11404084 -0.67566137 -0.73537951  0.37161748  1.27609193
-## [13] -0.54552632 -0.05912713 -1.19756571 -2.04686564 -0.07269409 -0.65109667
-## [19]  0.34949601 -0.01685953 -0.73779260  0.73399121 -0.42431906 -0.60610000
-## [25] -2.45860813</code></pre>
+<pre><code>##  [1]  0.79592207 -0.08219312  0.20696172  0.19407079 -0.81549222 -0.65995601
+##  [7]  1.07500154  0.32519015  2.94890796  0.98516281  1.37933218 -1.81522174
+## [13] -1.63877039 -0.84277413  0.03936536  0.36361089  0.23501222  0.43561372
+## [19]  1.46684259  0.03470093 -0.50959653 -1.39953385  1.57220702 -0.76331314
+## [25]  0.18272220</code></pre>
 <p>I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x) <span class="co">#første 6</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.3271345 -1.7076977 -1.0320063  1.4175633  0.5323455  0.4739228</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.79592207 -0.08219312  0.20696172  0.19407079 -0.81549222 -0.65995601</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(x) <span class="co">#sidste 6</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.01685953 -0.73779260  0.73399121 -0.42431906 -0.60610000 -2.45860813</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.03470093 -0.50959653 -1.39953385  1.57220702 -0.76331314  0.18272220</span></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="co">#første værdi</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.327135</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.7959221</span></span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">length</span>(x)] <span class="co">#sidste data point</span></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -2.458608</span></span></code></pre></div>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.1827222</span></span></code></pre></div>
 <p>Bemærk, at til forskellen af Python og mange andre programmering sprog, R bruger 1-baserende indicer - det betyder, at den første værdi er <code>x[1]</code> og <strong>ikke</strong> <code>x[0]</code> som i Python.</p>
 </div>
 <div id="measures-of-central-tendency" class="section level3 hasAnchor" number="1.8.2">
@@ -582,11 +582,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>my_var <span class="ot">&lt;-</span> <span class="fu">var</span>(x)</span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>my_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(x)</span>
 <span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(my_mean,my_median,my_max,my_min,my_var,my_sd) <span class="co">#print results</span></span></code></pre></div>
-<pre><code>## [1] -0.3633806 -0.4243191  1.4175633 -2.4586081  0.9131688  0.9555987</code></pre>
+<pre><code>## [1]  0.1485509  0.1940708  2.9489080 -1.8152217  1.1928696  1.0921857</code></pre>
 <p>Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -2.4586 -0.7378 -0.4243 -0.3634  0.3495  1.4176</code></pre>
+## -1.8152 -0.6600  0.1941  0.1486  0.7959  2.9489</code></pre>
 </div>
 <div id="tapply" class="section level3 hasAnchor" number="1.8.3">
 <h3><span class="header-section-number">1.8.3</span> <code>tapply()</code><a href="#tapply" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -963,8 +963,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Alle bør lave quizzen men ellers vælg øvelser efter egen erfaring:</p>
 <ul>
 <li>2-7 er meget grundlæggende og de fleste kan springer over hvis nogenlunde tryg med base-R</li>
-<li>8-14 anbefaler jeg som en god måde at tjekke viden på</li>
-<li>15-18 øver hvordan man laver variansanalyse/regression i R - regression kommer jeg ind på igen senere men det hjælper meget hvis du er tryg med brugen af funktionen <code>lm</code> til at lave modeller i ANOVA/simpel lineær regression.</li>
+<li>8-14 anbefaler jeg til alle som en god måde at tjekke viden på</li>
+<li>15-18 øver hvordan man laver variansanalyse/regression i R - regression kommer jeg ind på igen senere men det hjælper hvis du er tryg med brugen af funktionen <code>lm</code> til at lave modeller i ANOVA/simpel lineær regression.</li>
 </ul>
 <div id="quiz---basics" class="section level3 hasAnchor" number="1.10.1">
 <h3><span class="header-section-number">1.10.1</span> Quiz - Basics<a href="#quiz---basics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -987,13 +987,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
 <span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a><span class="fu">log10</span>(<span class="dv">100</span>)</span>
 <span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>)</span>
-<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y)</span>
-<span id="cb87-11"><a href="#cb87-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(y)</span></code></pre></div>
+<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(y)</span>
+<span id="cb87-11"><a href="#cb87-11" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>))</span>
+<span id="cb87-12"><a href="#cb87-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(y)</span>
+<span id="cb87-13"><a href="#cb87-13" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(y)</span>
+<span id="cb87-14"><a href="#cb87-14" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">13</span>,<span class="at">by=</span><span class="dv">3</span>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>(<strong>helt baserende viden</strong>) Køre følgende kode til at åbne nogle af de indbygget datasæt, som vi bruger i kurset.</li>
 </ol>
 <ul>
-<li>Prøve <code>head()</code>, <code>summary()</code> osv.</li>
+<li>Prøve <code>head()</code>, <code>nrow()</code>, <code>summary()</code> osv.</li>
 <li>Prøve også fk. <code>?cars</code> for at se en beskrivelse.</li>
 </ul>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
@@ -1005,22 +1008,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a><span class="co">#se her for andre:</span></span>
 <span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="at">help =</span> <span class="st">&quot;datasets&quot;</span>)</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
-<li>(<strong>baserende plots</strong>) Lad os lave plotter i ‘baseR.’ Jeg giver nogle muligheder for datasættet “iris.” Afprøve dem for nogle af de andre ovenstående indbygget datasæt, som du indlæst.</li>
+<li>(<strong>baserende plots</strong>) Jeg giver nogle muligheder for datasættet “iris.” Afprøve funktionerne for nogle af de andre ovenstående indbygget datasæt, som du indlæst.</li>
 </ol>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length,iris<span class="sc">$</span>Sepal.Width)</span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(iris<span class="sc">$</span>Sepal.Width)</span>
 <span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(iris<span class="sc">$</span>Sepal.Length<span class="sc">~</span>iris<span class="sc">$</span>Species)</span></code></pre></div>
-<p>Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne osv. Prøve <code>?plot</code> for at se nogle muligheder, og tilføje <code>ylab</code>, <code>xlab</code>, <code>main</code> (titel) i én af plotterne. Leg også med <code>col</code> (farver).</p>
+<p>Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne osv. Prøve <code>?plot</code> for at se nogle muligheder, og tilføje <code>ylab</code>, <code>xlab</code>, <code>main</code> (titel) i én af plotterne. Leg også med <code>col</code> (farver). Bemærk dog, at vi kommer til at ændre måden at lave plotter på når vi starter <code>ggplot2</code>.</p>
 <ol start="5" style="list-style-type: decimal">
-<li>(<strong>dataframes</strong>) Brug datasættet <code>cars</code> til at:</li>
+<li>(<strong>dataframes</strong>) Brug datasættet <code>cars</code> (<code>data(cars)</code>) til at:</li>
 </ol>
 <ul>
 <li>Lav et scatter plot med speed på x-aksen og dist på y-aksen</li>
-<li>Tilføj en ny kolon:</li>
+<li>Tilføj en ny kolon med følgende kode:</li>
 </ul>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>cars<span class="sc">$</span>fast <span class="ot">&lt;-</span> cars<span class="sc">$</span>speed<span class="sc">&gt;</span><span class="dv">15</span></span></code></pre></div>
 <ul>
-<li>Beregn gennemsnitsværdien af variablen <code>dist</code> for hurtige biler og ikke-hurtige biler hver for sig (brug funktionen <code>tapply</code>). Gem resultatet.</li>
+<li>Brug <code>mean</code> på den nye variabel til at finde ud af proportionen af biler, der er hurtige</li>
+<li>Beregn gennemsnitsværdien af variablen <code>dist</code> for hurtige biler og ikke-hurtige biler hver for sig (brug funktionen <code>tapply</code>). Gem resultatet med <code>&lt;-</code>.</li>
 <li>Brug <code>barplot</code> til at lave et plot af den gennemsnitlige <code>dist</code> for hurtige og ikke-hurtige biler.</li>
 </ul>
 <ol start="5" style="list-style-type: decimal">
@@ -1052,7 +1056,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Hvor mange rækker er der i den nye dataframe <code>newdf</code>?</li>
 <li>Hvor mange unikke værdier er der i variablen <code>dose</code> (brug funktionen <code>unique</code>) ?</li>
-<li>Find delmængden af datasættet <code>ToothGrowth</code>, hvor variablen <code>dose</code> er 0.5 eller 1.5 og <code>supp</code> er “VC.”</li>
+<li>Find delmængden af datasættet <code>ToothGrowth</code>, hvor variablen <code>dose</code> er 0.5 eller 1.5 (hint: brug <code>%in%</code> eller <code>|</code>) og <code>supp</code> er “VC.”</li>
 <li>Beregn den gennemsnitlige længde for observationerne i delmængden.</li>
 </ul>
 <!-- Tag dataframe fra sidste problem og kalde den for `mydf`. Hvor mange rækker har gule farve? Starter med at lave en subset af `mydf` og bruge `nrow` til at tælle rækkerne. -->
