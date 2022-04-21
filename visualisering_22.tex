@@ -117,7 +117,7 @@
 
 \title{Visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-04-19}
+\date{Last updated: 2022-04-21}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -1.0440854595 -1.5836304803 -2.2062951316 -0.1392173856  0.1104545770
-##  [6] -0.1094446921 -0.1920487480  0.2173292113 -0.5213377990  0.1473074304
-## [11]  0.3798456482  1.2152130678 -0.0083709831 -1.0521367664 -0.1026550713
-## [16]  1.0927110729 -1.2805451324 -0.1594601855  1.1832648467  0.1019146819
-## [21]  0.8618660899 -0.0009564068  0.3502409817  0.5256683545  0.0928287448
+##  [1]  1.4311609704  0.8018335250 -0.7716697451  0.8582603190 -0.3412557958
+##  [6]  0.3145008312  0.8988635544  1.2667383590 -0.3310681421  1.4875715490
+## [11] -0.6218384931  0.8933896456  1.6796713475  0.1453959907 -0.9608929364
+## [16] -0.0009451856 -0.1975433155  1.0002760152  0.4799559210  0.3207776943
+## [21] -0.3723581172  0.9618425415 -1.6519491309  0.3935887395 -0.1265245106
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,14 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}1.0440855 {-}1.5836305 {-}2.2062951 {-}0.1392174  0.1104546 {-}0.1094447}
+\DocumentationTok{\#\# [1]  1.4311610  0.8018335 {-}0.7716697  0.8582603 {-}0.3412558  0.3145008}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.1019146819  0.8618660899 {-}0.0009564068  0.3502409817  0.5256683545}
-\DocumentationTok{\#\# [6]  0.0928287448}
+\DocumentationTok{\#\# [1]  0.3207777 {-}0.3723581  0.9618425 {-}1.6519491  0.3935887 {-}0.1265245}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}1.044085}
+\DocumentationTok{\#\# [1] 1.431161}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.09282874}
+\DocumentationTok{\#\# [1] {-}0.1265245}
 \end{Highlighting}
 \end{Shaded}
 
@@ -666,8 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.0848615814 -0.0009564068  1.2152130678 -2.2062951316  0.7027359954
-## [6]  0.8382935020
+## [1]  0.3023113  0.3207777  1.6796713 -1.6519491  0.7073302  0.8410292
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -679,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
-## -2.2062951 -0.1920487 -0.0009564 -0.0848616  0.3502410  1.2152131
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -1.6519 -0.3311  0.3208  0.3023  0.8989  1.6797
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -1050,6 +1048,8 @@ P-værdien er (\textless0.05), så nulhypotesen er forkastet til fordel af alter
 
 \hypertarget{lineuxe6r-regression}{%
 \subsection{Lineær regression}\label{lineuxe6r-regression}}
+
+\emph{OBS: se også video i forbindelse med Rmarkdown (næste emne), hvor jeg gennemgå lineær regression med R}
 
 Formål: måler (en retningsbestemt) relation mellem to kontinuerte variabler. I simpel lineær regression svarer det til, at man gerne vil finde den rette linje gennem punkterne, der bedste beskriver relationen.
 
@@ -1601,33 +1601,125 @@ Find følgende i outputtet fra R:
   Skriv en kort sætning med din konklusion.
 \end{enumerate}
 
-\hypertarget{uxf8velser-med-anovaregression}{%
-\subsection{Øvelser med ANOVA/regression}\label{uxf8velser-med-anovaregression}}
+\hypertarget{uxf8velser-med-statistik-tests}{%
+\subsection{Øvelser med statistik tests}\label{uxf8velser-med-statistik-tests}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
 \setcounter{enumi}{14}
 \tightlist
 \item
-  (\textbf{ANOVA}) Kør følgende kode til at lave variansanalyse, der tester hulhypotesen hvor den gennemsnitlige værdi af variablen \texttt{Sepal.Width} er ens for hver af de tre arter (variablen \texttt{Species}) fra datasættet \texttt{iris}:
+  (\textbf{Chi-sq}) Kør følgende kode til at få en tabel (selve koden er ikke vigtigt):
 \end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{data}\NormalTok{(iris)}
+\NormalTok{mytable }\OtherTok{\textless{}{-}} \FunctionTok{structure}\NormalTok{(}\FunctionTok{c}\NormalTok{(80L, 97L, 372L, 136L, 87L, 119L), }\AttributeTok{.Dim =} \DecValTok{3}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{.Dimnames =} \FunctionTok{structure}\NormalTok{(}\FunctionTok{list}\NormalTok{(}
+    \FunctionTok{c}\NormalTok{(}\StringTok{"First"}\NormalTok{, }\StringTok{"Second"}\NormalTok{, }\StringTok{"Third"}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\StringTok{"Died"}\NormalTok{, }\StringTok{"Survived"}\NormalTok{)), }\AttributeTok{.Names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Class"}\NormalTok{, }\StringTok{"Survival"}\NormalTok{)), }\AttributeTok{class =} \StringTok{"table"}\NormalTok{)}
 
-\NormalTok{model\_h0 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Sepal.Width }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }\AttributeTok{data=}\NormalTok{iris)}
-\NormalTok{model\_h1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Sepal.Width }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Species, }\AttributeTok{data=}\NormalTok{iris)}
+\NormalTok{mytable}
+\end{Highlighting}
+\end{Shaded}
 
-\FunctionTok{anova}\NormalTok{(model\_h0,model\_h1)}
+\begin{verbatim}
+##         Survival
+## Class    Died Survived
+##   First    80      136
+##   Second   97       87
+##   Third   372      119
+\end{verbatim}
+
+Tabellen omhandler personer ombord skibet `Titanic' - den angiver hvor mange passagerer tilhørte de tre klass (førsteklass, andenklass, trejdeklass), delte efter overlevelse (døde eller overlevede tragedien).
+
+\begin{itemize}
+\tightlist
+\item
+  Benyt funktionen \texttt{chisq.test()} på tabellen.
+\item
+  Hvad er nulhypotesen?
+\item
+  Er testen signifikant?
+\item
+  Er passagerernes klass så uafhængige af deres chance for at overleve tragedien?
+\item
+  Hvilken klass havde den bedste chance for at overleve?
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{16}
+\tightlist
+\item
+  (\textbf{Korrelation analyse}) Åbn datasættet \texttt{trees} og lav et scatter plot med variablen \texttt{Girth} på x-aksen og variablen \texttt{Volume} på y-aksen.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(trees)}
+\FunctionTok{summary}\NormalTok{(trees)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{itemize}
 \tightlist
 \item
+  Anvend funktionen \texttt{cor.test} for at teste, om der er en signifikant korrelation mellem de to variabler. Brug \texttt{method\ =\ "pearson"} (det er dog faktisk default)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor.test}\NormalTok{(???, ???,}\AttributeTok{method=}\StringTok{"pearson"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Hvad er korrelationen mellem \texttt{Girth} og \texttt{Volume}?
+\item
+  Hvad er p-værdien? Er den signifikant?
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{14}
+\tightlist
+\item
+  (\textbf{ANOVA}) OBS: hvis du føler dig utryg med funktionen \texttt{lm()} - der kommer en video om det i morgen (i forbindelse med emnet Rmarkdown).
+\end{enumerate}
+
+Kør følgende kode til at lave variansanalyse, der tester hulhypotesen hvor den gennemsnitlige værdi af variablen \texttt{Sepal.Width} er ens for hver af de tre arter (variablen \texttt{Species}) fra datasættet \texttt{iris}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(iris)}
+
+\CommentTok{\#model under H0: no difference according to Species (1 just means "fit overall mean")}
+\NormalTok{model\_h0 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Sepal.Width }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }\AttributeTok{data=}\NormalTok{iris) }
+
+\CommentTok{\#model under H1: each level of Species has its own mean}
+\NormalTok{model\_h1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Sepal.Width }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Species, }\AttributeTok{data=}\NormalTok{iris) }
+
+\CommentTok{\#compare two models {-} significant p{-}value equates to choosing H1 model}
+\FunctionTok{anova}\NormalTok{(model\_h0,model\_h1)}
+\end{Highlighting}
+\end{Shaded}
+
+Kig på outputtet:
+
+\begin{itemize}
+\tightlist
+\item
+  Hvilken model reflekterer nulhypotesen?
+\item
+  Hvilken model reflekterer alternativhypotesen?
+\item
+  Hvor er p-værdien?
+\item
   Er der en signifikant forskel i den gennemsnitlige \texttt{Sepal.Width} efter de forskellige \texttt{Species}?
 \end{itemize}
+
+Brug funktionen \texttt{tapply} for at finde ud af, hvad er den middelværdi \texttt{Sepal.Width} til hver af de tre arter.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -1652,35 +1744,16 @@ Find følgende i outputtet fra R:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{16}
+\setcounter{enumi}{17}
 \tightlist
 \item
-  (\textbf{Lineær regression}) Åbn datasættet \texttt{trees} og lav et scatter plot med variablen \texttt{Girth} på x-aksen og variablen \texttt{Volume} på y-aksen.
+  (\textbf{Lineær regression})
 \end{enumerate}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{data}\NormalTok{(trees)}
-\FunctionTok{summary}\NormalTok{(trees)}
-\end{Highlighting}
-\end{Shaded}
-
 \begin{itemize}
 \tightlist
 \item
-  Anvend funktionen \texttt{cor.test} for at teste, om der er en signifikant korrelation mellem de to variabler. Brug \texttt{method\ =\ "pearson"} (default)
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{cor.test}\NormalTok{(???, ???,}\AttributeTok{method=}\StringTok{"pearson"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{itemize}
-\tightlist
-\item
-  Brug \texttt{lm} til at lave en simpel lineær regression, således at respons variablen \texttt{Volume} er afhængig af variablen \texttt{Girth}
+  Brug \texttt{lm} til at lave en simpel lineær regression, således at respons variablen \texttt{Volume} er afhængig af variablen \texttt{Girth} (datasæstet \texttt{trees}).
 \end{itemize}
 
 \begin{Shaded}
@@ -1689,16 +1762,16 @@ Find følgende i outputtet fra R:
 \end{Highlighting}
 \end{Shaded}
 
-Brug \texttt{summary} på din model for at se:
+Brug \texttt{summary} på din model for at finde følgende værdier:
 
 \begin{itemize}
 \tightlist
 \item
-  Hvad er r.squared? (multiple eller adjusted)
+  Hvad er r.squared? (multiple)
 \item
-  Er hældningen signifikant?
+  Er variablen \texttt{Girth} signifikant?
 \item
-  Hvad er ligningen på den bedste rette linje?
+  Hvad er ligningen på den bedste rette linje (husk formen y = ax + b)?
 \end{itemize}
 
 \begin{enumerate}
@@ -1706,27 +1779,31 @@ Brug \texttt{summary} på din model for at se:
 \setcounter{enumi}{17}
 \tightlist
 \item
-  (\textbf{Multiple lineær regression}) I ovenstående model tilføj variablen \texttt{Height} som en ekstra prediktær variabel i modellen med en ``+'' tegn.
+  (\textbf{Kort intro til multiple lineær regression}) Tag ovenstående model og tilføj variablen \texttt{Height} som en ekstra prediktær (uafhængig) variabel i modellen med en ``+'' tegn:
 \end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mylm\_height }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(???}\SpecialCharTok{\textasciitilde{}}\NormalTok{??? }\SpecialCharTok{+}\NormalTok{ ???, }\AttributeTok{data=}\NormalTok{trees) }
+\NormalTok{mylm\_height }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(??? }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ??? }\SpecialCharTok{+}\NormalTok{ ???, }\AttributeTok{data=}\NormalTok{trees) }
 \FunctionTok{summary}\NormalTok{(mylm\_height)}
 \end{Highlighting}
 \end{Shaded}
 
-Brug \texttt{summary} for at finde ud af:
+\emph{Bemærk at det ikke betyder, at de to variabler skal lægges sammen, men at vi gerne vil have både variablerne i modellen som uafhængig variabler (med andre ord er \texttt{Volume} afhængig af både \texttt{Girth} og \texttt{Height}).}
+
+Benyt \texttt{summary} på modellen og prøv at finde følgende:
 
 \begin{itemize}
 \tightlist
 \item
-  Hvor meget ændre den (multiple) r.squared værdi i forhold til modellen med kun variablen \texttt{Girth}?
+  Hvad er den den (multiple) r.squared værdi?
 \item
-  Brug funktionen \texttt{anova} til at sammenligne modellen uden \texttt{Height} med modellen med \texttt{Height}
+  Hvor meget ændre den (multiple) r.squared værdi i forhold til modellen med kun variablen \texttt{Girth}?
 \item
   Er \texttt{Volume} signifikant afhængig af \texttt{Height} (efter at man har taget højde for \texttt{Girth})?
 \end{itemize}
+
+Brug funktionen \texttt{anova} til at sammenligne modellen uden \texttt{Height} med modellen med \texttt{Height}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1734,6 +1811,7 @@ Brug \texttt{summary} for at finde ud af:
 \end{Highlighting}
 \end{Shaded}
 
+Bemærk, at i dette tilfælde er p-værdien fra ANOVA samme p-værdi fra \texttt{summary(mylm\_height)}.
 
   \bibliography{book.bib,packages.bib}
 

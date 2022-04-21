@@ -184,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.10.1" data-path="index.html"><a href="#quiz---basics"><i class="fa fa-check"></i><b>1.10.1</b> Quiz - Basics<span></span></a></li>
 <li class="chapter" data-level="1.10.2" data-path="index.html"><a href="#grundlæggende-r"><i class="fa fa-check"></i><b>1.10.2</b> Grundlæggende R<span></span></a></li>
 <li class="chapter" data-level="1.10.3" data-path="index.html"><a href="#kort-analyse-med-reaktionstider"><i class="fa fa-check"></i><b>1.10.3</b> Kort analyse med reaktionstider<span></span></a></li>
-<li class="chapter" data-level="1.10.4" data-path="index.html"><a href="#øvelser-med-anovaregression"><i class="fa fa-check"></i><b>1.10.4</b> Øvelser med ANOVA/regression<span></span></a></li>
+<li class="chapter" data-level="1.10.4" data-path="index.html"><a href="#øvelser-med-statistik-tests"><i class="fa fa-check"></i><b>1.10.4</b> Øvelser med statistik tests<span></span></a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -210,7 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Visualisering af biologiske datasæt - 2022</h1>
 <p class="author"><em>Sarah Rennie</em></p>
-<p class="date"><em>Last updated: 2022-04-19</em></p>
+<p class="date"><em>Last updated: 2022-04-21</em></p>
 </div>
 <div id="basics" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Grundlæggende R<a href="#basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -522,20 +522,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Man kan nemt lave sin egne ‘fake’ data ved at simulere det fra en fordeling, der vil typiske være den normale fordeling, idet den normale fordeling opstår mest hyppigt i den virkelige verden (husk den klassiske klokke-form). I R kan man bruge funktionen <code>rnorm</code> til at simulere data - først angiver man, hvor mange observationer man vil have, og dernæst den mean og standard deviation (sd), som er de to nødvendige parametre for at beskrive en normal fordeling</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>,<span class="at">mean=</span><span class="dv">0</span>,<span class="at">sd=</span><span class="dv">1</span>) <span class="co">#standard normal distribution</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>x <span class="co">#så har vi 25 værdier fra en normal distribution med mean=0 og standard deviation=1.</span></span></code></pre></div>
-<pre><code>##  [1]  0.79592207 -0.08219312  0.20696172  0.19407079 -0.81549222 -0.65995601
-##  [7]  1.07500154  0.32519015  2.94890796  0.98516281  1.37933218 -1.81522174
-## [13] -1.63877039 -0.84277413  0.03936536  0.36361089  0.23501222  0.43561372
-## [19]  1.46684259  0.03470093 -0.50959653 -1.39953385  1.57220702 -0.76331314
-## [25]  0.18272220</code></pre>
+<pre><code>##  [1] -0.04318361 -0.72074917 -0.46741742  1.07894266  0.33842371 -0.19040921
+##  [7]  1.24355052 -1.41222534  0.32545522 -2.28464325 -0.35959511 -0.40111759
+## [13] -0.72796041  0.26961894 -1.16655822 -0.43074406 -0.41607258  0.63479279
+## [19] -0.69154797 -1.30129596 -1.55164045  0.86229934  0.44803604  0.69527947
+## [25]  1.83431257</code></pre>
 <p>I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x) <span class="co">#første 6</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.79592207 -0.08219312  0.20696172  0.19407079 -0.81549222 -0.65995601</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.04318361 -0.72074917 -0.46741742  1.07894266  0.33842371 -0.19040921</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(x) <span class="co">#sidste 6</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.03470093 -0.50959653 -1.39953385  1.57220702 -0.76331314  0.18272220</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.3012960 -1.5516405  0.8622993  0.4480360  0.6952795  1.8343126</span></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="co">#første værdi</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.7959221</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.04318361</span></span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">length</span>(x)] <span class="co">#sidste data point</span></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.1827222</span></span></code></pre></div>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.834313</span></span></code></pre></div>
 <p>Bemærk, at til forskellen af Python og mange andre programmering sprog, R bruger 1-baserende indicer - det betyder, at den første værdi er <code>x[1]</code> og <strong>ikke</strong> <code>x[0]</code> som i Python.</p>
 </div>
 <div id="measures-of-central-tendency" class="section level3 hasAnchor" number="1.8.2">
@@ -582,11 +582,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>my_var <span class="ot">&lt;-</span> <span class="fu">var</span>(x)</span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>my_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(x)</span>
 <span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(my_mean,my_median,my_max,my_min,my_var,my_sd) <span class="co">#print results</span></span></code></pre></div>
-<pre><code>## [1]  0.1485509  0.1940708  2.9489080 -1.8152217  1.1928696  1.0921857</code></pre>
+<pre><code>## [1] -0.1773780 -0.3595951  1.8343126 -2.2846432  0.9383908  0.9687057</code></pre>
 <p>Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.8152 -0.6600  0.1941  0.1486  0.7959  2.9489</code></pre>
+## -2.2846 -0.7207 -0.3596 -0.1774  0.4480  1.8343</code></pre>
 </div>
 <div id="tapply" class="section level3 hasAnchor" number="1.8.3">
 <h3><span class="header-section-number">1.8.3</span> <code>tapply()</code><a href="#tapply" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -826,7 +826,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="lineær-regression" class="section level3 hasAnchor" number="1.9.7">
 <h3><span class="header-section-number">1.9.7</span> Lineær regression<a href="#lineær-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><!-- Hvordan afhnger ln af sektor? --></p>
+<p><em>OBS: se også video i forbindelse med Rmarkdown (næste emne), hvor jeg gennemgå lineær regression med R</em></p>
 <p>Formål: måler (en retningsbestemt) relation mellem to kontinuerte variabler. I simpel lineær regression svarer det til, at man gerne vil finde den rette linje gennem punkterne, der bedste beskriver relationen.</p>
 <p>Eksempel - datasættet <code>mtcars</code>, response (afgængig) variabel er <code>mpg</code> og predictor (uafhængig) variabel er <code>wt</code>.</p>
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-45-1.png" width="480" /></p>
@@ -1121,59 +1121,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Skriv en kort sætning med din konklusion.</li>
 </ol>
 </div>
-<div id="øvelser-med-anovaregression" class="section level3 hasAnchor" number="1.10.4">
-<h3><span class="header-section-number">1.10.4</span> Øvelser med ANOVA/regression<a href="#øvelser-med-anovaregression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="øvelser-med-statistik-tests" class="section level3 hasAnchor" number="1.10.4">
+<h3><span class="header-section-number">1.10.4</span> Øvelser med statistik tests<a href="#øvelser-med-statistik-tests" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol start="15" style="list-style-type: decimal">
-<li>(<strong>ANOVA</strong>) Kør følgende kode til at lave variansanalyse, der tester hulhypotesen hvor den gennemsnitlige værdi af variablen <code>Sepal.Width</code> er ens for hver af de tre arter (variablen <code>Species</code>) fra datasættet <code>iris</code>:</li>
+<li>(<strong>Chi-sq</strong>) Kør følgende kode til at få en tabel (selve koden er ikke vigtigt):</li>
 </ol>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>model_h0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>iris)</span>
-<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>model_h1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Species, <span class="at">data=</span>iris)</span>
-<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_h0,model_h1)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>mytable <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">c</span>(80L, 97L, 372L, 136L, 87L, 119L), <span class="at">.Dim =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">.Dimnames =</span> <span class="fu">structure</span>(<span class="fu">list</span>(</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;First&quot;</span>, <span class="st">&quot;Second&quot;</span>, <span class="st">&quot;Third&quot;</span>), <span class="fu">c</span>(<span class="st">&quot;Died&quot;</span>, <span class="st">&quot;Survived&quot;</span>)), <span class="at">.Names =</span> <span class="fu">c</span>(<span class="st">&quot;Class&quot;</span>, <span class="st">&quot;Survival&quot;</span>)), <span class="at">class =</span> <span class="st">&quot;table&quot;</span>)</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>mytable</span></code></pre></div>
+<pre><code>##         Survival
+## Class    Died Survived
+##   First    80      136
+##   Second   97       87
+##   Third   372      119</code></pre>
+<p>Tabellen omhandler personer ombord skibet ‘Titanic’ - den angiver hvor mange passagerer tilhørte de tre klass (førsteklass, andenklass, trejdeklass), delte efter overlevelse (døde eller overlevede tragedien).</p>
 <ul>
+<li>Benyt funktionen <code>chisq.test()</code> på tabellen.</li>
+<li>Hvad er nulhypotesen?</li>
+<li>Er testen signifikant?</li>
+<li>Er passagerernes klass så uafhængige af deres chance for at overleve tragedien?</li>
+<li>Hvilken klass havde den bedste chance for at overleve?</li>
+</ul>
+<ol start="17" style="list-style-type: decimal">
+<li>(<strong>Korrelation analyse</strong>) Åbn datasættet <code>trees</code> og lav et scatter plot med variablen <code>Girth</code> på x-aksen og variablen <code>Volume</code> på y-aksen.</li>
+</ol>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(trees)</span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(trees)</span></code></pre></div>
+<ul>
+<li>Anvend funktionen <code>cor.test</code> for at teste, om der er en signifikant korrelation mellem de to variabler. Brug <code>method = "pearson"</code> (det er dog faktisk default)</li>
+</ul>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(???, ???,<span class="at">method=</span><span class="st">&quot;pearson&quot;</span>)</span></code></pre></div>
+<ul>
+<li>Hvad er korrelationen mellem <code>Girth</code> og <code>Volume</code>?</li>
+<li>Hvad er p-værdien? Er den signifikant?</li>
+</ul>
+<ol start="15" style="list-style-type: decimal">
+<li>(<strong>ANOVA</strong>) OBS: hvis du føler dig utryg med funktionen <code>lm()</code> - der kommer en video om det i morgen (i forbindelse med emnet Rmarkdown).</li>
+</ol>
+<p>Kør følgende kode til at lave variansanalyse, der tester hulhypotesen hvor den gennemsnitlige værdi af variablen <code>Sepal.Width</code> er ens for hver af de tre arter (variablen <code>Species</code>) fra datasættet <code>iris</code>:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co">#model under H0: no difference according to Species (1 just means &quot;fit overall mean&quot;)</span></span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a>model_h0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>iris) </span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="co">#model under H1: each level of Species has its own mean</span></span>
+<span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a>model_h1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Sepal.Width <span class="sc">~</span> Species, <span class="at">data=</span>iris) </span>
+<span id="cb105-8"><a href="#cb105-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-9"><a href="#cb105-9" aria-hidden="true" tabindex="-1"></a><span class="co">#compare two models - significant p-value equates to choosing H1 model</span></span>
+<span id="cb105-10"><a href="#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_h0,model_h1)</span></code></pre></div>
+<p>Kig på outputtet:</p>
+<ul>
+<li>Hvilken model reflekterer nulhypotesen?</li>
+<li>Hvilken model reflekterer alternativhypotesen?</li>
+<li>Hvor er p-værdien?</li>
 <li>Er der en signifikant forskel i den gennemsnitlige <code>Sepal.Width</code> efter de forskellige <code>Species</code>?</li>
 </ul>
+<p>Brug funktionen <code>tapply</code> for at finde ud af, hvad er den middelværdi <code>Sepal.Width</code> til hver af de tre arter.</p>
 <ol start="16" style="list-style-type: decimal">
 <li>(<strong>ANOVA</strong>) Lav en lignende analyse på datasættet <code>chickwts</code> for at svare på spørgsmålet:</li>
 </ol>
 <ul>
 <li>Er der en forskel i den gennemsnitlige vægt (variablen <code>weight</code>) efter fodertypen (variablen <code>feed</code>)? Med andre ord er vægt afhængig af fodertypen?</li>
 </ul>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(chickwts)</span>
-<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="co">#skriv kode herfra</span></span></code></pre></div>
-<ol start="17" style="list-style-type: decimal">
-<li>(<strong>Lineær regression</strong>) Åbn datasættet <code>trees</code> og lav et scatter plot med variablen <code>Girth</code> på x-aksen og variablen <code>Volume</code> på y-aksen.</li>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(chickwts)</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="co">#skriv kode herfra</span></span></code></pre></div>
+<ol start="18" style="list-style-type: decimal">
+<li>(<strong>Lineær regression</strong>)</li>
 </ol>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(trees)</span>
-<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(trees)</span></code></pre></div>
 <ul>
-<li>Anvend funktionen <code>cor.test</code> for at teste, om der er en signifikant korrelation mellem de to variabler. Brug <code>method = "pearson"</code> (default)</li>
+<li>Brug <code>lm</code> til at lave en simpel lineær regression, således at respons variablen <code>Volume</code> er afhængig af variablen <code>Girth</code> (datasæstet <code>trees</code>).</li>
 </ul>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(???, ???,<span class="at">method=</span><span class="st">&quot;pearson&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(???, <span class="at">data=</span>trees) </span></code></pre></div>
+<p>Brug <code>summary</code> på din model for at finde følgende værdier:</p>
 <ul>
-<li>Brug <code>lm</code> til at lave en simpel lineær regression, således at respons variablen <code>Volume</code> er afhængig af variablen <code>Girth</code></li>
-</ul>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(???, <span class="at">data=</span>trees) </span></code></pre></div>
-<p>Brug <code>summary</code> på din model for at se:</p>
-<ul>
-<li>Hvad er r.squared? (multiple eller adjusted)</li>
-<li>Er hældningen signifikant?</li>
-<li>Hvad er ligningen på den bedste rette linje?</li>
+<li>Hvad er r.squared? (multiple)</li>
+<li>Er variablen <code>Girth</code> signifikant?</li>
+<li>Hvad er ligningen på den bedste rette linje (husk formen y = ax + b)?</li>
 </ul>
 <ol start="18" style="list-style-type: decimal">
-<li>(<strong>Multiple lineær regression</strong>) I ovenstående model tilføj variablen <code>Height</code> som en ekstra prediktær variabel i modellen med en “+” tegn.</li>
+<li>(<strong>Kort intro til multiple lineær regression</strong>) Tag ovenstående model og tilføj variablen <code>Height</code> som en ekstra prediktær (uafhængig) variabel i modellen med en “+” tegn:</li>
 </ol>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>mylm_height <span class="ot">&lt;-</span> <span class="fu">lm</span>(???<span class="sc">~</span>??? <span class="sc">+</span> ???, <span class="at">data=</span>trees) </span>
-<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mylm_height)</span></code></pre></div>
-<p>Brug <code>summary</code> for at finde ud af:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>mylm_height <span class="ot">&lt;-</span> <span class="fu">lm</span>(??? <span class="sc">~</span> ??? <span class="sc">+</span> ???, <span class="at">data=</span>trees) </span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mylm_height)</span></code></pre></div>
+<p><em>Bemærk at det ikke betyder, at de to variabler skal lægges sammen, men at vi gerne vil have både variablerne i modellen som uafhængig variabler (med andre ord er <code>Volume</code> afhængig af både <code>Girth</code> og <code>Height</code>).</em></p>
+<p>Benyt <code>summary</code> på modellen og prøv at finde følgende:</p>
 <ul>
+<li>Hvad er den den (multiple) r.squared værdi?</li>
 <li>Hvor meget ændre den (multiple) r.squared værdi i forhold til modellen med kun variablen <code>Girth</code>?</li>
-<li>Brug funktionen <code>anova</code> til at sammenligne modellen uden <code>Height</code> med modellen med <code>Height</code></li>
 <li>Er <code>Volume</code> signifikant afhængig af <code>Height</code> (efter at man har taget højde for <code>Girth</code>)?</li>
 </ul>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(<span class="co">#model without height,#model with height)</span></span></code></pre></div>
+<p>Brug funktionen <code>anova</code> til at sammenligne modellen uden <code>Height</code> med modellen med <code>Height</code></p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(<span class="co">#model without height,#model with height)</span></span></code></pre></div>
+<p>Bemærk, at i dette tilfælde er p-værdien fra ANOVA samme p-værdi fra <code>summary(mylm_height)</code>.</p>
 
 </div>
 </div>

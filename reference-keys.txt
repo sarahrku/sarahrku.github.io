@@ -33,4 +33,4 @@ problemstillinger
 quiz---basics
 grundlæggende-r
 kort-analyse-med-reaktionstider
-øvelser-med-anovaregression
+øvelser-med-statistik-tests
