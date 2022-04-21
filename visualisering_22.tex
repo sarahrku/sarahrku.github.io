@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1.4311609704  0.8018335250 -0.7716697451  0.8582603190 -0.3412557958
-##  [6]  0.3145008312  0.8988635544  1.2667383590 -0.3310681421  1.4875715490
-## [11] -0.6218384931  0.8933896456  1.6796713475  0.1453959907 -0.9608929364
-## [16] -0.0009451856 -0.1975433155  1.0002760152  0.4799559210  0.3207776943
-## [21] -0.3723581172  0.9618425415 -1.6519491309  0.3935887395 -0.1265245106
+##  [1]  2.30568766 -0.74638582 -0.03998899  0.67188909  1.06972754 -0.33077143
+##  [7]  0.74486868  0.01848570 -1.01753426  1.93921466  0.18321409 -0.29543939
+## [13] -1.43888428 -1.05856881  0.59904685  0.95723604  1.97550204  0.16207782
+## [19]  0.61169505  1.23998776  0.74040468 -1.90995027 -0.87465199  0.47851514
+## [25]  0.06599185
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  1.4311610  0.8018335 {-}0.7716697  0.8582603 {-}0.3412558  0.3145008}
+\DocumentationTok{\#\# [1]  2.30568766 {-}0.74638582 {-}0.03998899  0.67188909  1.06972754 {-}0.33077143}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.3207777 {-}0.3723581  0.9618425 {-}1.6519491  0.3935887 {-}0.1265245}
+\DocumentationTok{\#\# [1]  1.23998776  0.74040468 {-}1.90995027 {-}0.87465199  0.47851514  0.06599185}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 1.431161}
+\DocumentationTok{\#\# [1] 2.305688}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.1265245}
+\DocumentationTok{\#\# [1] 0.06599185}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.3023113  0.3207777  1.6796713 -1.6519491  0.7073302  0.8410292
+## [1]  0.2420548  0.1832141  2.3056877 -1.9099503  1.1286844  1.0623956
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,7 +678,7 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.6519 -0.3311  0.3208  0.3023  0.8989  1.6797
+## -1.9100 -0.3308  0.1832  0.2421  0.7449  2.3057
 \end{verbatim}
 
 \hypertarget{tapply}{%
