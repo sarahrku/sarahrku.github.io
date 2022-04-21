@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 9 Clustering | Visualisering af biologiske datasæt - 2022</title>
+  <meta name="description" content="Course materials for Analysering og visualisering af biologiske datasæt 2022" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 9 Clustering | Visualisering af biologiske datasæt - 2022" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Course materials for Analysering og visualisering af biologiske datasæt 2022" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 9 Clustering | Visualisering af biologiske datasæt - 2022" />
+  
+  <meta name="twitter:description" content="Course materials for Analysering og visualisering af biologiske datasæt 2022" />
+  
+
+<meta name="author" content="Sarah Rennie" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="visualising-trends.html"/>
+<link rel="next" href="principal-component-analysis-pca.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Visualisering kursus</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Grundlæggende R<span></span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#inledning-til-kapitel"><i class="fa fa-check"></i><b>1.1</b> Inledning til kapitel<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#rstudio"><i class="fa fa-check"></i><b>1.2</b> RStudio<span></span></a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#de-forskellige-vinduer-i-rstudio"><i class="fa fa-check"></i><b>1.2.1</b> De forskellige vinduer i RStudio<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#working-directory"><i class="fa fa-check"></i><b>1.3</b> Working directory<span></span></a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#r-pakker"><i class="fa fa-check"></i><b>1.4</b> R pakker<span></span></a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#hvor-kommer-vores-data-fra"><i class="fa fa-check"></i><b>1.5</b> Hvor kommer vores data fra?<span></span></a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#indbyggede-datasæt"><i class="fa fa-check"></i><b>1.5.1</b> Indbyggede datasæt<span></span></a></li>
+<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#importering-af-data-fra-.txt-fil"><i class="fa fa-check"></i><b>1.5.2</b> Importering af data fra .txt fil<span></span></a></li>
+<li class="chapter" data-level="1.5.3" data-path="index.html"><a href="index.html#importering-af-data-fra-excel"><i class="fa fa-check"></i><b>1.5.3</b> Importering af data fra Excel<span></span></a></li>
+<li class="chapter" data-level="1.5.4" data-path="index.html"><a href="index.html#kaggle"><i class="fa fa-check"></i><b>1.5.4</b> Kaggle<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#beregninger-i-r"><i class="fa fa-check"></i><b>1.6</b> Beregninger i R<span></span></a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="index.html"><a href="index.html#vectorer"><i class="fa fa-check"></i><b>1.6.1</b> Vectorer<span></span></a></li>
+<li class="chapter" data-level="1.6.2" data-path="index.html"><a href="index.html#datatyper"><i class="fa fa-check"></i><b>1.6.2</b> datatyper<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#dataframes"><i class="fa fa-check"></i><b>1.7</b> Dataframes<span></span></a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#delmægder-af-dataframes"><i class="fa fa-check"></i><b>1.7.1</b> Delmægder af dataframes<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#descriptive-statistics"><i class="fa fa-check"></i><b>1.8</b> Descriptive statistics<span></span></a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="index.html"><a href="index.html#simulere-data-fra-den-normale-fordeling"><i class="fa fa-check"></i><b>1.8.1</b> Simulere data fra den normale fordeling<span></span></a></li>
+<li class="chapter" data-level="1.8.2" data-path="index.html"><a href="index.html#measures-of-central-tendency"><i class="fa fa-check"></i><b>1.8.2</b> Measures of central tendency<span></span></a></li>
+<li class="chapter" data-level="1.8.3" data-path="index.html"><a href="index.html#tapply"><i class="fa fa-check"></i><b>1.8.3</b> <code>tapply()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#statistike-tester"><i class="fa fa-check"></i><b>1.9</b> Statistike tester<span></span></a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="index.html"><a href="index.html#korrelation"><i class="fa fa-check"></i><b>1.9.1</b> Korrelation<span></span></a></li>
+<li class="chapter" data-level="1.9.2" data-path="index.html"><a href="index.html#test-for-uafhængighed-chi-sq-test"><i class="fa fa-check"></i><b>1.9.2</b> Test for uafhængighed (chi-sq test)<span></span></a></li>
+<li class="chapter" data-level="1.9.3" data-path="index.html"><a href="index.html#sample-t-test"><i class="fa fa-check"></i><b>1.9.3</b> 1 sample t-test<span></span></a></li>
+<li class="chapter" data-level="1.9.4" data-path="index.html"><a href="index.html#sample-t-test-1"><i class="fa fa-check"></i><b>1.9.4</b> 2-sample t-test<span></span></a></li>
+<li class="chapter" data-level="1.9.5" data-path="index.html"><a href="index.html#paired-t-test"><i class="fa fa-check"></i><b>1.9.5</b> Paired t-test<span></span></a></li>
+<li class="chapter" data-level="1.9.6" data-path="index.html"><a href="index.html#anova-variansanalyse"><i class="fa fa-check"></i><b>1.9.6</b> ANOVA (variansanalyse)<span></span></a></li>
+<li class="chapter" data-level="1.9.7" data-path="index.html"><a href="index.html#lineær-regression"><i class="fa fa-check"></i><b>1.9.7</b> Lineær regression<span></span></a></li>
+<li class="chapter" data-level="1.9.8" data-path="index.html"><a href="index.html#r-squared-coefficient-of-determination"><i class="fa fa-check"></i><b>1.9.8</b> R-squared coefficient of determination<span></span></a></li>
+<li class="chapter" data-level="1.9.9" data-path="index.html"><a href="index.html#antagelser---lineær-regression"><i class="fa fa-check"></i><b>1.9.9</b> Antagelser - lineær regression<span></span></a></li>
+<li class="chapter" data-level="1.9.10" data-path="index.html"><a href="index.html#multiple-lineær-regression"><i class="fa fa-check"></i><b>1.9.10</b> Multiple lineær regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#problemstillinger"><i class="fa fa-check"></i><b>1.10</b> Problemstillinger<span></span></a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="index.html"><a href="index.html#quiz---basics"><i class="fa fa-check"></i><b>1.10.1</b> Quiz - Basics<span></span></a></li>
+<li class="chapter" data-level="1.10.2" data-path="index.html"><a href="index.html#grundlæggende-r"><i class="fa fa-check"></i><b>1.10.2</b> Grundlæggende R<span></span></a></li>
+<li class="chapter" data-level="1.10.3" data-path="index.html"><a href="index.html#kort-analyse-med-reaktionstider"><i class="fa fa-check"></i><b>1.10.3</b> Kort analyse med reaktionstider<span></span></a></li>
+<li class="chapter" data-level="1.10.4" data-path="index.html"><a href="index.html#øvelser-med-anovaregression"><i class="fa fa-check"></i><b>1.10.4</b> Øvelser med ANOVA/regression<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduktion.html"><a href="introduktion.html"><i class="fa fa-check"></i><b>2</b> Introduktion til R Markdown<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduktion.html"><a href="introduktion.html#hvad-er-r-markdown"><i class="fa fa-check"></i><b>2.1</b> Hvad er R Markdown?<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="introduktion.html"><a href="introduktion.html#installere-r-markdown"><i class="fa fa-check"></i><b>2.2</b> Installere R Markdown<span></span></a></li>
+<li class="chapter" data-level="2.3" data-path="introduktion.html"><a href="introduktion.html#videodemonstrationer"><i class="fa fa-check"></i><b>2.3</b> Videodemonstrationer<span></span></a></li>
+<li class="chapter" data-level="2.4" data-path="introduktion.html"><a href="introduktion.html#lave-et-nyt-dokument-i-r-markdown"><i class="fa fa-check"></i><b>2.4</b> Lave et nyt dokument i R Markdown<span></span></a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="introduktion.html"><a href="introduktion.html#yaml"><i class="fa fa-check"></i><b>2.4.1</b> YAML<span></span></a></li>
+<li class="chapter" data-level="2.4.2" data-path="introduktion.html"><a href="introduktion.html#globale-options"><i class="fa fa-check"></i><b>2.4.2</b> Globale options<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduktion.html"><a href="introduktion.html#skrive-baseret-tekst"><i class="fa fa-check"></i><b>2.5</b> Skrive baseret tekst<span></span></a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="introduktion.html"><a href="introduktion.html#headers"><i class="fa fa-check"></i><b>2.5.1</b> Headers<span></span></a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduktion.html"><a href="introduktion.html#liste"><i class="fa fa-check"></i><b>2.5.2</b> liste<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="introduktion.html"><a href="introduktion.html#kode-indenfor-teksten-inline-chunks"><i class="fa fa-check"></i><b>2.6</b> Kode indenfor teksten (‘Inline chunks’)<span></span></a></li>
+<li class="chapter" data-level="2.7" data-path="introduktion.html"><a href="introduktion.html#kode-chunks"><i class="fa fa-check"></i><b>2.7</b> Kode chunks<span></span></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="introduktion.html"><a href="introduktion.html#chunk-options"><i class="fa fa-check"></i><b>2.7.1</b> Chunk options<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="introduktion.html"><a href="introduktion.html#knit-kode"><i class="fa fa-check"></i><b>2.8</b> Knit kode<span></span></a></li>
+<li class="chapter" data-level="2.9" data-path="introduktion.html"><a href="introduktion.html#matematik"><i class="fa fa-check"></i><b>2.9</b> Matematik<span></span></a></li>
+<li class="chapter" data-level="2.10" data-path="introduktion.html"><a href="introduktion.html#problemstillinger-1"><i class="fa fa-check"></i><b>2.10</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="2.11" data-path="introduktion.html"><a href="introduktion.html#slut-for-ugen"><i class="fa fa-check"></i><b>2.11</b> Slut for ugen<span></span></a></li>
+<li class="chapter" data-level="2.12" data-path="introduktion.html"><a href="introduktion.html#ekstra-links"><i class="fa fa-check"></i><b>2.12</b> Ekstra links<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visual1.html"><a href="visual1.html"><i class="fa fa-check"></i><b>3</b> Visualisering - ggplot2 dag 1<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visual1.html"><a href="visual1.html#inledning-og-videoer"><i class="fa fa-check"></i><b>3.1</b> Inledning og videoer<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visual1.html"><a href="visual1.html#læringsmålene-for-dag-1"><i class="fa fa-check"></i><b>3.1.1</b> Læringsmålene for dag 1<span></span></a></li>
+<li class="chapter" data-level="3.1.2" data-path="visual1.html"><a href="visual1.html#hvad-er-ggplot2"><i class="fa fa-check"></i><b>3.1.2</b> Hvad er <strong>ggplot2</strong>?<span></span></a></li>
+<li class="chapter" data-level="3.1.3" data-path="visual1.html"><a href="visual1.html#brugen-af-materialerne"><i class="fa fa-check"></i><b>3.1.3</b> Brugen af materialerne<span></span></a></li>
+<li class="chapter" data-level="3.1.4" data-path="visual1.html"><a href="visual1.html#video-ressourcer"><i class="fa fa-check"></i><b>3.1.4</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visual1.html"><a href="visual1.html#transition-fra-base-r-til-ggplot2"><i class="fa fa-check"></i><b>3.2</b> Transition fra base R til ggplot2<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="visual1.html"><a href="visual1.html#vores-første-ggplot"><i class="fa fa-check"></i><b>3.3</b> Vores første ggplot<span></span></a></li>
+<li class="chapter" data-level="3.4" data-path="visual1.html"><a href="visual1.html#lidt-om-ggplot2"><i class="fa fa-check"></i><b>3.4</b> Lidt om ggplot2<span></span></a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="visual1.html"><a href="visual1.html#syntax"><i class="fa fa-check"></i><b>3.4.1</b> Syntax<span></span></a></li>
+<li class="chapter" data-level="3.4.2" data-path="visual1.html"><a href="visual1.html#globale-versus-lokale-æstetik"><i class="fa fa-check"></i><b>3.4.2</b> Globale versus lokale æstetik<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="visual1.html"><a href="visual1.html#specificere-axse-tekst-og-titel"><i class="fa fa-check"></i><b>3.5</b> Specificere axse tekst og titel<span></span></a></li>
+<li class="chapter" data-level="3.6" data-path="visual1.html"><a href="visual1.html#ændre-farver"><i class="fa fa-check"></i><b>3.6</b> Ændre farver<span></span></a></li>
+<li class="chapter" data-level="3.7" data-path="visual1.html"><a href="visual1.html#ændre-temaet"><i class="fa fa-check"></i><b>3.7</b> Ændre temaet<span></span></a></li>
+<li class="chapter" data-level="3.8" data-path="visual1.html"><a href="visual1.html#forskellige-type-plots"><i class="fa fa-check"></i><b>3.8</b> Forskellige type plots<span></span></a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="visual1.html"><a href="visual1.html#boxplot-geom_box"><i class="fa fa-check"></i><b>3.8.1</b> Boxplot (<code>geom_box</code>)<span></span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="visual1.html"><a href="visual1.html#barplot-geom_bar"><i class="fa fa-check"></i><b>3.8.2</b> Barplot (<code>geom_bar</code>)<span></span></a></li>
+<li class="chapter" data-level="3.8.3" data-path="visual1.html"><a href="visual1.html#histogram-geom_histogram"><i class="fa fa-check"></i><b>3.8.3</b> Histogram (<code>geom_histogram</code>)<span></span></a></li>
+<li class="chapter" data-level="3.8.4" data-path="visual1.html"><a href="visual1.html#density-geom_density"><i class="fa fa-check"></i><b>3.8.4</b> Density (<code>geom_density</code>)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="visual1.html"><a href="visual1.html#troubleshooting"><i class="fa fa-check"></i><b>3.9</b> Troubleshooting<span></span></a></li>
+<li class="chapter" data-level="3.10" data-path="visual1.html"><a href="visual1.html#problemstillinger-2"><i class="fa fa-check"></i><b>3.10</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="3.11" data-path="visual1.html"><a href="visual1.html#næste-gang"><i class="fa fa-check"></i><b>3.11</b> Næste gang<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visual2.html"><a href="visual2.html"><i class="fa fa-check"></i><b>4</b> Visualisering - ggplot2 dag 2<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visual2.html"><a href="visual2.html#indledning-og-videoer"><i class="fa fa-check"></i><b>4.1</b> Indledning og videoer<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="visual2.html"><a href="visual2.html#læringsmålene"><i class="fa fa-check"></i><b>4.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="4.1.2" data-path="visual2.html"><a href="visual2.html#video-ressourcer-1"><i class="fa fa-check"></i><b>4.1.2</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="visual2.html"><a href="visual2.html#koordinat-systemer"><i class="fa fa-check"></i><b>4.2</b> Koordinat systemer<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="visual2.html"><a href="visual2.html#zoom-på-plottet-coord_cartesian"><i class="fa fa-check"></i><b>4.2.1</b> Zoom på plottet (<code>coord_cartesian()</code>)<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="visual2.html"><a href="visual2.html#transformering-af-akserne---log-sqrt-osv-scale_x_continuous."><i class="fa fa-check"></i><b>4.2.2</b> Transformering af akserne - log, sqrt osv (<code>scale_x_continuous</code>).<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="visual2.html"><a href="visual2.html#flip-coordinates-coord_flip"><i class="fa fa-check"></i><b>4.2.3</b> Flip coordinates (<code>coord_flip</code>)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="visual2.html"><a href="visual2.html#mere-om-farver-og-punkt-former"><i class="fa fa-check"></i><b>4.3</b> Mere om farver og punkt former<span></span></a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visual2.html"><a href="visual2.html#automatisk-farver"><i class="fa fa-check"></i><b>4.3.1</b> Automatisk farver<span></span></a></li>
+<li class="chapter" data-level="4.3.2" data-path="visual2.html"><a href="visual2.html#farver-manuelt"><i class="fa fa-check"></i><b>4.3.2</b> Farver manuelt<span></span></a></li>
+<li class="chapter" data-level="4.3.3" data-path="visual2.html"><a href="visual2.html#punkt-former"><i class="fa fa-check"></i><b>4.3.3</b> Punkt former<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visual2.html"><a href="visual2.html#annotations"><i class="fa fa-check"></i><b>4.4</b> Annotations<span></span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="visual2.html"><a href="visual2.html#tilføje-labeller-direkte-på-plottet."><i class="fa fa-check"></i><b>4.4.1</b> Tilføje labeller direkte på plottet.<span></span></a></li>
+<li class="chapter" data-level="4.4.2" data-path="visual2.html"><a href="visual2.html#pakken-ggrepel-for-at-tilføje-tekst-labeller"><i class="fa fa-check"></i><b>4.4.2</b> Pakken <code>ggrepel</code> for at tilføje tekst labeller<span></span></a></li>
+<li class="chapter" data-level="4.4.3" data-path="visual2.html"><a href="visual2.html#tilføje-rektangler-i-regioner-af-interesse-annotate"><i class="fa fa-check"></i><b>4.4.3</b> Tilføje rektangler i regioner af interesse (<code>annotate</code>)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="visual2.html"><a href="visual2.html#opdele-plots-facet_gridfacet_wrap"><i class="fa fa-check"></i><b>4.5</b> Opdele plots (<code>facet_grid</code>/<code>facet_wrap</code>)<span></span></a></li>
+<li class="chapter" data-level="4.6" data-path="visual2.html"><a href="visual2.html#problemstillinger-3"><i class="fa fa-check"></i><b>4.6</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="4.7" data-path="visual2.html"><a href="visual2.html#workshop-opgave-obs-fredag"><i class="fa fa-check"></i><b>4.7</b> Workshop opgave (OBS Fredag)<span></span></a></li>
+<li class="chapter" data-level="4.8" data-path="visual2.html"><a href="visual2.html#ekstra-notat-gemme-dit-plot"><i class="fa fa-check"></i><b>4.8</b> Ekstra notat: gemme dit plot<span></span></a></li>
+<li class="chapter" data-level="4.9" data-path="visual2.html"><a href="visual2.html#ekstra-links-1"><i class="fa fa-check"></i><b>4.9</b> Ekstra links<span></span></a></li>
+<li class="chapter" data-level="4.10" data-path="visual2.html"><a href="visual2.html#slut-for-ugen-1"><i class="fa fa-check"></i><b>4.10</b> Slut for ugen<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>5</b> Bearbejdning dag 1<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data.html"><a href="data.html#inledning-og-læringsmålene"><i class="fa fa-check"></i><b>5.1</b> Inledning og læringsmålene<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="data.html"><a href="data.html#video-ressourcer-2"><i class="fa fa-check"></i><b>5.2</b> Video ressourcer<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="data.html"><a href="data.html#hvad-er-tidyverse"><i class="fa fa-check"></i><b>5.3</b> Hvad er Tidyverse?<span></span></a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data.html"><a href="data.html#princippen-med-tidy-data"><i class="fa fa-check"></i><b>5.3.1</b> Princippen med ‘tidy data’<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="data.html"><a href="data.html#lidt-om-tibbles"><i class="fa fa-check"></i><b>5.4</b> Lidt om <code>tibbles</code><span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="data.html"><a href="data.html#transition-fra-base-til-tidyverse"><i class="fa fa-check"></i><b>5.5</b> Transition fra base til tidyverse<span></span></a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="data.html"><a href="data.html#om-titanic-datasæt"><i class="fa fa-check"></i><b>5.5.1</b> Om <strong>Titanic</strong> datasæt<span></span></a></li>
+<li class="chapter" data-level="5.5.2" data-path="data.html"><a href="data.html#titanic-lidt-oprydning"><i class="fa fa-check"></i><b>5.5.2</b> Titanic: lidt oprydning<span></span></a></li>
+<li class="chapter" data-level="5.5.3" data-path="data.html"><a href="data.html#pipe"><i class="fa fa-check"></i><b>5.5.3</b> Pipe<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="data.html"><a href="data.html#bearbejdning-af-data-dplyr"><i class="fa fa-check"></i><b>5.6</b> Bearbejdning af data: <code>dplyr</code><span></span></a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="data.html"><a href="data.html#dplyr-verbs-select"><i class="fa fa-check"></i><b>5.6.1</b> dplyr verbs: <code>select()</code><span></span></a></li>
+<li class="chapter" data-level="5.6.2" data-path="data.html"><a href="data.html#dplyr-verbs-filter"><i class="fa fa-check"></i><b>5.6.2</b> dplyr verbs: <code>filter()</code><span></span></a></li>
+<li class="chapter" data-level="5.6.3" data-path="data.html"><a href="data.html#comparitiver-reference"><i class="fa fa-check"></i><b>5.6.3</b> Comparitiver reference<span></span></a></li>
+<li class="chapter" data-level="5.6.4" data-path="data.html"><a href="data.html#kombinere-filter-og-select"><i class="fa fa-check"></i><b>5.6.4</b> Kombinere <code>filter()</code> og <code>select()</code><span></span></a></li>
+<li class="chapter" data-level="5.6.5" data-path="data.html"><a href="data.html#dplyr-verbs-mutate"><i class="fa fa-check"></i><b>5.6.5</b> dplyr verbs: <code>mutate()</code><span></span></a></li>
+<li class="chapter" data-level="5.6.6" data-path="data.html"><a href="data.html#rename"><i class="fa fa-check"></i><b>5.6.6</b> <code>rename()</code><span></span></a></li>
+<li class="chapter" data-level="5.6.7" data-path="data.html"><a href="data.html#dplyr-verbs-arrange"><i class="fa fa-check"></i><b>5.6.7</b> dplyr verbs: <code>arrange()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data.html"><a href="data.html#ændre-data-med-recode"><i class="fa fa-check"></i><b>5.7</b> Ændre data med <code>recode()</code><span></span></a></li>
+<li class="chapter" data-level="5.8" data-path="data.html"><a href="data.html#visualisering-bruge-som-input-i-ggplot2"><i class="fa fa-check"></i><b>5.8</b> Visualisering: bruge som input i ggplot2<span></span></a></li>
+<li class="chapter" data-level="5.9" data-path="data.html"><a href="data.html#problemstillinger-4"><i class="fa fa-check"></i><b>5.9</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="5.10" data-path="data.html"><a href="data.html#kommentarer"><i class="fa fa-check"></i><b>5.10</b> Kommentarer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html"><i class="fa fa-check"></i><b>6</b> Bearbejdning dag 2<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#indledning-og-læringsmålene"><i class="fa fa-check"></i><b>6.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#læringsmålene-1"><i class="fa fa-check"></i><b>6.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="6.1.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#videoer"><i class="fa fa-check"></i><b>6.1.2</b> Videoer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#dplyr-group_by-med-summarise"><i class="fa fa-check"></i><b>6.2</b> dplyr: <code>group_by()</code> med <code>summarise()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#reference-af-summary-funktioner"><i class="fa fa-check"></i><b>6.2.1</b> Reference af <code>summary()</code> funktioner<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#flere-summary-statistic-på-én-gang"><i class="fa fa-check"></i><b>6.2.2</b> Flere summary statistic på én gang<span></span></a></li>
+<li class="chapter" data-level="6.2.3" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#mere-kompliceret-group_by"><i class="fa fa-check"></i><b>6.2.3</b> Mere kompliceret <code>group_by()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#tidyr-pakke---wide-og-long-data"><i class="fa fa-check"></i><b>6.3</b> Tidyr pakke - Wide og Long data<span></span></a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#tidyr-pakke---oversigt"><i class="fa fa-check"></i><b>6.3.1</b> Tidyr pakke - oversigt<span></span></a></li>
+<li class="chapter" data-level="6.3.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#wide---long-med-pivot_longer"><i class="fa fa-check"></i><b>6.3.2</b> Wide -&gt; Long med <code>pivot_longer()</code><span></span></a></li>
+<li class="chapter" data-level="6.3.3" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#separate"><i class="fa fa-check"></i><b>6.3.3</b> <code>separate()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#eksempel-titanic-summary-statistics"><i class="fa fa-check"></i><b>6.4</b> Eksempel: Titanic summary statistics<span></span></a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#demonstration-af-pivot_wider"><i class="fa fa-check"></i><b>6.4.1</b> Demonstration af <code>pivot_wider()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#problemstillinger-5"><i class="fa fa-check"></i><b>6.5</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="6.6" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#opgave-fredag-workshop-om-tidyverse"><i class="fa fa-check"></i><b>6.6</b> Opgave (fredag workshop om tidyverse)<span></span></a></li>
+<li class="chapter" data-level="6.7" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#ekstra-links-2"><i class="fa fa-check"></i><b>6.7</b> Ekstra links<span></span></a></li>
+<li class="chapter" data-level="6.8" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#sidste-kommentarer"><i class="fa fa-check"></i><b>6.8</b> Sidste kommentarer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html"><i class="fa fa-check"></i><b>7</b> Forbine tables, iterations og funktioner<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#inledning-og-læringsmålene-1"><i class="fa fa-check"></i><b>7.1</b> Inledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#læringsmålene-2"><i class="fa fa-check"></i><b>7.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#introduktion-til-chapter"><i class="fa fa-check"></i><b>7.1.2</b> Introduktion til Chapter<span></span></a></li>
+<li class="chapter" data-level="7.1.3" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#video-ressourcer-3"><i class="fa fa-check"></i><b>7.1.3</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#tilføje-sample-oplysninger-med-left_join"><i class="fa fa-check"></i><b>7.2</b> Tilføje sample oplysninger med <code>left_join()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#fuktionen-left_join-fra-dplyr-pakken"><i class="fa fa-check"></i><b>7.2.1</b> Fuktionen <code>left_join()</code> fra dplyr-pakken<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#anvende-left_join-for-vores-fiktiv-dataset."><i class="fa fa-check"></i><b>7.2.2</b> Anvende <code>left_join()</code> for vores fiktiv dataset.<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#iterativ-processer-med-map-fuktioner"><i class="fa fa-check"></i><b>7.3</b> Iterativ processer med <code>map()</code> fuktioner<span></span></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#introduktion-til-map-funktioner"><i class="fa fa-check"></i><b>7.3.1</b> Introduktion til <code>map()</code> funktioner<span></span></a></li>
+<li class="chapter" data-level="7.3.2" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#reference-for-the-different-map-functions"><i class="fa fa-check"></i><b>7.3.2</b> Reference for the different map functions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#custom-functions"><i class="fa fa-check"></i><b>7.4</b> Custom functions<span></span></a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#simple-functions"><i class="fa fa-check"></i><b>7.4.1</b> Simple functions<span></span></a></li>
+<li class="chapter" data-level="7.4.2" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#custom-functions-with-mapping"><i class="fa fa-check"></i><b>7.4.2</b> Custom functions with mapping<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#nesting-nest"><i class="fa fa-check"></i><b>7.5</b> Nesting <code>nest()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#anvende-map-med-nested-data"><i class="fa fa-check"></i><b>7.5.1</b> Anvende map() med nested data<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#problemstillinger-6"><i class="fa fa-check"></i><b>7.6</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="7.7" data-path="forbine-tables-iterations-og-funktioner.html"><a href="forbine-tables-iterations-og-funktioner.html#ekstra-notater-og-næste-gang"><i class="fa fa-check"></i><b>7.7</b> Ekstra notater og næste gang<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="visualising-trends.html"><a href="visualising-trends.html"><i class="fa fa-check"></i><b>8</b> Visualising trends<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="visualising-trends.html"><a href="visualising-trends.html#indledning-og-læringsmålene-1"><i class="fa fa-check"></i><b>8.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="visualising-trends.html"><a href="visualising-trends.html#læringsmålene-3"><i class="fa fa-check"></i><b>8.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="8.1.2" data-path="visualising-trends.html"><a href="visualising-trends.html#introduktion-til-chapter-1"><i class="fa fa-check"></i><b>8.1.2</b> Introduktion til chapter<span></span></a></li>
+<li class="chapter" data-level="8.1.3" data-path="visualising-trends.html"><a href="visualising-trends.html#video-ressourcer-4"><i class="fa fa-check"></i><b>8.1.3</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="visualising-trends.html"><a href="visualising-trends.html#nest-og-map-eksempel-med-korrelation"><i class="fa fa-check"></i><b>8.2</b> <code>nest()</code> og <code>map()</code>: eksempel med korrelation<span></span></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="visualising-trends.html"><a href="visualising-trends.html#korrelation-analyse-i-r"><i class="fa fa-check"></i><b>8.2.1</b> Korrelation analyse i R<span></span></a></li>
+<li class="chapter" data-level="8.2.2" data-path="visualising-trends.html"><a href="visualising-trends.html#korrelation-over-flere-datasæt-på-en-gang"><i class="fa fa-check"></i><b>8.2.2</b> Korrelation over flere datasæt på en gang<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="visualising-trends.html"><a href="visualising-trends.html#visualisering-af-lineær-regression-med-ggplot2"><i class="fa fa-check"></i><b>8.3</b> Visualisering af lineær regression med ggplot2<span></span></a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="visualising-trends.html"><a href="visualising-trends.html#lineær-trends"><i class="fa fa-check"></i><b>8.3.1</b> Lineær trends<span></span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="visualising-trends.html"><a href="visualising-trends.html#plotting-lineær-trend-lines-with-geom_smooth"><i class="fa fa-check"></i><b>8.3.2</b> plotting lineær trend lines with <code>geom_smooth()</code><span></span></a></li>
+<li class="chapter" data-level="8.3.3" data-path="visualising-trends.html"><a href="visualising-trends.html#plotting-multiple-lineær-trend-lines-with-geom_smooth"><i class="fa fa-check"></i><b>8.3.3</b> plotting multiple lineær trend lines with <code>geom_smooth()</code><span></span></a></li>
+<li class="chapter" data-level="8.3.4" data-path="visualising-trends.html"><a href="visualising-trends.html#plot-trends-med-methodloess-i-ggplot."><i class="fa fa-check"></i><b>8.3.4</b> Plot trends med <code>method=="loess"</code> i ggplot.<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="visualising-trends.html"><a href="visualising-trends.html#plot-linear-regresion-estimates"><i class="fa fa-check"></i><b>8.4</b> Plot linear regresion estimates<span></span></a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="visualising-trends.html"><a href="visualising-trends.html#iteratively-estimating-multiple-trends"><i class="fa fa-check"></i><b>8.4.1</b> Iteratively estimating multiple trends<span></span></a></li>
+<li class="chapter" data-level="8.4.2" data-path="visualising-trends.html"><a href="visualising-trends.html#lave-og-tilføje-labels-til-dit-regression-plot"><i class="fa fa-check"></i><b>8.4.2</b> Lave og tilføje labels til dit regression plot<span></span></a></li>
+<li class="chapter" data-level="8.4.3" data-path="visualising-trends.html"><a href="visualising-trends.html#case_when-adding-bar-plot-text"><i class="fa fa-check"></i><b>8.4.3</b> <code>case_when()</code>: adding bar plot text<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="visualising-trends.html"><a href="visualising-trends.html#problemstillinger-7"><i class="fa fa-check"></i><b>8.5</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="8.6" data-path="visualising-trends.html"><a href="visualising-trends.html#næste-uge"><i class="fa fa-check"></i><b>8.6</b> Næste uge<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>9</b> Clustering<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="clustering.html"><a href="clustering.html#indledning-og-læringsmålene-2"><i class="fa fa-check"></i><b>9.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="clustering.html"><a href="clustering.html#læringsmålene-4"><i class="fa fa-check"></i><b>9.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="9.1.2" data-path="clustering.html"><a href="clustering.html#inledning-til-chapter"><i class="fa fa-check"></i><b>9.1.2</b> Inledning til chapter<span></span></a></li>
+<li class="chapter" data-level="9.1.3" data-path="clustering.html"><a href="clustering.html#video-ressourcer-5"><i class="fa fa-check"></i><b>9.1.3</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="clustering.html"><a href="clustering.html#k-means-clustering"><i class="fa fa-check"></i><b>9.2</b> K-means clustering<span></span></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="clustering.html"><a href="clustering.html#hvordan-fungere-kmeans"><i class="fa fa-check"></i><b>9.2.1</b> Hvordan fungere kmeans?<span></span></a></li>
+<li class="chapter" data-level="9.2.2" data-path="clustering.html"><a href="clustering.html#run-k-means-i-r"><i class="fa fa-check"></i><b>9.2.2</b> Run k-means i R<span></span></a></li>
+<li class="chapter" data-level="9.2.3" data-path="clustering.html"><a href="clustering.html#tidy-up-k-means-resultaterne-med-pakken-broom"><i class="fa fa-check"></i><b>9.2.3</b> Tidy up k-means resultaterne med pakken <code>broom</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="clustering.html"><a href="clustering.html#hvor-mange-clusters-skal-der-være"><i class="fa fa-check"></i><b>9.3</b> Hvor mange clusters skal der være?<span></span></a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="clustering.html"><a href="clustering.html#få-statistikker-for-antal-clusters-fra-1-til-9"><i class="fa fa-check"></i><b>9.3.1</b> Få statistikker for antal clusters fra 1 til 9<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="clustering.html"><a href="clustering.html#manuelt-beslutning-med-elbow-plot."><i class="fa fa-check"></i><b>9.3.2</b> Manuelt beslutning med elbow plot.<span></span></a></li>
+<li class="chapter" data-level="9.3.3" data-path="clustering.html"><a href="clustering.html#automatistke-beslutning-med-pakken-nbclust"><i class="fa fa-check"></i><b>9.3.3</b> Automatistke beslutning med pakken <code>NbClust</code><span></span></a></li>
+<li class="chapter" data-level="9.3.4" data-path="clustering.html"><a href="clustering.html#plot-de-forskellige-antal-clusters"><i class="fa fa-check"></i><b>9.3.4</b> Plot de forskellige antal clusters<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="clustering.html"><a href="clustering.html#hierarchical-clustering"><i class="fa fa-check"></i><b>9.4</b> Hierarchical clustering<span></span></a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="clustering.html"><a href="clustering.html#vælge-ønkset-antal-clusters"><i class="fa fa-check"></i><b>9.4.1</b> Vælge ønkset antal clusters<span></span></a></li>
+<li class="chapter" data-level="9.4.2" data-path="clustering.html"><a href="clustering.html#lav-et-pænt-plot-af-dendrogram-med-ggplot2"><i class="fa fa-check"></i><b>9.4.2</b> Lav et pænt plot af dendrogram med ggplot2<span></span></a></li>
+<li class="chapter" data-level="9.4.3" data-path="clustering.html"><a href="clustering.html#ekstra-afprøve-andre-metoder"><i class="fa fa-check"></i><b>9.4.3</b> Ekstra: afprøve andre metoder<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="clustering.html"><a href="clustering.html#problemstillinger-8"><i class="fa fa-check"></i><b>9.5</b> Problemstillinger<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html"><i class="fa fa-check"></i><b>10</b> Principal component analysis (PCA)<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#indledning-og-læringsmålene-3"><i class="fa fa-check"></i><b>10.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#læringsmålene-5"><i class="fa fa-check"></i><b>10.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="10.1.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#introduktion-til-chapter-2"><i class="fa fa-check"></i><b>10.1.2</b> Introduktion til chapter<span></span></a></li>
+<li class="chapter" data-level="10.1.3" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#video-ressourcer-6"><i class="fa fa-check"></i><b>10.1.3</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#hvad-er-principal-component-analysis-pca"><i class="fa fa-check"></i><b>10.2</b> Hvad er principal component analysis (PCA)?<span></span></a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#simpel-eksempel-med-to-dimensioner"><i class="fa fa-check"></i><b>10.2.1</b> Simpel eksempel med to dimensioner<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#fit-pca-to-data-in-r"><i class="fa fa-check"></i><b>10.3</b> Fit PCA to data in R<span></span></a></li>
+<li class="chapter" data-level="10.4" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#integrere-pca-resultater-med-broom-pakke"><i class="fa fa-check"></i><b>10.4</b> Integrere PCA resultater med broom-pakke<span></span></a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#rotation-matrix-to-extract-variable-contributions"><i class="fa fa-check"></i><b>10.4.1</b> Rotation matrix to extract variable contributions<span></span></a></li>
+<li class="chapter" data-level="10.4.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#pakken-factoextra"><i class="fa fa-check"></i><b>10.4.2</b> Pakken <code>factoextra</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#quiz-og-problemstillinger"><i class="fa fa-check"></i><b>10.5</b> Quiz og problemstillinger<span></span></a></li>
+<li class="chapter" data-level="10.6" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#ekstra-læsning"><i class="fa fa-check"></i><b>10.6</b> Ekstra læsning<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html"><i class="fa fa-check"></i><b>11</b> Emner fra eksperimental design<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#inledning-og-læringsmålene-2"><i class="fa fa-check"></i><b>11.1</b> Inledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#læringsmålene-6"><i class="fa fa-check"></i><b>11.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="11.1.2" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#inledning-til-chapter-1"><i class="fa fa-check"></i><b>11.1.2</b> Inledning til chapter<span></span></a></li>
+<li class="chapter" data-level="11.1.3" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#video-ressourcer-7"><i class="fa fa-check"></i><b>11.1.3</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#baserende-princip-af-eksperimental-design"><i class="fa fa-check"></i><b>11.2</b> Baserende princip af eksperimental design<span></span></a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#randomisation-and-replication"><i class="fa fa-check"></i><b>11.2.1</b> Randomisation and replication<span></span></a></li>
+<li class="chapter" data-level="11.2.2" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#eksempel-med-datasættet-toothgrowth"><i class="fa fa-check"></i><b>11.2.2</b> Eksempel med datasættet <code>ToothGrowth</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#case-studies-simpsons-paradox"><i class="fa fa-check"></i><b>11.3</b> Case studies: Simpson’s paradox<span></span></a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#berkerly-admissions"><i class="fa fa-check"></i><b>11.3.1</b> Berkerly admissions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#case-studies-anscombes-quartet"><i class="fa fa-check"></i><b>11.4</b> Case studies: Anscombe’s quartet<span></span></a></li>
+<li class="chapter" data-level="11.5" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#using-pca-to-find-batch-effects"><i class="fa fa-check"></i><b>11.5</b> Using PCA to find batch effects<span></span></a></li>
+<li class="chapter" data-level="11.6" data-path="emner-fra-eksperimental-design.html"><a href="emner-fra-eksperimental-design.html#problemstillinger-9"><i class="fa fa-check"></i><b>11.6</b> Problemstillinger<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html"><i class="fa fa-check"></i><b>12</b> Tidymodels og introduktion til maskin læring<span></span></a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#læringsmålene-7"><i class="fa fa-check"></i><b>12.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#purpose-of-chapter"><i class="fa fa-check"></i><b>12.2</b> Purpose of chapter<span></span></a></li>
+<li class="chapter" data-level="12.3" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#testing-and-training-sets"><i class="fa fa-check"></i><b>12.3</b> Testing and training sets<span></span></a></li>
+<li class="chapter" data-level="12.4" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#regression-in-the-tidy-model-framework"><i class="fa fa-check"></i><b>12.4</b> Regression in the tidy model framework<span></span></a></li>
+<li class="chapter" data-level="12.5" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#classification-in-the-tidy-model-framework"><i class="fa fa-check"></i><b>12.5</b> Classification in the tidy model framework<span></span></a>
+<ul>
+<li class="chapter" data-level="12.5.1" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#titanic-survival"><i class="fa fa-check"></i><b>12.5.1</b> Titanic survival<span></span></a></li>
+<li class="chapter" data-level="12.5.2" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#fit-workflow-on-titanic-data"><i class="fa fa-check"></i><b>12.5.2</b> Fit workflow on titanic data<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.6" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#how-good-is-the-fit"><i class="fa fa-check"></i><b>12.6</b> How good is the fit?<span></span></a></li>
+<li class="chapter" data-level="12.7" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#cross-validation"><i class="fa fa-check"></i><b>12.7</b> Cross validation<span></span></a>
+<ul>
+<li class="chapter" data-level="12.7.1" data-path="tidymodels-og-introduktion-til-maskin-læring.html"><a href="tidymodels-og-introduktion-til-maskin-læring.html#khan-data-maybe-for-workshop"><i class="fa fa-check"></i><b>12.7.1</b> Khan data (maybe for workshop)<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html"><i class="fa fa-check"></i><b>13</b> Presæntering af datasæt over for andre<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#introduktion-til-chapter-og-læringsmålene"><i class="fa fa-check"></i><b>13.1</b> Introduktion til chapter og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#læringsmålene-8"><i class="fa fa-check"></i><b>13.1.1</b> Læringsmålene<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#video-ressourcer-8"><i class="fa fa-check"></i><b>13.2</b> Video ressourcer<span></span></a></li>
+<li class="chapter" data-level="13.3" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#interactiv-plots"><i class="fa fa-check"></i><b>13.3</b> Interactiv plots<span></span></a></li>
+<li class="chapter" data-level="13.4" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#shiny"><i class="fa fa-check"></i><b>13.4</b> Shiny<span></span></a>
+<ul>
+<li class="chapter" data-level="13.4.1" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#eksempeler-som-viser-shiny"><i class="fa fa-check"></i><b>13.4.1</b> Eksempeler som viser Shiny<span></span></a></li>
+<li class="chapter" data-level="13.4.2" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#create-new-app"><i class="fa fa-check"></i><b>13.4.2</b> Create new app<span></span></a></li>
+<li class="chapter" data-level="13.4.3" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#struktur-af-en-shiny-app"><i class="fa fa-check"></i><b>13.4.3</b> Struktur af en Shiny App<span></span></a></li>
+<li class="chapter" data-level="13.4.4" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#minimal-example-men-ikke-interaktiv"><i class="fa fa-check"></i><b>13.4.4</b> Minimal example (men ikke interaktiv)<span></span></a></li>
+<li class="chapter" data-level="13.4.5" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#minimal-example---interactiv."><i class="fa fa-check"></i><b>13.4.5</b> Minimal example - interactiv.<span></span></a></li>
+<li class="chapter" data-level="13.4.6" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#flere-plots-på-samme-shiny-app"><i class="fa fa-check"></i><b>13.4.6</b> Flere plots på samme Shiny app<span></span></a></li>
+<li class="chapter" data-level="13.4.7" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#involvere-en-table"><i class="fa fa-check"></i><b>13.4.7</b> Involvere en table<span></span></a></li>
+<li class="chapter" data-level="13.4.8" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#add-a-slider"><i class="fa fa-check"></i><b>13.4.8</b> Add a slider<span></span></a></li>
+<li class="chapter" data-level="13.4.9" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#ekstras-som-man-kan-tilføje-til-ui"><i class="fa fa-check"></i><b>13.4.9</b> Ekstras som man kan tilføje til <code>ui</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="13.5" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#ekstra-generelle-råd"><i class="fa fa-check"></i><b>13.5</b> Ekstra generelle råd<span></span></a></li>
+<li class="chapter" data-level="13.6" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#andre-mulighederadvanceret-topics"><i class="fa fa-check"></i><b>13.6</b> Andre muligheder/advanceret topics<span></span></a></li>
+<li class="chapter" data-level="13.7" data-path="presæntering-af-datasæt-over-for-andre.html"><a href="presæntering-af-datasæt-over-for-andre.html#problemstillinger-10"><i class="fa fa-check"></i><b>13.7</b> Problemstillinger<span></span></a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Visualisering af biologiske datasæt - 2022</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="clustering" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Clustering<a href="clustering.html#clustering" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="indledning-og-læringsmålene-2" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Indledning og læringsmålene<a href="clustering.html#indledning-og-læringsmålene-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="læringsmålene-4" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> Læringsmålene<a href="clustering.html#læringsmålene-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>I skal være i stand til at</p>
+<ul>
+<li>Beskrive hvad k-means clustering går ud på</li>
+<li>Anvende <code>kmeans</code> og output resultatet på en <strong>tidy</strong> måde</li>
+<li>Iterate over forskellige antal clusters og vælge antallet som passer til de data</li>
+<li>Anvende funktionen <code>hclust</code> for at lave et simpel hierarchical clustering</li>
+</ul>
+</div>
+<div id="inledning-til-chapter" class="section level3 hasAnchor" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Inledning til chapter<a href="clustering.html#inledning-til-chapter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>I clustering er der til formål at dele et datasæt op i forskellige grupper (clusters eller klynge på dansk) af observationer, der mest ligner hinanden. Det øger indsigten i datasættet ved at fk. bedre forstår strukturen. De spørgsmål som vi kan prøve at give svar på er bla.:</p>
+<ul>
+<li>Hvor mange forskellige clusters er repræsenteret i mit datasæt?</li>
+<li>Hvilke individuelle observationer tilhører hvilken cluster?</li>
+</ul>
+<p>I dette kapitel ser vi hvordan vi kan implementere både k-means clustering og hierarchical clustering i R (indenfor den tidyverse ramme), og bruge dem til at tage beslutninger om de ovenstående spørgsmål.</p>
+</div>
+<div id="video-ressourcer-5" class="section level3 hasAnchor" number="9.1.3">
+<h3><span class="header-section-number">9.1.3</span> Video ressourcer<a href="clustering.html#video-ressourcer-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Video 1: K-means clustering</li>
+</ul>
+<p>Link her hvis det ikke virker nedenunder: <a href="https://player.vimeo.com/video/553656150" class="uri">https://player.vimeo.com/video/553656150</a></p>
+<div class="vembedr">
+<div>
+<iframe class="vimeo-embed" src="https://player.vimeo.com/video/553656150" width="533" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<ul>
+<li>Video 2: augment, glanced og tidy med K-means</li>
+</ul>
+<p>Link her hvis det ikke virker nedenunder: <a href="https://player.vimeo.com/video/553656139" class="uri">https://player.vimeo.com/video/553656139</a></p>
+<div class="vembedr">
+<div>
+<iframe class="vimeo-embed" src="https://player.vimeo.com/video/553656139" width="533" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<ul>
+<li>Video 3: Hvor mange clusters skal man vælge?</li>
+</ul>
+<p>Link her hvis det ikke virker nedenunder: <a href="https://player.vimeo.com/video/553656129" class="uri">https://player.vimeo.com/video/553656129</a></p>
+<div class="vembedr">
+<div>
+<iframe class="vimeo-embed" src="https://player.vimeo.com/video/553656129" width="533" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+</div>
+</div>
+<div id="k-means-clustering" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> K-means clustering<a href="clustering.html#k-means-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="clustering.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb437-2"><a href="clustering.html#cb437-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb437-3"><a href="clustering.html#cb437-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<p>I k-means er alle observationer eller datapunkter tilknyttet til den nærmeste cluster, efter deres nærhed til hinanden. Man specificere i forvejen antallet af clusters som data skal være delt op ind i. Derfor, skal der være nogle undersøgelses arbejde for at vælge den bedste antal clusters som passer til problemstillingen/ bedste repræsenterer de data.</p>
+<p>Lad os tage udgangspunkt i datasættet <code>penguins</code>. Vi begynder med at få fjernet observationerne med <code>NA</code> i mindst én variable med funktionen <code>drop_na</code> og ved at specificere at <code>year</code> skal være en faktor (for at skelne den fra de andre numeriske kolonner):</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="clustering.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins)</span>
+<span id="cb438-2"><a href="clustering.html#cb438-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb438-3"><a href="clustering.html#cb438-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.factor</span>(year)) <span class="sc">%&gt;%</span></span>
+<span id="cb438-4"><a href="clustering.html#cb438-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() </span></code></pre></div>
+<p>Vi vide allerede i forvejen, at der er 3 <code>species</code> med i de data, som vi plotter her med forskellige farver.</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="clustering.html#cb439-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,<span class="at">y=</span>body_mass_g,<span class="at">colour=</span>species)) <span class="sc">+</span> </span>
+<span id="cb439-2"><a href="clustering.html#cb439-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb439-3"><a href="clustering.html#cb439-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-421-1.png" width="480" /></p>
+<p>Vi vil gerne bruge k-means clustering på de numeriske variabler i de datasæt, og derefter kan det være nyttigt at sammenligne de clusters vi få med de tre species - hvor gode er de clusters til at skelne i mellem de forskellige species, eller fanger de noget andet struktur i de data (for eksempel kønnet eller øen, de bor)?</p>
+<div id="hvordan-fungere-kmeans" class="section level3 hasAnchor" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Hvordan fungere kmeans?<a href="clustering.html#hvordan-fungere-kmeans" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>K-means er en iterativ process. Lad os forestille os at vi gerne vil have tre clusters i de data. Man starter med tre observationer ved tilfælde og kalde dem for de cluster middelværdierne eller “centroids.” Man tilknytter alle observationer til en af de tre clusters (efter de nærmeste af de tre centroids), og så beregner en ny middelværdi/centroid for at hver cluster. Man tilknytter observerationer til den nye cluster centroids og så gentager man processen flere gange.</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-422"></span>
+<img src="plots/kmeans.png" alt="source: https://towardsdatascience.com/k-means-a-complete-introduction-1702af9cd8c" width="50%" />
+<p class="caption">
+Figure 9.1: source: <a href="https://towardsdatascience.com/k-means-a-complete-introduction-1702af9cd8c" class="uri">https://towardsdatascience.com/k-means-a-complete-introduction-1702af9cd8c</a>
+</p>
+</div>
+<p>Jeg spørger ikke efter detaljerne i metoden men der er mange videoer på Youtube som bedre foreklarer hvordan k-means fungerer, for eksempel: <a href="https://www.youtube.com/watch?v=4b5d3muPQmA" class="uri">https://www.youtube.com/watch?v=4b5d3muPQmA</a></p>
+<p>Bemærk, at der er noget <strong>tilfældighed</strong> indbygget i algoritmen. Det betyder, at hver gang man anvende k-means, få man en lidt anderledes resultat.</p>
+<!-- Bare som summary af algoritmen: -->
+<!-- * Angiv antallet af clusters - lad os sige 3 her -->
+<!-- * Tag 3 tilfældige observationer og kalde dem for de cluster means (centroid i ovenstående figur) -->
+<!-- * Tilknytte alle observation til deres nærmeste cluster (de tre centroids) -->
+<!-- * Beregne de cluster means fra de 3 sæt observationer. -->
+<!-- * Gentage ovenstående steps mange gange indtil de cluster means ændre sig ikke meget.  -->
+<!-- I det sidste step vil det sige, at de total __within sum of square er minimized__ - det betyder den totale afstand af observationerne til de centroids er så lav som de kal være, og samtidig at de __between sum of squares er maximized__ - der er så store afstand imellem de tre grupper som der kan være. -->
+</div>
+<div id="run-k-means-i-r" class="section level3 hasAnchor" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Run k-means i R<a href="clustering.html#run-k-means-i-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>K-means fungerer kun på numeriske data, som vi kan vælge fra datasættet med <code>select</code> - man kan specificere <code>where(is.numeric)</code> indenfor <code>select()</code> for at slippe for at manuelt indtaste de relevante variable navne. Vi bruger også <code>scale()</code> på de data her. Det betyder, at alle variabler få den samme skala og det undgår, at der er nogle som få mere indflydelse end andre i de færdig resultater.</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="clustering.html#cb440-1" aria-hidden="true" tabindex="-1"></a>penguins_scaled <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb440-2"><a href="clustering.html#cb440-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> </span>
+<span id="cb440-3"><a href="clustering.html#cb440-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale</span>()</span></code></pre></div>
+<p>Man er også nødt til at fortælle i forvejen hvor mange clusters at opdele datasættet ind i, så lad os sige <code>centers=3</code> indenfor funktionen <code>kmeans</code> her og beregner vores clusters:</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="clustering.html#cb441-1" aria-hidden="true" tabindex="-1"></a>kclust <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(penguins_scaled,<span class="at">centers =</span> <span class="dv">3</span>)</span>
+<span id="cb441-2"><a href="clustering.html#cb441-2" aria-hidden="true" tabindex="-1"></a>kclust</span></code></pre></div>
+<pre><code>## K-means clustering with 3 clusters of sizes 70, 119, 144
+## 
+## Cluster means:
+##   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+## 1      0.8908006     0.7592465        -0.3044405  -0.4687119
+## 2      0.6537742    -1.1010497         1.1607163   1.0995561
+## 3     -0.9732998     0.5408171        -0.8112111  -0.6808149
+## 
+## Clustering vector:
+##   [1] 3 3 3 3 3 3 3 3 3 3 3 3 1 3 1 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+##  [38] 3 1 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 3 3 3 3 3 3
+##  [75] 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 1 3 1 3 3 3 3 3
+## [112] 3 3 3 3 3 3 3 3 3 3 3 3 1 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 2
+## [149] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## [186] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## [223] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## [260] 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 3 1 1 1 1 1 1 1 3
+## [297] 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1
+## 
+## Within cluster sum of squares by cluster:
+## [1]  78.96005 139.46837 152.44363
+##  (between_SS / total_SS =  72.1 %)
+## 
+## Available components:
+## 
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
+<p>Man få forskellige ting frem, for eksempel:</p>
+<ul>
+<li><code>Cluster means</code> - de svarer til de centroids markerede med <strong>x</strong> i den ovenstående figur - bemærk at her er de 5-dimensionel da vi brugt 5 variabler til at beregne resultatet.</li>
+<li><code>Clustering</code> vector - hvilke cluster er hver observation blevet tilknyttet til.</li>
+<li><code>Within cluster sum of squares</code> - Jo mindre, jo bedre - hvor meget observationerne indenfor samme cluster ligner hinanden (den totale squared afstand af observationerne fra deres nærmeste centroid).</li>
+</ul>
+</div>
+<div id="tidy-up-k-means-resultaterne-med-pakken-broom" class="section level3 hasAnchor" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> Tidy up k-means resultaterne med pakken <code>broom</code><a href="clustering.html#tidy-up-k-means-resultaterne-med-pakken-broom" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Fra pakken <code>broom</code> har vi beskæftiget os med <code>glance</code> som vi benyttede til at få enkel-linje baserede summary statistics fra flere modeller sammen i én dataramme, for at facilitete et plot/labels osv. Der er også to andre funktioner vi tager i bruge her. Her er en beskrivelse af de tre.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Funktion</th>
+<th>Beskrivelse</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>glance</code></td>
+<td>single line summary</td>
+</tr>
+<tr class="even">
+<td><code>augment</code></td>
+<td>Connect information from the model to the original dataset</td>
+</tr>
+<tr class="odd">
+<td><code>tidy</code></td>
+<td>multi-line summary</td>
+</tr>
+</tbody>
+</table>
+<p>For at lave et plot af de clusters kan det være nyttigt at benytte <code>augment</code>. Her kan man se, at vi har fået en kolon der hedder <code>.cluster</code> med i den oprindelige dataramme (jeg flyttet kolonen til første plads i følgende kode så man kunne se den i de output af kursusnotater).</p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="clustering.html#cb443-1" aria-hidden="true" tabindex="-1"></a>kc1 <span class="ot">&lt;-</span> <span class="fu">augment</span>(kclust, penguins) <span class="co">#clustering = første plads, data = anden plads</span></span>
+<span id="cb443-2"><a href="clustering.html#cb443-2" aria-hidden="true" tabindex="-1"></a>kc1 <span class="sc">%&gt;%</span> <span class="fu">select</span>(.cluster,<span class="fu">all_of</span>(<span class="fu">names</span>(penguins)))</span></code></pre></div>
+<pre><code>## # A tibble: 333 × 9
+##    .cluster species island    bill_length_mm bill_depth_mm flipper_length_mm
+##    &lt;fct&gt;    &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;
+##  1 3        Adelie  Torgersen           39.1          18.7               181
+##  2 3        Adelie  Torgersen           39.5          17.4               186
+##  3 3        Adelie  Torgersen           40.3          18                 195
+##  4 3        Adelie  Torgersen           36.7          19.3               193
+##  5 3        Adelie  Torgersen           39.3          20.6               190
+##  6 3        Adelie  Torgersen           38.9          17.8               181
+##  7 3        Adelie  Torgersen           39.2          19.6               195
+##  8 3        Adelie  Torgersen           41.1          17.6               182
+##  9 3        Adelie  Torgersen           38.6          21.2               191
+## 10 3        Adelie  Torgersen           34.6          21.1               198
+## # … with 323 more rows, and 3 more variables: body_mass_g &lt;int&gt;, sex &lt;fct&gt;,
+## #   year &lt;fct&gt;</code></pre>
+<p>Nu lad os benytte vores datasæt som vi har fået med <code>augment</code> til at lave et plot. Her giver jeg en farve efter <code>.cluster</code> og shape efter <code>species</code> så at vi kan sammenligne vores beregnet clusters med de tre forskellige species. Bemæk her, at jeg kun har to variabler i plottet, men der er faktisk fire variabler som blev brugt til at lave de clusters i med funktionen <code>kmeans</code>. En anden måde er at plotte de først to principal components i stedet for to af de fire variabler - det beskæftige vi os med næste gang.</p>
+<div class="sourceCode" id="cb445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb445-1"><a href="clustering.html#cb445-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(kc1, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">scale</span>(bill_length_mm), </span>
+<span id="cb445-2"><a href="clustering.html#cb445-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">scale</span>(bill_depth_mm))) <span class="sc">+</span> </span>
+<span id="cb445-3"><a href="clustering.html#cb445-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> .cluster, <span class="at">shape =</span> species)) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-426-1.png" width="480" /></p>
+<p>Vi kan også fk. tælle op hvor mange af tre species vi få i hver af vores tre clusters, hvor vi kan se, at <code>Adelie</code> og <code>Chinstrap</code> er blevet mere blandet blandt to af de tre clusters end <code>Gentoo</code>.</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="clustering.html#cb446-1" aria-hidden="true" tabindex="-1"></a>kc1 <span class="sc">%&gt;%</span></span>
+<span id="cb446-2"><a href="clustering.html#cb446-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(.cluster, species)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##   .cluster species       n
+##   &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt;
+## 1 1        Adelie        7
+## 2 1        Chinstrap    63
+## 3 2        Gentoo      119
+## 4 3        Adelie      139
+## 5 3        Chinstrap     5</code></pre>
+<p>Lad os også kigge på resultatet af <code>tidy</code>. Her har vi fået en pæn dataramme med middelværdierne (centroids) af de tre clusters over de fire variabler som blev brugt i beregningerne.</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="clustering.html#cb448-1" aria-hidden="true" tabindex="-1"></a>kclust_tidy <span class="ot">&lt;-</span> <span class="fu">tidy</span>(kclust) </span>
+<span id="cb448-2"><a href="clustering.html#cb448-2" aria-hidden="true" tabindex="-1"></a>kclust_tidy</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 7
+##   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g  size withinss
+##            &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1          0.891         0.759            -0.304      -0.469    70     79.0
+## 2          0.654        -1.10              1.16        1.10    119    139. 
+## 3         -0.973         0.541            -0.811      -0.681   144    152. 
+## # … with 1 more variable: cluster &lt;fct&gt;</code></pre>
+<p>Lad os benytte <code>kclust_tidy</code> som et datasæt i vores ovenstående plot indenfor en anden <code>geom_point()</code> til at tilføje en <code>x</code> form i de centre af de tre clusters (bemærk jeg har brugt <code>color</code> og <code>shape</code> som lokale aethetics i den første <code>geom_point()</code> her, der de ikke eksistere som kolonner i <code>kclust_tidy</code>):</p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="clustering.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(kc1, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">scale</span>(bill_length_mm), </span>
+<span id="cb450-2"><a href="clustering.html#cb450-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">scale</span>(bill_depth_mm))) <span class="sc">+</span> </span>
+<span id="cb450-3"><a href="clustering.html#cb450-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> .cluster, <span class="at">shape =</span> species)) <span class="sc">+</span></span>
+<span id="cb450-4"><a href="clustering.html#cb450-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> kclust_tidy, </span>
+<span id="cb450-5"><a href="clustering.html#cb450-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">10</span>, <span class="at">shape =</span> <span class="st">&quot;x&quot;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb450-6"><a href="clustering.html#cb450-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-429-1.png" width="480" /></p>
+<p>Vi kan se at vores clusters fanger ikke de samme gruppe som <code>species</code> perfekt - der er forskelligheder. Det kan være at vi også har fanget nogle oplysninger om fk. øen de kommer fra eller kønnet af pingvinerne.</p>
+</div>
+</div>
+<div id="hvor-mange-clusters-skal-der-være" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Hvor mange clusters skal der være?<a href="clustering.html#hvor-mange-clusters-skal-der-være" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Vi gættede på 3 clusters i ovenstående analyse (da vi havde oplysninger om de species i forvejen) men det kunne være, at et andet antal clusters passer bedre med de data. Vi kan anvende vores statistikker over de forskellige antal cluster til at tage en beslutning om, hvor mange clusters vi gerne vil beholde i vores færdig clustering resultat. Det er vigtigt at kan finde frem til en hensigtsmæssigt antal clusters - for mange clusters kan resultatere i over-fitting, hvor vi har for mange til at fortolke eller giver mening, og for få kan betyde at vi mangler indsigter ind i strukturen eller trends i de data.</p>
+<div id="få-statistikker-for-antal-clusters-fra-1-til-9" class="section level3 hasAnchor" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Få statistikker for antal clusters fra 1 til 9<a href="clustering.html#få-statistikker-for-antal-clusters-fra-1-til-9" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>I nedenstående iterater vi over vectoren <code>1:9</code>, som vi angive i <code>kmeans</code> for at fortæl hvor mange clusters vi gerne vil beregne. For hver af de integar 1 til 9, benytter vi således <code>kmeans</code> med hjælp af funktionen <code>my_func</code> (bemærk at vores input data <code>.x</code> er antallet af clusters men de datasæt er den samme hver gang). Dernæst benytte vi <code>tidy</code>, <code>glance</code> og <code>augment</code> på vores resultaterne fra <code>kmeans</code>:</p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="clustering.html#cb451-1" aria-hidden="true" tabindex="-1"></a>my_func <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">kmeans</span>(penguins <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> <span class="fu">scale</span>(),</span>
+<span id="cb451-2"><a href="clustering.html#cb451-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">centers =</span> .x)  </span>
+<span id="cb451-3"><a href="clustering.html#cb451-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb451-4"><a href="clustering.html#cb451-4" aria-hidden="true" tabindex="-1"></a>kclusts <span class="ot">&lt;-</span> </span>
+<span id="cb451-5"><a href="clustering.html#cb451-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">k =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb451-6"><a href="clustering.html#cb451-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">kclust =</span> <span class="fu">map</span>(k, my_func),</span>
+<span id="cb451-7"><a href="clustering.html#cb451-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">tidied =</span> <span class="fu">map</span>(kclust, tidy),</span>
+<span id="cb451-8"><a href="clustering.html#cb451-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">glanced =</span> <span class="fu">map</span>(kclust, glance),</span>
+<span id="cb451-9"><a href="clustering.html#cb451-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">augmented =</span> <span class="fu">map</span>(kclust, augment, penguins)</span>
+<span id="cb451-10"><a href="clustering.html#cb451-10" aria-hidden="true" tabindex="-1"></a>        )</span></code></pre></div>
+<p>Husk at for at få frem resultaterne i de forskellige former fra <code>tidy</code>,<code>glance</code> og <code>augment</code> er vi nødt til at anvende <code>unnest</code>:</p>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="clustering.html#cb452-1" aria-hidden="true" tabindex="-1"></a>kclusts_tidy    <span class="ot">&lt;-</span> kclusts <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(tidied))</span>
+<span id="cb452-2"><a href="clustering.html#cb452-2" aria-hidden="true" tabindex="-1"></a>kclusts_augment <span class="ot">&lt;-</span> kclusts <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(augmented))</span>
+<span id="cb452-3"><a href="clustering.html#cb452-3" aria-hidden="true" tabindex="-1"></a>kclusts_glance <span class="ot">&lt;-</span> kclusts <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(glanced))</span></code></pre></div>
+</div>
+<div id="manuelt-beslutning-med-elbow-plot." class="section level3 hasAnchor" number="9.3.2">
+<h3><span class="header-section-number">9.3.2</span> Manuelt beslutning med elbow plot.<a href="clustering.html#manuelt-beslutning-med-elbow-plot." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vi bruger <code>tot.withinness</code> fra vores <code>glance</code> output. Det måler hvor meget observationerne indenfor samme cluster ligner hinanden og er den totale afstand af observationerne fra deres nærmeste centroid. Jo flere clusters, jo mindre statistikken, men vi kan se, at efter 2-3 clusters, er der ikke meget gevinst med at bruge flere clusters. Derfor vælger man enten 2-3. Der er ofte kaldes for en ‘elbow’ plot - man vælge de tal på den ‘elbow,’ hvor der ikke er meget gevinst med at have flere clusters i de data.</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="clustering.html#cb453-1" aria-hidden="true" tabindex="-1"></a>kclusts_glance <span class="sc">%&gt;%</span> </span>
+<span id="cb453-2"><a href="clustering.html#cb453-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> tot.withinss)) <span class="sc">+</span> </span>
+<span id="cb453-3"><a href="clustering.html#cb453-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb453-4"><a href="clustering.html#cb453-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb453-5"><a href="clustering.html#cb453-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-432-1.png" width="480" /></p>
+</div>
+<div id="automatistke-beslutning-med-pakken-nbclust" class="section level3 hasAnchor" number="9.3.3">
+<h3><span class="header-section-number">9.3.3</span> Automatistke beslutning med pakken <code>NbClust</code><a href="clustering.html#automatistke-beslutning-med-pakken-nbclust" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Hvis man synes at de er svært at vælge et bestemt cluster tal fra de elbow plot, kan man også prøve noget mere automatisk. For eksempel pakken NbClust lave 30 forskellige clustering algoritme af de data fra antal clusters = 2 til antal cluster = 9 og for hver af de 30 tage en beslutning om de bedste antal clusters. Man kan således se hvilket antal clusters blev valgt af de mest algoritmer.</p>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="clustering.html#cb454-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb454-2"><a href="clustering.html#cb454-2" aria-hidden="true" tabindex="-1"></a>cluster_30_indexes <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(<span class="at">data =</span> penguins <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> scale, </span>
+<span id="cb454-3"><a href="clustering.html#cb454-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, </span>
+<span id="cb454-4"><a href="clustering.html#cb454-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">min.nc =</span> <span class="dv">2</span>, </span>
+<span id="cb454-5"><a href="clustering.html#cb454-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">max.nc =</span> <span class="dv">9</span>, </span>
+<span id="cb454-6"><a href="clustering.html#cb454-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">method =</span> <span class="st">&quot;complete&quot;</span>)</span></code></pre></div>
+<p>Man kan se her, at enten 2 eller 3 er optimelt, som passer sammen med den elbow plot methode.</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="clustering.html#cb455-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(cluster_30_indexes<span class="sc">$</span>Best.nc[<span class="dv">1</span>,]) <span class="sc">%&gt;%</span></span>
+<span id="cb455-2"><a href="clustering.html#cb455-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(value))) <span class="sc">+</span> </span>
+<span id="cb455-3"><a href="clustering.html#cb455-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;count&quot;</span>,<span class="at">fill=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb455-4"><a href="clustering.html#cb455-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb455-5"><a href="clustering.html#cb455-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-434-1.png" width="384" /></p>
+</div>
+<div id="plot-de-forskellige-antal-clusters" class="section level3 hasAnchor" number="9.3.4">
+<h3><span class="header-section-number">9.3.4</span> Plot de forskellige antal clusters<a href="clustering.html#plot-de-forskellige-antal-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vi kan også visualisere hvordan de forskellige antal clusters ser ud. Her kan vi bruge vores resultater fra funktionen <code>augment</code> til hver af de 9 clusterings. Her har vi har plottet <code>flipper_length_mm</code> vs <code>bill_length_mm</code>.</p>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="clustering.html#cb456-1" aria-hidden="true" tabindex="-1"></a>kclusts_augment <span class="sc">%&gt;%</span> </span>
+<span id="cb456-2"><a href="clustering.html#cb456-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> bill_length_mm,<span class="at">colour=</span>.cluster)) <span class="sc">+</span></span>
+<span id="cb456-3"><a href="clustering.html#cb456-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape=</span><span class="fu">factor</span>(species)), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb456-4"><a href="clustering.html#cb456-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">facet_wrap</span>(<span class="sc">~</span> k) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-435-1.png" width="480" /></p>
+<p>Her introducerer jeg <code>sex</code> som en ekstra variable i de plot. Husk at variablen <code>sex</code> ikke blev brugt i k-means, men det kan være, at der er nogle aspekter af de fire variabler, som kan fortælle os nogle om kønnet af pingvingerne. For at spare plads, har jeg kun plottet antal clusters fra 2 til 5.</p>
+<div class="sourceCode" id="cb457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb457-1"><a href="clustering.html#cb457-1" aria-hidden="true" tabindex="-1"></a>kclusts_augment <span class="sc">%&gt;%</span> <span class="fu">filter</span>(k <span class="sc">%in%</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb457-2"><a href="clustering.html#cb457-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">scale</span>(flipper_length_mm), <span class="at">y =</span> <span class="fu">scale</span>(bill_length_mm),<span class="at">colour=</span>.cluster)) <span class="sc">+</span></span>
+<span id="cb457-3"><a href="clustering.html#cb457-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape=</span><span class="fu">factor</span>(species)), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb457-4"><a href="clustering.html#cb457-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">facet_wrap</span>(<span class="sc">~</span> sex<span class="sc">+</span>k,<span class="at">nrow=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-436-1.png" width="960" /></p>
+</div>
+</div>
+<div id="hierarchical-clustering" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Hierarchical clustering<a href="clustering.html#hierarchical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>K-means er en meget populær måde at lave clusters i de data på, men der er mange andre metoder til at lave clusters. Jeg nævne kort hierarchical clustering. Derfor vil jeg også navne her hierarchical clustering. Vi skifter over til <code>mtcars</code>, og ligesom i <code>kmeans</code> skal vi bruge <code>scale</code> på de numeriske kolonner i de data.</p>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="clustering.html#cb458-1" aria-hidden="true" tabindex="-1"></a>mtcars_scaled <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> scale</span></code></pre></div>
+<p>I modsætning til k-means, for at lave hierarchical clustering skal man første beregne afstanden mellem alle de observationer i de data. De gøre man med funktionen <code>dist</code> (som bruger den Euclidean distance som default):</p>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="clustering.html#cb459-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(mtcars_scaled)</span></code></pre></div>
+<p>For at lave en hierarchical clustering anvender man funktionen <code>hclust</code>. Metoden <code>complete</code> er default men man kan afprøve de andre methoder (der er ikke en fast regel over for, hvilken man skal bruge).</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="clustering.html#cb460-1" aria-hidden="true" tabindex="-1"></a>mtcars_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d, <span class="at">method =</span> <span class="st">&quot;complete&quot;</span> )</span>
+<span id="cb460-2"><a href="clustering.html#cb460-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Metoder: &quot;average&quot;, &quot;single&quot;, &quot;complete&quot;, &quot;ward.D&quot;</span></span></code></pre></div>
+<p>I følgende arbejder vi lidt med <code>mtcars_hc</code> til at få nogle clusters frem, og til at lave et plot.</p>
+<div id="vælge-ønkset-antal-clusters" class="section level3 hasAnchor" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Vælge ønkset antal clusters<a href="clustering.html#vælge-ønkset-antal-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Funktionen <code>cutree</code> anvendes til at få clusters fra de data. For eksempel, hvis man gerne vil have 4 clusters, bruger man <code>k = 4</code>. Jeg specificerer <code>order_clusters_as_data = FALSE</code> for at få de clusters i de rækkefølger, som passer til plottet (dendrogram) vi lave (man skal have ovenstående pakker installeret for at få den til at fungere).</p>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="clustering.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dendextend)</span>
+<span id="cb461-2"><a href="clustering.html#cb461-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb461-3"><a href="clustering.html#cb461-3" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">cutree</span>(mtcars_hc, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">order_clusters_as_data =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb461-4"><a href="clustering.html#cb461-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb461-5"><a href="clustering.html#cb461-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="st">&quot;cluster&quot;</span><span class="ot">=</span>clusters) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div>
+<pre><code>FALSE # A tibble: 4 × 2
+FALSE   cluster `n()`
+FALSE     &lt;int&gt; &lt;int&gt;
+FALSE 1       1     7
+FALSE 2       2     8
+FALSE 3       3    12
+FALSE 4       4     5</code></pre>
+</div>
+<div id="lav-et-pænt-plot-af-dendrogram-med-ggplot2" class="section level3 hasAnchor" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> Lav et pænt plot af dendrogram med ggplot2<a href="clustering.html#lav-et-pænt-plot-af-dendrogram-med-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Første vi anvende <code>dendro_data</code> til at udtrække de dendrogram oplysninger fra de <code>hclust</code> resultater.</p>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="clustering.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
+<span id="cb463-2"><a href="clustering.html#cb463-2" aria-hidden="true" tabindex="-1"></a>dend_data <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(mtcars_hc <span class="sc">%&gt;%</span> as.dendrogram, <span class="at">type =</span> <span class="st">&quot;rectangle&quot;</span>)</span></code></pre></div>
+<p>Vi tilføjer vores clusters som vi beregnede ovenpå (det er derfor vi sikrede rækkefølgen af de clusters):</p>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="clustering.html#cb464-1" aria-hidden="true" tabindex="-1"></a>dend_data<span class="sc">$</span>labels <span class="ot">&lt;-</span> dend_data<span class="sc">$</span>labels <span class="sc">%&gt;%</span> </span>
+<span id="cb464-2"><a href="clustering.html#cb464-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster =</span> clusters)</span></code></pre></div>
+<p>Vi benytter <code>dend_data$segments</code> og <code>dend_data$labels</code> til at lave et informativ plot af de data i <code>ggplot2</code>.</p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="clustering.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dend_data<span class="sc">$</span>segments) <span class="sc">+</span> </span>
+<span id="cb465-2"><a href="clustering.html#cb465-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span></span>
+<span id="cb465-3"><a href="clustering.html#cb465-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb465-4"><a href="clustering.html#cb465-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> dend_data<span class="sc">$</span>labels, </span>
+<span id="cb465-5"><a href="clustering.html#cb465-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(x, y, <span class="at">label =</span> label,<span class="at">col=</span><span class="fu">factor</span>(cluster)),</span>
+<span id="cb465-6"><a href="clustering.html#cb465-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb465-7"><a href="clustering.html#cb465-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb465-8"><a href="clustering.html#cb465-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dendro</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-443-1.png" width="480" /></p>
+</div>
+<div id="ekstra-afprøve-andre-metoder" class="section level3 hasAnchor" number="9.4.3">
+<h3><span class="header-section-number">9.4.3</span> Ekstra: afprøve andre metoder<a href="clustering.html#ekstra-afprøve-andre-metoder" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Her giver jeg nogle valgfri ekstra kode til at afprøve de fire metoder - “average,” “single,” “complete” og “ward.D.”</p>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="clustering.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="co"># samme ggplot kommando som ovenpå lavet til en funktion </span></span>
+<span id="cb466-2"><a href="clustering.html#cb466-2" aria-hidden="true" tabindex="-1"></a>den_plot <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">ggplot</span>(.x<span class="sc">$</span>segments) <span class="sc">+</span> </span>
+<span id="cb466-3"><a href="clustering.html#cb466-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span></span>
+<span id="cb466-4"><a href="clustering.html#cb466-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb466-5"><a href="clustering.html#cb466-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> .x<span class="sc">$</span>labels, </span>
+<span id="cb466-6"><a href="clustering.html#cb466-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(x, y, <span class="at">label =</span> label),</span>
+<span id="cb466-7"><a href="clustering.html#cb466-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb466-8"><a href="clustering.html#cb466-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">theme_dendro</span>()</span></code></pre></div>
+<p>Vi iterate over de fire metoder og lave samme process som ovenpå med map. Derefter kan man lave et plot fk. med grid.arrange:</p>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="clustering.html#cb467-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fire metoder:</span></span>
+<span id="cb467-2"><a href="clustering.html#cb467-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;average&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;complete&quot;</span>, <span class="st">&quot;ward.D&quot;</span>)</span>
+<span id="cb467-3"><a href="clustering.html#cb467-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb467-4"><a href="clustering.html#cb467-4" aria-hidden="true" tabindex="-1"></a>hc_results <span class="ot">&lt;-</span> </span>
+<span id="cb467-5"><a href="clustering.html#cb467-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">method =</span> m) <span class="sc">%&gt;%</span></span>
+<span id="cb467-6"><a href="clustering.html#cb467-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">kclust =</span> <span class="fu">map</span>(method, <span class="sc">~</span><span class="fu">hclust</span>(d, <span class="at">method =</span> .x)), </span>
+<span id="cb467-7"><a href="clustering.html#cb467-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="fu">map</span>(kclust,as.dendrogram),</span>
+<span id="cb467-8"><a href="clustering.html#cb467-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">den_dat =</span> <span class="fu">map</span>(dendrogram,<span class="sc">~</span><span class="fu">dendro_data</span>(.x,<span class="at">type=</span><span class="st">&quot;rectangle&quot;</span>)),</span>
+<span id="cb467-9"><a href="clustering.html#cb467-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot =</span> <span class="fu">map</span>(den_dat,den_plot))</span>
+<span id="cb467-10"><a href="clustering.html#cb467-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb467-11"><a href="clustering.html#cb467-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb467-12"><a href="clustering.html#cb467-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(<span class="at">grobs =</span> hc_results <span class="sc">%&gt;%</span> <span class="fu">pull</span>(plot),<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-445-1.png" width="480" /></p>
+</div>
+</div>
+<div id="problemstillinger-8" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Problemstillinger<a href="clustering.html#problemstillinger-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>0</strong>) Quiz - Clustering</p>
+<p><strong>1</strong>) <em>Funktionen kmeans</em>. I ovenstående anvendt vi <code>mtcars</code> i hierarchical clustering, men lad os se, hvordan det ser ud med <code>k-means</code>. Man kan tilpasse den ovenstående kode for det <code>penguins</code> datasæt:</p>
+<ul>
+<li><p><strong>a</strong>) Benyt <code>kmeans</code> til at finde 2 clusters i de data</p>
+<ul>
+<li>husk at vælge kun de numeriske kolonner og scale de data i forvejen</li>
+<li>gem din clustering som <code>my_clusters</code>.</li>
+<li>hvor mange observationer er der i hver af de to clusters?</li>
+</ul></li>
+<li><p><strong>b</strong>) Anvend <code>augment</code> til at forbinde de datasæt til de clusters fra <code>my_clusters</code> (husk at din clustering resultat skrives i første plads i funktionen og så de data i anden plads).</p></li>
+<li><p><strong>c</strong>) Brug din augmented datasæt til at lave et scatter plot mellem to af de numeriske variabler i de data og give dem farver efter de clusters du har beregnet.</p>
+<ul>
+<li>hvis du har forbundet det oprindeligt data (der ikke var scaled) i <code>augment</code>, husk at scale de data i plottet.</li>
+<li>prøve også to andre numeriske variabler</li>
+</ul></li>
+<li><p><strong>d</strong>) Anvend <code>tidy</code> til at finde ud af de middelværdier/centroids af hver af de 2 clusters</p>
+<ul>
+<li>tilpas min kode fra notaterne til at tilføj dem til plottet som ‘x.’</li>
+</ul></li>
+</ul>
+<p><strong>2</strong>) <em>k-means for forskellige k</em></p>
+<p>Åbn <code>LungCapData</code> fra nedenstående link</p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="clustering.html#cb468-1" aria-hidden="true" tabindex="-1"></a>LungCapData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1&quot;</span>)</span>
+<span id="cb468-2"><a href="clustering.html#cb468-2" aria-hidden="true" tabindex="-1"></a>LungCapData <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(LungCapData)</span>
+<span id="cb468-3"><a href="clustering.html#cb468-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(LungCapData) <span class="co">#se variabler navne</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 6
+##   LungCap   Age Height Smoke Gender Caesarean
+##     &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    
+## 1    6.48     6   62.1 no    male   no       
+## 2   10.1     18   74.7 yes   female no       
+## 3    9.55    16   69.7 no    female yes      
+## 4   11.1     14   71   no    male   no       
+## 5    4.8      5   56.9 no    male   no       
+## 6    6.22    11   58.7 no    female no</code></pre>
+<ul>
+<li><p><strong>a</strong>) Anvend <code>kmeans</code> på <code>LungCapData</code></p>
+<ul>
+<li>Vælg de numeriske variabler og scale</li>
+<li>Angiv <code>centers = 3</code></li>
+<li>Benytte <code>augment</code> til at forbinde resultaterne til <code>LungCapData</code> og gemme resultatet.</li>
+</ul></li>
+<li><p><strong>b</strong>) Lav et scatter plot mellem <code>LungCap</code> og <code>Age</code> og giv farver efter din beregnet clusters.</p></li>
+<li><p><strong>c</strong>) Lav et scatter plot mellem <code>LungCap</code> og <code>Height</code> og giv farver efter <code>Smoke</code>.</p>
+<ul>
+<li>Angiv en forskellige form efter <code>Smoke</code></li>
+</ul></li>
+<li><p><strong>d</strong>) Man kan også bruge <code>my_clusters_augment</code> til at beregne middelværdier med <code>group_by</code> og <code>summarise</code>.</p>
+<ul>
+<li>group efter <code>.cluster</code> og <code>smoke</code> og beregner den gennemsnitlige <code>LungCap</code> og <code>Height</code> for hver kombination.</li>
+<li>Angiv datarammen af resultaterne middelværdier indenfor plottet med <code>geom_point</code> for at få dem som “X” punkter i plottet.</li>
+</ul></li>
+</ul>
+<p>Lad os undersøge om, 3 var en gode antal clusters til at beregne i de data.</p>
+<ul>
+<li><strong>d</strong>) Tilpas koden nedenstående (baserende på den jeg præsenterede i notaterne) til at beregne 9 clusterings for det <code>LungCapData</code> datasæt.</li>
+</ul>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="clustering.html#cb470-1" aria-hidden="true" tabindex="-1"></a>my_func <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">kmeans</span>(??? <span class="sc">%&gt;%</span> <span class="fu">select</span>(???) <span class="sc">%&gt;%</span> ???,</span>
+<span id="cb470-2"><a href="clustering.html#cb470-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">centers =</span> ???)  </span>
+<span id="cb470-3"><a href="clustering.html#cb470-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb470-4"><a href="clustering.html#cb470-4" aria-hidden="true" tabindex="-1"></a>kclusts <span class="ot">&lt;-</span> </span>
+<span id="cb470-5"><a href="clustering.html#cb470-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">k =</span> ???) <span class="sc">%&gt;%</span></span>
+<span id="cb470-6"><a href="clustering.html#cb470-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">kclust =</span> <span class="fu">map</span>(k, my_func),</span>
+<span id="cb470-7"><a href="clustering.html#cb470-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">tidied =</span> ???,</span>
+<span id="cb470-8"><a href="clustering.html#cb470-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">glanced =</span> ???,</span>
+<span id="cb470-9"><a href="clustering.html#cb470-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">augmented =</span> ???</span>
+<span id="cb470-10"><a href="clustering.html#cb470-10" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb470-11"><a href="clustering.html#cb470-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb470-12"><a href="clustering.html#cb470-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb470-13"><a href="clustering.html#cb470-13" aria-hidden="true" tabindex="-1"></a>kclusts_tidy    <span class="ot">&lt;-</span> kclusts <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(???)</span>
+<span id="cb470-14"><a href="clustering.html#cb470-14" aria-hidden="true" tabindex="-1"></a>kclusts_augment <span class="ot">&lt;-</span> ??? </span>
+<span id="cb470-15"><a href="clustering.html#cb470-15" aria-hidden="true" tabindex="-1"></a>kclusts_glance <span class="ot">&lt;-</span>  ???</span></code></pre></div>
+<ul>
+<li><p><strong>e</strong>) Lav et “elbow”-plot fra din beregnet clusterings</p>
+<ul>
+<li>Anvend <code>kclusts_glance</code> og plot <code>tot.withinss</code> på y-aksen.</li>
+</ul></li>
+<li><p><strong>e</strong>) Afpøv automatiske method (tilpas min kode fra kursus notaterne)</p></li>
+<li><p><strong>f</strong>) Visualiser de forskellige antal clusters i et plot</p>
+<ul>
+<li>Tilpas min kode og benytter <code>kclusts_augment</code></li>
+<li>Husk at bruge <code>facet_wrap</code> til at adskille efter k.</li>
+</ul></li>
+</ul>
+<p><strong>3</strong>) <em>Hierarchical clustering øvelse</em></p>
+<p>Vi laver en analyse af det <code>msleep</code> datasæt. Jeg har lavet oprydningen og scaling for jer:</p>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="clustering.html#cb471-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(msleep)</span>
+<span id="cb471-2"><a href="clustering.html#cb471-2" aria-hidden="true" tabindex="-1"></a>msleep_clean <span class="ot">&lt;-</span> msleep <span class="sc">%&gt;%</span> <span class="fu">select</span>(name,<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span>
+<span id="cb471-3"><a href="clustering.html#cb471-3" aria-hidden="true" tabindex="-1"></a>msleep_scaled <span class="ot">&lt;-</span> msleep_clean <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>name) <span class="sc">%&gt;%</span> scale</span>
+<span id="cb471-4"><a href="clustering.html#cb471-4" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(msleep_scaled) <span class="ot">&lt;-</span> msleep_clean<span class="sc">$</span>name</span></code></pre></div>
+<p>Tilpas min kode fra kursusnotaterne til at lave følgende skridt:</p>
+<ul>
+<li><p><strong>a</strong>) Benyt funktioner <code>dist</code> og så <code>hclust</code> på datasættet <code>msleep_scaled</code>.</p></li>
+<li><p><strong>b</strong>) Benyt <code>cuttree</code> for at finde 5 clusters i de data, og kalde det for <code>clusters</code>. Husk at anvende <code>order_clusters_as_data = FALSE</code> så at vi har den korrekt rækkefølge for et plot (man skal indlæse pakken <code>dendextend</code>)</p></li>
+<li><p><strong>c</strong>) Benyt <code>dendro_data</code> til at udtrække de dendrogram fra resultaterne</p>
+<ul>
+<li>Tilføj <code>clusters</code> til <code>dend_data$labels</code></li>
+</ul></li>
+<li><p><strong>d</strong>) Lav et plot af de dendrogram</p>
+<ul>
+<li>Tilpas koden for <code>mtcars</code> eksempel for nuværende data</li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="visualising-trends.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="principal-component-analysis-pca.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["visualisering_22.pdf", "visualisering_22.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
