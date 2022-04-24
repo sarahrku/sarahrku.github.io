@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1.77327930 -1.39868048  1.28496391 -1.43666908 -1.34861423  0.29871852
-##  [7] -0.84009906  0.32581624 -2.31403995 -1.40173332 -0.16225598  0.09992230
-## [13]  0.80566602 -0.03205436  1.24819826  2.81087683 -0.20731606  0.20416810
-## [19]  0.93581285 -1.99680321  2.30205774 -0.06403052  0.28079686  0.08758140
-## [25]  0.09636265
+##  [1]  0.11129416 -0.48503168 -1.81521384 -0.81600654 -0.02951077 -0.62375755
+##  [7]  0.45835026  0.10406692 -0.17828285 -0.01621769 -0.12082452  0.16900236
+## [13]  1.05886047  0.25176926  0.26453119 -0.25252697 -0.46729058  0.36720546
+## [19]  1.13610529 -1.45158622 -0.55701554 -0.49988962 -0.12272356  0.96161367
+## [25]  0.62881360
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  1.7732793 {-}1.3986805  1.2849639 {-}1.4366691 {-}1.3486142  0.2987185}
+\DocumentationTok{\#\# [1]  0.11129416 {-}0.48503168 {-}1.81521384 {-}0.81600654 {-}0.02951077 {-}0.62375755}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}1.99680321  2.30205774 {-}0.06403052  0.28079686  0.08758140  0.09636265}
+\DocumentationTok{\#\# [1] {-}1.4515862 {-}0.5570155 {-}0.4998896 {-}0.1227236  0.9616137  0.6288136}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 1.773279}
+\DocumentationTok{\#\# [1] 0.1112942}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.09636265}
+\DocumentationTok{\#\# [1] 0.6288136}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.05407699  0.09636265  2.81087683 -2.31403995  1.63645384  1.27923955
+## [1] -0.07697061 -0.02951077  1.13610529 -1.81521384  0.48796450  0.69854456
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,7 +678,7 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 
 \begin{verbatim}
 ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -2.31404 -0.84010  0.09636  0.05408  0.80567  2.81088
+## -1.81521 -0.48503 -0.02951 -0.07697  0.26453  1.13611
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -1277,23 +1277,12 @@ Alle bør lave quizzen men ellers vælg øvelser efter egen erfaring:
 \hypertarget{quiz---basics}{%
 \subsection{Quiz - Basics}\label{quiz---basics}}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\tightlist
-\item
-  Se quiz i Absalon, der hedder ``Quiz - Basics''.
-\end{enumerate}
+\textbf{1)} Se quiz i Absalon, der hedder ``Quiz - Basics''.
 
 \hypertarget{grundluxe6ggende-r}{%
 \subsection{Grundlæggende R}\label{grundluxe6ggende-r}}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{1}
-\tightlist
-\item
-  (\textbf{helt baserende viden}) Åbn en ny fil i Rstudio ved at trykke på ``File'' \textgreater{} ``New File'' \textgreater{} ``R script''. Køre følgende kode en linje ad gangen og tjek, du kan forstå outputtet.
-\end{enumerate}
+\textbf{2)} (\textbf{helt baserende viden}) Åbn en ny fil i Rstudio ved at trykke på ``File'' \textgreater{} ``New File'' \textgreater{} ``R script''. Køre følgende kode en linje ad gangen og tjek, du kan forstå outputtet.
 
 Husk at den nemmeste måde at køre kode er ved at trykke CMD+ENTER (Mac) eller WIN-KEY+ENTER (Windows).
 
@@ -1316,21 +1305,9 @@ Husk at den nemmeste måde at køre kode er ved at trykke CMD+ENTER (Mac) eller 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{2}
-\tightlist
-\item
-  (\textbf{helt baserende viden}) Køre følgende kode til at åbne nogle af de indbygget datasæt, som vi bruger i kurset.
-\end{enumerate}
-
-\begin{itemize}
-\tightlist
-\item
-  Prøve \texttt{head()}, \texttt{nrow()}, \texttt{summary()} osv.
-\item
-  Prøve også fk. \texttt{?cars} for at se en beskrivelse.
-\end{itemize}
+\textbf{3)} (\textbf{helt baserende viden}) Køre følgende kode til at åbne nogle af de indbygget datasæt, som vi bruger i kurset.
+* Prøve \texttt{head()}, \texttt{nrow()}, \texttt{summary()} osv.
+* Prøve også fk. \texttt{?cars} for at se en beskrivelse.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1345,13 +1322,7 @@ Husk at den nemmeste måde at køre kode er ved at trykke CMD+ENTER (Mac) eller 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{3}
-\tightlist
-\item
-  (\textbf{baserende plots}) Jeg giver nogle muligheder for datasættet ``iris''. Afprøve funktionerne for nogle af de andre ovenstående indbygget datasæt, som du indlæst.
-\end{enumerate}
+\textbf{4)} (\textbf{baserende plots}) Jeg giver nogle muligheder for datasættet ``iris''. Afprøve funktionerne for nogle af de andre ovenstående indbygget datasæt, som du indlæst.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1363,13 +1334,7 @@ Husk at den nemmeste måde at køre kode er ved at trykke CMD+ENTER (Mac) eller 
 
 Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne osv. Prøve \texttt{?plot} for at se nogle muligheder, og tilføje \texttt{ylab}, \texttt{xlab}, \texttt{main} (titel) i én af plotterne. Leg også med \texttt{col} (farver). Bemærk dog, at vi kommer til at ændre måden at lave plotter på når vi starter \texttt{ggplot2}.
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{4}
-\tightlist
-\item
-  (\textbf{dataframes}) Brug datasættet \texttt{cars} (\texttt{data(cars)}) til at:
-\end{enumerate}
+\textbf{5)} (\textbf{dataframes}) Brug datasættet \texttt{cars} (\texttt{data(cars)}) til at:
 
 \begin{itemize}
 \tightlist
@@ -1395,13 +1360,7 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
   Brug \texttt{barplot} til at lave et plot af den gennemsnitlige \texttt{dist} for hurtige og ikke-hurtige biler.
 \end{itemize}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{4}
-\tightlist
-\item
-  (\textbf{dataframes}) Lav en ny dataframe (funktionen \texttt{data.frame()}) med tre kolonner som hedder ``navn'', ``alder'' og ``yndlings\_farve'' (find bare selv på værdierne). Sørge for, at den har 4 rækker.
-\end{enumerate}
+\textbf{6)} (\textbf{dataframes}) Lav en ny dataframe (funktionen \texttt{data.frame()}) med tre kolonner som hedder ``navn'', ``alder'' og ``yndlings\_farve'' (find bare selv på værdierne). Sørge for, at den har 4 rækker.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1411,13 +1370,7 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{5}
-\tightlist
-\item
-  (\textbf{dataframes}) Tilføj en ny variabel \texttt{random} til ovenstående dataframe, hvor værdierne kommer fra en normal fordeling med et gennemsnit på 5 og sd på 1 (bruge funktionen \texttt{rnorm}).
-\end{enumerate}
+\textbf{7)} (\textbf{dataframes}) Tilføj en ny variabel \texttt{random} til ovenstående dataframe, hvor værdierne kommer fra en normal fordeling med et gennemsnit på 5 og sd på 1 (bruge funktionen \texttt{rnorm}).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1425,13 +1378,7 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
 \end{Highlighting}
 \end{Shaded}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{6}
-\tightlist
-\item
-  (\textbf{delmængder af dataframes}) Åbn datasættet ``ToothGrowth'' med følgende kode:
-\end{enumerate}
+\textbf{8)} (\textbf{delmængder af dataframes}) Åbn datasættet ``ToothGrowth'' med følgende kode:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1467,7 +1414,7 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
 \hypertarget{kort-analyse-med-reaktionstider}{%
 \subsection{Kort analyse med reaktionstider}\label{kort-analyse-med-reaktionstider}}
 
-\textbf{8)} (\textbf{indlæse data}) Åbn en fil, der sidder i Absalon og hedder ``reactions.txt'' ved at bruge funktionen \texttt{read.table()} (kalde det for \texttt{data}). Husk at tjekke, om selve filen har variabelnavne og bruge således \texttt{header=T} hvis nødvendigt.
+\textbf{9)} (\textbf{indlæse data}) Åbn en fil, der sidder i Absalon og hedder ``reactions.txt'' ved at bruge funktionen \texttt{read.table()} (kalde det for \texttt{data}). Husk at tjekke, om selve filen har variabelnavne og bruge således \texttt{header=T} hvis nødvendigt.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1475,7 +1422,7 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{9)} (\textbf{factor variabler}) Variablerne \texttt{subject} og \texttt{time} indlæses som henholdvis data type `int' (heltal) og ``chr'' (character) men de skal hellere være `factor' variabler. Lav dem om til facktor variabler.
+\textbf{10)} (\textbf{factor variabler}) Variablerne \texttt{subject} og \texttt{time} indlæses som henholdvis data type `int' (heltal) og ``chr'' (character) men de skal hellere være `factor' variabler. Lav dem om til facktor variabler.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1492,7 +1439,7 @@ Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne 
   Hvor mange niveauer er der i hver af de to variabler?
 \end{itemize}
 
-\textbf{10)} (\textbf{delmængde af dataframe})
+\textbf{11)} (\textbf{delmængde af dataframe})
 
 Lav to delmængder af ovenstående datasæt -
 
@@ -1529,7 +1476,7 @@ Lav to delmængder af ovenstående datasæt -
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{11)} (\textbf{mean og tapply}) Benyt funktionen \texttt{mean} til at beregne den gennemsnitlige reaktionstid (variablen \texttt{RT}) til ``before'' og ``after'' hver for sig (brug ovenstående delmængder).
+\textbf{12)} (\textbf{mean og tapply}) Benyt funktionen \texttt{mean} til at beregne den gennemsnitlige reaktionstid (variablen \texttt{RT}) til ``before'' og ``after'' hver for sig (brug ovenstående delmængder).
 
 \begin{itemize}
 \tightlist
@@ -1549,7 +1496,7 @@ Lav to delmængder af ovenstående datasæt -
   Er reaktionstiderne blevet hurtigere eller langsommere i gennemsnit?
 \end{itemize}
 
-\textbf{12)} (\textbf{beregn forskellen og mean})
+\textbf{13)} (\textbf{beregn forskellen og mean})
 
 Bemærk, at datasættet er `paired' - målingerne er lavet på de præcis samme personer både ``before'' og ``after''.
 
@@ -1574,7 +1521,7 @@ Bemærk, at datasættet er `paired' - målingerne er lavet på de præcis samme 
   Tjek tegnet stemmer overens med din konklusion fra \textbf{11)} - hvis den er positiv, så betyder det, at reaktionstiderne er blevet langsommere.
 \end{itemize}
 
-\textbf{13)} (\textbf{lav t-test i R}) Lav en t-test (funktionen \texttt{t.test}) for at teste hypotesen at den gennemsnitslige forskel i reaktionstiderne mellem ``before'' og ``after'' er anderledes end 0.
+\textbf{14)} (\textbf{lav t-test i R}) Lav en t-test (funktionen \texttt{t.test}) for at teste hypotesen at den gennemsnitslige forskel i reaktionstiderne mellem ``before'' og ``after'' er anderledes end 0.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1594,12 +1541,12 @@ Find følgende i outputtet fra R:
   Hvad er alternativhypotesen?
 \end{itemize}
 
-\textbf{14)} Skriv en kort sætning med din konklusion.
+\textbf{15)} Skriv en kort sætning med din konklusion.
 
 \hypertarget{ekstra-uxf8velser-med-statistik-tests}{%
 \subsection{Ekstra øvelser med statistik tests}\label{ekstra-uxf8velser-med-statistik-tests}}
 
-\textbf{15)} (\textbf{Chi-sq}) Kør følgende kode til at få en tabel (selve koden er ikke vigtigt):
+\textbf{16)} (\textbf{Chi-sq}) Kør følgende kode til at få en tabel (selve koden er ikke vigtigt):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1659,7 +1606,7 @@ Tabellen omhandler personer ombord skibet `Titanic' (der sank den 15. april 1912
 
 Vi kommer til at arbejde meget mere med datasættet \texttt{Titanic} i emnet Tidyverse - dag 1!
 
-\textbf{16)} (\textbf{Korrelation analyse}) Åbn datasættet \texttt{trees} og lav et scatter plot med variablen \texttt{Girth} på x-aksen og variablen \texttt{Volume} på y-aksen.
+\textbf{17)} (\textbf{Korrelation analyse}) Åbn datasættet \texttt{trees} og lav et scatter plot med variablen \texttt{Girth} på x-aksen og variablen \texttt{Volume} på y-aksen.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1688,7 +1635,7 @@ Vi kommer til at arbejde meget mere med datasættet \texttt{Titanic} i emnet Tid
   Hvad er p-værdien? Er den signifikant?
 \end{itemize}
 
-\textbf{17)} (\textbf{ANOVA}) OBS: hvis du føler dig utryg med funktionen \texttt{lm()} - der kommer en video om det i morgen (i forbindelse med emnet Rmarkdown).
+\textbf{18)} (\textbf{ANOVA}) OBS: hvis du føler dig utryg med funktionen \texttt{lm()} - der kommer en video om det i morgen (i forbindelse med emnet Rmarkdown).
 
 Kør følgende kode til at lave variansanalyse, der tester hulhypotesen hvor den gennemsnitlige værdi af variablen \texttt{Sepal.Width} er ens for hver af de tre arter (variablen \texttt{Species}) fra datasættet \texttt{iris}:
 
@@ -1735,7 +1682,7 @@ Kig på outputtet:
 
 Brug funktionen \texttt{tapply} for at finde ud af, hvad er den middelværdi \texttt{Sepal.Width} til hver af de tre arter.
 
-\textbf{18)} (\textbf{ANOVA}) Lav en lignende analyse på datasættet \texttt{chickwts} for at svare på spørgsmålet:
+\textbf{19)} (\textbf{ANOVA}) Lav en lignende analyse på datasættet \texttt{chickwts} for at svare på spørgsmålet:
 
 \begin{itemize}
 \tightlist
@@ -1749,15 +1696,9 @@ Brug funktionen \texttt{tapply} for at finde ud af, hvad er den middelværdi \te
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Valgfri - vi gennemgår også lineær regression i morgen}
+\textbf{Valgfri - vi gennemgår også lineær regression i morgen og du kan altid komme tilbage senere hvis du har bruge for det}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{17}
-\tightlist
-\item
-  (\textbf{Lineær regression})
-\end{enumerate}
+\textbf{20)} (\textbf{Lineær regression})
 
 \begin{itemize}
 \tightlist
@@ -1783,13 +1724,7 @@ Brug \texttt{summary} på din model for at finde følgende værdier:
   Hvad er ligningen på den bedste rette linje (husk formen y = ax + b)?
 \end{itemize}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi})}
-\setcounter{enumi}{17}
-\tightlist
-\item
-  (\textbf{Kort intro til multiple lineær regression}) Tag ovenstående model og tilføj variablen \texttt{Height} som en ekstra prediktær (uafhængig) variabel i modellen med en ``+'' tegn:
-\end{enumerate}
+\textbf{21)} (\textbf{Kort intro til multiple lineær regression}) Tag ovenstående model og tilføj variablen \texttt{Height} som en ekstra prediktær (uafhængig) variabel i modellen med en ``+'' tegn:
 
 \begin{Shaded}
 \begin{Highlighting}[]
