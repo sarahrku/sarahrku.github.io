@@ -1,4 +1,4 @@
-basics
+baser
 inledning-til-kapitel
 rstudio
 de-forskellige-vinduer-i-rstudio
@@ -33,4 +33,4 @@ problemstillinger
 quiz---basics
 grundlæggende-r
 kort-analyse-med-reaktionstider
-øvelser-med-statistik-tests
+ekstra-øvelser-med-statistik-tests
