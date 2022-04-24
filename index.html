@@ -522,20 +522,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Man kan nemt lave sin egne ‘fake’ data ved at simulere det fra en fordeling, der vil typiske være den normale fordeling, idet den normale fordeling opstår mest hyppigt i den virkelige verden (husk den klassiske klokke-form). I R kan man bruge funktionen <code>rnorm</code> til at simulere data - først angiver man, hvor mange observationer man vil have, og dernæst den mean og standard deviation (sd), som er de to nødvendige parametre for at beskrive en normal fordeling</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>,<span class="at">mean=</span><span class="dv">0</span>,<span class="at">sd=</span><span class="dv">1</span>) <span class="co">#standard normal distribution</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>x <span class="co">#så har vi 25 værdier fra en normal distribution med mean=0 og standard deviation=1.</span></span></code></pre></div>
-<pre><code>##  [1]  0.1665299 -1.7793132 -0.9094833  0.4780607 -0.2928280  0.2116737
-##  [7] -0.2816619  1.3159252 -1.6248817 -0.8266835 -0.6839849 -2.2885224
-## [13] -0.7814463 -2.2549076 -0.4546275 -0.1704199 -0.3845381  0.1357116
-## [19] -0.2969356  0.5482132  1.6412422  0.8404493  2.9967727  0.4599418
-## [25]  0.3763356</code></pre>
+<pre><code>##  [1]  0.4846020  1.0217402 -1.6123750 -0.6206528  0.5574158  1.4012263
+##  [7] -1.0947561 -0.2010323  1.9242212 -2.1924029  0.6255781  0.4409352
+## [13]  0.3002300 -0.4995283 -0.6537322  1.0215559  0.5442152 -0.1400952
+## [19] -0.3983962  0.1983800 -1.2399333  1.5820820  1.3667596  0.6595759
+## [25] -2.6156399</code></pre>
 <p>I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x) <span class="co">#første 6</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.1665299 -1.7793132 -0.9094833  0.4780607 -0.2928280  0.2116737</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.4846020  1.0217402 -1.6123750 -0.6206528  0.5574158  1.4012263</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(x) <span class="co">#sidste 6</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.5482132 1.6412422 0.8404493 2.9967727 0.4599418 0.3763356</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.1983800 -1.2399333  1.5820820  1.3667596  0.6595759 -2.6156399</span></span>
 <span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="co">#første værdi</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.1665299</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.484602</span></span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">length</span>(x)] <span class="co">#sidste data point</span></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.3763356</span></span></code></pre></div>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -2.61564</span></span></code></pre></div>
 <p>Bemærk, at til forskellen af Python og mange andre programmering sprog, R bruger 1-baserende indicer - det betyder, at den første værdi er <code>x[1]</code> og <strong>ikke</strong> <code>x[0]</code> som i Python.</p>
 </div>
 <div id="measures-of-central-tendency" class="section level3 hasAnchor" number="1.8.2">
@@ -582,11 +582,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>my_var <span class="ot">&lt;-</span> <span class="fu">var</span>(x)</span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>my_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(x)</span>
 <span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(my_mean,my_median,my_max,my_min,my_var,my_sd) <span class="co">#print results</span></span></code></pre></div>
-<pre><code>## [1] -0.1543751 -0.2816619  2.9967727 -2.2885224  1.4101585  1.1875009</code></pre>
+<pre><code>## [1]  0.03439893  0.30023001  1.92422124 -2.61563993  1.34799155  1.16103038</code></pre>
 <p>Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -2.2885 -0.7814 -0.2817 -0.1544  0.4599  2.9968</code></pre>
+## -2.6156 -0.6207  0.3002  0.0344  0.6596  1.9242</code></pre>
 </div>
 <div id="tapply" class="section level3 hasAnchor" number="1.8.3">
 <h3><span class="header-section-number">1.8.3</span> <code>tapply()</code><a href="#tapply" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -960,11 +960,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="problemstillinger" class="section level2 hasAnchor" number="1.10">
 <h2><span class="header-section-number">1.10</span> Problemstillinger<a href="#problemstillinger" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Alle bør lave quizzen men ellers vælg øvelser efter egen erfaring:</p>
+<p>Lav quizzen og ellers vælg øvelser efter egen erfaring:</p>
 <ul>
-<li>2-7 er meget grundlæggende og de fleste kan springer over hvis nogenlunde tryg med base-R</li>
-<li>8-14 anbefaler jeg til alle som en god måde at tjekke viden på</li>
-<li>15-18 øver hvordan man laver variansanalyse/regression i R - regression kommer jeg ind på igen senere men det hjælper hvis du er tryg med brugen af funktionen <code>lm</code> til at lave modeller i ANOVA/simpel lineær regression.</li>
+<li>2-8 er meget grundlæggende og de fleste kan springer over hvis nogenlunde tryg med base-R</li>
+<li>9-15 anbefaler jeg til alle som en god måde at tjekke viden på</li>
+<li>16-20 øver hvordan man andre statistiske teste i R - regression kommer jeg ind på igen senere men det hjælper hvis du er tryg med brugen af funktionen <code>lm</code> til at lave modeller i ANOVA/simpel lineær regression (se også video og problemstillingerne i morgen).</li>
 </ul>
 <div id="quiz---basics" class="section level3 hasAnchor" number="1.10.1">
 <h3><span class="header-section-number">1.10.1</span> Quiz - Basics<a href="#quiz---basics" class="anchor-section" aria-label="Anchor link to header"></a></h3>

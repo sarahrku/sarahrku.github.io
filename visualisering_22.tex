@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.11129416 -0.48503168 -1.81521384 -0.81600654 -0.02951077 -0.62375755
-##  [7]  0.45835026  0.10406692 -0.17828285 -0.01621769 -0.12082452  0.16900236
-## [13]  1.05886047  0.25176926  0.26453119 -0.25252697 -0.46729058  0.36720546
-## [19]  1.13610529 -1.45158622 -0.55701554 -0.49988962 -0.12272356  0.96161367
-## [25]  0.62881360
+##  [1] -0.24965039  1.42406688 -2.01847421  1.27294000 -0.84691327  0.46995160
+##  [7]  1.39885227  0.14887032  1.07852906 -0.13188521  0.61280603  0.31411323
+## [13]  1.02730185 -1.13723867  0.88570160  0.01821858 -1.66154037  0.74162170
+## [19]  1.42090958  0.34433131 -0.57352984  0.79540009  0.56542679 -1.02489265
+## [25]  0.73423245
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.11129416 {-}0.48503168 {-}1.81521384 {-}0.81600654 {-}0.02951077 {-}0.62375755}
+\DocumentationTok{\#\# [1] {-}0.2496504  1.4240669 {-}2.0184742  1.2729400 {-}0.8469133  0.4699516}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}1.4515862 {-}0.5570155 {-}0.4998896 {-}0.1227236  0.9616137  0.6288136}
+\DocumentationTok{\#\# [1]  0.3443313 {-}0.5735298  0.7954001  0.5654268 {-}1.0248926  0.7342324}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.1112942}
+\DocumentationTok{\#\# [1] {-}0.2496504}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.6288136}
+\DocumentationTok{\#\# [1] 0.7342324}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.07697061 -0.02951077  1.13610529 -1.81521384  0.48796450  0.69854456
+## [1]  0.2243659  0.4699516  1.4240669 -2.0184742  0.9396176  0.9693387
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.81521 -0.48503 -0.02951 -0.07697  0.26453  1.13611
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -2.0185 -0.2497  0.4700  0.2244  0.8857  1.4241
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -1262,16 +1262,16 @@ Så kan man se, at \texttt{cyl} er signifikant.
 \hypertarget{problemstillinger}{%
 \section{Problemstillinger}\label{problemstillinger}}
 
-Alle bør lave quizzen men ellers vælg øvelser efter egen erfaring:
+Lav quizzen og ellers vælg øvelser efter egen erfaring:
 
 \begin{itemize}
 \tightlist
 \item
-  2-7 er meget grundlæggende og de fleste kan springer over hvis nogenlunde tryg med base-R
+  2-8 er meget grundlæggende og de fleste kan springer over hvis nogenlunde tryg med base-R
 \item
-  8-14 anbefaler jeg til alle som en god måde at tjekke viden på
+  9-15 anbefaler jeg til alle som en god måde at tjekke viden på
 \item
-  15-18 øver hvordan man laver variansanalyse/regression i R - regression kommer jeg ind på igen senere men det hjælper hvis du er tryg med brugen af funktionen \texttt{lm} til at lave modeller i ANOVA/simpel lineær regression.
+  16-20 øver hvordan man andre statistiske teste i R - regression kommer jeg ind på igen senere men det hjælper hvis du er tryg med brugen af funktionen \texttt{lm} til at lave modeller i ANOVA/simpel lineær regression (se også video og problemstillingerne i morgen).
 \end{itemize}
 
 \hypertarget{quiz---basics}{%
