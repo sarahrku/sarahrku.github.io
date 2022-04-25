@@ -117,7 +117,7 @@
 
 \title{Visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-04-24}
+\date{Last updated: 2022-04-25}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.24965039  1.42406688 -2.01847421  1.27294000 -0.84691327  0.46995160
-##  [7]  1.39885227  0.14887032  1.07852906 -0.13188521  0.61280603  0.31411323
-## [13]  1.02730185 -1.13723867  0.88570160  0.01821858 -1.66154037  0.74162170
-## [19]  1.42090958  0.34433131 -0.57352984  0.79540009  0.56542679 -1.02489265
-## [25]  0.73423245
+##  [1] -0.565732226  1.102949928 -1.267805939 -0.106620779  1.345322294
+##  [6]  0.067503374 -0.731661510 -0.038525474  0.207150150  1.287591016
+## [11]  1.240898080 -1.497734033 -0.170084840 -1.033213669 -0.493380875
+## [16] -0.370234503 -1.245347708 -0.912537755  0.045824782  0.272771545
+## [21] -1.159878046 -1.653881236  0.201343361  0.004231229 -1.923123793
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,14 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.2496504  1.4240669 {-}2.0184742  1.2729400 {-}0.8469133  0.4699516}
+\DocumentationTok{\#\# [1] {-}0.56573223  1.10294993 {-}1.26780594 {-}0.10662078  1.34532229  0.06750337}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.3443313 {-}0.5735298  0.7954001  0.5654268 {-}1.0248926  0.7342324}
+\DocumentationTok{\#\# [1]  0.272771545 {-}1.159878046 {-}1.653881236  0.201343361  0.004231229}
+\DocumentationTok{\#\# [6] {-}1.923123793}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.2496504}
+\DocumentationTok{\#\# [1] {-}0.5657322}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.7342324}
+\DocumentationTok{\#\# [1] {-}1.923124}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +666,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.2243659  0.4699516  1.4240669 -2.0184742  0.9396176  0.9693387
+## [1] -0.2957671 -0.1700848  1.3453223 -1.9231238  0.8566699  0.9255646
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,7 +679,7 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -2.0185 -0.2497  0.4700  0.2244  0.8857  1.4241
+## -1.9231 -1.0332 -0.1701 -0.2958  0.2013  1.3453
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -1756,6 +1757,478 @@ Brug funktionen \texttt{anova} til at sammenligne modellen uden \texttt{Height} 
 \end{Shaded}
 
 Bemærk, at i dette tilfælde er p-værdien fra ANOVA samme p-værdi fra \texttt{summary(mylm\_height)}.
+
+\hypertarget{rmarkdown}{%
+\chapter{Introduktion til R Markdown}\label{rmarkdown}}
+
+I dag begynder vi at arbejde med R Markdown. Selve emnet er relativt kort og er designet til, at du kan komme i gang med at bruge R Markdown i praksis, men notaterne referere også til nogle ekstra muligheder så du kan indrette dit dokument efter eget ønske. Der er to videoer - én er en `quick-start guide' for at komme i gang, og den anden viser en simpel lineær regression i R Markdown - har du ikke brug for lidt genopfriskning, kan man også se mere om funktionaliten i R Markdown.
+
+Efter quizzerne og problemstillinger er der en worksheet, hvor du kan øve dig videre med de typer opgaver vi kommer til at se i workshopperne. Fra næste gang (fredag) skifter vi emnet til visualiseringer i \textbf{ggplot2}, og vi arbejder naturligvis i R Markdown fremadrettet.
+
+\hypertarget{hvad-er-r-markdown}{%
+\section{Hvad er R Markdown?}\label{hvad-er-r-markdown}}
+
+R Markdown er både en nem og fleksibel måde at arbejde med R til projekter på. Her kan du kombinere din R-kode, output og tekst i samme dokument, og derudover fremviser et pænt HTML dokument fra det, som potentielt kan deles med andre. Jeg anbefaler at du bruger R Markdown til alle opgaverne i kurset og \textbf{ved eksamen forventer jeg at du afleverer en HTML dokument} til mig med din ``knittede'' kode fra din analyse.
+
+\hypertarget{installere-r-markdown}{%
+\section{Installere R Markdown}\label{installere-r-markdown}}
+
+R Markdown er, ligesom R, gratis og `open source'. Den fungerer indenfor RStudio and kan installeres ved at bruge den følgende kommando:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"rmarkdown"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{videodemonstrationer}{%
+\section{Videodemonstrationer}\label{videodemonstrationer}}
+
+Jeg har lavet to videoer som kan ses her:
+
+Video 1:
+
+Jeg viser
+
+\begin{itemize}
+\tightlist
+\item
+  hvordan man laver et nyt dokument i R Markdown
+\item
+  hvordan man skriver tekst ind i dokumentet
+\item
+  hvordan man bruger ``knit'' til at lave et HTML-dokument
+\item
+  hvordan man opretter og kører kode chunks
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://vimeo.com/702416505}
+
+Video 2:
+
+Jeg viser en kort lineær regression analyse:
+
+\begin{itemize}
+\tightlist
+\item
+  Indlæse datasæt og lave plot af datasættet
+\item
+  Lynhurtig gennemgåelse af ligningen for rette linje
+\item
+  Hvordan man anvender funktionen \texttt{lm()} til at fitte en lineær model
+\item
+  Fortolkelse af resultaterne
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://vimeo.com/701240044}
+
+\hypertarget{oprette-et-nyt-dokument-i-r-markdown}{%
+\section{Oprette et nyt dokument i R Markdown}\label{oprette-et-nyt-dokument-i-r-markdown}}
+
+Man åbner et nyt rmarkdown dokument ved at trykke ``New'' \textgreater{} ``New File'' \textgreater{} ``New R Markdown\ldots{}''. Man kan også trykke på ``+'' knappen øverst til venstre hjørne.
+
+\begin{figure}
+\centering
+\includegraphics{plots/open_new_rmarkdown.png}
+\caption{Hvordan man åbner et nyt R Markdown dokument}
+\end{figure}
+
+Dernæst angiver man en titel (det kan ændres senere hvis der er bruge for det) og bekræfter, at outputtet kommer i HTML form. I kurset arbejdes der kun med HTML dokumenter, men man har også andre muligheder, som du er velkommen til at afprøve (PDF/Word/Shiny osv\ldots).
+
+\begin{figure}
+\centering
+\includegraphics{plots/create_new_rmarkdown.png}
+\caption{Hvordan man åbne et nyt R Markdown dokument}
+\end{figure}
+
+\hypertarget{yaml}{%
+\subsection{YAML}\label{yaml}}
+
+Den første sektion af dokument skrives i hvad der kaldes for `YAML'. (Dette står for `YAML Ain't Markup Language').
+
+\begin{figure}
+\centering
+\includegraphics{plots/YAML.png}
+\caption{Hvordan man åbner et nyt R Markdown dokument}
+\end{figure}
+
+Det indeholder oplysninger om dokumentet, og her kan man specificere forskellige muligheder - fk. titel, forfatter, output-type (fks. HTML eller PDF), dato, osv. I de fleste tilfælde nøjes vi med at bruge standard indstillinger, men hvis man gerne vil lære mere om de forskellige muligheder med YAML, kan man læse her:
+
+\url{https://bookdown.org/yihui/rmarkdown/html-document.html}
+
+eller se en liste af muligheder her på dette cheatsheet:
+
+\url{https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf}
+
+\hypertarget{globale-options}{%
+\subsection{Globale options}\label{globale-options}}
+
+Der er også tekst som ser ud som følgende:
+
+\begin{figure}
+\centering
+\includegraphics{plots/global_options.png}
+\caption{Hvordan man åbner et nyt R Markdown dokument}
+\end{figure}
+
+Med funktionen \texttt{opts\_chunk\$set()} kan man specificere de globale indstillinger, som styrer hvordan det færdige dokument ser ud. I dette tilfælde er de fleste parametre angivet som `default' (da de ikke er nævnt eksplicit), og \texttt{echo} er den eneste der har noget angivet. Hvis \texttt{echo} er \texttt{TRUE}, så betyder det, at når man ``knitter'' sin kode (processen, der få et HTML dokument frem, se nedenfor), så kan man også se koden, der blev kørt, samt dens output, i det færdige HTML dokument, der kommmer frem.
+
+\hypertarget{skrive-baseret-tekst}{%
+\section{Skrive baseret tekst}\label{skrive-baseret-tekst}}
+
+Her er nogle brugbare muligheder for at skrive tekst i opgaverne eller rapporter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\SpecialCharTok{*}\NormalTok{italic}\SpecialCharTok{*}   \ErrorTok{**}\NormalTok{bold}\SpecialCharTok{**}
+
+\NormalTok{\_italic\_   \_\_bold\_\_}
+\end{Highlighting}
+\end{Shaded}
+
+\emph{italic} \textbf{bold}
+
+\emph{italic} \textbf{bold}
+
+\hypertarget{headers}{%
+\subsection{Headers}\label{headers}}
+
+Man kan også lave sektioner:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Header 1}
+
+\DocumentationTok{\#\# Header 2}
+
+\DocumentationTok{\#\#\# Header 3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{header_eksempel.png}
+\caption{Caption for the picture.}
+\end{figure}
+
+\hypertarget{liste}{%
+\subsection{liste}\label{liste}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\SpecialCharTok{*}\NormalTok{ Item }\DecValTok{1}
+\SpecialCharTok{*}\NormalTok{ Item }\DecValTok{2}
+    \SpecialCharTok{+}\NormalTok{ Item 2a}
+    \SpecialCharTok{+}\NormalTok{ Item 2b}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Item 1
+\item
+  Item 2
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Item 2a
+  \item
+    Item 2b
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{knitte-kode}{%
+\section{Knitte kode}\label{knitte-kode}}
+
+Man bruger \emph{Knit} for at gengive filen i HTML form. Når man trykker på knappen \emph{Knit}, bliver samtlige koder i filen kørt og et HTML dokument fremvises. Bemærk, at \textbf{koderne bliver kørt på ny hver gang man knitter}, uden hensyn til hvad du har i din nuværende workspace i RStudio. Det betyder, at hvis du eksempelvis har pakken \texttt{tidyverse} indlæst på din computer men har glemt at skrive \texttt{library(tidyverse)} eksplicit på toppen af dit dokument, så får du en fejlmeddelelse hvis du bruger tidyverse-baserede funktioner nogle steder.
+
+\hypertarget{kode-chunks}{%
+\section{Kode chunks}\label{kode-chunks}}
+
+Man skriver selve R kode indenfor hvad der kaldes for ``chunks''. Man kan oprette en ny chunk på flere måder - enten ved at trykke på den \emph{Insert a new code chunk} knap ovenpå, eller ved at trykke \emph{Cmd+Option+I} på tastaturet (hvis man bruger MAC) eller \emph{Ctrl+Alt+I} (hvis man bruger Windows). Det er værd at huske den keyboard-shortcut - det sparer meget tid efter egen erfaring!
+
+Her er et eksempel af en chunk:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# This is a chunk, let\textquotesingle{}s write som R code}
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{x }\SpecialCharTok{+} \DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+For at køre en chunk, trykker man på den grønne pile øverste i højre hjørne på selve chunk (der hedder \emph{Run Current Chunk} når du holder musen over den). Resultatet kan ses lige nedenunder, som i ovenstående.
+
+Bemærk, at når du arbejde med dit R Markdown dokument er det generelt hurtigere at bruge den grønne pile / \emph{Run Current Chunk} i stedet for at knitte hele dokumentet hver gang man vil køre kode. Det er fordi her kører man kun den enkel chunk i stedet for hele dokumentet på ny (herunder indlæsning af pakker og eventuelle store filer), som er tilfældet med \emph{Knit}.
+
+\hypertarget{et-godt-ruxe5d-nuxe5r-man-arbejder-med-chunks}{%
+\subsection{Et godt råd når man arbejder med chunks}\label{et-godt-ruxe5d-nuxe5r-man-arbejder-med-chunks}}
+
+Til længere opgaver er det god praksis at sikre jævnligt, at man kan få et HTML dokument frem ved at knitte, selvom du kører din chunks lokalt mens du udvikler din kode - det vil sige, at du ikke få en alvorlig fejlmeddelelse, der forhindre din koder at knitte. \textbf{Det er dit ansvar at sikre, at din kode fungerer som helhed og du kan dermed producere et HTML dokument med din løsninger.}
+
+\hypertarget{chunk-indstillinger}{%
+\subsection{Chunk indstillinger}\label{chunk-indstillinger}}
+
+I R Markdown er der mange muligheder for at styre hver eneste chunk i dit dokument - hvordan skal R håndtere koden med hensyn til evaluering og præsentering (især med hensyn til tabeller og plotter) af en bestemt chunk i dit dokument? Det kommer meget an på, hvem du gerne vil viser dit dokument til. For eksempel, i nuværende kursusnotater vil jeg gerne have generelt, at du ser alle min kode (en global indstilling), men nogle gange vil jeg foretrækker noget andet - en chunk som viser noget jeg ikke vil have kørt, eller ændre på størrelsen af et plotte i en bestemt chunk. For eksempel, en chunk med indstillingen \texttt{eval=FALSE} ser sådan ud (fjerne \# symbol)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r,eval=FALSE\}}
+\CommentTok{\#}
+\CommentTok{\#\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+Her er nogle muligheder (sektionen ``Embed code with knitr syntax''):
+
+\url{https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf}
+
+Her er seks populær muligheder som jeg har kopiret fra nettet:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{include\ =\ FALSE}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    prevents code and results from appearing in the finished file. R Markdown still runs the code in the chunk, and the results can be used by other chunks.
+  \end{itemize}
+\item
+  \texttt{echo\ =\ FALSE}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    prevents code, but not the results from appearing in the finished file. This is a useful way to embed figures.
+  \end{itemize}
+\item
+  \texttt{message\ =\ FALSE}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    prevents messages that are generated by code from appearing in the finished file.
+  \end{itemize}
+\item
+  \texttt{warning\ =\ FALSE}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    prevents warnings that are generated by code from appearing in the finished.
+  \end{itemize}
+\item
+  \texttt{fig.cap\ =\ "..."}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    adds a caption to graphical results.
+  \end{itemize}
+\item
+  \texttt{eval\ =\ FALSE}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    does not evaluate the code
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{r-beregninger-indenfor-teksten-i-dokument-inline-code}{%
+\section{R beregninger indenfor teksten i dokument (`inline code')}\label{r-beregninger-indenfor-teksten-i-dokument-inline-code}}
+
+I nogle tilfælde vil man køre R kode ``inline'', det vil sige, direkte indenfor teksten, ekempelvis indenfor en sætning. Dette gøres ved at skrive på følgende måde:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Her er min }\StringTok{\textasciigrave{}}\AttributeTok{kode}\StringTok{\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+Ovenstående ser sådan ud når skrevet direkte indenfor teksten:
+
+Her er min \texttt{kode}
+
+I dette tilfælde, er der ikke noget R kode som er blevet kørt. Hvis man vil køre R kode indenfor teksten skriver man (for eksempel):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{De gennemsnitlige antal af observationer er }\StringTok{\textasciigrave{}}\AttributeTok{r mean(c(5,7,4,6,3,3))}\StringTok{\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+Ovenstående ser sådan ud når skrevet direkte indenfor teksten:
+
+De gennemsnitlige antal af observationer er 4.6666667
+
+Og bemærk, at hvis man glemmer `r', så bliver koden ikke kørte:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{De gennemsnitlige antal af observationer er }\StringTok{\textasciigrave{}}\AttributeTok{mean(c(5,7,4,6,3,3))}\StringTok{\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+giver:
+
+De gennemsnitlige antal af observationer er \texttt{mean(c(5,7,4,6,3,3))}
+
+Brugen af kode inline kan være en kæmpe fordel når man gerne vil skrive noget om an analyse, hvor man referere til forskellige statistik beregninger som man har beregnet i R (eksempelvis en middelværdi eller p-værdi). Hvis man skriver eller kopier et tal direkte og datasættet eller analysemetoden ændre sig på en eller anden grund, så bliver beregningerne indenfor teksten ikke opdateret, og så risikerer man at have en fejl i den endelige rapport. Bruger man inline code, så er beregningerne opdateret automatiske, uden at tænke over det.
+
+\hypertarget{working-directory-1}{%
+\section{Working directory}\label{working-directory-1}}
+
+Bemærk at den måde man sætter en working directory er ændleredes i R Markdown i forhold til base-R. Hvis man bruger \texttt{setwd()} i en chunk, sætter man kun den working directory i den pågælende chunk og ikke i de efterfølgende chunks.
+
+I R Markdown er standarden (default), at din working directory er mappen som du gemmer din .Rmd fil. Hvis du genre vil bruge noget andet, kan du tilføje \texttt{knitr::opts\_knit\$set(root.dir\ =\ \textquotesingle{}/tmp\textquotesingle{})} til din globale indstillinger chunk på toppen af din fil, hvor \texttt{\textquotesingle{}/tmp\textquotesingle{}} skal ændres til din ønskede mappe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r, setup, include=FALSE\}}
+\InformationTok{knitr::opts\_knit$set(root.dir = \textquotesingle{}/tmp\textquotesingle{})}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{matematik}{%
+\section{Matematik}\label{matematik}}
+
+Man kan også skrive matematik (Latex) i R Markdown - eksempelvis \texttt{\$\textbackslash{}int\_0\^{}5\ x\^{}2\ dx\$} vil ser ud som \(\int_0^5 x^2 dx\) i dit HTML dokument. Jeg forventer ikke at du lære Latex men det er af og til brugbart - for eksempel en rette linje ligning er \texttt{\$y\ =\ 3.4x\ +\ 2.1\$} giver \(y = 3.4x + 2.1\) eller en hypotese: \texttt{\$H0:\ \textbackslash{}mu\ =\ 0\$} giver \(H0: \mu = 0\). Det er op til dig hvor meget du bruger matematik måde i dine egne dokumenter.
+
+\hypertarget{problemstillinger-1}{%
+\section{Problemstillinger}\label{problemstillinger-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Der er en kort \textbf{quiz} i Absalon, som hedder ``Quiz - R Markdown''.
+\item
+  Lav et nyt R Markdown dokument i RStudio. Prøve at lave en list og nogle overskrifter i forskellige størrelser.
+\item
+  Nu tryk på \texttt{Knit} knappen og tjek at et HTML-dokument fremvises på din skærm.
+\item
+  Rediger på titlen (den er en del af din YAML-header oppe på toppen af din fil) - kald dit dokument for ``My first R Markdown document'', og tryk på \texttt{Knit} igen for at se ændringen i dit HTML dokument.
+\item
+  Opret en ny R-chunk, og tilføj noget kode, eksempelvis
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{20}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{) }\CommentTok{\#make a sample of normally distributed data}
+\FunctionTok{plot}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  husk shortcut CMD+OPT+I eller CTRL+WIN+I når man oprette en chunk (det sparer tid)
+\item
+  tryk på den grønne pile
+\item
+  prøve også at køre en linjen ad gangen med CMD+Enter/CTRL+Enter
+\item
+  lav flere chunks med adskillige kode som du vælger
+\item
+  tryk på knit og bemærk, at det tager længere tid at \texttt{knit} hver eneste gang man ændre noget, end når man bare kører chunks individ indenfor dit dokument
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{5}
+\item
+  Tryk på ``hjulen''-knappen i øverste højre hjørne af en af din chunks og prøv at ændre på de forskellige chunk indstillinger. Tryk på `knit' for at se, hvad der sker.
+\item
+  Hver gang du knitter, du lave et HTML dokument. Nu prøv at lave en andet type dokument i stedet for - erstatte \texttt{html\_document} med \texttt{word\_document} i YAML (toppen af din .Rmd fil)
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Se her for endnu flere muligheder: \url{https://bookdown.org/yihui/rmarkdown/output-formats.html}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Tilføj følgende chunk til dit dokument og tryk på ``knit''. Få du en fejlmedelse?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(mtcars)}
+\NormalTok{mtcars }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(cyl}\SpecialCharTok{==}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Bemærk, at du får en fejlmeddelse fordi, du endnu ikke har indlæst den påkrævet pakke til at få koden til at virke. Det kan ske, selvom du måske har indlæste pakken i Console eller i Packages tab.
+
+\begin{itemize}
+\tightlist
+\item
+  Først prøve at køre ``library(tidyverse)'' indenfor Console og dernæst prøve at knitte dit dokument igen - du får stadig en fejmeddelse.
+\item
+  Tilføj \texttt{library(tidyverse)} \textbf{øverst i din chunk}. Nu bør dit dokument knitte.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Erstat linjen \texttt{output:\ html\_document} med følgende i din YAML metadata oppe i toppen af din .Rmd fil:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{output}\KeywordTok{:}
+\AttributeTok{  }\FunctionTok{html\_document}\KeywordTok{:}
+\AttributeTok{    }\FunctionTok{code\_folding}\KeywordTok{:}\AttributeTok{ hide}
+\end{Highlighting}
+\end{Shaded}
+
+Knit og se hvad, der sker.
+
+\begin{itemize}
+\tightlist
+\item
+  Erstat \texttt{hide} med \texttt{show} og kig på forskellen.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{9}
+\item
+  Brug \texttt{\$\ \$} til at skrive en ligning ind i teksten i din .Rmd fil. Prøv for eksempel \texttt{\$\textbackslash{}bar\{x\}\_\{i\}\ =\ \textbackslash{}frac\{1\}\{n\}\textbackslash{}sum\_\{i=1\}\^{}\{n\}\ x\_\{i\}\$} og knitte dit dokument for at tjekke, om du får formlen til middelværdien.
+\item
+  (\textbf{Worksheet}) Ind på Absalon har jeg lagt en R Markdown (.Rmd) fil som hedder ``R Markdown opgave'', som du kan bruge til at starte med at arbejde med R Markdown baserede opgaver. Det kombinerer koncepter fra det forudgående kapitel om de grundlæggende ting i R og statistik.
+\end{enumerate}
+
+\hypertarget{fuxe6rdig-for-i-dag-og-nuxe6ste-gang}{%
+\section{Færdig for i dag og næste gang}\label{fuxe6rdig-for-i-dag-og-nuxe6ste-gang}}
+
+Husk at sende mig eventuelle spørgsmål, som jeg kan svare på enten direkte eller i forelæsning næste gang. Næste gang begynder vi at arbejde vi med R-pakken \texttt{ggplot2}, der bruges til at lave høj kvalitet visualiseringer fra datasæt.
+
+\hypertarget{ekstra-links}{%
+\section{Ekstra links}\label{ekstra-links}}
+
+\begin{itemize}
+\item
+  Her er en `quick tour' \url{https://rmarkdown.rstudio.com/authoring_quick_tour.html}
+\item
+  Handy R Markdown Cheatsheet: RStudio has published numerous cheatsheets for working with R, including a detailed cheatsheet on using R Markdown! The R Markdown cheatsheet can be accessed from within RStudio by selecting \emph{Help \textgreater{} Cheatsheets \textgreater{} R Markdown Cheat Sheet}.
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 
