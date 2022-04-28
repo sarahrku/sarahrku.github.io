@@ -36,7 +36,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Visualisering af biologiske datasæt - 2022},
+  pdftitle={Analyse og visualisering af biologiske datasæt - 2022},
   pdfauthor={Sarah Rennie},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
@@ -115,9 +115,9 @@
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 
-\title{Visualisering af biologiske datasæt - 2022}
+\title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-04-25}
+\date{Last updated: 2022-04-28}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.565732226  1.102949928 -1.267805939 -0.106620779  1.345322294
-##  [6]  0.067503374 -0.731661510 -0.038525474  0.207150150  1.287591016
-## [11]  1.240898080 -1.497734033 -0.170084840 -1.033213669 -0.493380875
-## [16] -0.370234503 -1.245347708 -0.912537755  0.045824782  0.272771545
-## [21] -1.159878046 -1.653881236  0.201343361  0.004231229 -1.923123793
+##  [1] -0.06478248 -0.44753808 -0.25412545  0.35586514  1.86602432 -0.35720619
+##  [7]  1.11885160  0.28746897 -1.35663125 -0.89806780  0.45677019  0.80773672
+## [13] -0.33108946  0.31308735 -1.26677721 -0.32934757  0.82221416  0.76715866
+## [19]  1.38524521 -0.02758980 -0.33195056  0.24232381 -0.55674905  0.23014446
+## [25] -0.64139436
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,14 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.56573223  1.10294993 {-}1.26780594 {-}0.10662078  1.34532229  0.06750337}
+\DocumentationTok{\#\# [1] {-}0.06478248 {-}0.44753808 {-}0.25412545  0.35586514  1.86602432 {-}0.35720619}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.272771545 {-}1.159878046 {-}1.653881236  0.201343361  0.004231229}
-\DocumentationTok{\#\# [6] {-}1.923123793}
+\DocumentationTok{\#\# [1] {-}0.0275898 {-}0.3319506  0.2423238 {-}0.5567490  0.2301445 {-}0.6413944}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.5657322}
+\DocumentationTok{\#\# [1] {-}0.06478248}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}1.923124}
+\DocumentationTok{\#\# [1] {-}0.6413944}
 \end{Highlighting}
 \end{Shaded}
 
@@ -666,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.2957671 -0.1700848  1.3453223 -1.9231238  0.8566699  0.9255646
+## [1]  0.07158565 -0.02758980  1.86602432 -1.35663125  0.61533597  0.78443353
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.9231 -1.0332 -0.1701 -0.2958  0.2013  1.3453
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.35663 -0.35721 -0.02759  0.07159  0.45677  1.86602
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -1768,7 +1767,7 @@ Efter quizzerne og problemstillinger er der en worksheet, hvor du kan øve dig v
 \hypertarget{hvad-er-r-markdown}{%
 \section{Hvad er R Markdown?}\label{hvad-er-r-markdown}}
 
-R Markdown er både en nem og fleksibel måde at arbejde med R til projekter på. Her kan du kombinere din R-kode, output og tekst i samme dokument, og derudover fremviser et pænt HTML dokument fra det, som potentielt kan deles med andre. Jeg anbefaler at du bruger R Markdown til alle opgaverne i kurset og \textbf{ved eksamen forventer jeg at du afleverer en HTML dokument} til mig med din ``knittede'' kode fra din analyse.
+R Markdown er både en nem og fleksibel måde at arbejde med R til projekter på. Her kan du kombinere din R-kode, output og tekst i samme dokument, og derudover fremviser et pænt HTML dokument fra det, som potentielt kan deles med andre. Jeg anbefaler at du bruger R Markdown til alle opgaverne i kurset og \textbf{ved eksamen forventer jeg at du afleverer et HTML dokument} til mig med din ``knittede'' kode fra din analyse.
 
 \hypertarget{installere-r-markdown}{%
 \section{Installere R Markdown}\label{installere-r-markdown}}
@@ -2229,6 +2228,784 @@ Husk at sende mig eventuelle spørgsmål, som jeg kan svare på enten direkte el
 \item
   Handy R Markdown Cheatsheet: RStudio has published numerous cheatsheets for working with R, including a detailed cheatsheet on using R Markdown! The R Markdown cheatsheet can be accessed from within RStudio by selecting \emph{Help \textgreater{} Cheatsheets \textgreater{} R Markdown Cheat Sheet}.
 \end{itemize}
+
+\hypertarget{visual1}{%
+\chapter{Visualisering - ggplot2 dag 1}\label{visual1}}
+
+\includegraphics[width=2.9in]{plots/ggplot2_logo}
+
+\hypertarget{inledning-og-videoer}{%
+\section{Inledning og videoer}\label{inledning-og-videoer}}
+
+Dette kapitel giver en introduktion til hvordan man visualiserer data med R-pakken \textbf{ggplot2}.
+
+\hypertarget{luxe6ringsmuxe5lene-for-dag-1}{%
+\subsection{Læringsmålene for dag 1}\label{luxe6ringsmuxe5lene-for-dag-1}}
+
+I skal være i stand til at:
+
+\begin{itemize}
+\tightlist
+\item
+  Forstå hvad ``Grammar of Graphics'' betyder og sammenhængen med den \textbf{ggplot2}-pakke
+\item
+  Lære at bruge funktionen \texttt{ggplot} og den relevante \textbf{geoms} (\texttt{geom\_point()}, \texttt{geom\_bar()}, \texttt{geom\_histogram()}, \texttt{geom\_boxplot()}, \texttt{geom\_density()})
+\item
+  Lave en `færdig' figur med en titel og korrekte etiketter på akserne
+\item
+  Begynde at arbejde med farver og temaer
+\end{itemize}
+
+\hypertarget{hvad-er-ggplot2}{%
+\subsection{\texorpdfstring{Hvad er \textbf{ggplot2}?}{Hvad er ggplot2?}}\label{hvad-er-ggplot2}}
+
+De fleste i kurset har anvendt funktionen \texttt{plot()}, der er den standard base-R funktion til at lave et plot. Man kan godt blive ved med at lave plotter i base-pakken, men det er ofte meget tidskrævende så snart man gerne vil lave noget mere indviklet eller pænere.
+
+En alternativ løsning er pakken \textbf{ggplot2}, som står for ``grammar of graphics'' (se nedenunder for nærmere forklaring). \textbf{ggplot2} er den meste populær pakke fra \textbf{tidyverse}, og som vi kommer til at se i dette kapitel, har den en ret logisk tilgang, hvor man opbygger et plot i forskellige komponenter. Det kan virke uoverskueligt i første omgang, men er faktisk meget intuitiv når man er vant til det. Det nyttige i at lære \textbf{ggplot2} kan også ses når man begynder at integrere de øvrige \textbf{tidyverse} pakker fra kapitel 4.
+
+\hypertarget{brugen-af-materialerne}{%
+\subsection{Brugen af materialerne}\label{brugen-af-materialerne}}
+
+Jeg har optaget videoer hvor jeg viser nogle `quick-start' type eksempler indenfor min RStudio. Videoerne er ikke designet til at indeholde alle detaljer, men til at fungere som udgangspunkt til at kunne komme i gang med øvelserne. Vær opmærksom på, at alle koder i videoerne findes også i kursusnotaterne, hvis du selv vil afprøve dem. Jeg anbefaler at du bruger kursusnotaterne som en reference gennem kurset når man arbejder på opgaverne, og vær også opmærksom på, at jeg nogen gange introducerer nye ting i selve øvelserne.
+
+\hypertarget{video-ressourcer}{%
+\subsection{Video ressourcer}\label{video-ressourcer}}
+
+\begin{itemize}
+\tightlist
+\item
+  I video 1 demonstrerer jeg, hvordan man lave sit første plot med \texttt{ggplot2}.
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/701245598}
+
+\begin{itemize}
+\tightlist
+\item
+  I video 2 dækker vi boxplots.
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/701245695}
+
+\begin{itemize}
+\tightlist
+\item
+  I video 3 demonstrerer jeg barplots.
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/704025240}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 4: Histogram og density plots
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/703699213}
+
+\hypertarget{transition-fra-base-r-til-ggplot2}{%
+\section{Transition fra base R til ggplot2}\label{transition-fra-base-r-til-ggplot2}}
+
+Vi starter som udgangspunkt med base-R og viser, hvordan man laver et lignende plot med \textbf{ggplot2}. Til dette formål bruger vi det indbyggede datasæt, der hedder \texttt{iris}. Det er et meget berømt datasæt, og det er næsten sikkert, at du støder ind (eller har stødt ind) i det mange gange uden for dette kursus, enten på nettet eller i forbindelse med andre kurser som handler om R. Datasættet var oprindeligt samlet af statistikker og biologer Ronald Fisher i 1936 og indeholder 50 stikprøver, der dækker forskellige målinger, for hver af tre arter af planten iris (Iris setosa, Iris virginica og Iris Versicolor).
+
+\includegraphics[width=0.85\linewidth]{plots/iris_picture}
+
+Som vi også så i grundlæggende R, kan man indlæse et indbyggede datasæt med hjælp af funktionen \texttt{data()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+Først vil vi have et overblik over datasættet. Til at gøre dette bruger vi \texttt{summary()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##        Species  
+##  setosa    :50  
+##  versicolor:50  
+##  virginica :50  
+##                 
+##                 
+## 
+\end{verbatim}
+
+Forestil, at vi gerne vil lave et plot, som viser sammenhængen mellem længden og bredden af sepal (bægerblad), eller specifikt er vi interesseret i kolonnerne \texttt{iris\$Sepal.Length} og \texttt{iris\$Sepal.Width}. Lad os starte med at visualisere variablerne i base-R, ved at bruge \texttt{plot}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length, iris}\SpecialCharTok{$}\NormalTok{Sepal.Width)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-116-1.pdf}
+
+Man kan gøre det meget pænere eksempelvis ved at bruge forskellige farver til at betegne de forskellige arter, eller ved at give en hensigtsmæssig overskrift eller aksenavne.
+
+\hypertarget{vores-fuxf8rste-ggplot}{%
+\section{Vores første ggplot}\label{vores-fuxf8rste-ggplot}}
+
+Vi vil imidlertid fokusere på at lave et lignende plot med pakken \texttt{ggplot2}. Hvis man ikke allerede har gjort det, så husk at indlæse pakken i R for at få nedenstående koder til at virke.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("ggplot2") \#hvis ikke allerede installeret}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+For at lave et plot med \texttt{ggplot2} tager man altid udgangspunkt i funktionen \texttt{ggplot()}. Først specificerer vi vores data - altså at vi gerne vil bruge dataframe \texttt{iris}. Dernæst angiver vi indenfor funktionen \texttt{aes()} (som sidder indenfor \texttt{ggplot()}), at x-aksen skal være \texttt{Sepal.Length} og y-aksen \texttt{Sepal.Width}. Det ser sådan ud:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-118-1.pdf}
+
+Koden fungerer, men bemærk at plottet er helt blank og derfor ikke særligt brugbart. Men der er blevet lavet et grundlag (se aksenavne osv.). Det er blank fordi vi endnu ikke har fortalt, hvilken plot type det skal være - for eksempel søljediagram/barplot, histogram, punktplot/scatter plot (jeg vælge de engelske begreber herfra for at skabe den bedste sammenhæng med koden). Vi vil gerne bruge et scatter plot, som i \textbf{ggplot2} er angivet af funktionen \texttt{geom\_point()}. Vi forbinder derfor funktionen \texttt{geom\_point()} til den \texttt{ggplot()} funktion, vi allerede har specificeret. Husk altid, at man bruger \texttt{+} til at forbinde de to ``komponenter'' (altså \texttt{ggplot()} og \texttt{geom\_point()}) af plottet (ellers få vi fortsat et blank plot).
+
+Koden er således:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-119-1.pdf}
+
+Bemærk, at vi ikke har skrevet noget indeni de runde parenteser i funktionen \texttt{geom\_point()}. Det betyder, at vi accepterer alle standard eller `default' parametre, som funktionen tager. Hvis vi vil have noget andet end de standard parametre, kan vi godt specificere det. For eksempel kan vi gøre punkterne lidt større end ved standard (prøve at tjekke \texttt{?geom\_point()} for at se en list overfor de mulige parametre, man kan justere på):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-120-1.pdf}
+
+Vi har nu et plot, som vi kan sammenligne med det ovenstående plot, vi lavet i base-pakken. Ligesom i base-pakken vil vi gerne tilføje nogle ting for at gøre vores plot til vores \emph{færdige figur}.. Her i \textbf{ggplot2} gøres det ved at tilføje flere komponenter ovenpå, med brugen af \texttt{+}, ligesom vi gjorde da vi tilføjede \texttt{geom\_point()} til \texttt{ggplot()}. Første vil jeg gerne skrive nogle orde om \textbf{ggplot2} generelt, og filosofien bag.
+
+\hypertarget{lidt-om-ggplot2}{%
+\section{Lidt om ggplot2}\label{lidt-om-ggplot2}}
+
+\hypertarget{syntax}{%
+\subsection{Syntax}\label{syntax}}
+
+Som vi har lige set, \texttt{ggplot()} tager altid udgangspunkt i en dataframe, som vi specificerer først. I \texttt{ggplot()} indeholder den dataframe variablerne vi skal bruge til at få lavet figuren. Til at gøre det til noget mere konkret, lad os sammenligne koden mellem base-pakken og \texttt{ggplot()} til vores \texttt{iris} data. I base-R angav vi direkte vektorer \texttt{iris\$Sepal.Length} og \texttt{iris\$Sepal.Width} som parametre \texttt{x} og \texttt{y}, der tager henholdsvis første og andens-plads i funktionen \texttt{plot()}. Til gengæld i \texttt{ggplot()}, specificerer man først den hele dataramme i den første plads, og så bagefter med brugen af \texttt{aes()} angav vi hvordan x-aksen og y-aksen ser ud.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#baseplot solution}
+\FunctionTok{plot}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length, iris}\SpecialCharTok{$}\NormalTok{Sepal.Width) }
+
+\CommentTok{\#ggplot2 solution}
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+En anden fordel af \texttt{ggplot2()} er, at man kan blive ved med at forbedre plottet ved at tilføje ting ovenpå det plot, som vi allerede har lavet, i hvad man kan beskriver som en lagring tilgang. Det gøres intuitiv ved brugen af ``+''. Man kan derfor starte med noget simpelt, og derefter opbygge det til noget mere kompleks. Dette er uafhængig af den type plot, vi laver.
+
+\hypertarget{hvad-betyder-egentlig-grammar-of-graphics}{%
+\subsection{Hvad betyder egentlig grammar of graphics?}\label{hvad-betyder-egentlig-grammar-of-graphics}}
+
+Den \texttt{gg} i \texttt{ggplot2} står for \emph{grammar of graphics}, og filosofien er at der skal defineres en \emph{sætningsstruktur} til de figurer, man laver. Med andre ord består vores figur af forskellige komponenter, som man forbinder med ``+''..
+
+\includegraphics[width=0.5\linewidth]{plots/graphics_grammar}
+
+Her er en beskrivelse af de forskellige komponenter til at opbygge et plot:
+
+\begin{itemize}
+\tightlist
+\item
+  Data: Datarammer tager altid udgangspunkt
+\item
+  Aesthetics: Variabler til x-aksen eller y-aksen, farve, form eller størrelse
+\item
+  Scale: Scalere værdier eller representere flere værdier
+\item
+  Geometries: Eller \texttt{geoms} - hvad type plot skal vi lave - fk. bars, points, lines osv.
+\item
+  Statistics: Tilføj fk. mean, median, quartile som beskrive data
+\item
+  Facets: Lave subplots baserende på flere dimensioner
+\item
+  Coordinate system: Transformerer akser, ændrer afstanden for de viste data
+\end{itemize}
+
+\hypertarget{globale-versus-lokale-uxe6stetik}{%
+\subsection{Globale versus lokale æstetik}\label{globale-versus-lokale-uxe6stetik}}
+
+De fleste tilfælde bruger vil funktionen \texttt{aes()} indenfor \texttt{ggplot()}, med betydningen, at variablerne specificeret indenfor \texttt{aes()} gælder globalt over alle komponenter i plottet. Man kan faktisk også skrive \texttt{aes()} lokale indenfor selve geom funktion, som i følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-123-1.pdf}
+
+Vi får det samme plot som før, men det er kun \texttt{geom\_point()} der er påvirket af specificeringen indenfor \texttt{aes()}. I simpel situationer som ovenpå er der ingen forskel, men når man har mange forskellige komponenter i spil, så kan det nogle gange give mening at bruge lokale æstetik.
+
+\hypertarget{specificere-etiketter-og-titel}{%
+\section{Specificere etiketter og titel}\label{specificere-etiketter-og-titel}}
+
+Vi tager udgangspunkt i plottet, vi lavet i ovenstående og prøver at gøre det bedre ved at tilføje nye etiketter og en titel. I \texttt{ggplot} kan man opdatere y-akse og x-akse etiketter ved at bruge henholdsvis \texttt{ylab} og \texttt{xlab}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-124-1.pdf}
+
+Vi tilføjer en titel med funktionen \texttt{ggtitle()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Scatter plot of Sepal Width vs Sepal Length"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-125-1.pdf}
+
+\hypertarget{uxe6ndre-farver}{%
+\section{Ændre farver}\label{uxe6ndre-farver}}
+
+I \texttt{ggplot2} kan man bruge ``automatisk'' farver for at skelne imellem de tre forskellige \texttt{Species} i datasættet \texttt{iris}. I næste lektion dækker jeg hvordan man kan være mere fleksibel ved at sætte farver manuelt, men ofte vil vi bare bruge som udgangspunkt den nemme løsning og eventuelle rette op på det bagefter med en ny komponent, hvis der er behov for det. Vi skriver \texttt{color=Species} indenfor \texttt{aes()}, som i følgende. Bemærk, at der kommer en `legend' med, der fortæller os, hvilken art få hvilken farve.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width,}\AttributeTok{color=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Scatter plot of Sepal Width vs Sepal Length"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-126-1.pdf}
+
+\hypertarget{uxe6ndre-tema}{%
+\section{Ændre tema}\label{uxe6ndre-tema}}
+
+Det standard tema har en grå baggrund og ``grid'' linjer, men vi kan godt vælge noget andet. For eksempel kan man tilføje \texttt{theme\_minimal()} som i nedenstående. Her får vi en hvid baggrund i stedet for, mens vi får stadig grid linjer. Man kan afprøve forskellige temaer (for eksempel \texttt{theme\_classic()}, \texttt{theme\_bw()}), og se, hvilket tema fungerer bedst i det enkelt plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width,}\AttributeTok{color=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Scatter plot of Sepal Width vs Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-127-1.pdf}
+
+Her er nogle eksempler på mulige temaer du kan bruge i dine plotter (det er dog generelt op til dig).
+
+\begin{longtable}[]{@{}l@{}}
+\toprule
+tema \\
+\midrule
+\endhead
+\texttt{theme\_grey()} \\
+\texttt{theme\_classic()} \\
+\texttt{theme\_bw()} \\
+\texttt{theme\_dark()} \\
+\texttt{theme\_minimal()} \\
+\texttt{theme\_light()} \\
+\bottomrule
+\end{longtable}
+
+Se også her hvis du er interesseret i flere temaer: \url{https://r-charts.com/ggplot2/themes/}
+
+\hypertarget{forskellige-geoms}{%
+\section{Forskellige geoms}\label{forskellige-geoms}}
+
+Indtil videre har vi kun arbejdet med \texttt{geom\_point()} for at lave et scatter plot, men det kan være at vi gerne vil lave noget andet. Her gennemgår jeg følgende ``geoms'':
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+geom & plot \\
+\midrule
+\endhead
+\texttt{geom\_point()} & scatter plot \\
+\texttt{geom\_bar()} & barplot \\
+\texttt{geom\_boxplot()} & boxplot \\
+\texttt{geom\_histogram()} & histogram \\
+\texttt{geom\_density()} & density \\
+\bottomrule
+\end{longtable}
+
+For at lave disse geoms, skal man tillægge funktionen til den \texttt{ggplot()} kommando med \texttt{+}, ligesom vi gjorde med \texttt{geom\_point()}. Der kan dog være for nogle plot-typer specifikke overvejelser, som er værd at vide inden man selv bruger dem.
+
+\hypertarget{boxplot-geom_box}{%
+\subsection{\texorpdfstring{Boxplot (\texttt{geom\_box})}{Boxplot (geom\_box)}}\label{boxplot-geom_box}}
+
+For at lave et boxplot af \texttt{Sepal.Length} opdelt efter \texttt{Species}, angiver vi \texttt{Species} på x-aksen og \texttt{Sepal.Length} på y-aksen. Vi vil også have, at hver art få sin egen farve, så bruger vi \texttt{fill=Species}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{y=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Boxplot"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-128-1.pdf}
+
+\textbf{Lave punkter ovenpå}
+
+Det kan ofte være nyttigt at plotte de egentlige data punkter ovenpå boxplottet, så I kan se både fordelingen i de data samt de rå data. En løsning er at benytte \texttt{geom\_point()} ved at tilføje det som komponent over vores eksisterende kode.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{y=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Boxplot with points overlayed"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-129-1.pdf}
+
+Man kan dog se, at det ikke er særlig informativ, da alle punkter er på den samme lodrette linje. Hvis vi har mange punkter med samme eller næsten samme værdier, så kan vi ikke se de fleste af dem i plottet. En bedre løsning er at indføre noget tilfældighed i punkterne langt x-aksen, så at man mere tydelige kan se dem. Det er kaldes for ``jitter'' og man specificerer jitter ved at bruge \texttt{geom\_jitter} i stedet for \texttt{geom\_point}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{y=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_jitter}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Boxplot with jitter"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-130-1.pdf}
+
+Jeg kan vi også specificere \texttt{alpha}, som indføre gøre punkterne gennemsigtige, for at gøre dem mindre markant. Man kan også ændre på \texttt{width} som kontrollerer deres spredning langt x-axsen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{y=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{,}\AttributeTok{width=}\FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Boxplot with jitter and transparency"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-131-1.pdf}
+
+\textbf{Fjerne legend hvis unødvendige}
+
+Man kan se, at når man specificerer farver, få man en legend på højre side af plotte. I dette tilfælde er det faktisk ikke nødvendige, da man kan se uden legend hvad de tre boxplots refererer til. Defor fjerner vi den fra plottet ved at bruge \texttt{theme(legend.position="none")}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{y=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_jitter}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Boxplot with jitter and no legend"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position=}\StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-132-1.pdf}
+
+\hypertarget{barplot-geom_bar}{%
+\subsection{\texorpdfstring{Barplot (\texttt{geom\_bar})}{Barplot (geom\_bar)}}\label{barplot-geom_bar}}
+
+Med \texttt{ggplot()} kan man representere data i et bar plot ved at bruge \texttt{geom\_bar()}. I følgende vil vi gerne tælle op de antal observationer for hver art (variable \texttt{Species}), og visualiser dem således som søjler. Indenfor \texttt{geom\_bar()} specificerer vi således \texttt{stat="count"}.
+
+Vi bruger også \texttt{fill=Species} her for at lave en forskellige farve automatiske for hver af de tre arter. Bemærk, at det var \texttt{color=Species} i det forudgående plot når vi anvendte \texttt{geom\_point()}. Det er fordi, \texttt{color} bruges for punkter og linjer, mens \texttt{fill} er til større regioner bliver udfyldt, såsom bars og histograms.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"count"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of observations by species"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-133-1.pdf}
+
+\textbf{Barplot: stack vs dodge}
+
+Hvis man har flere katagoriske variabler, kan man lave barplots på forskellige måder. Da der er en ekstra katagorisk variabel i datasættet, laver jeg én, der hedder \texttt{Sepal.Group}, der skelne imellem \texttt{Long} og \texttt{Short} værdier af variablen \texttt{Sepal.Length}. Her specificerer jeg bare (med funktionen \texttt{ifelse()}), at hvis \texttt{Sepal.Length} er længere end den gennemsnitlige \texttt{Sepal.Length}, så er det betragtet \texttt{Long}, ellers er det \texttt{Short}.
+
+Når jeg laver en barplot med de to variabler, tilføjer jeg \texttt{Sepal.Group} med \texttt{fill}, og \texttt{ggplot} splitter antal observationer efter \texttt{Sepal.Group} med farver som repræsenterer \texttt{Sepal.Group}, og tilføjer en tilsvarende legend.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Group }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length}\SpecialCharTok{\textgreater{}}\FunctionTok{mean}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length),}\StringTok{"Long"}\NormalTok{,}\StringTok{"Short"}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{)  }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-134-1.pdf}
+
+Mange gange foretrækker man at få bars som stå ved siden af hinanden. Det kan vi specificere med blot at tilføje \texttt{position="dodge"} ind i \texttt{geom\_bar()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-135-1.pdf}
+
+\hypertarget{histogram-geom_histogram}{%
+\subsection{\texorpdfstring{Histogram (\texttt{geom\_histogram})}{Histogram (geom\_histogram)}}\label{histogram-geom_histogram}}
+
+En histogram bruges til at få overblik over hvordan data fordeler sig. I \texttt{ggplot2} kan man lave en histogram med \texttt{geom\_histogram()}. Den x-akse variable skal være en `continuous' variable. Her specificerer vi, at vi gerne vil have et histogram for hver Species.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Iris histogram"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-136-1.pdf}
+
+Man kan også gøre det nemmere at skelne imellem de tre arter ved at sætte \texttt{alpha=0.5} indenfor \texttt{geom\_histogram} og ved at angive en linje farve som mulighed inden for \texttt{geom\_histogram()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{,}\AttributeTok{color=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Iris histogram"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-137-1.pdf}
+
+\hypertarget{density-geom_density}{%
+\subsection{\texorpdfstring{Density (\texttt{geom\_density})}{Density (geom\_density)}}\label{density-geom_density}}
+
+Med en density plot, ligesom med en histogram, kan man se fordelingen, de data har, i formen af en glat (eller ``smooth'') kurv.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{color=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Density plot"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-138-1.pdf}
+
+\textbf{Density plot med fill og gennemsigtig farver}
+
+Vi kan angive en værdi for \texttt{alpha} indenfor \texttt{geom\_density()}. Den parameter \texttt{alpha} specificerer gennemsigtigheden af de density kurver i plottet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Density plot with alpha=0.5"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-139-1.pdf}
+
+\textbf{Tilføje middelværdi linjer}
+
+Vi bruger funktionen \texttt{tapply()} til at beregne middelværdier af \texttt{Sepal.Length} for hver af de tre \texttt{Species}. Vi kan derefter tilføje dem som lodrette linjer to vores plot. Her bruger vi \texttt{geom\_vline()} (OBS det er \texttt{geom\_hline()} hvis man vil have en vandret linje) og fortæller, at \texttt{xintercept} skal vare lig med de middelværdier, som vi har beregnet. Parameteren \texttt{lty=2} betyder, at vi vil gerne have en ``dashed'' linje.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{means }\OtherTok{\textless{}{-}} \FunctionTok{tapply}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length,iris}\SpecialCharTok{$}\NormalTok{Species,median)}
+
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{color=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Density plot with alpha=0.5"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ means,}\AttributeTok{lty=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-140-1.pdf}
+
+\hypertarget{troubleshooting}{%
+\section{Troubleshooting}\label{troubleshooting}}
+
+Her er en lille list over nogle ting, der forårsager en fejl når man kører kode med \textbf{ggplot2}. Jeg tilføjer også andre ting som opstå i vores lektion :).
+
+\begin{itemize}
+\item
+  \texttt{ggplot(data=iris,\ aes(....))} : husk her \texttt{data=iris} er korrekt og \textbf{ikke} \texttt{Data=iris} (R skelner mellem store og små bogstaver). Man kan også undlade at bruge \texttt{data=} og skrive bare \texttt{iris} i stedet for.
+\item
+  Forkert stavning - dobbelt tjek, at du har stavet variabler eller funktioner navne korrekt.
+\item
+  Glemte \texttt{+} symbol - for at forbinde komponenterne i plottet, skal man huske at tilføje \texttt{+} i slutningen af en linje og så skrive de næste komponent bagefter (man behøver ikke at skrive hver komponent på en ny linje med det gøre det nemmere at læse koden).
+\item
+  Skrev \texttt{\%\textgreater{}\%} symbol i stedet for \texttt{+} - de øvrige pakker fra \textbf{tidyverse} bruger \texttt{\%\textgreater{}\%}.
+\item
+  Glemte parentes: her har man glemt den sidste parentes: skal være \texttt{fill=Species))} og \textbf{ikke} \texttt{fill=Species)}. Man får bare en \texttt{+} fordi R forventer at du fortsætter med at skrive mere kode.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\SpecialCharTok{\textgreater{}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{fill=}\NormalTok{Species)}
+\SpecialCharTok{+} 
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{fill} og \texttt{colour} - indenfor \texttt{aes()} refererer \texttt{fill} til at man fylder fk. bars eller regioner med farver, og \texttt{colour} referere til farven af linjer eller punkter.
+\end{itemize}
+
+\hypertarget{problemstillinger-2}{%
+\section{Problemstillinger}\label{problemstillinger-2}}
+
+\textbf{1)} Quiz på Absalon - den hedder \texttt{Quiz\ -\ ggplot2\ part\ 1}.
+
+\emph{OBS: Husk at lave følgende øvelser i R Markdown. Det er god praksis at sikre, at jeres dokument knitter - i selve eksamen afleverer du et html dokument.}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Lav et nyt R Markdown dokument og fjern de eksempel koder. Husk at oprette en ny chunk ved at trykke på ``Insert'' new chunk", eller bruge shortcut-kommandoen CMD+ALT+I eller CTRL+ALT+I. Jeg anbefaler, at I oprette en ny chunk for hver plot, I laver}.
+\end{itemize}
+
+Vi bruger datasættet der hedder \texttt{diamonds}. Huske at først indlæse de data:*
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(diamonds)}
+\end{Highlighting}
+\end{Shaded}
+
+Her er beskrivelsen af \texttt{diamonds}:
+
+\emph{Prices of over 50,000 round cut diamonds:} a dataset containing the prices and other attributes of almost 54,000 diamonds.
+
+Se også ?diamonds for en beskrivelse af de variabler.
+
+\textbf{2)} Bruge datasættet \texttt{diamonds} til at lave et scatter plot (\texttt{geom\_point()}):
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{caret} på x-aksen
+\item
+  \texttt{price} på y-aksen
+\end{itemize}
+
+Så at du har noget at sammenligne med, skal dit plot se sådan ud:
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-143-1.pdf}
+
+\textbf{3)} Tilføj nogle komponenter til dit plot fra 2).
+
+\begin{itemize}
+\tightlist
+\item
+  En x-akse label (\texttt{xlab()}) og en y-akse label (\texttt{ylab()})
+\item
+  En titel (\texttt{ggtitle()})
+\item
+  Et tema som hedder \texttt{theme\_bw()}
+\item
+  Huske at forbinde komponenterne med \texttt{+} og skrive de nye komponenter på deres egen linje.
+\end{itemize}
+
+Det skal se sådan ud:
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-144-1.pdf}
+
+\textbf{4)} Ændre temaet til \texttt{theme\_classic()} eller \texttt{theme\_minimal()} i stedet for \texttt{theme\_bw()} og kig på resultatet.
+
+Ekstra: Hvis man (måske ved uheld) skriver ind \textbf{to} temaer på samme tid (for eksempel \texttt{+\ theme\_bw()\ +\ theme\_classic()}) - hvilke tema får man så i plotten?
+
+\emph{Valgfri ekstra: her er nogle flere tema man kan prøve: \url{https://ggplot2.tidyverse.org/reference/ggtheme.html}}
+
+\textbf{5)} Lav det samme plot som i \textbf{4)}, med \texttt{color=color} indenfor \texttt{aes()}. Den første \texttt{color} refererer til punkt farver og den anden til variablen \texttt{color} i dataframen.
+
+Det skal se sådan ud:
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-145-1.pdf}
+
+\textbf{6)} Bruge stadig \texttt{diamonds}, til at lave et boxplot:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{cut} på x-aksen (giv x-aksen label \texttt{Cut})
+\item
+  \texttt{price} på y-aksen (giv y-aksen label \texttt{Price\ of\ diamond})
+\item
+  bruge \texttt{fill} til at give forskellige farver til de mulige værdier af \texttt{cut}.
+\item
+  bruge temaet \texttt{theme\_bw()}
+\end{itemize}
+
+Det skal se sådan ud:
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-146-1.pdf}
+
+Ekstra: hvordan ser det ud, hvis man bruger \texttt{color} i stedet for \texttt{fill}?
+
+\textbf{7)} Lav følgende ekstra ændringer til din boxplot fra ovenstående:
+
+\begin{itemize}
+\tightlist
+\item
+  Tilføj \texttt{geom\_jitter()} til din boxplot
+\item
+  fjern de legend (se notaterne).
+\end{itemize}
+
+Det skal se sådan ud:
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-147-1.pdf}
+
+\emph{Ekstra 1}: man kan også prøve at forbedre plottet ved at give nogle indstillinger ind i \texttt{geom\_jitter()}, for eksempel kan man prøve \texttt{geom\_jitter(size=.2,color="grey",alpha=0.5)} for at gøre punkter mindre overbelastende i plottet (eller kan man bare fjerne dem).
+
+Leg med de tre indstilling \texttt{size},\texttt{color} og \texttt{alpha} og ser på forskellen. Her er en note om \texttt{alpha}:
+
+\emph{Alpha refers to the opacity of a geom. Values of alpha range from 0 to 1, with lower values corresponding to more transparent colors.} \url{https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html}
+
+\emph{Ekstra 2}: Prøve også at skifte rækkefølgerne af \texttt{geom\_jitter()} og \texttt{geom\_boxplot()} i den plot kode og se - gøre det en forskel til hvordan plottet ser ud?
+
+\textbf{8)} Lav en barplot med indstillingen \texttt{stat="count"}:
+
+\begin{itemize}
+\tightlist
+\item
+  Variable \texttt{clarity} på x-aksen
+\item
+  Forskellige farver til den gruppe-variable \texttt{cut}
+\item
+  Specificerer \texttt{position="dodge"} for at få bars ved siden af hinanden
+\item
+  Brug også indstillingen \texttt{colour="black"} og notater effekten
+\item
+  Tilføje et tema
+\end{itemize}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-148-1.pdf}
+
+\textbf{9)} Lav en histogram
+
+\begin{itemize}
+\tightlist
+\item
+  Variable \texttt{depth} på x-aksen
+\item
+  Forskellige farver efter \texttt{cut}
+\item
+  Brug indstilling \texttt{alpha} til at ændre gennemsigtigheden af søljerne
+\item
+  Giv søjlerne en sort ramme
+\item
+  Tilføje et tema osv.
+\end{itemize}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-149-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Nu får du en advarsel - gør hvad advarselen siger og ændre på indstillingen \texttt{bins} indenfor \texttt{geom\_histogram()}
+\end{itemize}
+
+\textbf{10)} Lav en density
+
+\begin{itemize}
+\tightlist
+\item
+  Man kan se, at det er svært at sammenligne fordelingerne i ovenstående histograms
+\item
+  I din histogram kode fra \textbf{9)} erstatte \texttt{geom\_histogram} med \texttt{geom\_density}
+\item
+  Er det nu nemmere at sammenligne fordelingerne efter de forskellige niveauer af \texttt{cut}?
+\item
+  Tilføj lodrette linjer med median værdier af variablen \texttt{depth} for hver af de cuts fra variablen \texttt{cut}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Hint: \texttt{tapply} til at beregne \texttt{median}, \texttt{geom\_vline} til at lave lodrette linjer
+  \end{itemize}
+\end{itemize}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-150-1.pdf}
+
+\textbf{11)} Bare ekstra øvelse: Lege frit med at lave andre plots fra \texttt{diamonds} med ggplot2. Eksempelvis
+
+\begin{itemize}
+\tightlist
+\item
+  Boxplots med \texttt{carat} opdelte efter \texttt{clarity}
+\item
+  Barplots for de forskellige farver (variable \texttt{color})
+\item
+  Et scatter plot af \texttt{depth} vs \texttt{price}.
+\end{itemize}
+
+I alle tilfælde tilføje akse-labs, en titel, et tema osv.
+
+\hypertarget{nuxe6ste-gang}{%
+\section{Næste gang}\label{nuxe6ste-gang}}
+
+Efter at have lavet de problemstillinger skal man kunne se, at der er rigtig meget fleksibilitet involveret med at lave et plot med \texttt{ggplot2}. I morgen går vi videre med andre plot typer, og hvordan man fk. sætte farver manuelt.
 
   \bibliography{book.bib,packages.bib}
 
