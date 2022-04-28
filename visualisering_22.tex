@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -1.2026278  0.3212779 -0.7583539 -1.3375449 -1.5853946 -0.4360447
-##  [7] -0.3848414 -1.1030047 -1.0566022  1.2473844  1.6938504 -0.1309552
-## [13]  0.4482350  0.4166749  0.7148778 -0.3545271 -0.3144934 -1.0643199
-## [19]  0.5191644  0.1998743 -1.3961923 -0.4280463  1.7840929  0.0609416
-## [25] -0.9230462
+##  [1] -1.16406623 -2.24383917 -0.31176593 -1.41503119  0.48148849 -1.41044793
+##  [7] -0.01333695  0.77359769 -0.85325192 -0.73235689  1.26002935  0.44885772
+## [13] -1.13351967  1.29717595  0.65648184  1.32342036 -0.01962012 -2.01552312
+## [19] -0.79655102  0.54183060  1.24422875 -1.02530061 -0.58390825  1.56357844
+## [25] -0.59735174
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}1.2026278  0.3212779 {-}0.7583539 {-}1.3375449 {-}1.5853946 {-}0.4360447}
+\DocumentationTok{\#\# [1] {-}1.1640662 {-}2.2438392 {-}0.3117659 {-}1.4150312  0.4814885 {-}1.4104479}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.1998743 {-}1.3961923 {-}0.4280463  1.7840929  0.0609416 {-}0.9230462}
+\DocumentationTok{\#\# [1]  0.5418306  1.2442288 {-}1.0253006 {-}0.5839082  1.5635784 {-}0.5973517}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}1.202628}
+\DocumentationTok{\#\# [1] {-}1.164066}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.9230462}
+\DocumentationTok{\#\# [1] {-}0.5973517}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.2027848 -0.3545271  1.7840929 -1.5853946  0.8848473  0.9406632
+## [1] -0.1890073 -0.3117659  1.5635784 -2.2438392  1.2230115  1.1058985
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,7 +678,7 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.5854 -1.0566 -0.3545 -0.2028  0.4167  1.7841
+## -2.2438 -1.0253 -0.3118 -0.1890  0.6565  1.5636
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -2724,7 +2724,7 @@ Som ekstra for at vise fleksibiliten i pakken \texttt{ggplot2}: jeg kan ikke lid
 \hypertarget{histogram-geom_histogram}{%
 \subsection{\texorpdfstring{Histogram (\texttt{geom\_histogram})}{Histogram (geom\_histogram)}}\label{histogram-geom_histogram}}
 
-En histogram bruges til at få overblik over hvordan data fordeler sig. I \texttt{ggplot2} kan man lave en histogram med \texttt{geom\_histogram()}. Den x-akse variable skal være en `continuous' variable. Her specificerer vi, at vi gerne vil have et histogram for hver Species.
+En histogram bruges til at få overblik over hvordan data fordeler sig. I \texttt{ggplot2} kan man lave en histogram med \texttt{geom\_histogram()}. Den x-akse variabel skal være en `continuous' variabel. Her specificerer vi, at vi gerne vil have et histogram for hver Species.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2876,7 +2876,7 @@ Så at du har noget at sammenligne med, skal dit plot se sådan ud:
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-145-1.pdf}
 
-\textbf{3)} Tilføj nogle komponenter til dit plot fra 2).
+\textbf{3)} Tilføj nogle komponenter til dit plot fra \textbf{2)}.
 
 \begin{itemize}
 \tightlist
@@ -2887,25 +2887,40 @@ Så at du har noget at sammenligne med, skal dit plot se sådan ud:
 \item
   Et tema som hedder \texttt{theme\_bw()}
 \item
-  Huske at forbinde komponenterne med \texttt{+} og skrive de nye komponenter på deres egen linje.
+  Husk at forbinde komponenterne med \texttt{+} og skrive de nye komponenter på deres egen linje.
 \end{itemize}
 
 Det skal se sådan ud:
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-146-1.pdf}
 
-\textbf{4)} Ændre temaet til \texttt{theme\_classic()} eller \texttt{theme\_minimal()} i stedet for \texttt{theme\_bw()} og kig på resultatet.
+\textbf{4)} Ændre temaet af dit plot til \texttt{theme\_classic()} eller \texttt{theme\_minimal()} i stedet for \texttt{theme\_bw()} og kig på resultatet.
 
-Ekstra: Hvis man (måske ved uheld) skriver ind \textbf{to} temaer på samme tid (for eksempel \texttt{+\ theme\_bw()\ +\ theme\_classic()}) - hvilke tema får man så i plotten?
+\begin{itemize}
+\tightlist
+\item
+  Hvis man (måske ved uheld) skriver ind \textbf{to} temaer på samme tid (for eksempel \texttt{+\ theme\_bw()\ +\ theme\_classic()}) - hvilket tema får man så i plottet?
+\item
+  Valgfri ekstra: her er nogle flere tema man kan prøve: \url{https://ggplot2.tidyverse.org/reference/ggtheme.html}*
+\end{itemize}
 
-\emph{Valgfri ekstra: her er nogle flere tema man kan prøve: \url{https://ggplot2.tidyverse.org/reference/ggtheme.html}}
-
-\textbf{5)} Lav det samme plot som i \textbf{4)}, med \texttt{color=color} indenfor \texttt{aes()}. Den første \texttt{color} refererer til punkt farver og den anden til variablen \texttt{color} i dataframen.
-
+\textbf{5)} Lav det samme plot som i \textbf{3)}, og skriv \texttt{color=color} indenfor \texttt{aes()}. Den første \texttt{color} refererer til punkt farver og den anden til variablen \texttt{color} i dataframen.
 Det skal se sådan ud:
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-147-1.pdf}
 
-\textbf{6)} Bruge stadig \texttt{diamonds}, til at lave et boxplot:
+\begin{itemize}
+\tightlist
+\item
+  Nu fjern \texttt{color=color} fra funktionen \texttt{aes()} og i stedet tilføj \texttt{aes(color=color)} i funktionen \texttt{geom\_point()}. Får du samme resultat?
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  Bemærk at det er lige meget om man bruger britisk eller amerikansk stavning i \texttt{ggplot2} - fk. \texttt{colour} eller \texttt{color} indenfor \texttt{aes()} giiver samme resultat.
+\end{itemize}
+
+\textbf{6)} Brug stadig \texttt{diamonds}, til at lave et boxplot:
 
 \begin{itemize}
 \tightlist
@@ -2923,7 +2938,11 @@ Det skal se sådan ud:
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-148-1.pdf}
 
-Ekstra: hvordan ser det ud, hvis man bruger \texttt{color} i stedet for \texttt{fill}?
+\begin{itemize}
+\tightlist
+\item
+  Hvordan ser det ud, hvis man bruger \texttt{colour} i stedet for \texttt{fill}? Eller hvis man giver begge to?
+\end{itemize}
 
 \textbf{7)} Lav følgende ekstra ændringer til din boxplot fra ovenstående:
 
@@ -2932,20 +2951,30 @@ Ekstra: hvordan ser det ud, hvis man bruger \texttt{color} i stedet for \texttt{
 \item
   Tilføj \texttt{geom\_jitter()} til din boxplot
 \item
-  fjern de legend (se notaterne).
+  fjern legend ved at tilføj \texttt{theme(legend.position="none")}
+\item
+  Man kan også tilføj \texttt{show.legend=FALSE} til både \texttt{geom\_boxplot()} og \texttt{geom\_jitter()} i stedet for - prøv det i stedet for at bruge \texttt{theme(legend.position="none")}. Er det nok at tilføje \texttt{show.legend=FALSE} til kun én af de to geoms?
 \end{itemize}
 
 Det skal se sådan ud:
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-149-1.pdf}
 
-\emph{Ekstra 1}: man kan også prøve at forbedre plottet ved at give nogle indstillinger ind i \texttt{geom\_jitter()}, for eksempel kan man prøve \texttt{geom\_jitter(size=.2,color="grey",alpha=0.5)} for at gøre punkter mindre overbelastende i plottet (eller kan man bare fjerne dem).
+\begin{itemize}
+\tightlist
+\item
+  Man kan også prøve at forbedre plottet ved at give nogle indstillinger ind i \texttt{geom\_jitter()}, for eksempel kan man prøve \texttt{geom\_jitter(size=.2,color="grey",alpha=0.5)} for at gøre punkter mindre overbelastende i plottet (eller kan man overvejer at fjerne dem).
+\end{itemize}
 
 Leg med de tre indstilling \texttt{size},\texttt{color} og \texttt{alpha} og ser på forskellen. Her er en note om \texttt{alpha}:
 
 \emph{Alpha refers to the opacity of a geom. Values of alpha range from 0 to 1, with lower values corresponding to more transparent colors.} \url{https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html}
 
-\emph{Ekstra 2}: Prøve også at skifte rækkefølgerne af \texttt{geom\_jitter()} og \texttt{geom\_boxplot()} i den plot kode og se - gøre det en forskel til hvordan plottet ser ud?
+\begin{itemize}
+\tightlist
+\item
+  Prøv at skifte rækkefølgerne af \texttt{geom\_jitter()} og \texttt{geom\_boxplot()} i dit plot kommando og se - gøre det en forskel til hvordan plottet ser ud?
+\end{itemize}
 
 \textbf{8)} Lav en barplot med indstillingen \texttt{stat="count"}:
 
@@ -2956,11 +2985,11 @@ Leg med de tre indstilling \texttt{size},\texttt{color} og \texttt{alpha} og ser
 \item
   Forskellige farver til den gruppe-variable \texttt{cut}
 \item
-  Specificerer \texttt{position="dodge"} for at få bars ved siden af hinanden
+  Specificer \texttt{position="dodge"} for at få bars ved siden af hinanden
 \item
   Brug også indstillingen \texttt{colour="black"} og notater effekten
 \item
-  Tilføje et tema
+  Tilføj et tema
 \end{itemize}
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-150-1.pdf}
@@ -2978,15 +3007,16 @@ Leg med de tre indstilling \texttt{size},\texttt{color} og \texttt{alpha} og ser
 \item
   Giv søjlerne en sort ramme
 \item
-  Tilføje et tema osv.
+  Tilføj et tema osv.
 \end{itemize}
 
+Det ser sådan ud:
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-151-1.pdf}
 
 \begin{itemize}
 \tightlist
 \item
-  Nu får du en advarsel - gør hvad advarselen siger og ændre på indstillingen \texttt{bins} indenfor \texttt{geom\_histogram()}
+  Nu får du en advarsel - gør hvad advarselen siger og ændre på indstillingen \texttt{bins} indenfor \texttt{geom\_histogram()}.
 \end{itemize}
 
 \textbf{10)} Lav en density
@@ -3000,7 +3030,7 @@ Leg med de tre indstilling \texttt{size},\texttt{color} og \texttt{alpha} og ser
 \item
   Er det nu nemmere at sammenligne fordelingerne efter de forskellige niveauer af \texttt{cut}?
 \item
-  Tilføj lodrette linjer med median værdier af variablen \texttt{depth} for hver af de cuts fra variablen \texttt{cut}.
+  Tilføj lodrette linjer med beregnede \texttt{median} værdier af variablen \texttt{depth} for hver af de cuts fra variablen \texttt{cut}.
 
   \begin{itemize}
   \tightlist

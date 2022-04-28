@@ -637,7 +637,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="histogram-geom_histogram" class="section level3 hasAnchor" number="3.8.3">
 <h3><span class="header-section-number">3.8.3</span> Histogram (<code>geom_histogram</code>)<a href="visual1.html#histogram-geom_histogram" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <!-- Her præsenterer jeg to yderligere brugbart plot typer. -->
-<p>En histogram bruges til at få overblik over hvordan data fordeler sig. I <code>ggplot2</code> kan man lave en histogram med <code>geom_histogram()</code>. Den x-akse variable skal være en ‘continuous’ variable. Her specificerer vi, at vi gerne vil have et histogram for hver Species.</p>
+<p>En histogram bruges til at få overblik over hvordan data fordeler sig. I <code>ggplot2</code> kan man lave en histogram med <code>geom_histogram()</code>. Den x-akse variabel skal være en ‘continuous’ variabel. Her specificerer vi, at vi gerne vil have et histogram for hver Species.</p>
 <div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="visual1.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>iris, <span class="fu">aes</span>(<span class="at">x=</span>Sepal.Length, <span class="at">fill=</span>Species)) <span class="sc">+</span> </span>
 <span id="cb150-2"><a href="visual1.html#cb150-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span> </span>
 <span id="cb150-3"><a href="visual1.html#cb150-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Sepal Length&quot;</span>) <span class="sc">+</span> </span>
@@ -717,22 +717,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Så at du har noget at sammenligne med, skal dit plot se sådan ud:</p>
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-145-1.png" width="384" /></p>
-<p><strong>3)</strong> Tilføj nogle komponenter til dit plot fra 2).</p>
+<p><strong>3)</strong> Tilføj nogle komponenter til dit plot fra <strong>2)</strong>.</p>
 <ul>
 <li>En x-akse label (<code>xlab()</code>) og en y-akse label (<code>ylab()</code>)</li>
 <li>En titel (<code>ggtitle()</code>)</li>
 <li>Et tema som hedder <code>theme_bw()</code></li>
-<li>Huske at forbinde komponenterne med <code>+</code> og skrive de nye komponenter på deres egen linje.</li>
+<li>Husk at forbinde komponenterne med <code>+</code> og skrive de nye komponenter på deres egen linje.</li>
 </ul>
 <p>Det skal se sådan ud:</p>
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-146-1.png" width="384" /></p>
-<p><strong>4)</strong> Ændre temaet til <code>theme_classic()</code> eller <code>theme_minimal()</code> i stedet for <code>theme_bw()</code> og kig på resultatet.</p>
-<p>Ekstra: Hvis man (måske ved uheld) skriver ind <strong>to</strong> temaer på samme tid (for eksempel <code>+ theme_bw() + theme_classic()</code>) - hvilke tema får man så i plotten?</p>
-<p><em>Valgfri ekstra: her er nogle flere tema man kan prøve: <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="uri">https://ggplot2.tidyverse.org/reference/ggtheme.html</a></em></p>
-<p><strong>5)</strong> Lav det samme plot som i <strong>4)</strong>, med <code>color=color</code> indenfor <code>aes()</code>. Den første <code>color</code> refererer til punkt farver og den anden til variablen <code>color</code> i dataframen.</p>
-<p>Det skal se sådan ud:
+<p><strong>4)</strong> Ændre temaet af dit plot til <code>theme_classic()</code> eller <code>theme_minimal()</code> i stedet for <code>theme_bw()</code> og kig på resultatet.</p>
+<ul>
+<li>Hvis man (måske ved uheld) skriver ind <strong>to</strong> temaer på samme tid (for eksempel <code>+ theme_bw() + theme_classic()</code>) - hvilket tema får man så i plottet?</li>
+<li>Valgfri ekstra: her er nogle flere tema man kan prøve: <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="uri">https://ggplot2.tidyverse.org/reference/ggtheme.html</a>*</li>
+</ul>
+<p><strong>5)</strong> Lav det samme plot som i <strong>3)</strong>, og skriv <code>color=color</code> indenfor <code>aes()</code>. Den første <code>color</code> refererer til punkt farver og den anden til variablen <code>color</code> i dataframen.
+Det skal se sådan ud:
 <img src="visualisering_22_files/figure-html/unnamed-chunk-147-1.png" width="480" /></p>
-<p><strong>6)</strong> Bruge stadig <code>diamonds</code>, til at lave et boxplot:</p>
+<ul>
+<li>Nu fjern <code>color=color</code> fra funktionen <code>aes()</code> og i stedet tilføj <code>aes(color=color)</code> i funktionen <code>geom_point()</code>. Får du samme resultat?</li>
+</ul>
+<!-- * Tilføj også `x=depth` til din nye lokale `aes()` funktion indenfor `geom_point()` - hvad får du på x-aksen? Passer etiketten på x-aksen?   -->
+<ul>
+<li>Bemærk at det er lige meget om man bruger britisk eller amerikansk stavning i <code>ggplot2</code> - fk. <code>colour</code> eller <code>color</code> indenfor <code>aes()</code> giiver samme resultat.</li>
+</ul>
+<p><strong>6)</strong> Brug stadig <code>diamonds</code>, til at lave et boxplot:</p>
 <ul>
 <li><code>cut</code> på x-aksen (giv x-aksen label <code>Cut</code>)</li>
 <li><code>price</code> på y-aksen (giv y-aksen label <code>Price of diamond</code>)</li>
@@ -741,25 +750,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Det skal se sådan ud:</p>
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-148-1.png" width="480" /></p>
-<p>Ekstra: hvordan ser det ud, hvis man bruger <code>color</code> i stedet for <code>fill</code>?</p>
+<ul>
+<li>Hvordan ser det ud, hvis man bruger <code>colour</code> i stedet for <code>fill</code>? Eller hvis man giver begge to?</li>
+</ul>
 <p><strong>7)</strong> Lav følgende ekstra ændringer til din boxplot fra ovenstående:</p>
 <ul>
 <li>Tilføj <code>geom_jitter()</code> til din boxplot</li>
-<li>fjern de legend (se notaterne).</li>
+<li>fjern legend ved at tilføj <code>theme(legend.position="none")</code></li>
+<li>Man kan også tilføj <code>show.legend=FALSE</code> til både <code>geom_boxplot()</code> og <code>geom_jitter()</code> i stedet for - prøv det i stedet for at bruge <code>theme(legend.position="none")</code>. Er det nok at tilføje <code>show.legend=FALSE</code> til kun én af de to geoms?</li>
 </ul>
 <p>Det skal se sådan ud:</p>
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-149-1.png" width="384" /></p>
-<p><em>Ekstra 1</em>: man kan også prøve at forbedre plottet ved at give nogle indstillinger ind i <code>geom_jitter()</code>, for eksempel kan man prøve <code>geom_jitter(size=.2,color="grey",alpha=0.5)</code> for at gøre punkter mindre overbelastende i plottet (eller kan man bare fjerne dem).</p>
+<ul>
+<li>Man kan også prøve at forbedre plottet ved at give nogle indstillinger ind i <code>geom_jitter()</code>, for eksempel kan man prøve <code>geom_jitter(size=.2,color="grey",alpha=0.5)</code> for at gøre punkter mindre overbelastende i plottet (eller kan man overvejer at fjerne dem).</li>
+</ul>
 <p>Leg med de tre indstilling <code>size</code>,<code>color</code> og <code>alpha</code> og ser på forskellen. Her er en note om <code>alpha</code>:</p>
 <p><em>Alpha refers to the opacity of a geom. Values of alpha range from 0 to 1, with lower values corresponding to more transparent colors.</em> <a href="https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html" class="uri">https://ggplot2.tidyverse.org/reference/aes_colour_fill_alpha.html</a></p>
-<p><em>Ekstra 2</em>: Prøve også at skifte rækkefølgerne af <code>geom_jitter()</code> og <code>geom_boxplot()</code> i den plot kode og se - gøre det en forskel til hvordan plottet ser ud?</p>
+<ul>
+<li>Prøv at skifte rækkefølgerne af <code>geom_jitter()</code> og <code>geom_boxplot()</code> i dit plot kommando og se - gøre det en forskel til hvordan plottet ser ud?</li>
+</ul>
 <p><strong>8)</strong> Lav en barplot med indstillingen <code>stat="count"</code>:</p>
 <ul>
 <li>Variable <code>clarity</code> på x-aksen</li>
 <li>Forskellige farver til den gruppe-variable <code>cut</code></li>
-<li>Specificerer <code>position="dodge"</code> for at få bars ved siden af hinanden</li>
+<li>Specificer <code>position="dodge"</code> for at få bars ved siden af hinanden</li>
 <li>Brug også indstillingen <code>colour="black"</code> og notater effekten</li>
-<li>Tilføje et tema</li>
+<li>Tilføj et tema</li>
 </ul>
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-150-1.png" width="480" /></p>
 <p><strong>9)</strong> Lav en histogram</p>
@@ -768,18 +784,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Forskellige farver efter <code>cut</code></li>
 <li>Brug indstilling <code>alpha</code> til at ændre gennemsigtigheden af søljerne</li>
 <li>Giv søjlerne en sort ramme</li>
-<li>Tilføje et tema osv.</li>
+<li>Tilføj et tema osv.</li>
 </ul>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-151-1.png" width="576" /></p>
+<p>Det ser sådan ud:
+<img src="visualisering_22_files/figure-html/unnamed-chunk-151-1.png" width="576" /></p>
 <ul>
-<li>Nu får du en advarsel - gør hvad advarselen siger og ændre på indstillingen <code>bins</code> indenfor <code>geom_histogram()</code></li>
+<li>Nu får du en advarsel - gør hvad advarselen siger og ændre på indstillingen <code>bins</code> indenfor <code>geom_histogram()</code>.</li>
 </ul>
 <p><strong>10)</strong> Lav en density</p>
 <ul>
 <li>Man kan se, at det er svært at sammenligne fordelingerne i ovenstående histograms</li>
 <li>I din histogram kode fra <strong>9)</strong> erstatte <code>geom_histogram</code> med <code>geom_density</code></li>
 <li>Er det nu nemmere at sammenligne fordelingerne efter de forskellige niveauer af <code>cut</code>?</li>
-<li>Tilføj lodrette linjer med median værdier af variablen <code>depth</code> for hver af de cuts fra variablen <code>cut</code>.
+<li>Tilføj lodrette linjer med beregnede <code>median</code> værdier af variablen <code>depth</code> for hver af de cuts fra variablen <code>cut</code>.
 <ul>
 <li>Hint: <code>tapply</code> til at beregne <code>median</code>, <code>geom_vline</code> til at lave lodrette linjer</li>
 </ul></li>
