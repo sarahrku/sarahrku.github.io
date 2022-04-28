@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.06478248 -0.44753808 -0.25412545  0.35586514  1.86602432 -0.35720619
-##  [7]  1.11885160  0.28746897 -1.35663125 -0.89806780  0.45677019  0.80773672
-## [13] -0.33108946  0.31308735 -1.26677721 -0.32934757  0.82221416  0.76715866
-## [19]  1.38524521 -0.02758980 -0.33195056  0.24232381 -0.55674905  0.23014446
-## [25] -0.64139436
+##  [1] -1.2026278  0.3212779 -0.7583539 -1.3375449 -1.5853946 -0.4360447
+##  [7] -0.3848414 -1.1030047 -1.0566022  1.2473844  1.6938504 -0.1309552
+## [13]  0.4482350  0.4166749  0.7148778 -0.3545271 -0.3144934 -1.0643199
+## [19]  0.5191644  0.1998743 -1.3961923 -0.4280463  1.7840929  0.0609416
+## [25] -0.9230462
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.06478248 {-}0.44753808 {-}0.25412545  0.35586514  1.86602432 {-}0.35720619}
+\DocumentationTok{\#\# [1] {-}1.2026278  0.3212779 {-}0.7583539 {-}1.3375449 {-}1.5853946 {-}0.4360447}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.0275898 {-}0.3319506  0.2423238 {-}0.5567490  0.2301445 {-}0.6413944}
+\DocumentationTok{\#\# [1]  0.1998743 {-}1.3961923 {-}0.4280463  1.7840929  0.0609416 {-}0.9230462}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.06478248}
+\DocumentationTok{\#\# [1] {-}1.202628}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.6413944}
+\DocumentationTok{\#\# [1] {-}0.9230462}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.07158565 -0.02758980  1.86602432 -1.35663125  0.61533597  0.78443353
+## [1] -0.2027848 -0.3545271  1.7840929 -1.5853946  0.8848473  0.9406632
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.35663 -0.35721 -0.02759  0.07159  0.45677  1.86602
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -1.5854 -1.0566 -0.3545 -0.2028  0.4167  1.7841
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -2662,7 +2662,8 @@ Vi bruger også \texttt{fill=Species} her for at lave en forskellige farve autom
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"count"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of observations by species"}\NormalTok{)}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of observations by species"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2670,33 +2671,55 @@ Vi bruger også \texttt{fill=Species} her for at lave en forskellige farve autom
 
 \textbf{Barplot: stack vs dodge}
 
-Hvis man har flere katagoriske variabler, kan man lave barplots på forskellige måder. Da der er en ekstra katagorisk variabel i datasættet, laver jeg én, der hedder \texttt{Sepal.Group}, der skelne imellem \texttt{Long} og \texttt{Short} værdier af variablen \texttt{Sepal.Length}. Her specificerer jeg bare (med funktionen \texttt{ifelse()}), at hvis \texttt{Sepal.Length} er længere end den gennemsnitlige \texttt{Sepal.Length}, så er det betragtet \texttt{Long}, ellers er det \texttt{Short}.
+Hvis man har flere katagoriske variabler, kan man lave barplots på forskellige måder. Da der er en ekstra katagorisk variabel i datasættet, laver jeg én, der hedder \texttt{Sepal.Group}, der skelne imellem \texttt{Long} og \texttt{Short} værdier af variablen \texttt{Sepal.Length}. Her specificerer jeg bare (med funktionen \texttt{ifelse()}), at hvis \texttt{Sepal.Length} er længere end den gennemsnitlige \texttt{Sepal.Length}, så er det betragtet \texttt{Long}, ellers er det \texttt{Short}, som i følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Group }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ifelse}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length}\SpecialCharTok{\textgreater{}}\FunctionTok{mean}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length),  }\CommentTok{\#test}
+         \StringTok{"Long"}\NormalTok{,                                     }\CommentTok{\#if TRUE}
+         \StringTok{"Short"}\NormalTok{)                                    }\CommentTok{\#if FALSE}
+\end{Highlighting}
+\end{Shaded}
 
 Når jeg laver en barplot med de to variabler, tilføjer jeg \texttt{Sepal.Group} med \texttt{fill}, og \texttt{ggplot} splitter antal observationer efter \texttt{Sepal.Group} med farver som repræsenterer \texttt{Sepal.Group}, og tilføjer en tilsvarende legend.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Group }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length}\SpecialCharTok{\textgreater{}}\FunctionTok{mean}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length),}\StringTok{"Long"}\NormalTok{,}\StringTok{"Short"}\NormalTok{)}
-
-\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{)  }\SpecialCharTok{+}
-  \FunctionTok{theme\_minimal}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-134-1.pdf}
-
-Mange gange foretrækker man at få bars som stå ved siden af hinanden. Det kan vi specificere med blot at tilføje \texttt{position="dodge"} ind i \texttt{geom\_bar()}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
-  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"count"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of observations by species"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-135-1.pdf}
+
+Mange gange foretrækker man at få bars som stå ved siden af hinanden. Det kan vi specificere med blot at tilføje \texttt{position="dodge"} ind i \texttt{geom\_bar()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"count"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of observations by species"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-136-1.pdf}
+
+Som ekstra for at vise fleksibiliten i pakken \texttt{ggplot2}: jeg kan ikke lide at bredden af søjlen til arten setosa i ovenstående plot har bredden som er to gange større end de andre søjler (fordi der er ingen observationer i setosa som har ``Long'' i variablen \texttt{Sepal.Group}). Jeg Gogglede mig frem til en løsning på det:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species, }\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"count"}\NormalTok{, }\AttributeTok{position =} \FunctionTok{position\_dodge2}\NormalTok{(}\AttributeTok{preserve =} \StringTok{"single"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Number of observations by species"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-137-1.pdf}
 
 \hypertarget{histogram-geom_histogram}{%
 \subsection{\texorpdfstring{Histogram (\texttt{geom\_histogram})}{Histogram (geom\_histogram)}}\label{histogram-geom_histogram}}
@@ -2713,7 +2736,7 @@ En histogram bruges til at få overblik over hvordan data fordeler sig. I \textt
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-136-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-138-1.pdf}
 
 Man kan også gøre det nemmere at skelne imellem de tre arter ved at sætte \texttt{alpha=0.5} indenfor \texttt{geom\_histogram} og ved at angive en linje farve som mulighed inden for \texttt{geom\_histogram()}.
 
@@ -2727,7 +2750,7 @@ Man kan også gøre det nemmere at skelne imellem de tre arter ved at sætte \te
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-137-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-139-1.pdf}
 
 \hypertarget{density-geom_density}{%
 \subsection{\texorpdfstring{Density (\texttt{geom\_density})}{Density (geom\_density)}}\label{density-geom_density}}
@@ -2744,7 +2767,7 @@ Med en density plot, ligesom med en histogram, kan man se fordelingen, de data h
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-138-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-140-1.pdf}
 
 \textbf{Density plot med fill og gennemsigtig farver}
 
@@ -2760,7 +2783,7 @@ Vi kan angive en værdi for \texttt{alpha} indenfor \texttt{geom\_density()}. De
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-139-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-141-1.pdf}
 
 \textbf{Tilføje middelværdi linjer}
 
@@ -2779,7 +2802,7 @@ Vi bruger funktionen \texttt{tapply()} til at beregne middelværdier af \texttt{
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-140-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-142-1.pdf}
 
 \hypertarget{troubleshooting}{%
 \section{Troubleshooting}\label{troubleshooting}}
@@ -2851,7 +2874,7 @@ Se også ?diamonds for en beskrivelse af de variabler.
 
 Så at du har noget at sammenligne med, skal dit plot se sådan ud:
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-143-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-145-1.pdf}
 
 \textbf{3)} Tilføj nogle komponenter til dit plot fra 2).
 
@@ -2869,7 +2892,7 @@ Så at du har noget at sammenligne med, skal dit plot se sådan ud:
 
 Det skal se sådan ud:
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-144-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-146-1.pdf}
 
 \textbf{4)} Ændre temaet til \texttt{theme\_classic()} eller \texttt{theme\_minimal()} i stedet for \texttt{theme\_bw()} og kig på resultatet.
 
@@ -2880,7 +2903,7 @@ Ekstra: Hvis man (måske ved uheld) skriver ind \textbf{to} temaer på samme tid
 \textbf{5)} Lav det samme plot som i \textbf{4)}, med \texttt{color=color} indenfor \texttt{aes()}. Den første \texttt{color} refererer til punkt farver og den anden til variablen \texttt{color} i dataframen.
 
 Det skal se sådan ud:
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-145-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-147-1.pdf}
 
 \textbf{6)} Bruge stadig \texttt{diamonds}, til at lave et boxplot:
 
@@ -2898,7 +2921,7 @@ Det skal se sådan ud:
 
 Det skal se sådan ud:
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-146-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-148-1.pdf}
 
 Ekstra: hvordan ser det ud, hvis man bruger \texttt{color} i stedet for \texttt{fill}?
 
@@ -2914,7 +2937,7 @@ Ekstra: hvordan ser det ud, hvis man bruger \texttt{color} i stedet for \texttt{
 
 Det skal se sådan ud:
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-147-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-149-1.pdf}
 
 \emph{Ekstra 1}: man kan også prøve at forbedre plottet ved at give nogle indstillinger ind i \texttt{geom\_jitter()}, for eksempel kan man prøve \texttt{geom\_jitter(size=.2,color="grey",alpha=0.5)} for at gøre punkter mindre overbelastende i plottet (eller kan man bare fjerne dem).
 
@@ -2940,7 +2963,7 @@ Leg med de tre indstilling \texttt{size},\texttt{color} og \texttt{alpha} og ser
   Tilføje et tema
 \end{itemize}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-148-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-150-1.pdf}
 
 \textbf{9)} Lav en histogram
 
@@ -2958,7 +2981,7 @@ Leg med de tre indstilling \texttt{size},\texttt{color} og \texttt{alpha} og ser
   Tilføje et tema osv.
 \end{itemize}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-149-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-151-1.pdf}
 
 \begin{itemize}
 \tightlist
@@ -2986,7 +3009,7 @@ Leg med de tre indstilling \texttt{size},\texttt{color} og \texttt{alpha} og ser
   \end{itemize}
 \end{itemize}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-150-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-152-1.pdf}
 
 \textbf{11)} Bare ekstra øvelse: Lege frit med at lave andre plots fra \texttt{diamonds} med ggplot2. Eksempelvis
 
