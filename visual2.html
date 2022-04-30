@@ -643,11 +643,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="problemstillinger-3" class="section level2 hasAnchor" number="4.7">
 <h2><span class="header-section-number">4.7</span> Problemstillinger<a href="visual2.html#problemstillinger-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>1</strong>) Lav quiz - “Quiz - ggplot2 part 2”</p>
-<p><strong>2</strong>) (<em>Factorer og plots</em>)</p>
+<p><strong>Problem 1</strong>) Lav quiz - “Quiz - ggplot2 part 2”</p>
+<p><strong>Problem 2</strong>) (<em>Factorer og plots</em>)</p>
 <p><strong>a</strong>) Åbn datsættet <code>mtcars</code> og lav en barplot:</p>
+<p><!-- * Først tjek hvor mange unikke værdier er der i variablen `cyl`. --></p>
 <ul>
-<li>Først tjek hvor mange unikke værdier er der i variablen <code>cyl</code>.</li>
 <li>Bruge variablen <code>cyl</code> på x-aksen og give forskellige farver efter den samme variabel.</li>
 <li>Virker din kode? Kig på x-aksen.</li>
 <li>Variablen er numerisk men skal fortolkes som en factor. Lav variablen om til en factor (eller bare skriv <code>as.factor(cyl)</code> i selve plottet) og lave dit plot igen.</li>
@@ -674,7 +674,7 @@ FALSE # … with 1 more variable: year &lt;int&gt;</code></pre>
 <p>Man kan altid anvende <code>?penguins</code> for at se flere detaljer om variablenavner.</p>
 <p><em>Vi skal starte med at rydde op lidt med datasættet. Køre følgende for at fjerne al rækker som har NA (manglende) værdier:</em></p>
 <div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="visual2.html#cb193-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(penguins)</span></code></pre></div>
-<p><strong>3</strong>) <em>Manuelt farver og punkter</em></p>
+<p><strong>Problem 3</strong>) <em>Manuelt farver og punkter</em></p>
 <p><strong>a</strong>) Lav en scatter plot med <code>ggplot</code>:</p>
 <ul>
 <li><code>bill_length_mm</code> på x-aksen</li>
@@ -684,9 +684,9 @@ FALSE # … with 1 more variable: year &lt;int&gt;</code></pre>
 </ul>
 <p><strong>b</strong>) Lav følgende ændringer til det plot:</p>
 <ul>
-<li>Ændre farver manuelt - prøve både at angive farver med <code>scale_color_manual</code> og afprøve også løsningen med pakken <code>RColorBrewer</code> (husk at installere/indlæse pakken hvis nødvendigt).</li>
-<li>Angiv at der skal være forskellige punkt former for hver <code>species</code>.</li>
-<li>Prøv at vælge nogle punkt former fra listen og specificer dem manuelt.</li>
+<li>Ændr farver manuelt - prøv både at angive farver med <code>scale_color_manual</code> og afprøve også løsningen med pakken <code>RColorBrewer</code> (husk at installere/indlæse pakken hvis nødvendigt).</li>
+<li>Angiv at der skal være forskellige punkt former for hver art i variablen <code>species</code>.</li>
+<li>Prøv også at vælge nogle punkt former fra listen og specificer dem manuelt.</li>
 </ul>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-199"></span>
 <img src="visualisering_22_files/figure-html/unnamed-chunk-199-1.png" alt="Min løsning" width="384" />
@@ -694,26 +694,49 @@ FALSE # … with 1 more variable: year &lt;int&gt;</code></pre>
 Figure 4.1: Min løsning
 </p>
 </div>
-<p><strong>4</strong>) <em>Histogram med facets</em></p>
+<p><strong>Problem 4</strong>) <em>Coordinate systemer</em></p>
+<p>Tag overstående scatter plot fra <strong>3</strong>) og</p>
+<ul>
+<li>bruge <code>coord_cartesian()</code> så at man fanger kun en bill længde mellem 40 og 50, og en bill depth mellem 16 og 19.<br />
+</li>
+<li>som ekstra afprøve pakken <code>ggrepel</code> (husk at installere/inlæse) ved at tilføje de navne af de forskellige øer som labels direkte på plottet</li>
+<li>lav en delmængde af de data efter samme kriterier og specificere den nye dataframe som parameteren <code>data</code> indenfor <code>geom_text_repel</code>-funktionen. Det undgår, at tekst bliver plottet for punkterne udenfor området angivet med <code>coord_cartesian()</code>).</li>
+</ul>
+<pre><code>## Warning: ggrepel: 14 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-200"></span>
+<img src="visualisering_22_files/figure-html/unnamed-chunk-200-1.png" alt="Min løsning" width="480" />
+<p class="caption">
+Figure 4.2: Min løsning
+</p>
+</div>
+<p><strong>Problem 5</strong>) <em>Histogram med facets</em></p>
 <p>Lav en histogram:</p>
 <ul>
 <li>Variablen <code>flipper_length_mm</code> på x-aksen</li>
-<li>Anvend <code>facet_grid</code> for at adskille dit plot i tre på <code>species</code> (obs små bogstaver til forskel fra i datasættet <code>iris</code>)</li>
-<li>Giv en forskellige farve til hvert niveau i <code>species</code></li>
+<li>Anvend <code>facet_grid</code> for at adskille dit plot i tre efter variablen <code>species</code></li>
+<li>Giv også en forskellige farve til hver art i <code>species</code></li>
 <li>Specificer hensigtsmæssige tekst (akserne, titel) og et tema</li>
 <li>Hvis nødvendigt ændr parameteren <code>bins</code> til noget andet indenfor <code>geom_histogram()</code>.</li>
 </ul>
 <p>Det skal ser sådan ud:</p>
-<p><strong>5</strong>) <strong>a)</strong> Lave et density plot af <code>body_mass_g</code>.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="visual2.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins,<span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm,<span class="at">fill=</span>species)) <span class="sc">+</span></span>
+<span id="cb195-2"><a href="visual2.html#cb195-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">colour=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb195-3"><a href="visual2.html#cb195-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Histogram of flipper length according to species&quot;</span>) <span class="sc">+</span></span>
+<span id="cb195-4"><a href="visual2.html#cb195-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>species) <span class="sc">+</span></span>
+<span id="cb195-5"><a href="visual2.html#cb195-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Flipper length (mm)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb195-6"><a href="visual2.html#cb195-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-201-1.png" width="384" /></p>
+<p><strong>Problem 6</strong>) <strong>a)</strong> Lave et density plot af <code>body_mass_g</code>.</p>
 <ul>
 <li>Anvend funktionen <code>facet_grid</code> til at opdele i til tre plots efter <code>species</code></li>
-<li>Bruge <code>fill</code> til at opdele de tre plots efter variablen <code>sex</code></li>
-<li>Gøre dine density plots gennemsigtige</li>
-<li>Skrive en sætning om forskellen i <code>body_mass_g</code> mellem females og males.</li>
-<li>Hvorfor tror du, at de densities har flere topper?</li>
+<li>Brug også <code>fill</code> til at opdele densities indenfor de tre plots efter variablen <code>sex</code></li>
+<li>Gør dine density plots gennemsigtige</li>
+<li>Skrive en sætning om forskellen i <code>body_mass_g</code> mellem “females” og “males.”</li>
 </ul>
-<p><strong>b</strong>) Nu udvikl din <code>facet_grid</code> kommando til at adskille plots yderligere således at du har en grid struktur med de forskellige ø (variablen <code>island</code>) på rækkerne og de tre arter (variablen <code>spieces</code>) på kolonnerne.</p>
-<p><strong>c</strong>) Kan du forklare hvorfor der er blank plotter i din grid? Eksperimenter med <code>facet_wrap</code> i stedet for facet grid.</p>
+<!-- * Hvorfor tror du, at de densities har flere topper? -->
+<p><strong>b</strong>) Nu udvikl din <code>facet_grid</code> kommando til at adskille plots yderligere således at du har en “grid” struktur med de forskellige ø (variablen <code>island</code>) på rækkerne og de tre arter (variablen <code>spieces</code>) på kolonnerne.</p>
+<p><strong>c</strong>) Kan du forklare hvorfor der er blank plotter i din grid? Eksperimenter med <code>facet_wrap</code> i stedet for <code>facet_grid</code>.</p>
 <!-- __b)__ Vi vil gerne adskille vores densities yderligere, efter `species`. -->
 <!-- * Nu tilføj linjen `facet_grid(~species)` til dit plot og opdag, hvad der sker.  -->
 <!-- * Skriv endnu en sætning, som beskriver forskellen i `body_mass_g` mellem de to køn over de tre `species`. -->
@@ -723,76 +746,68 @@ Figure 4.1: Min løsning
 <!--   facet_grid(~species) + -->
 <!--   theme_minimal() -->
 <!-- ``` -->
-<p><strong>6</strong>) <em>Coordinate systemer</em></p>
-<p>Tag overstående scatter plot fra <strong>3</strong>) og</p>
-<ul>
-<li>bruge <code>coord_cartesian()</code> så at man fanger kun en bill længde mellem 40 og 50, og en bill depth mellem 16 og 19.<br />
-</li>
-<li>som ekstra afprøve pakken <code>ggrepel</code> (husk at installere/inlæse) ved at tilføje de navne af de forskellige øer som labels direkte på plottet (valfrig opfordring: man kan lave en subset af de data og specificere det indenfor den relevant <code>ggrepl</code> funktion, for at undgå, at de labels bliver plottet for punkterne udenfor området angivet med <code>coord_cartesian()</code>).</li>
-</ul>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-204"></span>
-<img src="visualisering_22_files/figure-html/unnamed-chunk-204-1.png" alt="Min løsning" width="480" />
-<p class="caption">
-Figure 4.2: Min løsning
-</p>
-</div>
-<p><strong>7</strong>) <em>Coordinate systemer</em></p>
+<p><strong>Problem 7</strong>) <em>Coordinate systemer</em></p>
 <p>Lav en barplot af counts for <code>species</code> opdelte efter <code>sex</code>.</p>
 <ul>
-<li>Anvende en ‘coordinate flip’ for at få den til at være horizontal.</li>
-<li>Vælge nogle manuelt farver.</li>
-<li>Vælge et tema som I godt kan lide.</li>
+<li><p>Anvend en ‘coordinate flip’ for at få den til at være vandrette/horizontal.</p></li>
+<li><p>Vælg nogle farver - jeg benytter <code>palette = "Accent"</code> fra den <code>RColorBrewer</code> løsning</p></li>
+<li><p>Ændr rækkefølgen af de tre søjler, således at arten med de meste observationer er på toppen og arten med den færrest er på bunden.</p></li>
+<li><p>Prøve også <code>scale_y_reverse()</code> og kig på resultatet.</p></li>
 </ul>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-205"></span>
-<img src="visualisering_22_files/figure-html/unnamed-chunk-205-1.png" alt="Min løsning" width="384" />
+Her er min løsning
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-206"></span>
+<img src="visualisering_22_files/figure-html/unnamed-chunk-206-1.png" alt="Min løsning" width="384" />
 <p class="caption">
 Figure 4.3: Min løsning
 </p>
 </div>
+<p><strong>Problem 8</strong>) Lav boxplots af <code>body_mass_g</code> opdelt efter <code>species</code>.</p>
 <ul>
-<li>I vil have at de tre arter få rækkefølgen, således at den <code>species</code> med de meste observationer er på toppen og den <code>species</code> med den færrest er på bunden. Ændre rækkefølgen af de tre <code>species</code>.</li>
-<li>Prøve også <code>scale_y_reverse()</code> og kig på resultatet.</li>
-</ul>
-<p><strong>8</strong>) Lave boxplots af <code>body_mass_g</code> opdelte efter <code>species</code>.</p>
-<ul>
-<li><p>Tilføj punkter ovenpå.</p></li>
-<li><p>Specificere nogle farver manuelt for de boxes.</p></li>
+<li><p>Tilføj “jitter” punkter ovenpå boxplots.</p></li>
+<li><p>Specificer nogle farver manuelt for både boxes og punkterne (en farve til hver art)</p></li>
 <li><p>Giv det en hensigtsmæssig titel og nogle akser-labels</p></li>
 <li><p>Adskille plotterne ved at opdele efter de forskellige <code>islands</code>.</p></li>
-<li><p>Ekstra: skrive en sætning om <code>body_mass_g</code> ser forskellige ud for <code>Adelie</code> over de tre <code>islands</code>.</p></li>
-<li><p>Ekstra: udforsk <code>?geom_violin</code> som erstatning for <code>geom_boxplot</code>.</p></li>
+<li><p>Ekstra: prøv <code>?geom_violin</code> som erstatning for <code>geom_boxplot</code>.</p></li>
 </ul>
-<p><strong>9</strong>) <em>Annotations</em>. <strong>a</strong>) Lav et scatter plot af <code>bill_length_mm</code> vs <code>bill_depth_mm</code>.</p>
+<p><strong>Problem 9</strong>) <em>Annotations og linjer</em>.</p>
+<p><strong>a</strong>) Lav et scatter plot af <code>bill_length_mm</code> vs <code>bill_depth_mm</code>.</p>
 <ul>
 <li>Anvend hensigtsmæssigt titel/labels/tema</li>
 <li>Anvend forskellige farver for de tre <code>species</code>.</li>
-<li>Tjekke funktionen <code>?annotate</code> og bruge den med <code>geom="text"</code> og hensigtsmæssigt x- og y-akse værdier til at tilføje <code>species</code> navne som tekst direkte på plottet (se eksempel nedenfor for at se, hvad jeg mener).</li>
-<li>Udforske hvordan man gøre teksten større, som jeg har gjorte i men løsning.</li>
-<li>Fjerne den legend med <code>show.legend = FALSE</code> indenfor <code>geom_point()</code></li>
-<li>Ekstra: bruge <code>annotate</code> igen til at lave et orange rektangel omkring alle de blå punkter (se kursusnotaterne).</li>
+<li>Tjek funktionen <code>?annotate</code> og bruge den med <code>geom="text"</code> og hensigtsmæssigt x- og y-akse værdier til at tilføje <code>species</code> navne som tekst direkte på plottet (se eksempel nedenfor for at se, hvad jeg mener).</li>
+<li>Udforsk hvordan man gøre teksten større, som jeg har gjort i min løsning.</li>
+<li>Fjern legend med <code>show.legend = FALSE</code> indenfor <code>geom_point()</code></li>
 </ul>
+<!-- * Ekstra: bruge `annotate` igen til at lave et orange rektangel omkring alle de blå punkter (se kursusnotaterne). -->
+<p>Her er min løsning:</p>
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-208-1.png" width="384" /></p>
-<p><strong>b</strong>) Vi vil gerne tilføje noget lodrette og vandrette linjer til plottet som specificer de middelværdier af de tre fordelinger.</p>
+<p><strong>b</strong>) Vi vil gerne tilføje nogle lodrette og vandrette linjer til plottet, som viser middelværdierne af variablerne for de tre arter</p>
 <ul>
-<li>Bruge <code>tapply</code> til at beregne de gennemsnitlige værdier for henholdsvis <code>bill_length_mm</code> og <code>bill_depth_mm</code> opdelte efter <code>species</code>.</li>
-<li>Lave en dataramme, med kolonner <code>species</code>, <code>mlength</code> og <code>mdepth</code>, hvor <code>mlength</code> og <code>mdepth</code> er dine middelværdier for henholdsvis <code>bill_length_mm</code> og <code>bill_depth_mm</code>. Kalde det for <code>mydf</code>. Fk.</li>
+<li>Først brug <code>tapply</code> til at beregne de gennemsnitlige værdier for henholdsvis <code>bill_length_mm</code> og <code>bill_depth_mm</code> opdelte efter <code>species</code> (gem dem som henholdsvis <code>mean_length</code> og <code>mean_depth</code>)</li>
+<li>Brug <code>mean_length</code> og <code>mean_depth</code> til at tilføje linjer til plottet med den relevante funktion.</li>
 </ul>
-<pre><code>##        species  mlength   mdepth
-## Adelie  Adelie 38.82397 18.34726</code></pre>
+<p><strong>c</strong>) <strong>Udfordring</strong> Kan du gøre linjerne til samme farver som punkterne af deres pågældende art (se min løsning nedenunder)?</p>
 <ul>
-<li>For de lodrette linjer anvende <code>geom_vline()</code> og specificere din ny dataramme indenfor med <code>data=mydf</code>. Tilføj også <code>xintercept=mlength</code> og <code>colour=species</code> (husk at da <code>mlength</code> og <code>species</code> er variabler fra <code>mydf</code> skal man bruge <code>aes()</code>)<br />
-</li>
-<li>Tilføje de relevante vandrette linjer.</li>
-<li>Specificer “dashed” linjer</li>
+<li>Hint: tage udgangspunkt i følgende dataframe, der bruger din beregnede værdier:</li>
 </ul>
-<p>Plotten skal ser sådan ud</p>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-210-1.png" width="480" /></p>
-<p><strong>10</strong>) Valgfri: Lav et scatter plot og inddrag <code>?scale_colour_gradient2</code> (se fk. <a href="https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html" class="uri">https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html</a>)</p>
-<!-- ## Workshop opgave (OBS Fredag) -->
-<!-- 1) I uge arbejder vi direkte på en skabalon som jeg har lavet i rmarkdown. Filen hedder `markdown_visualisering.Rmd` og er tilgængelige på Absalon. -->
-<!-- 2) Jeg kommer rundt i breakout rooms og tilbudde min støtte. -->
-<!-- 3) Derefter poster jeg mine løsninger på problemer, som du måske kan bruge til at tage noget ekstra videre til næste gang. -->
-<!-- 4) På mandag gå vi igennem nogle af de punkter som I havde meste svært ved.  -->
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="visual2.html#cb196-1" aria-hidden="true" tabindex="-1"></a>mydf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;species&quot;</span><span class="ot">=</span><span class="fu">names</span>(mean_length),<span class="st">&quot;mlength&quot;</span><span class="ot">=</span>mean_length,<span class="st">&quot;mdepth&quot;</span><span class="ot">=</span>mean_depth)</span>
+<span id="cb196-2"><a href="visual2.html#cb196-2" aria-hidden="true" tabindex="-1"></a>mydf</span></code></pre></div>
+<pre><code>##             species  mlength   mdepth
+## Adelie       Adelie 38.82397 18.34726
+## Chinstrap Chinstrap 48.83382 18.42059
+## Gentoo       Gentoo 47.56807 14.99664</code></pre>
+<ul>
+<li>Angiv parameteren <code>data</code> til at være ovenstående dataframe i <code>geom_vline()</code> og brug lokal aethestiks (<code>aes()</code>) til at angive parametre til linjerne.</li>
+<li>Gør samme for <code>geom_hline()</code></li>
+<li>Specificer også “dashed” linjer</li>
+</ul>
+<p>Her er min løsning:</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-211"></span>
+<img src="visualisering_22_files/figure-html/unnamed-chunk-211-1.png" alt="min løsning" width="480" />
+<p class="caption">
+Figure 4.4: min løsning
+</p>
+</div>
 </div>
 <div id="ekstra-links-1" class="section level2 hasAnchor" number="4.8">
 <h2><span class="header-section-number">4.8</span> Ekstra links<a href="visual2.html#ekstra-links-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>

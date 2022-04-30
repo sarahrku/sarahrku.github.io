@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -1.1295010  1.2660040 -0.9078392  0.4705522  0.3508347  0.3288316
-##  [7]  0.3503138  1.6829648 -1.2722558  0.7674048  0.5827377 -0.5539948
-## [13]  0.1651226  1.1098807 -2.4127320 -0.3301219  0.1530181  0.1195577
-## [19]  0.5372404  0.1433733 -0.2490627  0.2944050 -1.7550915 -0.4734600
-## [25] -0.5021878
+##  [1] -1.209483125 -0.851953156  0.876843841  1.390453594 -0.375826404
+##  [6]  2.112240029  0.640870122 -0.187748358 -0.965191777  0.947820455
+## [11] -0.163008665  0.034203842 -0.234108117  0.117383283  0.009268997
+## [16]  1.088951282  1.629320032 -0.581715464  2.266691702 -0.383319485
+## [21]  2.721942978  0.923745744  0.234946902  0.510121341  1.394981158
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}1.1295010  1.2660040 {-}0.9078392  0.4705522  0.3508347  0.3288316}
+\DocumentationTok{\#\# [1] {-}1.2094831 {-}0.8519532  0.8768438  1.3904536 {-}0.3758264  2.1122400}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.1433733 {-}0.2490627  0.2944050 {-}1.7550915 {-}0.4734600 {-}0.5021878}
+\DocumentationTok{\#\# [1] {-}0.3833195  2.7219430  0.9237457  0.2349469  0.5101213  1.3949812}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}1.129501}
+\DocumentationTok{\#\# [1] {-}1.209483}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.5021878}
+\DocumentationTok{\#\# [1] 1.394981}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.05056022  0.15301813  1.68296477 -2.41273197  0.88092598  0.93857657
+## [1]  0.4778972  0.2349469  2.7219430 -1.2094831  1.0893241  1.0437069
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -2.41273 -0.50219  0.15302 -0.05056  0.47055  1.68296
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -1.2095 -0.2341  0.2349  0.4779  1.0890  2.7219
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -3638,16 +3638,14 @@ Man må gerne ændre højden og bredden på det gemt plot med \texttt{width} og 
 \hypertarget{problemstillinger-3}{%
 \section{Problemstillinger}\label{problemstillinger-3}}
 
-\textbf{1}) Lav quiz - ``Quiz - ggplot2 part 2''
+\textbf{Problem 1}) Lav quiz - ``Quiz - ggplot2 part 2''
 
-\textbf{2}) (\emph{Factorer og plots})
+\textbf{Problem 2}) (\emph{Factorer og plots})
 
 \textbf{a}) Åbn datsættet \texttt{mtcars} og lav en barplot:
 
 \begin{itemize}
 \tightlist
-\item
-  Først tjek hvor mange unikke værdier er der i variablen \texttt{cyl}.
 \item
   Bruge variablen \texttt{cyl} på x-aksen og give forskellige farver efter den samme variabel.
 \item
@@ -3697,7 +3695,7 @@ Man kan altid anvende \texttt{?penguins} for at se flere detaljer om variablenav
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{3}) \emph{Manuelt farver og punkter}
+\textbf{Problem 3}) \emph{Manuelt farver og punkter}
 
 \textbf{a}) Lav en scatter plot med \texttt{ggplot}:
 
@@ -3718,11 +3716,11 @@ Man kan altid anvende \texttt{?penguins} for at se flere detaljer om variablenav
 \begin{itemize}
 \tightlist
 \item
-  Ændre farver manuelt - prøve både at angive farver med \texttt{scale\_color\_manual} og afprøve også løsningen med pakken \texttt{RColorBrewer} (husk at installere/indlæse pakken hvis nødvendigt).
+  Ændr farver manuelt - prøv både at angive farver med \texttt{scale\_color\_manual} og afprøve også løsningen med pakken \texttt{RColorBrewer} (husk at installere/indlæse pakken hvis nødvendigt).
 \item
-  Angiv at der skal være forskellige punkt former for hver \texttt{species}.
+  Angiv at der skal være forskellige punkt former for hver art i variablen \texttt{species}.
 \item
-  Prøv at vælge nogle punkt former fra listen og specificer dem manuelt.
+  Prøv også at vælge nogle punkt former fra listen og specificer dem manuelt.
 \end{itemize}
 
 \begin{figure}
@@ -3731,47 +3729,7 @@ Man kan altid anvende \texttt{?penguins} for at se flere detaljer om variablenav
 \caption{\label{fig:unnamed-chunk-199}Min løsning}
 \end{figure}
 
-\textbf{4}) \emph{Histogram med facets}
-
-Lav en histogram:
-
-\begin{itemize}
-\tightlist
-\item
-  Variablen \texttt{flipper\_length\_mm} på x-aksen
-\item
-  Anvend \texttt{facet\_grid} for at adskille dit plot i tre på \texttt{species} (obs små bogstaver til forskel fra i datasættet \texttt{iris})
-\item
-  Giv en forskellige farve til hvert niveau i \texttt{species}
-\item
-  Specificer hensigtsmæssige tekst (akserne, titel) og et tema
-\item
-  Hvis nødvendigt ændr parameteren \texttt{bins} til noget andet indenfor \texttt{geom\_histogram()}.
-\end{itemize}
-
-Det skal ser sådan ud:
-
-\textbf{5}) \textbf{a)} Lave et density plot af \texttt{body\_mass\_g}.
-
-\begin{itemize}
-\tightlist
-\item
-  Anvend funktionen \texttt{facet\_grid} til at opdele i til tre plots efter \texttt{species}
-\item
-  Bruge \texttt{fill} til at opdele de tre plots efter variablen \texttt{sex}
-\item
-  Gøre dine density plots gennemsigtige
-\item
-  Skrive en sætning om forskellen i \texttt{body\_mass\_g} mellem females og males.
-\item
-  Hvorfor tror du, at de densities har flere topper?
-\end{itemize}
-
-\textbf{b}) Nu udvikl din \texttt{facet\_grid} kommando til at adskille plots yderligere således at du har en grid struktur med de forskellige ø (variablen \texttt{island}) på rækkerne og de tre arter (variablen \texttt{spieces}) på kolonnerne.
-
-\textbf{c}) Kan du forklare hvorfor der er blank plotter i din grid? Eksperimenter med \texttt{facet\_wrap} i stedet for facet grid.
-
-\textbf{6}) \emph{Coordinate systemer}
+\textbf{Problem 4}) \emph{Coordinate systemer}
 
 Tag overstående scatter plot fra \textbf{3}) og
 
@@ -3780,61 +3738,109 @@ Tag overstående scatter plot fra \textbf{3}) og
 \item
   bruge \texttt{coord\_cartesian()} så at man fanger kun en bill længde mellem 40 og 50, og en bill depth mellem 16 og 19.\\
 \item
-  som ekstra afprøve pakken \texttt{ggrepel} (husk at installere/inlæse) ved at tilføje de navne af de forskellige øer som labels direkte på plottet (valfrig opfordring: man kan lave en subset af de data og specificere det indenfor den relevant \texttt{ggrepl} funktion, for at undgå, at de labels bliver plottet for punkterne udenfor området angivet med \texttt{coord\_cartesian()}).
+  som ekstra afprøve pakken \texttt{ggrepel} (husk at installere/inlæse) ved at tilføje de navne af de forskellige øer som labels direkte på plottet
+\item
+  lav en delmængde af de data efter samme kriterier og specificere den nye dataframe som parameteren \texttt{data} indenfor \texttt{geom\_text\_repel}-funktionen. Det undgår, at tekst bliver plottet for punkterne udenfor området angivet med \texttt{coord\_cartesian()}).
 \end{itemize}
+
+\begin{verbatim}
+## Warning: ggrepel: 14 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+\end{verbatim}
 
 \begin{figure}
 \centering
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-204-1.pdf}
-\caption{\label{fig:unnamed-chunk-204}Min løsning}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-200-1.pdf}
+\caption{\label{fig:unnamed-chunk-200}Min løsning}
 \end{figure}
 
-\textbf{7}) \emph{Coordinate systemer}
+\textbf{Problem 5}) \emph{Histogram med facets}
+
+Lav en histogram:
+
+\begin{itemize}
+\tightlist
+\item
+  Variablen \texttt{flipper\_length\_mm} på x-aksen
+\item
+  Anvend \texttt{facet\_grid} for at adskille dit plot i tre efter variablen \texttt{species}
+\item
+  Giv også en forskellige farve til hver art i \texttt{species}
+\item
+  Specificer hensigtsmæssige tekst (akserne, titel) og et tema
+\item
+  Hvis nødvendigt ændr parameteren \texttt{bins} til noget andet indenfor \texttt{geom\_histogram()}.
+\end{itemize}
+
+Det skal ser sådan ud:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{penguins,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{flipper\_length\_mm,}\AttributeTok{fill=}\NormalTok{species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{, }\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{colour=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Histogram of flipper length according to species"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{species) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flipper length (mm)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-201-1.pdf}
+
+\textbf{Problem 6}) \textbf{a)} Lave et density plot af \texttt{body\_mass\_g}.
+
+\begin{itemize}
+\tightlist
+\item
+  Anvend funktionen \texttt{facet\_grid} til at opdele i til tre plots efter \texttt{species}
+\item
+  Brug også \texttt{fill} til at opdele densities indenfor de tre plots efter variablen \texttt{sex}
+\item
+  Gør dine density plots gennemsigtige
+\item
+  Skrive en sætning om forskellen i \texttt{body\_mass\_g} mellem ``females'' og ``males''.
+\end{itemize}
+
+\textbf{b}) Nu udvikl din \texttt{facet\_grid} kommando til at adskille plots yderligere således at du har en ``grid'' struktur med de forskellige ø (variablen \texttt{island}) på rækkerne og de tre arter (variablen \texttt{spieces}) på kolonnerne.
+
+\textbf{c}) Kan du forklare hvorfor der er blank plotter i din grid? Eksperimenter med \texttt{facet\_wrap} i stedet for \texttt{facet\_grid}.
+
+\textbf{Problem 7}) \emph{Coordinate systemer}
 
 Lav en barplot af counts for \texttt{species} opdelte efter \texttt{sex}.
 
 \begin{itemize}
-\tightlist
 \item
-  Anvende en `coordinate flip' for at få den til at være horizontal.
+  Anvend en `coordinate flip' for at få den til at være vandrette/horizontal.
 \item
-  Vælge nogle manuelt farver.
+  Vælg nogle farver - jeg benytter \texttt{palette\ =\ "Accent"} fra den \texttt{RColorBrewer} løsning
 \item
-  Vælge et tema som I godt kan lide.
-\end{itemize}
-
-\begin{figure}
-\centering
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-205-1.pdf}
-\caption{\label{fig:unnamed-chunk-205}Min løsning}
-\end{figure}
-
-\begin{itemize}
-\tightlist
-\item
-  I vil have at de tre arter få rækkefølgen, således at den \texttt{species} med de meste observationer er på toppen og den \texttt{species} med den færrest er på bunden. Ændre rækkefølgen af de tre \texttt{species}.
+  Ændr rækkefølgen af de tre søjler, således at arten med de meste observationer er på toppen og arten med den færrest er på bunden.
 \item
   Prøve også \texttt{scale\_y\_reverse()} og kig på resultatet.
 \end{itemize}
 
-\textbf{8}) Lave boxplots af \texttt{body\_mass\_g} opdelte efter \texttt{species}.
+Her er min løsning
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-206-1.pdf}
+
+\textbf{Problem 8}) Lav boxplots af \texttt{body\_mass\_g} opdelt efter \texttt{species}.
 
 \begin{itemize}
 \item
-  Tilføj punkter ovenpå.
+  Tilføj ``jitter'' punkter ovenpå boxplots.
 \item
-  Specificere nogle farver manuelt for de boxes.
+  Specificer nogle farver manuelt for både boxes og punkterne (en farve til hver art)
 \item
   Giv det en hensigtsmæssig titel og nogle akser-labels
 \item
   Adskille plotterne ved at opdele efter de forskellige \texttt{islands}.
 \item
-  Ekstra: skrive en sætning om \texttt{body\_mass\_g} ser forskellige ud for \texttt{Adelie} over de tre \texttt{islands}.
-\item
-  Ekstra: udforsk \texttt{?geom\_violin} som erstatning for \texttt{geom\_boxplot}.
+  Ekstra: prøv \texttt{?geom\_violin} som erstatning for \texttt{geom\_boxplot}.
 \end{itemize}
 
-\textbf{9}) \emph{Annotations}. \textbf{a}) Lav et scatter plot af \texttt{bill\_length\_mm} vs \texttt{bill\_depth\_mm}.
+\textbf{Problem 9}) \emph{Annotations og linjer}.
+
+\textbf{a}) Lav et scatter plot af \texttt{bill\_length\_mm} vs \texttt{bill\_depth\_mm}.
 
 \begin{itemize}
 \tightlist
@@ -3843,47 +3849,66 @@ Lav en barplot af counts for \texttt{species} opdelte efter \texttt{sex}.
 \item
   Anvend forskellige farver for de tre \texttt{species}.
 \item
-  Tjekke funktionen \texttt{?annotate} og bruge den med \texttt{geom="text"} og hensigtsmæssigt x- og y-akse værdier til at tilføje \texttt{species} navne som tekst direkte på plottet (se eksempel nedenfor for at se, hvad jeg mener).
+  Tjek funktionen \texttt{?annotate} og bruge den med \texttt{geom="text"} og hensigtsmæssigt x- og y-akse værdier til at tilføje \texttt{species} navne som tekst direkte på plottet (se eksempel nedenfor for at se, hvad jeg mener).
 \item
-  Udforske hvordan man gøre teksten større, som jeg har gjorte i men løsning.
+  Udforsk hvordan man gøre teksten større, som jeg har gjort i min løsning.
 \item
-  Fjerne den legend med \texttt{show.legend\ =\ FALSE} indenfor \texttt{geom\_point()}
-\item
-  Ekstra: bruge \texttt{annotate} igen til at lave et orange rektangel omkring alle de blå punkter (se kursusnotaterne).
+  Fjern legend med \texttt{show.legend\ =\ FALSE} indenfor \texttt{geom\_point()}
 \end{itemize}
+
+Her er min løsning:
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-208-1.pdf}
 
-\textbf{b}) Vi vil gerne tilføje noget lodrette og vandrette linjer til plottet som specificer de middelværdier af de tre fordelinger.
+\textbf{b}) Vi vil gerne tilføje nogle lodrette og vandrette linjer til plottet, som viser middelværdierne af variablerne for de tre arter
 
 \begin{itemize}
 \tightlist
 \item
-  Bruge \texttt{tapply} til at beregne de gennemsnitlige værdier for henholdsvis \texttt{bill\_length\_mm} og \texttt{bill\_depth\_mm} opdelte efter \texttt{species}.
+  Først brug \texttt{tapply} til at beregne de gennemsnitlige værdier for henholdsvis \texttt{bill\_length\_mm} og \texttt{bill\_depth\_mm} opdelte efter \texttt{species} (gem dem som henholdsvis \texttt{mean\_length} og \texttt{mean\_depth})
 \item
-  Lave en dataramme, med kolonner \texttt{species}, \texttt{mlength} og \texttt{mdepth}, hvor \texttt{mlength} og \texttt{mdepth} er dine middelværdier for henholdsvis \texttt{bill\_length\_mm} og \texttt{bill\_depth\_mm}. Kalde det for \texttt{mydf}. Fk.
+  Brug \texttt{mean\_length} og \texttt{mean\_depth} til at tilføje linjer til plottet med den relevante funktion.
 \end{itemize}
 
+\textbf{c}) \textbf{Udfordring} Kan du gøre linjerne til samme farver som punkterne af deres pågældende art (se min løsning nedenunder)?
+
+\begin{itemize}
+\tightlist
+\item
+  Hint: tage udgangspunkt i følgende dataframe, der bruger din beregnede værdier:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mydf }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\StringTok{"species"}\OtherTok{=}\FunctionTok{names}\NormalTok{(mean\_length),}\StringTok{"mlength"}\OtherTok{=}\NormalTok{mean\_length,}\StringTok{"mdepth"}\OtherTok{=}\NormalTok{mean\_depth)}
+\NormalTok{mydf}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{verbatim}
-##        species  mlength   mdepth
-## Adelie  Adelie 38.82397 18.34726
+##             species  mlength   mdepth
+## Adelie       Adelie 38.82397 18.34726
+## Chinstrap Chinstrap 48.83382 18.42059
+## Gentoo       Gentoo 47.56807 14.99664
 \end{verbatim}
 
 \begin{itemize}
 \tightlist
 \item
-  For de lodrette linjer anvende \texttt{geom\_vline()} og specificere din ny dataramme indenfor med \texttt{data=mydf}. Tilføj også \texttt{xintercept=mlength} og \texttt{colour=species} (husk at da \texttt{mlength} og \texttt{species} er variabler fra \texttt{mydf} skal man bruge \texttt{aes()})\\
+  Angiv parameteren \texttt{data} til at være ovenstående dataframe i \texttt{geom\_vline()} og brug lokal aethestiks (\texttt{aes()}) til at angive parametre til linjerne.
 \item
-  Tilføje de relevante vandrette linjer.
+  Gør samme for \texttt{geom\_hline()}
 \item
-  Specificer ``dashed'' linjer
+  Specificer også ``dashed'' linjer
 \end{itemize}
 
-Plotten skal ser sådan ud
+Her er min løsning:
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-210-1.pdf}
-
-\textbf{10}) Valgfri: Lav et scatter plot og inddrag \texttt{?scale\_colour\_gradient2} (se fk. \url{https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html})
+\begin{figure}
+\centering
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-211-1.pdf}
+\caption{\label{fig:unnamed-chunk-211}min løsning}
+\end{figure}
 
 \hypertarget{ekstra-links-1}{%
 \section{Ekstra links}\label{ekstra-links-1}}

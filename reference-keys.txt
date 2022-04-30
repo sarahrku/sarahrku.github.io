@@ -1,6 +1,7 @@
 fig:unnamed-chunk-199
-fig:unnamed-chunk-204
-fig:unnamed-chunk-205
+fig:unnamed-chunk-200
+fig:unnamed-chunk-206
+fig:unnamed-chunk-211
 baser
 inledning-til-kapitel
 rstudio
