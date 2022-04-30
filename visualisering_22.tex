@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-04-28}
+\date{Last updated: 2022-04-30}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -1.16406623 -2.24383917 -0.31176593 -1.41503119  0.48148849 -1.41044793
-##  [7] -0.01333695  0.77359769 -0.85325192 -0.73235689  1.26002935  0.44885772
-## [13] -1.13351967  1.29717595  0.65648184  1.32342036 -0.01962012 -2.01552312
-## [19] -0.79655102  0.54183060  1.24422875 -1.02530061 -0.58390825  1.56357844
-## [25] -0.59735174
+##  [1] -1.1295010  1.2660040 -0.9078392  0.4705522  0.3508347  0.3288316
+##  [7]  0.3503138  1.6829648 -1.2722558  0.7674048  0.5827377 -0.5539948
+## [13]  0.1651226  1.1098807 -2.4127320 -0.3301219  0.1530181  0.1195577
+## [19]  0.5372404  0.1433733 -0.2490627  0.2944050 -1.7550915 -0.4734600
+## [25] -0.5021878
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}1.1640662 {-}2.2438392 {-}0.3117659 {-}1.4150312  0.4814885 {-}1.4104479}
+\DocumentationTok{\#\# [1] {-}1.1295010  1.2660040 {-}0.9078392  0.4705522  0.3508347  0.3288316}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.5418306  1.2442288 {-}1.0253006 {-}0.5839082  1.5635784 {-}0.5973517}
+\DocumentationTok{\#\# [1]  0.1433733 {-}0.2490627  0.2944050 {-}1.7550915 {-}0.4734600 {-}0.5021878}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}1.164066}
+\DocumentationTok{\#\# [1] {-}1.129501}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.5973517}
+\DocumentationTok{\#\# [1] {-}0.5021878}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.1890073 -0.3117659  1.5635784 -2.2438392  1.2230115  1.1058985
+## [1] -0.05056022  0.15301813  1.68296477 -2.41273197  0.88092598  0.93857657
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -2.2438 -1.0253 -0.3118 -0.1890  0.6565  1.5636
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -2.41273 -0.50219  0.15302 -0.05056  0.47055  1.68296
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -2476,8 +2476,8 @@ Vi tager udgangspunkt i plottet, vi lavet i ovenstående og prøver at gøre det
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{)}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2489,8 +2489,8 @@ Vi tilføjer en titel med funktionen \texttt{ggtitle()}:
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Scatter plot of Sepal Width vs Sepal Length"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -2506,8 +2506,8 @@ I \texttt{ggplot2} kan man bruge ``automatisk'' farver for at skelne imellem de 
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width,}\AttributeTok{color=}\NormalTok{Species)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Scatter plot of Sepal Width vs Sepal Length"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
@@ -2523,8 +2523,8 @@ Det standard tema har en grå baggrund og ``grid'' linjer, men vi kan godt vælg
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width,}\AttributeTok{color=}\NormalTok{Species)) }\SpecialCharTok{+}
   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Sepal Width"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Scatter plot of Sepal Width vs Sepal Length"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
@@ -3059,6 +3059,838 @@ I alle tilfælde tilføje akse-labs, en titel, et tema osv.
 \section{Næste gang}\label{nuxe6ste-gang}}
 
 Efter at have lavet de problemstillinger skal man kunne se, at der er rigtig meget fleksibilitet involveret med at lave et plot med \texttt{ggplot2}. I morgen går vi videre med andre plot typer, og hvordan man fk. sætte farver manuelt.
+
+\hypertarget{visual2}{%
+\chapter{Visualisering - ggplot2 dag 2}\label{visual2}}
+
+\includegraphics[width=2.9in]{plots/ggplot2_logo}
+
+\hypertarget{indledning-og-videoer}{%
+\section{Indledning og videoer}\label{indledning-og-videoer}}
+
+I nuværende emne udvider du værktøjskassen af kommandoer i pakken \textbf{ggplot2} for at tillade større fleksibilitet og appel i dine visualiseringer. Jeg anbefaler, at du ser videoerne inden undervisningstimerne og bruger notaterne som en slags reference samtidig at du arbejder med problemstillingerne.
+
+\hypertarget{luxe6ringsmuxe5lene}{%
+\subsection{Læringsmålene}\label{luxe6ringsmuxe5lene}}
+
+I skal være i stand til at:
+
+\begin{itemize}
+\tightlist
+\item
+  Arbejde fleksibelt med koordinat systemer - transformering, modificering og ``flipping'' af x- og y-aksen.
+\item
+  Udvide brugen af farver og form.
+\item
+  Tilføje tekst direkte på plottet med \texttt{geom\_text()}.
+\item
+  Bruge \texttt{facet\_grid()} eller \texttt{facet\_wrap()} til at adskille plots efter en katagorisk variabel.
+\item
+  Gemme dit færdigt plot i en fil.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2) }\CommentTok{\#husk}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{video-ressourcer-1}{%
+\subsection{Video ressourcer}\label{video-ressourcer-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 1: Koordinat systemer (2021)
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/544201985}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 2: Farver og punkt former (2021)
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/544218153}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 3: Labels - \texttt{geom\_text()} og \texttt{geom\_text\_repel()} (2021)
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/544226498}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 4 - Facets
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/704140333}
+
+\hypertarget{koordinat-systemer}{%
+\section{Koordinat systemer}\label{koordinat-systemer}}
+
+Her arbejder vi videre med koordinater i pakken \textbf{ggplot2}.
+
+\hypertarget{zoom-coord_cartesian-expand_limits}{%
+\subsection{\texorpdfstring{Zoom (\texttt{coord\_cartesian()}, \texttt{expand\_limits()})}{Zoom (coord\_cartesian(), expand\_limits())}}\label{zoom-coord_cartesian-expand_limits}}
+
+Man kan bruge funktionen \texttt{coord\_cartesian()} til at zoome ind på et bestemt område i plottet. \textbf{Indenfor} \texttt{coord\_cartesian()} angives \texttt{xlim()} og \texttt{ylim()}, som specificerer de øvre og nedre grænser langt henholdsvis x-aksen og y-aksen. Man kan også bruge \texttt{xlim()} og \texttt{ylim()} udenom \texttt{coord\_cartesian()}, men i dette tilfælde bliver punkterne, som ikke kan ses i plottet (fordi deres koordinater ligger udenfor de angivne grænser), smidt væk (med en advarsel). Med \texttt{coord\_cartesian()} beholder man til gengæld samtlige data, og man får således ikke en advarsel.
+
+I følgende ses vores oprindeligt scatter plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length, }\AttributeTok{y =}\NormalTok{ Sepal.Width,}\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-159-1.pdf}
+
+Og her anvender jeg funktionen \texttt{coord\_cartesian()} med \texttt{xlim()} og \texttt{ylim()} indenfor til at zoome ind på et ønsket område på plottet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length, }\AttributeTok{y =}\NormalTok{ Sepal.Width,}\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\FloatTok{2.2}\NormalTok{,}\FloatTok{4.5}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-160-1.pdf}
+
+Du kan også zoome ud ved at bruge \texttt{expand\_limits()}. For eksempel hvis jeg gerne vil have punkterne \(x = 0\) og \(y = 0\) (\texttt{c(0,0)}, eller ``origin'') med i selve plottet:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width,}\AttributeTok{col=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{expand\_limits}\NormalTok{(}\AttributeTok{x =} \DecValTok{0}\NormalTok{, }\AttributeTok{y =} \DecValTok{0}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-161-1.pdf}
+
+Det kan være brubart i situationer hvor man, eksempelvis har flere etiketter omkring punkterne i selve plottet, som bedre kan ses hvis man tillader lidt ekstra plads i plottets område.
+
+\hypertarget{transformering-af-akserne---log-sqrt-osv-scale_x_continuous.}{%
+\subsection{\texorpdfstring{Transformering af akserne - log, sqrt osv (\texttt{scale\_x\_continuous}).}{Transformering af akserne - log, sqrt osv (scale\_x\_continuous).}}\label{transformering-af-akserne---log-sqrt-osv-scale_x_continuous.}}
+
+Nogle gange kan det være svært at visualisere nogle variabler på grund af deres fordeling. Er der mange outliers i variablen så er de fleste punkter samlede i et lille område i plottet. Transformering med enten \texttt{log} eller \texttt{sqrt} på x-aksen og/eller y-aksen er især en populær tilgang, så de data kan ses på en mere informativ måde.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width,}\AttributeTok{col=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{trans =} \StringTok{"log2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{trans =} \StringTok{"log2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-162-1.pdf}
+
+Man kan også prøve fk. ``sqrt'' i stedet for ``log2''. Formålet er, at hvis de data fordeler sig mere `normalt', kan man nemmere visualiser det i et plot - en måde til at gøre der er ved at transformere de data med ``sqrt'' eller ``log2''.
+
+Bemærk at det er til forskel fra at man transformere selve data som bruges i plottet. Jeg kan for eksempel få samme resultat ved at ændre på datasættet forud for at anvende \texttt{ggplot2} - her behøver jeg ikke at bruge \texttt{scale\_x\_continuous(trans\ =\ "log2")} for at opnår samme resultat, men notater at tallerne på akserne reflektere de transformeret data og ikke de oprindelige værdier. Den beslutninger man tager her kommer an på, hvad man gerne vil opnå med analysering af de data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Length }\OtherTok{\textless{}{-}} \FunctionTok{log2}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length)}
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Width }\OtherTok{\textless{}{-}} \FunctionTok{log2}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Width)}
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width,}\AttributeTok{col=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-163-1.pdf}
+
+\hypertarget{flip-coordinates-coord_flip}{%
+\subsection{\texorpdfstring{Flip coordinates (\texttt{coord\_flip})}{Flip coordinates (coord\_flip)}}\label{flip-coordinates-coord_flip}}
+
+Vi kan bruge \texttt{coord\_flip()} til at spejler x-aksen på y-aksen og omvendt (det svarer til, at man drejer plottet ved 90 grader). Se følgende eksempel, hvor jeg først opretter variablen \texttt{Sepal.Group}, laver en barplot og anvender \texttt{coord\_flip} for at få vandrettet søjler.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Sepal.Group defineret som i går}
+\NormalTok{iris}\SpecialCharTok{$}\NormalTok{Sepal.Group }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length}\SpecialCharTok{\textgreater{}}\FunctionTok{mean}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length),}\StringTok{"Long"}\NormalTok{,}\StringTok{"Short"}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{color=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-164-1.pdf}
+
+Man kan ændre på rækkefølgen af de tre \texttt{Species} ved at bruge funktionen \texttt{scale\_x\_discrete()} og angiver den nye rækkefølge med indstillingen \texttt{limits}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Sepal.Group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{,}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{,}\AttributeTok{color=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\StringTok{"virginica"}\NormalTok{, }\StringTok{"versicolor"}\NormalTok{,}\StringTok{"setosa"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-165-1.pdf}
+
+\hypertarget{mere-om-farver-og-punkt-former}{%
+\section{Mere om farver og punkt former}\label{mere-om-farver-og-punkt-former}}
+
+Der er flere måder at specificere farver på i \texttt{ggplot2}. Man kan nøjes med den automatiske løsning, som er hurtigt (og effektiv i mange situationer), eller man kan bruge den manuelle løsning, som tager lidt mere tid at indkode men er brugbar hvis man gerne vil lave et plot til at præsentere til andre.
+
+\hypertarget{automatisk-farver}{%
+\subsection{Automatisk farver}\label{automatisk-farver}}
+
+Vi så sidste emnet at man automatisk kan bede om forskellige farver, ved at benytte \texttt{colour=Species} indenfor \texttt{aes()} i den \texttt{ggplot()} funktion.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#automatisk løsning}
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width, }\AttributeTok{colour=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-166-1.pdf}
+
+\hypertarget{manuelle-farver}{%
+\subsection{Manuelle farver}\label{manuelle-farver}}
+
+Hvis man foretrækker at bruge sine egne farver, kan man det ved at benytte funktionen \texttt{scale\_colour\_manual()}. Her angiver jeg stadig \texttt{colour=Species} indenfor \texttt{aes()} men så angiver jeg hvilke bestemte farver de forskellige arter skal få indenfor \texttt{scale\_colour\_manual} med indstillingen \texttt{values}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#manuelt løsning}
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width, }\AttributeTok{colour=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_colour\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\StringTok{"purple"}\NormalTok{, }\StringTok{"yellow"}\NormalTok{,}\StringTok{"pink"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-167-1.pdf}
+
+En faktastisk pakke er \texttt{RColorBrewer}. Pakken indeholder mange forskellige ``colour palettes'', det vil sige grupper af farver, der passer godt med hinanden. Man kan således slippe for at selv samle et godt kombination der passer til plottet. Nogle af de colour palettes tager også i betragtning, eksempelvis hvis man er farveblind, eller om man vil have en farvegradient eller et sæt diskrete farver som ikke ligner hinanden.
+
+I følgende indlæser jeg pakken \texttt{RColorBrewer} og anvender funktionen \texttt{scale\_colour\_brewer} med indstillingen \texttt{palette="Set1"}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("RColorBrewer")}
+\FunctionTok{library}\NormalTok{(RColorBrewer)}
+
+\CommentTok{\#manuelt løsning}
+\FunctionTok{ggplot}\NormalTok{(iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length, }\AttributeTok{y=}\NormalTok{Sepal.Width, }\AttributeTok{colour=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_colour\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-168-1.pdf}
+
+Bemærk at både \texttt{scale\_color\_maual()} og \texttt{scale\_color\_brewer()} sætter farver af punkter og linjer, mens i en boxplot eller barplot sammenhænge, bruger man \texttt{scale\_fill\_manual()} eller \texttt{scale\_fill\_brewer()}. For eksempel i følgende vil jeg gerne sætte farver på de opfyldte områder i en boxplot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{y=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"Set2"}\NormalTok{)  }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-169-1.pdf}
+
+Her er en oversigt over de fire funktioner.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+\toprule
+fuktion & beskrivelse \\
+\midrule
+\endhead
+\texttt{scale\_fill\_manual(values=c("firebrick3","blue"))} & manuelle farver til boxplots og barplots osv. \\
+\texttt{scale\_color\_maual(values=c("darkorchid","cyan4"))} & manulle farver til punkter og linjer osv. \\
+\texttt{scale\_fill\_brewer(palette="Dark2")} & \texttt{RColourBrewer} løsning til boxplots/barplots/osv. \\
+\texttt{scale\_color\_brewer(palette="Set1")} & \texttt{RColourBrewer} løsning til punkter og linjer osv. \\
+\bottomrule
+\end{longtable}
+
+Der er også andre muligheder hvis man har behov for dem - for eksempel for kontinuitet data kan man prøve at google efter \texttt{scale\_fill\_gradient}.
+
+\textbf{\emph{Farver i RColourBrewer}}
+
+Her er en nyttig reference, der viser de forskellige farver tilgængelige i pakken \texttt{RColourBrewer}.
+
+\begin{figure}
+\centering
+\includegraphics{plots/rcolorbrewer.png}
+\caption{Mulige colour palettes tilgængelige i RColourBrewer}
+\end{figure}
+
+\hypertarget{punkt-former}{%
+\subsection{Punkt former}\label{punkt-former}}
+
+Ligesom man kan lave forskellige farver, kan man også lave forskellige punkt former. Vi starter med den automatiske løsning ligesom vi gjorde med farver. Når det er en variable vi angiver, skal variablenavnet skrives indenfor \texttt{aes()}. Her, da \texttt{shape} er en parameter som er meget specifik til \texttt{geom\_point}, vælger jeg at skrive en ny \texttt{aes()} indenfor \texttt{geom\_point()} i stedet for indenfor funktionen \texttt{ggplot()}. Husk, at i funktionen \texttt{ggplot()} specificerer man globale ting som gælder for hele plot, og i funktionen \texttt{geom\_pont()} angiver man ting som gælder kun for \texttt{geom\_point()}. Se følgende eksempel:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length, }\AttributeTok{y =}\NormalTok{ Sepal.Width)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"Set2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{shape=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-170-1.pdf}
+
+Så har jeg fået både en farve og en punkt form til hver art i variablen \texttt{Species}.
+
+\textbf{\emph{Sætte punkt form manuelt}}
+
+Hvis vi ikke kan lide de tre punkt former vi få automatisk, kan vi ændre dem ved at bruge \texttt{scale\_shape\_manual} - her vælger jeg \texttt{values=c(1,2,3)}, men der er en reference nedenunder, hvor I kan se, de mappings mellem de numeriske tal og de punkt former, så at I kan vælger jeres egne.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{iris, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sepal.Length, }\AttributeTok{y =}\NormalTok{ Sepal.Width, }\AttributeTok{colour=}\NormalTok{Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{shape=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"Set2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_shape\_manual}\NormalTok{(}\AttributeTok{values=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-171-1.pdf}
+
+\textbf{\emph{Reference for punkt former}}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-172-1.pdf}
+
+\hypertarget{annotations-geom_text}{%
+\section{\texorpdfstring{Annotations (\texttt{geom\_text})}{Annotations (geom\_text)}}\label{annotations-geom_text}}
+
+\hypertarget{tilfuxf8je-labeller-direkte-puxe5-plottet.}{%
+\subsection{Tilføje labeller direkte på plottet.}\label{tilfuxf8je-labeller-direkte-puxe5-plottet.}}
+
+Man kan bruge \texttt{geom\_text()} til at tilføje tekst på punkterne direkte på plottet. Her skal man fortælle, hvad for nogle tekst skal være på plottet - her specificerer vi navne på biler fra datasættet \texttt{mtcars}. Plottet er en scatter plot mellem variabler \texttt{mpg} og \texttt{wt}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(mtcars)}
+
+\FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-173-1.pdf}
+
+For at gøre det nemmere at læse kan man også fjerne selve punkterne:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
+  \CommentTok{\#geom\_point() +}
+  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-174-1.pdf}
+
+Teksten på plottet er stadig meget svært at læse. En god løsning kan være at bruge R-pakken \texttt{ggrepel}, som i følgende.
+
+\hypertarget{pakken-ggrepel-for-at-tilfuxf8je-tekst-labeller}{%
+\subsection{\texorpdfstring{Pakken \texttt{ggrepel} for at tilføje tekst labeller}{Pakken ggrepel for at tilføje tekst labeller}}\label{pakken-ggrepel-for-at-tilfuxf8je-tekst-labeller}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages(ggrepel) \#installere hvis nødvendeigt}
+\end{Highlighting}
+\end{Shaded}
+
+For at anvende pakken \texttt{ggrepel} for det \texttt{mtcars} datasæt, erstatter man bare \texttt{geom\_text()} med \texttt{geom\_text\_repel()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggrepel)}
+\FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: ggrepel: 9 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-176-1.pdf}
+
+Så kan vi se, at nu er der ingen navne som sidder lige overfor hinanden, fordi \texttt{ggrepel()} har været dygtig nok til at placerer dem tæt på deres tilhørende punkter, og ikke ovenpå hinanden. Man kan også se her, at der er nogle punkter, hvor funktionen har tilføjet en linje for at gøre det klart, hvilken punkt teksten referer til.
+
+I ovenstående har jeg fået en advarsel. Jeg prøver hvad jeg er blevet bedt om - og fortæller, at jeg vil have \texttt{max.overlaps\ =\ 20}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggrepel)}
+\FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars),}\AttributeTok{max.overlaps =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-177-1.pdf}
+
+Så kan du se, at jeg ikke længere få en advarsel, og der tilhører tekst til alle punkterne nu.
+
+\hypertarget{tilfuxf8je-rektangler-i-regioner-af-interesse-annotate}{%
+\subsection{\texorpdfstring{Tilføje rektangler i regioner af interesse (\texttt{annotate})}{Tilføje rektangler i regioner af interesse (annotate)}}\label{tilfuxf8je-rektangler-i-regioner-af-interesse-annotate}}
+
+Hvis man gerne vil fremhæve et bestemt område i plottet, kan man bruge funktionen \texttt{annotate()}. Prøve at selv regne ud, hvad de indstillinger indenfor \texttt{annotate()} gå ud på i følgende eksempel:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}\StringTok{"rect"}\NormalTok{,}\AttributeTok{xmin=}\DecValTok{18}\NormalTok{,}\AttributeTok{xmax=}\DecValTok{23}\NormalTok{,}\AttributeTok{ymin=}\FloatTok{2.5}\NormalTok{,}\AttributeTok{ymax=}\DecValTok{3}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.2}\NormalTok{,}\AttributeTok{fill=}\StringTok{"orange"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: ggrepel: 9 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-178-1.pdf}
+
+Man kan også benytte den samme funktion til at tilføje nogle tekst på et bestemt sted:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}\StringTok{"rect"}\NormalTok{,}\AttributeTok{xmin=}\DecValTok{18}\NormalTok{,}\AttributeTok{xmax=}\DecValTok{23}\NormalTok{,}\AttributeTok{ymin=}\FloatTok{2.5}\NormalTok{,}\AttributeTok{ymax=}\DecValTok{3}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.2}\NormalTok{,}\AttributeTok{fill=}\StringTok{"orange"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{,}\AttributeTok{x=}\DecValTok{25}\NormalTok{,}\AttributeTok{y=}\FloatTok{2.75}\NormalTok{,}\AttributeTok{label=}\StringTok{"Cars of interest"}\NormalTok{,}\AttributeTok{col=}\StringTok{"orange"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: ggrepel: 9 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-179-1.pdf}
+
+\hypertarget{adskille-plots-med-facets-facet_gridfacet_wrap}{%
+\section{\texorpdfstring{Adskille plots med facets (\texttt{facet\_grid}/\texttt{facet\_wrap})}{Adskille plots med facets (facet\_grid/facet\_wrap)}}\label{adskille-plots-med-facets-facet_gridfacet_wrap}}
+
+En stor fordel af at bruge \texttt{ggplot} er evnen til at benytte funktionerne \texttt{facet\_grid()} og \texttt{facet\_wrap()} til at adskille efter en kategorisk variabel over flere plotter. I følgende kode viser jeg et density plot, hvor de tre kurver der tilhører de tre arter ligger oven på hindanen i det samme plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-181-1.pdf}
+
+Med funktionen \texttt{facet\_grid()} eller \texttt{facet\_wrap()} bruger vi \texttt{\textasciitilde{}} (tilde) tegn til at angive hvordan vi gerne vil visualisere de forskellige plots - skal man opdele dem over rækker (variablerne venstre til \texttt{\textasciitilde{}}) eller over kolonner (variabler højre til \texttt{\textasciitilde{}})?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#notrun}
+\FunctionTok{variable}\NormalTok{(s) to split into row}\SpecialCharTok{{-}}\NormalTok{wise plots }\SpecialCharTok{\textasciitilde{}} \FunctionTok{variables}\NormalTok{(s) to split into column}\SpecialCharTok{{-}}\NormalTok{wise plots}
+\end{Highlighting}
+\end{Shaded}
+
+Ovenstående density plots af \texttt{Sepal.Length} kan adskilles på \texttt{Species}, således at man får tre plots med en kolon til hver af de tre arter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Species) }\SpecialCharTok{+} \CommentTok{\#split Species into different column{-}wise plots}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-183-1.pdf}
+
+Man kan gøre det over rækkerne (man skal dog husk at bruge en ``.'' efter ``\textasciitilde{}'' for at betegne at man kun vil adskille plots over rækkerne, mens kan af en eller anden grund kan man dropper ``.'' hvis man kun vil adskiller over kolonner som i ovenstående).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_grid}\NormalTok{(Species}\SpecialCharTok{\textasciitilde{}}\NormalTok{.) }\SpecialCharTok{+} \CommentTok{\#split Species into different column{-}wise plots}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-184-1.pdf}
+
+Her angives \texttt{Sepal.Group\textasciitilde{}Species}, der betyder, at plotterne bliver adskilt efter både \texttt{Sepal.Group} og \texttt{Species} - \texttt{Sepal.Group} over rækkerne, og \texttt{Species} over kolonnerne:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_grid}\NormalTok{(Sepal.Group}\SpecialCharTok{\textasciitilde{}}\NormalTok{Species) }\SpecialCharTok{+} \CommentTok{\#split Species into different column{-}wise plots}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-186-1.pdf}
+
+Bemærk forskellen mellem \texttt{facet\_grid()} og \texttt{facet\_wrap()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#same plot, replace facet\_grid with facet\_wrap}
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(Sepal.Group}\SpecialCharTok{\textasciitilde{}}\NormalTok{Species) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-187-1.pdf}
+
+I \texttt{facet\_grid()} bliver man tvunget til at få en ``grid'' layout. Vi har således 6 plotter i en 2 x 3 grid (2 niveauer til variablen \texttt{Sepal.Group} og 3 niveauer til variablen \texttt{Species}), og det sker selvom den ene af dem har ikke noget data ind i - der findes altså ikke nogle observationer hvor \texttt{Species} er ``Setosa'' og \texttt{Sepal.Group} er ``Long'', men vi får et plot alligevel for at bevare strukturen. Med \texttt{facet\_wrap()} bliver plotterne uden data droppet og i dette tilfælde får man 5 plotter i hvad der kaldes for en ``ribbon''.
+
+Med \texttt{facet\_wrap()} kan man også fortælle at vi gerne vil have plotterne over 1 row (\texttt{nrow\ =\ 1} eller \texttt{ncol\ =\ 5}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(Sepal.Group}\SpecialCharTok{\textasciitilde{}}\NormalTok{Species,}\AttributeTok{nrow =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-188-1.pdf}
+
+Til sidste kan det være at jeg gerne vil ``befrie'' skalen på y-akserne - på den måde har ikke alle plotter den samme maksimum y-værdi og de enkelte plotter benytter i stedet egne værdierne til at bestemme skalerne. Det kan være brugbart hvis man inddrager forskellige målinger men vær dog opmærksom på vhad der bedste giver mening - hvis man direkte vil sammenligne to af plotterne så er det bedre at de dele samme y-akse skale.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#same plot, replace facet\_grid with facet\_wrap}
+\FunctionTok{ggplot}\NormalTok{(iris,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Length,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(Sepal.Group}\SpecialCharTok{\textasciitilde{}}\NormalTok{Species,}\AttributeTok{ncol =} \DecValTok{5}\NormalTok{,}\AttributeTok{scales =} \StringTok{"free"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-189-1.pdf}
+
+Jeg håber at det er klart, at funktionerne er meget brugbart, og mens de opnår stort set samme ting, er der små forskel mellem dem, der er værd at husk.
+
+\hypertarget{gemme-dit-plot}{%
+\section{Gemme dit plot}\label{gemme-dit-plot}}
+
+Her bruger vi R Markdown til at lave et rapport som indeholder vores plots, men det også kan være at man gerne vil gemme sit plot som fil på computeren. Til at gemme et plot kan man bruge kommandoen \texttt{ggsave()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(myplot, }\StringTok{"myplot.pdf"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Figuren vil blive gemt i din \emph{working directory} (eller den mappe, du har din .Rmd fil). Filtypen \texttt{.pdf} kan erstattes med andre formater, for eksempel \texttt{.png} eller \texttt{jpeg} osv. Hvis man gerne vil tage sit plot og redigerer på det (fk. Adobe Illustrater eller Inkscape), vil jeg anbefaler, at du bruge \texttt{.pdf}.
+
+Man må gerne ændre højden og bredden på det gemt plot med \texttt{width} og \texttt{height}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(myplot, }\StringTok{"myplot.pdf"}\NormalTok{, }\AttributeTok{width =} \DecValTok{4}\NormalTok{, }\AttributeTok{height =} \DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{problemstillinger-3}{%
+\section{Problemstillinger}\label{problemstillinger-3}}
+
+\textbf{1}) Lav quiz - ``Quiz - ggplot2 part 2''
+
+\textbf{2}) (\emph{Factorer og plots})
+
+\textbf{a}) Åbn datsættet \texttt{mtcars} og lav en barplot:
+
+\begin{itemize}
+\tightlist
+\item
+  Først tjek hvor mange unikke værdier er der i variablen \texttt{cyl}.
+\item
+  Bruge variablen \texttt{cyl} på x-aksen og give forskellige farver efter den samme variabel.
+\item
+  Virker din kode? Kig på x-aksen.
+\item
+  Variablen er numerisk men skal fortolkes som en factor. Lav variablen om til en factor (eller bare skriv \texttt{as.factor(cyl)} i selve plottet) og lave dit plot igen.
+\end{itemize}
+
+\textbf{b}) Opdel søjlerne yderligere efter variablen \texttt{gear} i dit plot (søjlerne skal sidde ved siden af hinanden). Vær OBS om hvordan R fortolker variablen.
+
+I følgende problemer arbejder vi med datasættet \texttt{Palmer\ Penguins}. Pakken \texttt{palmerpenguins} skall installeres hvis du ikke har brugt datasættet før.
+
+Data beskrivelse: \emph{The palmerpenguins data contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica.}
+
+\includegraphics[width=0.2\linewidth]{plots/palmerpenguins}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("palmerpenguins") \#køre hvis ikke allerede installeret}
+\FunctionTok{library}\NormalTok{(palmerpenguins)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{head}\NormalTok{(penguins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+FALSE # A tibble: 6 x 8
+FALSE   species island bill_length_mm bill_depth_mm flipper_length_~ body_mass_g sex  
+FALSE   <fct>   <fct>           <dbl>         <dbl>            <int>       <int> <fct>
+FALSE 1 Adelie  Torge~           39.1          18.7              181        3750 male 
+FALSE 2 Adelie  Torge~           39.5          17.4              186        3800 fema~
+FALSE 3 Adelie  Torge~           40.3          18                195        3250 fema~
+FALSE 4 Adelie  Torge~           NA            NA                 NA          NA <NA> 
+FALSE 5 Adelie  Torge~           36.7          19.3              193        3450 fema~
+FALSE 6 Adelie  Torge~           39.3          20.6              190        3650 male 
+FALSE # ... with 1 more variable: year <int>
+\end{verbatim}
+
+Man kan altid anvende \texttt{?penguins} for at se flere detaljer om variablenavner.
+
+\emph{Vi skal starte med at rydde op lidt med datasættet. Køre følgende for at fjerne al rækker som har NA (manglende) værdier:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\OtherTok{\textless{}{-}} \FunctionTok{drop\_na}\NormalTok{(penguins)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{3}) \emph{Manuelt farver og punkter}
+
+\textbf{a}) Lav en scatter plot med \texttt{ggplot}:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{bill\_length\_mm} på x-aksen
+\item
+  \texttt{bill\_depth\_mm} på y-aksen
+\item
+  give hver \texttt{species} sin egen farve (automatisk)
+\item
+  sætte et tema
+\end{itemize}
+
+\textbf{b}) Lav følgende ændringer til det plot:
+
+\begin{itemize}
+\tightlist
+\item
+  Ændre farver manuelt - prøve både at angive farver med \texttt{scale\_color\_manual} og afprøve også løsningen med pakken \texttt{RColorBrewer} (husk at installere/indlæse pakken hvis nødvendigt).
+\item
+  Angiv at der skal være forskellige punkt former for hver \texttt{species}.
+\item
+  Prøv at vælge nogle punkt former fra listen og specificer dem manuelt.
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-199-1.pdf}
+\caption{\label{fig:unnamed-chunk-199}Min løsning}
+\end{figure}
+
+\textbf{4}) \emph{Histogram med facets}
+
+Lav en histogram:
+
+\begin{itemize}
+\tightlist
+\item
+  Variablen \texttt{flipper\_length\_mm} på x-aksen
+\item
+  Anvend \texttt{facet\_grid} for at adskille dit plot i tre på \texttt{species} (obs små bogstaver til forskel fra i datasættet \texttt{iris})
+\item
+  Giv en forskellige farve til hvert niveau i \texttt{species}
+\item
+  Specificer hensigtsmæssige tekst (akserne, titel) og et tema
+\item
+  Hvis nødvendigt ændr parameteren \texttt{bins} til noget andet indenfor \texttt{geom\_histogram()}.
+\end{itemize}
+
+Det skal ser sådan ud:
+
+\textbf{5}) \textbf{a)} Lave et density plot af \texttt{body\_mass\_g}.
+
+\begin{itemize}
+\tightlist
+\item
+  Anvend funktionen \texttt{facet\_grid} til at opdele i til tre plots efter \texttt{species}
+\item
+  Bruge \texttt{fill} til at opdele de tre plots efter variablen \texttt{sex}
+\item
+  Gøre dine density plots gennemsigtige
+\item
+  Skrive en sætning om forskellen i \texttt{body\_mass\_g} mellem females og males.
+\item
+  Hvorfor tror du, at de densities har flere topper?
+\end{itemize}
+
+\textbf{b}) Nu udvikl din \texttt{facet\_grid} kommando til at adskille plots yderligere således at du har en grid struktur med de forskellige ø (variablen \texttt{island}) på rækkerne og de tre arter (variablen \texttt{spieces}) på kolonnerne.
+
+\textbf{c}) Kan du forklare hvorfor der er blank plotter i din grid? Eksperimenter med \texttt{facet\_wrap} i stedet for facet grid.
+
+\textbf{6}) \emph{Coordinate systemer}
+
+Tag overstående scatter plot fra \textbf{3}) og
+
+\begin{itemize}
+\tightlist
+\item
+  bruge \texttt{coord\_cartesian()} så at man fanger kun en bill længde mellem 40 og 50, og en bill depth mellem 16 og 19.\\
+\item
+  som ekstra afprøve pakken \texttt{ggrepel} (husk at installere/inlæse) ved at tilføje de navne af de forskellige øer som labels direkte på plottet (valfrig opfordring: man kan lave en subset af de data og specificere det indenfor den relevant \texttt{ggrepl} funktion, for at undgå, at de labels bliver plottet for punkterne udenfor området angivet med \texttt{coord\_cartesian()}).
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-204-1.pdf}
+\caption{\label{fig:unnamed-chunk-204}Min løsning}
+\end{figure}
+
+\textbf{7}) \emph{Coordinate systemer}
+
+Lav en barplot af counts for \texttt{species} opdelte efter \texttt{sex}.
+
+\begin{itemize}
+\tightlist
+\item
+  Anvende en `coordinate flip' for at få den til at være horizontal.
+\item
+  Vælge nogle manuelt farver.
+\item
+  Vælge et tema som I godt kan lide.
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-205-1.pdf}
+\caption{\label{fig:unnamed-chunk-205}Min løsning}
+\end{figure}
+
+\begin{itemize}
+\tightlist
+\item
+  I vil have at de tre arter få rækkefølgen, således at den \texttt{species} med de meste observationer er på toppen og den \texttt{species} med den færrest er på bunden. Ændre rækkefølgen af de tre \texttt{species}.
+\item
+  Prøve også \texttt{scale\_y\_reverse()} og kig på resultatet.
+\end{itemize}
+
+\textbf{8}) Lave boxplots af \texttt{body\_mass\_g} opdelte efter \texttt{species}.
+
+\begin{itemize}
+\item
+  Tilføj punkter ovenpå.
+\item
+  Specificere nogle farver manuelt for de boxes.
+\item
+  Giv det en hensigtsmæssig titel og nogle akser-labels
+\item
+  Adskille plotterne ved at opdele efter de forskellige \texttt{islands}.
+\item
+  Ekstra: skrive en sætning om \texttt{body\_mass\_g} ser forskellige ud for \texttt{Adelie} over de tre \texttt{islands}.
+\item
+  Ekstra: udforsk \texttt{?geom\_violin} som erstatning for \texttt{geom\_boxplot}.
+\end{itemize}
+
+\textbf{9}) \emph{Annotations}. \textbf{a}) Lav et scatter plot af \texttt{bill\_length\_mm} vs \texttt{bill\_depth\_mm}.
+
+\begin{itemize}
+\tightlist
+\item
+  Anvend hensigtsmæssigt titel/labels/tema
+\item
+  Anvend forskellige farver for de tre \texttt{species}.
+\item
+  Tjekke funktionen \texttt{?annotate} og bruge den med \texttt{geom="text"} og hensigtsmæssigt x- og y-akse værdier til at tilføje \texttt{species} navne som tekst direkte på plottet (se eksempel nedenfor for at se, hvad jeg mener).
+\item
+  Udforske hvordan man gøre teksten større, som jeg har gjorte i men løsning.
+\item
+  Fjerne den legend med \texttt{show.legend\ =\ FALSE} indenfor \texttt{geom\_point()}
+\item
+  Ekstra: bruge \texttt{annotate} igen til at lave et orange rektangel omkring alle de blå punkter (se kursusnotaterne).
+\end{itemize}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-208-1.pdf}
+
+\textbf{b}) Vi vil gerne tilføje noget lodrette og vandrette linjer til plottet som specificer de middelværdier af de tre fordelinger.
+
+\begin{itemize}
+\tightlist
+\item
+  Bruge \texttt{tapply} til at beregne de gennemsnitlige værdier for henholdsvis \texttt{bill\_length\_mm} og \texttt{bill\_depth\_mm} opdelte efter \texttt{species}.
+\item
+  Lave en dataramme, med kolonner \texttt{species}, \texttt{mlength} og \texttt{mdepth}, hvor \texttt{mlength} og \texttt{mdepth} er dine middelværdier for henholdsvis \texttt{bill\_length\_mm} og \texttt{bill\_depth\_mm}. Kalde det for \texttt{mydf}. Fk.
+\end{itemize}
+
+\begin{verbatim}
+##        species  mlength   mdepth
+## Adelie  Adelie 38.82397 18.34726
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  For de lodrette linjer anvende \texttt{geom\_vline()} og specificere din ny dataramme indenfor med \texttt{data=mydf}. Tilføj også \texttt{xintercept=mlength} og \texttt{colour=species} (husk at da \texttt{mlength} og \texttt{species} er variabler fra \texttt{mydf} skal man bruge \texttt{aes()})\\
+\item
+  Tilføje de relevante vandrette linjer.
+\item
+  Specificer ``dashed'' linjer
+\end{itemize}
+
+Plotten skal ser sådan ud
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-210-1.pdf}
+
+\textbf{10}) Valgfri: Lav et scatter plot og inddrag \texttt{?scale\_colour\_gradient2} (se fk. \url{https://michaeltoth.me/a-detailed-guide-to-ggplot-colors.html})
+
+\hypertarget{ekstra-links-1}{%
+\section{Ekstra links}\label{ekstra-links-1}}
+
+R Graphics cookbook
+
+\url{https://r-graphics.org/}
 
   \bibliography{book.bib,packages.bib}
 
