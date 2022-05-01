@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.838124929  0.172301484  0.798633416  0.131803830 -0.433732128
-##  [6]  0.950197414  1.617158455  1.383868301  0.947780100 -0.346866327
-## [11]  0.706223480  0.551015351  0.005372852  0.658915604  0.751661038
-## [16] -0.485255803  1.208356931  0.733396185 -1.044509230 -0.707545986
-## [21]  0.232082085  1.212167854 -0.100922028  0.335633360  1.496941320
+##  [1] -0.29708000  0.14800276 -0.02935153 -0.85517192  0.20499250 -0.43582686
+##  [7]  1.31737998 -1.92938059 -1.78733867 -0.44976347  0.44043671  0.01011527
+## [13] -0.67779653  1.18457128 -1.16016646  1.36662370 -0.33967062 -0.42858060
+## [19]  0.59222876  0.24056852 -0.23824239 -0.47246813 -0.30277341 -0.23450413
+## [25] -1.02968206
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.8381249  0.1723015  0.7986334  0.1318038 {-}0.4337321  0.9501974}
+\DocumentationTok{\#\# [1] {-}0.29708000  0.14800276 {-}0.02935153 {-}0.85517192  0.20499250 {-}0.43582686}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.7075460  0.2320821  1.2121679 {-}0.1009220  0.3356334  1.4969413}
+\DocumentationTok{\#\# [1]  0.2405685 {-}0.2382424 {-}0.4724681 {-}0.3027734 {-}0.2345041 {-}1.0296821}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.8381249}
+\DocumentationTok{\#\# [1] {-}0.29708}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 1.496941}
+\DocumentationTok{\#\# [1] {-}1.029682}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.4645121  0.6589156  1.6171585 -1.0445092  0.5061029  0.7114091
+## [1] -0.2065151 -0.2970800  1.3666237 -1.9293806  0.6803281  0.8248200
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## -1.044509  0.005373  0.658916  0.464512  0.947780  1.617158
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -1.9294 -0.4725 -0.2971 -0.2065  0.2050  1.3666
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -3640,6 +3640,8 @@ Man må gerne ændre højden og bredden på det gemt plot med \texttt{width} og 
 
 \textbf{Problem 1}) Lav quiz - ``Quiz - ggplot2 part 2''
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \textbf{Problem 2}) (\emph{Factorer og plots})
 
 \textbf{a}) Åbn datsættet \texttt{mtcars} og lav en barplot:
@@ -3654,9 +3656,11 @@ Man må gerne ændre højden og bredden på det gemt plot med \texttt{width} og 
   Variablen er numerisk men skal fortolkes som en factor. Lav variablen om til en factor (eller bare skriv \texttt{as.factor(cyl)} i selve plottet) og lave dit plot igen.
 \end{itemize}
 
-\textbf{b}) Opdel søjlerne yderligere efter variablen \texttt{gear} i dit plot (søjlerne skal sidde ved siden af hinanden). Vær OBS om hvordan R fortolker variablen.
+\textbf{b}) Opdel søjlerne ved at angive farver efter variablen \texttt{gear} i dit plot (søjlerne skal sidde ved siden af hinanden). Vær OBS om hvordan R fortolker variablen.
 
-I følgende problemer arbejder vi med datasættet \texttt{Palmer\ Penguins}. Pakken \texttt{palmerpenguins} skall installeres hvis du ikke har brugt datasættet før.
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+I følgende problemer arbejder vi med datasættet \texttt{Palmer\ Penguins}. Pakken \texttt{palmerpenguins} skal installeres hvis du ikke har brugt datasættet før.
 
 Data beskrivelse: \emph{The palmerpenguins data contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica.}
 
@@ -3687,13 +3691,15 @@ FALSE # ... with 1 more variable: year <int>
 
 Man kan altid anvende \texttt{?penguins} for at se flere detaljer om variablenavner.
 
-\emph{Vi skal starte med at rydde op lidt med datasættet. Køre følgende for at fjerne al rækker som har NA (manglende) værdier:}
+\emph{Vi skal starte med at rydde op lidt i datasættet. Køre følgende for at fjerne al rækker som har NA (manglende) værdier:}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{penguins }\OtherTok{\textless{}{-}} \FunctionTok{drop\_na}\NormalTok{(penguins)}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 3}) \emph{Manuelt farver og punkter}
 
@@ -3706,7 +3712,7 @@ Man kan altid anvende \texttt{?penguins} for at se flere detaljer om variablenav
 \item
   \texttt{bill\_depth\_mm} på y-aksen
 \item
-  give hver \texttt{species} sin egen farve (automatisk)
+  give hver \texttt{species} sin egen farve (automatisk løsning)
 \item
   sætte et tema
 \end{itemize}
@@ -3729,30 +3735,23 @@ Man kan altid anvende \texttt{?penguins} for at se flere detaljer om variablenav
 \caption{\label{fig:unnamed-chunk-199}Min løsning}
 \end{figure}
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \textbf{Problem 4}) \emph{Coordinate systemer}
 
 Tag overstående scatter plot fra \textbf{3}) og
 
-\begin{itemize}
-\tightlist
-\item
-  bruge \texttt{coord\_cartesian()} så at man fanger kun en bill længde mellem 40 og 50, og en bill depth mellem 16 og 19.\\
-\item
-  som ekstra afprøve pakken \texttt{ggrepel} (husk at installere/inlæse) ved at tilføje de navne af de forskellige øer som labels direkte på plottet
-\item
-  lav en delmængde af de data efter samme kriterier og specificere den nye dataframe som parameteren \texttt{data} indenfor \texttt{geom\_text\_repel}-funktionen. Det undgår, at tekst bliver plottet for punkterne udenfor området angivet med \texttt{coord\_cartesian()}).
-\end{itemize}
+\textbf{a}) brug \texttt{coord\_cartesian()} så at man fanger kun en bill længde (variablen \texttt{bill\_length\_mm}) mellem 40 og 50, og en bill depth (variablen \texttt{bill\_depth\_mm}) mellem 16 og 19.\\
+\textbf{b}) brug pakken \texttt{ggrepel} (husk at installere/inlæse) og tilføj navnerne af de forskellige øer som tekst direkte på plottet
+\textbf{c}) lav en delmængde af dataframen \texttt{penguins} efter samme kriterier som \textbf{a}) og specificer din nye dataframe som parameteren \texttt{data} indenfor \texttt{geom\_text\_repel}-funktionen. Det undgår, at tekst bliver plottet for punkterne udenfor området angivet med \texttt{coord\_cartesian()}).
 
 \begin{verbatim}
 ## Warning: ggrepel: 14 unlabeled data points (too many overlaps). Consider
 ## increasing max.overlaps
 \end{verbatim}
 
-\begin{figure}
-\centering
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-200-1.pdf}
-\caption{\label{fig:unnamed-chunk-200}Min løsning}
-\end{figure}
+- - -
 
 \textbf{Problem 5}) \emph{Histogram med facets}
 
@@ -3767,8 +3766,6 @@ Lav en histogram:
 \item
   Giv også en forskellige farve til hver art i \texttt{species}
 \item
-  Specificer hensigtsmæssige tekst (akserne, titel) og et tema
-\item
   Hvis nødvendigt ændr parameteren \texttt{bins} til noget andet indenfor \texttt{geom\_histogram()}.
 \end{itemize}
 
@@ -3778,6 +3775,7 @@ Her er min løsning:
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{penguins,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{flipper\_length\_mm,}\AttributeTok{fill=}\NormalTok{species)) }\SpecialCharTok{+}
   \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins =} \DecValTok{30}\NormalTok{, }\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{colour=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Histogram of flipper length according to species"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{species) }\SpecialCharTok{+}
   \FunctionTok{xlab}\NormalTok{(}\StringTok{"Flipper length (mm)"}\NormalTok{) }\SpecialCharTok{+}
@@ -3786,6 +3784,8 @@ Her er min løsning:
 \end{Shaded}
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-201-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 6}) \textbf{a)} Lave et density plot af \texttt{body\_mass\_g}.
 
@@ -3801,9 +3801,11 @@ Her er min løsning:
   Skrive en sætning om forskellen i \texttt{body\_mass\_g} mellem ``females'' og ``males''.
 \end{itemize}
 
-\textbf{b}) Nu udvikl din \texttt{facet\_grid} kommando til at adskille plots yderligere således at du har en ``grid'' struktur med de forskellige ø (variablen \texttt{island}) på rækkerne og de tre arter (variablen \texttt{spieces}) på kolonnerne.
+\textbf{b}) Nu udvikl din \texttt{facet\_grid} kommando til at adskille plots yderligere således at du har en ``grid'' struktur med de forskellige øer (variablen \texttt{island}) på rækkerne og de tre arter (variablen \texttt{spieces}) på kolonnerne.
 
 \textbf{c}) Kan du forklare hvorfor der er blank plotter i din grid? Eksperimenter med \texttt{facet\_wrap} i stedet for \texttt{facet\_grid}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 7}) \emph{Coordinate systemer}
 
@@ -3817,11 +3819,13 @@ Lav en barplot af counts for \texttt{species} opdelte efter \texttt{sex}.
 \item
   Ændr rækkefølgen af de tre søjler, således at arten med de meste observationer er på toppen og arten med den færrest er på bunden.
 \item
-  Prøve også \texttt{scale\_y\_reverse()} og kig på resultatet.
+  Prøv også \texttt{scale\_y\_reverse()} og kig på resultatet.
 \end{itemize}
 
 Her er min løsning
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-206-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 8}) Lav boxplots af \texttt{body\_mass\_g} opdelt efter \texttt{species}.
 
@@ -3833,10 +3837,14 @@ Her er min løsning
 \item
   Giv det en hensigtsmæssig titel og nogle akser-labels
 \item
-  Adskille plotterne ved at opdele efter de forskellige \texttt{islands}.
+  Tilføj en ny variabel \texttt{island\_binary} til \texttt{penguins}, som er ``Biscoe'' hvis \texttt{island} er `Biscoe' og ``not Biscoe'' hvis ikke.
+\item
+  Adskille plotterne ved at opdele efter \texttt{island\_binary}.
 \item
   Ekstra: prøv \texttt{?geom\_violin} som erstatning for \texttt{geom\_boxplot}.
 \end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 9}) \emph{Annotations og linjer}.
 
