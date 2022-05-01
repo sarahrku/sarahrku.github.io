@@ -719,14 +719,14 @@ Figure 4.2: Min løsning
 <li>Specificer hensigtsmæssige tekst (akserne, titel) og et tema</li>
 <li>Hvis nødvendigt ændr parameteren <code>bins</code> til noget andet indenfor <code>geom_histogram()</code>.</li>
 </ul>
-<p>Det skal ser sådan ud:</p>
+<p>Her er min løsning:</p>
 <div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="visual2.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>penguins,<span class="fu">aes</span>(<span class="at">x=</span>flipper_length_mm,<span class="at">fill=</span>species)) <span class="sc">+</span></span>
 <span id="cb195-2"><a href="visual2.html#cb195-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">colour=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
 <span id="cb195-3"><a href="visual2.html#cb195-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Histogram of flipper length according to species&quot;</span>) <span class="sc">+</span></span>
 <span id="cb195-4"><a href="visual2.html#cb195-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>species) <span class="sc">+</span></span>
 <span id="cb195-5"><a href="visual2.html#cb195-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Flipper length (mm)&quot;</span>) <span class="sc">+</span></span>
 <span id="cb195-6"><a href="visual2.html#cb195-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-201-1.png" width="384" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-201-1.png" width="576" /></p>
 <p><strong>Problem 6</strong>) <strong>a)</strong> Lave et density plot af <code>body_mass_g</code>.</p>
 <ul>
 <li>Anvend funktionen <code>facet_grid</code> til at opdele i til tre plots efter <code>species</code></li>

@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-04-30}
+\date{Last updated: 2022-05-01}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -1.209483125 -0.851953156  0.876843841  1.390453594 -0.375826404
-##  [6]  2.112240029  0.640870122 -0.187748358 -0.965191777  0.947820455
-## [11] -0.163008665  0.034203842 -0.234108117  0.117383283  0.009268997
-## [16]  1.088951282  1.629320032 -0.581715464  2.266691702 -0.383319485
-## [21]  2.721942978  0.923745744  0.234946902  0.510121341  1.394981158
+##  [1]  0.838124929  0.172301484  0.798633416  0.131803830 -0.433732128
+##  [6]  0.950197414  1.617158455  1.383868301  0.947780100 -0.346866327
+## [11]  0.706223480  0.551015351  0.005372852  0.658915604  0.751661038
+## [16] -0.485255803  1.208356931  0.733396185 -1.044509230 -0.707545986
+## [21]  0.232082085  1.212167854 -0.100922028  0.335633360  1.496941320
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}1.2094831 {-}0.8519532  0.8768438  1.3904536 {-}0.3758264  2.1122400}
+\DocumentationTok{\#\# [1]  0.8381249  0.1723015  0.7986334  0.1318038 {-}0.4337321  0.9501974}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.3833195  2.7219430  0.9237457  0.2349469  0.5101213  1.3949812}
+\DocumentationTok{\#\# [1] {-}0.7075460  0.2320821  1.2121679 {-}0.1009220  0.3356334  1.4969413}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}1.209483}
+\DocumentationTok{\#\# [1] 0.8381249}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 1.394981}
+\DocumentationTok{\#\# [1] 1.496941}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.4778972  0.2349469  2.7219430 -1.2094831  1.0893241  1.0437069
+## [1]  0.4645121  0.6589156  1.6171585 -1.0445092  0.5061029  0.7114091
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.2095 -0.2341  0.2349  0.4779  1.0890  2.7219
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## -1.044509  0.005373  0.658916  0.464512  0.947780  1.617158
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -3772,7 +3772,7 @@ Lav en histogram:
   Hvis nødvendigt ændr parameteren \texttt{bins} til noget andet indenfor \texttt{geom\_histogram()}.
 \end{itemize}
 
-Det skal ser sådan ud:
+Her er min løsning:
 
 \begin{Shaded}
 \begin{Highlighting}[]
