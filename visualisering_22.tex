@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-01}
+\date{Last updated: 2022-05-02}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.29708000  0.14800276 -0.02935153 -0.85517192  0.20499250 -0.43582686
-##  [7]  1.31737998 -1.92938059 -1.78733867 -0.44976347  0.44043671  0.01011527
-## [13] -0.67779653  1.18457128 -1.16016646  1.36662370 -0.33967062 -0.42858060
-## [19]  0.59222876  0.24056852 -0.23824239 -0.47246813 -0.30277341 -0.23450413
-## [25] -1.02968206
+##  [1]  0.12055193  0.69772093  1.07580565 -0.23546727  0.71866700 -1.32677754
+##  [7]  0.03419063 -0.09919032  1.71477185 -0.26985550 -1.10938022  1.68083572
+## [13]  0.62768517 -0.97259026  0.66536629 -1.55877236 -0.17774910  1.89879786
+## [19] -0.22021773 -0.80990979 -0.87608150 -1.18278748  1.59573737  0.25318056
+## [25] -0.02744638
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.29708000  0.14800276 {-}0.02935153 {-}0.85517192  0.20499250 {-}0.43582686}
+\DocumentationTok{\#\# [1]  0.1205519  0.6977209  1.0758056 {-}0.2354673  0.7186670 {-}1.3267775}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.2405685 {-}0.2382424 {-}0.4724681 {-}0.3027734 {-}0.2345041 {-}1.0296821}
+\DocumentationTok{\#\# [1] {-}0.80990979 {-}0.87608150 {-}1.18278748  1.59573737  0.25318056 {-}0.02744638}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.29708}
+\DocumentationTok{\#\# [1] 0.1205519}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}1.029682}
+\DocumentationTok{\#\# [1] {-}0.02744638}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.2065151 -0.2970800  1.3666237 -1.9293806  0.6803281  0.8248200
+## [1]  0.08868342 -0.02744638  1.89879786 -1.55877236  1.00859065  1.00428614
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.9294 -0.4725 -0.2971 -0.2065  0.2050  1.3666
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.55877 -0.80991 -0.02745  0.08868  0.69772  1.89880
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -3917,6 +3917,10 @@ Her er min løsning:
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-211-1.pdf}
 \caption{\label{fig:unnamed-chunk-211}min løsning}
 \end{figure}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 10}) \emph{Ekstra}. Kig på ``cheatsheet'' til ggplot2 (Tryk på ``Help'' \textgreater{} ``Cheatsheets'' og vælg en til ggplot2) og afprøve nogle af de ting, som ikke var dækket i kurset indtil videre! Gerne lad mig høre hvis du synes der er eventuelle noget meget nyttig for dig, som er ellers blevet glemt i notaterne.
 
 \hypertarget{ekstra-links-1}{%
 \section{Ekstra links}\label{ekstra-links-1}}
