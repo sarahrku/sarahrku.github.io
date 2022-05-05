@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.37937203 -0.26210802  1.00359808 -2.61115536 -0.41206936  1.24997732
-##  [7] -1.15282268  1.72417607  0.66669696 -0.32221255  0.48005789 -1.06891159
-## [13] -1.31796905 -0.60533016 -0.68681223 -0.15145410  1.73887866  0.03664377
-## [19] -0.64918448 -0.48692478  0.31601820 -0.16449719 -1.45818571 -2.52345333
-## [25]  0.31640940
+##  [1]  0.5420779  0.7317360 -0.6122096  1.7417406  0.5055379  0.3211640
+##  [7] -0.3151674 -1.1599510  0.7434557 -0.6771026  0.2848019 -1.1874511
+## [13]  0.7312959 -0.2130847  1.8068287 -0.1093650 -1.0857583  1.1592119
+## [19] -1.3552779  0.1336251  1.1944754 -0.7628169 -0.7829073 -0.4322301
+## [25] -0.7649608
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.3793720 {-}0.2621080  1.0035981 {-}2.6111554 {-}0.4120694  1.2499773}
+\DocumentationTok{\#\# [1]  0.5420779  0.7317360 {-}0.6122096  1.7417406  0.5055379  0.3211640}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.4869248  0.3160182 {-}0.1644972 {-}1.4581857 {-}2.5234533  0.3164094}
+\DocumentationTok{\#\# [1]  0.1336251  1.1944754 {-}0.7628169 {-}0.7829073 {-}0.4322301 {-}0.7649608}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.379372}
+\DocumentationTok{\#\# [1] 0.5420779}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.3164094}
+\DocumentationTok{\#\# [1] {-}0.7649608}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.2384505 -0.2621080  1.7388787 -2.6111554  1.2322799  1.1100811
+## [1]  0.01750673 -0.10936504  1.80682867 -1.35527786  0.84015092  0.91659747
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -2.6112 -0.6868 -0.2621 -0.2385  0.3794  1.7389
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.35528 -0.76282 -0.10937  0.01751  0.73130  1.80683
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -3936,8 +3936,18 @@ R Graphics cookbook
 
 \includegraphics[width=0.15\linewidth]{plots/hex-tidyverse}
 
-\hypertarget{inledning-og-luxe6ringsmuxe5lene}{%
-\section{Inledning og læringsmålene}\label{inledning-og-luxe6ringsmuxe5lene}}
+\hypertarget{hvad-er-tidyverse}{%
+\section{Hvad er Tidyverse?}\label{hvad-er-tidyverse}}
+
+\textbf{Tidyverse} er en samling af pakker i R, som man bruger til at bearbejde datasæt. Formålet er ikke nødvendigvis at erstatte funktionaliteten af base-pakken, men til at bygge på den. Som vi kommer til at se i detaljer, \textbf{tidyverse} deler faktisk meget af den samme tankegang bag \textbf{ggplot2} - men i stedet for at bruge \texttt{+} til at bygge komponenter op i et plot, bruger man \texttt{\%\textgreater{}\%} (udtales `pipe') til at tilknytte de forskellige funktioner til hinanden.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.45\textwidth,height=\textheight]{plots/tidyverse2_packages.png}
+\caption{Most common tidyverse packages}
+\end{figure}
+
+\textbf{Læringsmålene til i dag}
 
 I skal være i stand til at:
 
@@ -3958,7 +3968,7 @@ I skal være i stand til at:
 
 \begin{itemize}
 \item
-  \textbf{Begynd ved at læse 5.3.1}: ``Principen med `tidy data'\,'' og 5.4 `lidt om tibbles' nedenunder, og så se følgende videoer.
+  \textbf{Begynd ved} at læse ``Principper med `tidy data'\,'' og `Lidt om tibbles' nedenunder, og så se følgende videoer.
 \item
   \textbf{Video 1} - rydde op i datasættet \texttt{titanic} med \texttt{select()} og \texttt{drop\_na()}
 \end{itemize}
@@ -3995,18 +4005,10 @@ Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/70
 
 Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/706266885}
 
-\hypertarget{hvad-er-tidyverse}{%
-\section{Hvad er Tidyverse?}\label{hvad-er-tidyverse}}
+\hypertarget{oversigt-over-pakker}{%
+\section{Oversigt over pakker}\label{oversigt-over-pakker}}
 
-\textbf{Tidyverse} er en samling af pakker i R, som man bruger til at bearbejde datasæt. Formålet er ikke nødvendigvis at erstatte funktionaliteten af base-pakken, men til at bygge på den. Som vi kommer til at se i detaljer, \textbf{tidyverse} deler faktisk meget af den samme tankegang bag \textbf{ggplot2} - men i stedet for at bruge \texttt{+} til at bygge komponenter op i et plot, bruger man \texttt{\%\textgreater{}\%} (udtales `pipe') til at tilknytte de forskellige funktioner til hinanden.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.45\textwidth,height=\textheight]{plots/tidyverse2_packages.png}
-\caption{Most common tidyverse packages}
-\end{figure}
-
-Lad os starte med at indlæse pakken \textbf{tidyverse}. Vær opmærksom på, at har du ikke pakken på din computer, kan det tage lidt tid at installere - det er pga. de mange pakke der \textbf{tidyverse} er afhængig af, der enten skal også installeres eller opdateres.
+Lad os starte med at indlæse pakken \textbf{tidyverse}. Vær opmærksom på, at har du ikke pakken på din computer, kan det tage lidt tid at installere - det er pga. de mange pakke der \textbf{tidyverse} er afhængig af, der enten skal også installeres eller opdateres. \textbf{Hvis har pakken installeret men oplever problemer tjek om du har det seneste versioner af pakkerne og R på dit system.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4037,10 +4039,10 @@ pakke & korte beskrivelse \\
 
 Man kan også indlæse alle pakke individuelt ved at bruge fk. \texttt{library(dplyr)}, men det er meget bekvemt bare at indlæse alle på samme tid med brugen af \texttt{library(tidyverse)}.
 
-\hypertarget{princippen-med-tidy-data}{%
-\subsection{Princippen med `tidy data'}\label{princippen-med-tidy-data}}
+\hypertarget{principper-med-tidy-data}{%
+\section{Principper med `tidy data'}\label{principper-med-tidy-data}}
 
-Idéen bag \textbf{tidyverse} er, at hvis alle datasæt følger præcis den samme struktur, så er det ligefrem at bearbejde med vores data, til præcis som vi gerne vil have det. Datasæt som har den struktur hedder ``tidy data''. For at betragte et datasæt som ``tidy'', må det opfylde tre kriterie:
+Idéen bag \textbf{tidyverse} er, at hvis alle datasæt følger præcis den samme struktur, så er det enkelt datasæt ligefrem at bearbejde til præcis som vi gerne vil have det. Datasæt som har den struktur hedder ``tidy data''. For at betragte et datasæt som ``tidy'', må det opfylde tre kriterie:
 
 \begin{itemize}
 \tightlist
@@ -4079,12 +4081,12 @@ Hver variabel (\texttt{Sepal.Length}, \texttt{Sepal.Width}, \texttt{Petal.Length
 \caption{Principper af tidy data}
 \end{figure}
 
-Det er tilfældet, at de fleste af datasæt i dette kursus hører til ``tidy data'', især i disse notater, hvor vi benytter en del af indbygget datasæt. Nogle gange kan det dog være, at vi er nødt til at gøre noget, til at lave et datasæt om til en ``tidy datasæt''. R-pakker \textbf{dplyr} og \textbf{tidyr} er velegnet til at hjælpe med at transformere et datasæt til en, der er ``tidy'', og bagefter kan man forsætte i den sædvanlige måde med at analyse datasættet. Bemærk dog, at bar fordi et datasæt er ``tidy'', betyder det ikke nødvendigvis, at det er klart til at analysere, for der kan godt være, at man har bruge for at filtrere eller rydde op i det. Pakken \textbf{dplyr} indeholder mange funktioner til at håndtere
+Det er tilfældet, at de fleste af datasæt i dette kursus hører til ``tidy data'', især i disse notater, hvor vi benytter en del af indbygget datasæt. Nogle gange kan det dog være, at vi er nødt til at gøre noget, til at lave et datasæt om til en ``tidy datasæt''. R-pakker \textbf{dplyr} og \textbf{tidyr} er velegnet til at hjælpe med at transformere et datasæt til en, der er ``tidy'', og bagefter kan man forsætte i den sædvanlige måde med at analyse datasættet. Bemærk at bare fordi et datasæt er ``tidy'', betyder det ikke nødvendigvis, at det er klart til at analysere, for der kan godt være, at man har bruge for at bearbejde videre på det første - igen med pakkerne \textbf{dplyr} og \textbf{tidyr}.
 
 \hypertarget{lidt-om-tibbles}{%
 \section{\texorpdfstring{Lidt om \texttt{tibbles}}{Lidt om tibbles}}\label{lidt-om-tibbles}}
 
-En \texttt{tibble} er det \texttt{tidyverse} svar på en \texttt{data.frame} fra base-R. De ligner hinanden meget og derfor skal man ikke tænk for meget over forskellen, men der er nogle opdateret aspekter i en \texttt{tibble} - for eksempel bruger en \texttt{tibble} ikke \texttt{row.names}, og når man visualiserer en \texttt{tibble} i R Markdown, få man lidt ekstra oplysninger, såsom dimensioner og data typer. Bemærk, at de fleste \texttt{tidyverse} funktioner fungerer lige så godt uanset om man har en \texttt{tibble} eller en \texttt{data.frame}. Bemærk, at jeg vedligeholder ordet `dataframe' indenfor almindelig tekst.
+En \texttt{tibble} er det \texttt{tidyverse} svar på en \texttt{data.frame} fra base-R. De ligner hinanden meget og derfor behøver man ikke tænk for meget over forskellen, men der er nogle opdateret aspekter i en \texttt{tibble} - for eksempel bruger en \texttt{tibble} ikke \texttt{row.names}, og når man visualiserer en \texttt{tibble} i R Markdown, få man lidt ekstra oplysninger, såsom dimensioner og data typer. Bemærk, at de fleste \texttt{tidyverse} funktioner fungerer lige så godt uanset om man har en \texttt{tibble} eller en \texttt{data.frame}. Bemærk, at jeg vedligeholder ordet `dataframe' indenfor almindelig tekst.
 
 Man kan lave sin egen \texttt{tibble} på samme måde som en \texttt{data.frame}.
 
@@ -4123,8 +4125,6 @@ Man kan også lave en \texttt{tribble}, som er den samme som en \texttt{tibble} 
 ## 3     3 c
 \end{verbatim}
 
-Den fleste \texttt{tidyverse} kode fungerer lige så godt uanset om man har en \texttt{tibble} eller en \texttt{data.frame}.
-
 Man kan lave en \texttt{data.frame} om til en \texttt{tibble} som i følgende:
 
 \begin{Shaded}
@@ -4149,6 +4149,8 @@ Man kan lave en \texttt{data.frame} om til en \texttt{tibble} som i følgende:
 ## 10          4.9         3.1          1.5         0.1 setosa 
 ## # ... with 140 more rows
 \end{verbatim}
+
+\textbf{De fleste \texttt{tidyverse} koder fungerer lige så godt uanset om man har en \texttt{tibble} eller en \texttt{data.frame}. }
 
 \hypertarget{transition-fra-base-til-tidyverse}{%
 \section{Transition fra base til tidyverse}\label{transition-fra-base-til-tidyverse}}
@@ -4452,7 +4454,7 @@ Hvis vi gerne vil fjerne en variabel fra en dataframe, kan vi bruge et minustegn
 \hypertarget{hjuxe6lper-funktioner-til-select}{%
 \subsubsection{\texorpdfstring{Hjælper funktioner til \texttt{select()}}{Hjælper funktioner til select()}}\label{hjuxe6lper-funktioner-til-select}}
 
-Hjælper funktioner til funktionen \texttt{select()} kan være brugbare hvis du gerne vil udvælge bestemte variabler efter nogle kriterier. Jeg har samlet nogle funktioner nedenfor og inddrager eksempler i problemstillingerne.
+Hjælper funktioner til funktionen \texttt{select()} kan være brugbare hvis du gerne vil udvælge bestemte variabler efter nogle kriterier. Jeg har samlet nogle (men ikke alle mulige!) funktioner nedenfor og inddrager eksempler i problemstillingerne.
 
 \begin{longtable}[]{@{}
   >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
@@ -4472,7 +4474,7 @@ select helper & beskrivelse \\
 \bottomrule
 \end{longtable}
 
-Fk
+For eksempel:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4497,7 +4499,7 @@ Fk
 ## # ... with 704 more rows
 \end{verbatim}
 
-Særligt brugbar it statistik analyse er \texttt{where()}, især når kombinerede med \texttt{is.numeric}. Eksempelvis i følgende kode udvælger man kun numeriske variabler fra datasættet \texttt{titanic\_clean}:
+Særligt brugbar i statistik statistisk metoder der kræver kun numeriske variabler er \texttt{where()} når kombinerede med \texttt{is.numeric}. Eksempelvis i følgende kode udvælger man kun numeriske variabler fra datasættet \texttt{titanic\_clean}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -4935,6 +4937,43 @@ Jeg gør det lidt mere kompliceret i følgende, ved at tage \texttt{titanic\_cle
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-254-1.pdf}
 
 Så viser det, at der var 600 Adults og lidt over 100 Children ombord skibet.
+
+\hypertarget{ekstra-misc-funktioner-som-du-skal-vide}{%
+\section{Ekstra misc funktioner som du skal vide}\label{ekstra-misc-funktioner-som-du-skal-vide}}
+
+\hypertarget{pull}{%
+\subsection{Pull}\label{pull}}
+
+I tidyverse arbejder vi meget med dataframes - tilgagen er således at man tager udgangspunkt i en dataframe, får en dataframe som resultat og så arbejde videre på den dataframe. Nogle gange kan det dog være at man gerne vil udtrække en variabel som vector fra en dataframe, fk. hvis man gerne vil bruge den i en bestemt statistik metode.
+
+Se følgende eksempel, hvor man udtrække variable \texttt{Age} for ``male'' og ``female'' (variablen \texttt{Sex}) og bruge resulterende vectorer i en t-test sammenhæng:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ages\_male }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Sex}\SpecialCharTok{==}\StringTok{"male"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Age)}
+\NormalTok{ages\_female }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Sex}\SpecialCharTok{==}\StringTok{"female"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Age)}
+\FunctionTok{t.test}\NormalTok{(ages\_male,ages\_female)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  ages_male and ages_female
+## t = 2.5259, df = 560.05, p-value = 0.01181
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.6250732 4.9967983
+## sample estimates:
+## mean of x mean of y 
+##  30.72664  27.91571
+\end{verbatim}
+
+Så kan man se at mænd og kvinder har signifikant forskellige alder i gennemsnit (hvor mændene er ældre en kvinderne).
+
+\hypertarget{slice}{%
+\subsection{Slice}\label{slice}}
 
 \hypertarget{problemstillinger-4}{%
 \section{Problemstillinger}\label{problemstillinger-4}}

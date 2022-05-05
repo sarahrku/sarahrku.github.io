@@ -102,10 +102,10 @@ gemme-dit-plot
 problemstillinger-3
 ekstra-links-1
 data
-inledning-og-læringsmålene
-video-ressourcer-2
 hvad-er-tidyverse
-princippen-med-tidy-data
+video-ressourcer-2
+oversigt-over-pakker
+principper-med-tidy-data
 lidt-om-tibbles
 transition-fra-base-til-tidyverse
 om-titanic-datasæt
@@ -122,5 +122,8 @@ rename
 dplyr-verbs-recode
 dplyr-verbs-arrange
 visualisering-bruge-som-input-i-ggplot2
+ekstra-misc-funktioner-som-du-skal-vide
+pull
+slice
 problemstillinger-4
 kommentarer
