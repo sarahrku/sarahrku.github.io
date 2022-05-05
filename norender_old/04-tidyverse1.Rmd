@@ -1,0 +1,768 @@
+# Bearbejdning dag 1 {#data}
+
+
+```{r, echo=FALSE,fig.width = 1,fig.height=1,comment=FALSE,warning=FALSE,out.width="15%"}
+# Bigger fig.width
+library(png)
+library(knitr)
+include_graphics("plots/hex-tidyverse.png")
+```
+
+
+## Inledning og læringsmålene
+
+I skal være i stand til at:
+
+* Beskrive generelle hvad R-pakken `Tidyverse` kan benyttes til.
+* Beskrive en tibble og genkende når et datasæt er betragtet som "tidy".
+* Benytte nogle vigtige `Tidyverse`-verbs til at bearbejde data (`filter()`,`select()`, `mutate()`, `rename()`, `arrange()`, `recode()`).
+* Bruge `%>%` til at forbinde `Tidyverse`-verber sammen og at overføre data til et plot.
+
+## Video ressourcer
+
+* Video 1 - introduktion til uge, hvad er den `tidyverse`-pakke? Hvad er en tibble?
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/547107062
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/547107062")
+```
+
+
+* Video 2 - rydder op den titanic datasæt med `select()` og `drop_na()`
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/546910795
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/546910795")
+```
+
+
+* Video 3 - introduktion til `%>%` 
+
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/546910781
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/546910781")
+```
+
+
+* Video 4 - `tidyverse` verber: `select` og `filter`
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/546910758
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/546910758")
+```
+
+
+* Video 5 - `tidyverse` verber: `mutate` og `arrange`
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/546910712
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/546910712")
+```
+
+
+## Hvad er Tidyverse?
+
+**Tidyverse** er en samling af pakker i R, som man bruger til at bearbejde datasæt. Formålet er ikke nødvendigvis at erstatte funktionaliteten af base-pakken, men til at bygge på den. Som vi kommer til at se i detaljer, **tidyverse** deler faktisk meget af den samme tankegang bag **ggplot2** - men i stedet for at bruge `+` til at bygge komponenter op i et plot, bruger man `%>%` (udtales 'pipe') til at tilknytte de forskellige funktioner til hinanden.
+
+![Most common tidyverse packages](plots/tidyverse2_packages.png){width=45%}
+
+Lad os starte med at indlæse pakken **tidyverse**.
+
+```{r}
+#install.packages("tidyverse)
+library(tidyverse)
+```
+
+Du kan se, at det faktisk er ikke kun én, men otte pakker som blev indlæst. Her er nogle beskrivelser af pakkerne:
+
+pakke | korte beskrivelse
+--- | ---
+`readr` | indlæse data
+`ggplot2` | plot data
+`tibble` | lave “tibbles” - ***tidyverse***’s svar på datarammer (data.frame).
+`tidyr` | skifte imellem data forms (fk. 'long' > 'wide' format, eller omvendt)
+`purrr` | for functional programming.
+`dplyr` | manipulere tibbles (eller datarammer) - skabe nye variable, beregne oversigtsstatistikker osv.
+`stringr` | manipulere strings
+`forcats` | FOR CATegorical data (factors); this makes it easier to reorder and rename the levels in factor variables.
+
+Man kan også indlæse alle pakke individuelt ved at bruge fk. `library(dplyr)`, men det er meget bekvemt bare at indlæse alle på samme tid med brugen af `library(tidyverse)`.
+
+### Princippen med 'tidy data'
+
+Idéen bag __tidyverse__ er, at hvis alle datasæt følger præcis den samme struktur, så er det ligefrem at bearbejde med vores data, til præcis som vi gerne vil have det. Datasæt som har den struktur hedder "tidy data". For at betragte et datasæt som "tidy", må det opfylde tre kriterie:
+
+* Hver variabel i datasættet har sin egen kolonne
+* Hver observation i datasættet har sin egen række
+* Hver værdi i datasættet få sin egen cell
+
+Iris er et godt eksempel af **tidy data**:
+
+```{r}
+data(iris)
+head(iris)
+```
+
+Hver variabel (`Sepal.Length`, `Sepal.Width`, `Petal.Length`, `Petal.Width` og `Species`) har sin egen kolon, og hver observation (e.g. 1,2,3, osv.) har sin egen række. Derudover har hver cell sin egen data værdi og det er dermed meget klart at læse og forstå dataframen ved øjnene. 
+
+![Principper af tidy data](plots/tidy-1.png){width=100%}
+
+Det er tilfældet, at de fleste af datasæt i dette kursus hører til "tidy data", især i disse notater, hvor vi benytter en del af indbygget datasæt. Nogle gange kan det dog være, at vi er nødt til at gøre noget, til at lave et datasæt om til en "tidy datasæt". R-pakker **dplyr** og **tidyr** er velegnet til at hjælpe med at transformere et datasæt til en, der er "tidy", og bagefter kan man forsætte i den sædvanlige måde med at analyse datasættet. Bemærk dog, at bar fordi et datasæt er "tidy", betyder det ikke nødvendigvis, at det er klart til at analysere, for der kan godt være, at man har bruge for at filtrere eller rydde op i det. Pakken __dplyr__ indeholder mange funktioner til at håndtere 
+
+## Lidt om `tibbles`
+
+En `tibble` er det `tidyverse` svar på en `data.frame` fra base-R. De ligner hinanden meget og derfor skal man ikke tænk for meget over forskellen, men der er nogle opdateret aspekter i en `tibble` - for eksempel bruger en `tibble` ikke `row.names`, og når man visualiserer en `tibble` i R Markdown, få man lidt ekstra oplysninger, såsom dimensioner og data typer.
+
+Man kan lave sin egen `tibble` på samme måde som en `data.frame`.
+
+```{r}
+tibble(x=1:3,y=c("a","b","c"))
+```
+
+Man kan også lave en `tribble`, som er den samme som en `tibble` men har en lidt anderledes måde at indsætte data på. For eksempel er følgende tilsvarende til den overstående tibble:
+
+```{r}
+tribble(~x, ~y,
+       1, "a",
+       2, "b",
+       3, "c")
+```
+
+Den fleste `tidyverse` kode fungerer lige så godt uanset om man har en `tibble` eller en `data.frame`.
+
+Man kan lave en `data.frame` om til en `tibble` som i følgende:
+
+```{r}
+as_tibble(iris)
+```
+
+
+## Transition fra base til tidyverse
+
+Jeg introducerer **tidyverse** gennem et meget berømt datasæt som hedder **titanic** - det er ikke biologiske data men er stadigvæk ret interessent, og sjovt at manipulere. 
+
+**titanic** er brugt som en del af en åben konkurrence på kaggle, hvor mindst 31.000 mennesker indtil videre har arbejdet på at lave den bedste maskinlærings model til at forudsige, hvem der overlever katastrofen - linket er her, hvor du kan også læse noget om den baggrund til datasættet https://www.kaggle.com/c/titanic. 
+
+### Om **Titanic** datasæt
+
+Man kan godt downloade datasættet, der hedder `titanic_train`, direkte fra Kaggle, men der faktisk er en R-pakke, som gøre det mere bekvemt:
+
+```{r}
+#install.packages("titanic") #hvis ikke allerede installerede
+library(titanic)
+```
+
+Beskrivelsen for pakken:
+
+_**titanic** is an R package containing data sets providing information on the fate of passengers on the fatal maiden voyage of the ocean liner "Titanic", summarized according to economic status (class), sex, age and survival. These data sets are often used as an introduction to machine learning on Kaggle._
+
+Vi vil gerne bruge datasættet der hedder `titanic_train` - det hedder det fordi det bliver brugt i Kaggle til at train maskinelærings modeller (som bliver testet på `titanic_test` for at evaluere, hvor god modellen er).
+
+```{r}
+titanic <- as_tibble(titanic_train)
+head(titanic)
+```
+
+Jeg har også kopieret de variable beskrivelser her:
+
+* PassengerId: unique index for each passenger
+* Survived: Whether or not the passenger survived. 0 = No, 1 = Yes.
+* Pclass: Ticket class: 1 = 1st Class, 2 = 2nd Class, 3 = 3rd Class.
+* Name: A character string containing the name of each passenger.
+* Sex: Character strings for passenger sex ("male"/ "female").
+* Age: Age in years.
+* SibSp: The number of siblings/spouses aboard the titanic with the passenger
+* Parch: The number of parents/children aboard the titanic with the passenger
+* Ticket: Another character string containing the ticket ID of the passenger.
+* Fare: The price paid for tickets in pounds Sterling (Keep in mind that unskilled workers made around 1 pound a week - these were expensive tickets!)
+* Cabin: The cabin number of the passengers (character).
+* Embarked: Where passengers boarded the titanic. C = Cherbourg, Q = Queenstown, S = Southampton).
+
+### Titanic: lidt oprydning
+
+Der er faktisk nogle rengøring i datasættet vi skal tage os af, før vi gøre noget videre. Lad os lige tjekke hvor mange observationer vi har i datasættet: 
+
+```{r}
+nrow(titanic)
+```
+
+For det første, har det fleste (687) passagerer ingenting for variabel `cabin`, og andre har mere end en cabin alloceret:
+
+```{r}
+table(titanic$Cabin)[1:40]
+```
+
+Det ser ikke særlig **tidy** ud, og man kan hellere ikke forestille sig at lave en fornuftig analyse fra den. Vi vælger derfor bare at fjerne hele kolon med funktionen `select()`:
+
+```{r}
+titanic_no_cabin <- select(titanic, -Cabin) 
+```
+
+`select()` er en af de core funktioner man bruger i **tidyverse** - her angiver vi, hvilke kolonner vi gerne vil beholde eller fjerne fra datasættet. I dette tilfælde har vi specificeret `-Cabin`, som betyder, at vi _ikke_ vil have kolonen der hedder `Cabin` med, men gerne vil beholde resten af kolonnerne. Prøv at køre `select(titanic, Cabin)` i stedet for - så får vi kun `Cabin` og fjerner resten af vores variable.  
+
+Næste kan vi tjekke for `NA` i datasættet. Man kan se, at `Age` faktisk har 177 `NA`. 
+
+```{r}
+colSums(is.na(titanic_no_cabin))
+```
+
+Vi kan vælge at fjerne alle passagerer som har `NA` i stedet for deres alder. Her kan vi bare bruge `drop_na` som fjerner alle observationer, med `NA` i mindst èn variabel.
+
+```{r,tidy=FALSE}
+titanic_clean <- drop_na(titanic_no_cabin)
+colSums(is.na(titanic_clean))
+```
+
+Nu kan vi tjekke igen, hvor mange observationer og variabel vi har tilbage.
+
+```{r}
+nrow(titanic_clean)
+ncol(titanic_clean)
+```
+
+Vi har stadig 714 observationer og 11 kolonner, og vores datasæt opfylder kriteren for at være **tidy**.
+
+### Pipe
+
+Man kan faktisk gøre den samme som i ovenstående ved at bruge pipe `%>%`:
+
+```{r,tidy=FALSE}
+titanic_clean <- titanic %>% # we take the titanic dataset
+    select(-Cabin) %>% # select the bits we want
+    drop_na() # then remove the NAs
+```
+
+Man bruger pipe %>% til kat ombinere funktioner i samme kommando - linjen slutter med `%>%`, der fortæller, at vi skal bruge resultatet fra den linje som input i den næste linje. Logikken er således, at vi starter med en dataramme, og så dernæst gør én ting ad gangen. 
+
+Bemærk, at processen ligner den vi bruger i **ggplot2**, men forskellen er at man bruger `%>%` i stedet for `+` i denne ramme. Bemærk også her, at ligesom i **ggplot2**, skriver vi koden over flere linjer. Det er ikke et krav men det gøre det nemmere at læse og forstå koden.
+
+For at illustrerer logikken, kan man se, at følgende to linjer er tilsvarende:
+
+```{r,tidy=FALSE,eval=FALSE}
+f(x)
+x %>% f
+```
+
+I tilfældet af `x %>% f` starter vi med `x`, og så anvender vi funktionen `f` med `x` som argument - det er den **tidyverse** løsning.
+
+På sammen måde i vores titanic oprydning kan man både pakke funktionen `select()` ind i funktionen `drop_na()`, eller bruge den **tidyverse** løsning, ligesom i nedenstående - de to giver det tilsvarende resultat: første bruger vi `select()` til at fjerne kolonnen `Cabin`, og så bruger vi `drop_na()` til at fjerne alle række med mindste én `NA` (manglende værdi).
+
+```{r,eval=FALSE,tidy=FALSE}
+titanic_clean <- drop_na(select(titanic,-Cabin))
+
+titanic_clean <- titanic %>% 
+    select(-Cabin) %>%
+    drop_na() 
+```
+
+Vi kommer til at bruge den **tidyverse** løsning meget fremadrettet.
+
+## Bearbejdning af data: `dplyr`
+
+Den meste nyttige pakke, der kan bruges til at bearbejde datarammer, er `dplyr`, som vi vil fokusere på i følgende sektioner.
+
+https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf
+
+
+```{r}
+library(dplyr) #behøves ikke hvis pakken tidyverse allerede er indlæste
+```
+
+Pakken giver nogle basale funktioner, der gør det nemt at bearbejde datarammer (`data.frame` eller `tibble`). 
+
+dplyr verbs | Description
+--- | ---
+`select()` | udvælge kolonner (_variable_) 
+`filter()` | udvælge rækker (_observationer_)
+`arrange()` | sortere rækker
+`mutate()` | tilføje eller ændre eksisterende kolonner
+`rename()` | ændre navne på kolonner
+`group_by()` | lave 'split' operationer over en gruppe variabel, som forudsætning til `summarise()` 
+`summarise()` | aggregere rækker
+
+Med alle disse funktioner, at de tager man udgangspunkt i en dataramme, få man altid en ny dataramme som output. Ved at kunne bruge disse funktioner og kombinere dem (ved hjælp af `%>%`), har man godt styr på bearbejdningen af datarammer.
+
+###  dplyr verbs: `select()`
+
+Med `select()` vælger man bestemte __variabler__. Vi kan vælger at beholde, fjerne eller andre rækkefølgen af variablerne i datarammen.
+
+Som eksempel, hvis vi kun skal bruge bestemte variabler i vores dataramme, eksempelvis `Name` og `Age`:
+
+```{r}
+titanic_clean %>% 
+  select(Name, Age) %>%
+  head()
+```
+
+
+Hvis vi gerne vil fjerne en variabel fra en dataramme, kan vi bruge en minus tegnet. I nedenstående fjerne vi `Name` og `Age` fra datarammen.
+
+
+```{r}
+titanic_clean %>% 
+  select(-Name, -Age) %>%
+  head()
+```
+
+
+### dplyr verbs: `filter()`
+
+Husk, at med `select()` vælger man bestemte __variabler__. Man anvender `filter()` til at vælge bestemte observationer (rækker) fra datarammen. I nedenstående tager vi kun rækkerne fra datarammen `titanic_clean`, hvor kolonnen `Age` er lig med 50. Bemærk, at vi bevarer alle kolonner i datarammen, og at det kun er rækkerene der bliver udvalgt.
+
+```{r}
+titanic_clean %>% 
+  filter(Age == 50) %>%
+  head()
+```
+
+Man kan også vælge intervaller - for eksempel hvis man vil vælge alle som er i halvtredserne. 
+
+```{r}
+titanic_clean %>% 
+  filter(Age >= 50 & Age < 60) %>%
+  head()
+```
+
+Man kan også kombinere kriterier fra forskellige kolonner, for eksempel i nedenstående vælger vi alle personer som er kvinder __og__ som rejste ved første klasse __og__ som overlevede. 
+
+```{r}
+titanic_clean %>% 
+    filter(Sex == 'female' & Pclass == 1 & Survived == 1) %>%
+    head()
+```
+
+Vi kan også inddrage flere comparitiv symboler. For eksempel i nedenståenden  vælger vi personer som er kvinder __og__ som rejste i __enten__ første eller anden klass __og__ som overlevede. Huske at tilføje round brackets omkring de to `Pclass`. 
+
+```{r}
+titanic_clean %>% 
+    filter(Sex == 'female' & (Pclass == 1 | Pclass == 2) & Survived == 1) %>%
+    head()
+```
+
+
+### Comparitiver reference
+
+Her er en tabel af comparitiver.
+
+comparitive | beskrivelse
+--- | ---
+`<` | less than
+`>` | greater than
+`<=` | less than or equal to
+`>=` | greater than or equal to
+`==` | identical to
+`!=` | not equal to
+`&` | and 
+`|` | or
+`%in%` | in
+
+
+### Kombinere `filter()` og `select()`
+
+Man kan også kombinere både `filter()` og `select()` i samme kommando. For eksempel i nedenstående får vi kun kolonnerne `Name` og `Fare`, for alle passagerer som som er kvinder __og__ som rejste ved første klasse __og__ som overlevede.   
+
+```{r}
+titanic_clean %>% 
+    filter(Sex == "female" & Pclass == 1 & Survived == 1) %>%
+    select(Name, Fare)  %>% 
+    head()
+```
+
+Bemærk at man bør passe på den rækkefølge, som man anvender de forskellige funktioner. For eksempel hvis man skifter `filter()` og `select()` i ovenstående, få man en advarsel. Det er fordi, hvis man første vælger at kun beholde variabler `Name` og `Age`, så findes de andre kolonner ikke mere i de resulterende dataramme. Man kan ikke derfor bruge den `filter()` funktion på variabler `Pclass`,`Sex` og `Survived`.
+
+```{r,eval=FALSE,tidy=FALSE,warning=FALSE}
+##virker ikke!!!!!#####
+titanic_clean %>% 
+    select(Name, Fare)  %>% 
+    filter(Pclass == 1 & Sex == "female" & Survived == 1) %>%
+    head()
+```
+
+
+### dplyr verbs: `mutate()`
+
+Man kan avende funktionen `mutate()` til at tilføje en ny variable til en dataramme. 
+
+I nedenstående tilføjer vi en nye variabel ved navn `Adult`, der angiver om personen kan betragtes som en voksen (hvis de er mindst 18 år gammel). 
+
+Bemærke her, at vi gemme resultatet som en ny dataramme der hedder `titanic_with_Adult`, og derefter bruger vi `head()` for at se, hvordan vores nye kolon ser ud. I forudgående eksempler har vi ikke gemt resultatet (bare brugt `head()` for at se resultatet på skærmen). 
+
+```{r}
+titanic_with_Adult <- titanic_clean %>% 
+    mutate(Adult = Age>=18)
+
+head(titanic_with_Adult$Adult)
+summary(titanic_with_Adult$Adult)
+```
+
+Så kan man se, at der er `r sum(titanic_with_Adult$Adult)` voksne og `r sum(!titanic_with_Adult$Adult)` børn som passagerere på skibet.
+
+Man kan lave samme kolon mere informativ end bare TRUE eller FALSE med en `ifelse` statement. Vi tilføjer også en `select()` funktion, bare så vi kan se variablen i nedenstående table i dette dokument.
+
+<!-- mere informativ Adult kolonne -->
+```{r}
+titanic_clean %>% 
+    mutate(Adult = ifelse(Age>=18,"Adult","Child")) %>%
+    select(Name,Age,Sex,Pclass,Adult) %>%
+    head()
+```
+
+Så er kolonnen lidt mere informativ end før.
+
+
+###  `rename()`
+
+
+Man kan bruge `rename()` til at ændre navnet på en eller flere kolonner i datasættet. Lad os måske bruge `rename()` til at give en kolon navnet 'Years' i stedet for 'Age'.
+
+```{r}
+titanic_clean %>%
+  rename(Years = Age) %>%
+  head()
+```
+
+Så vi kan se at `Age` ikke findes, og vi har `Years` i stedet for.
+
+Man kan også andre navne på flere kolonner på en gang. For eksempel, vi kan måske lave nogle oversættelse arbejde.
+
+<!-- Ændre navne på flere kolonner på én gang -->
+```{r}
+titanic_clean_dansk <- titanic_clean %>%
+  rename(Overlevede = Survived,
+         Navn = Name,
+         Klasse = Pclass)
+```
+
+Så vi kan se vi har ændrede naverne. Lad også kalde det for `titanic_clean_dansk`, så vi gemme vores danske version.
+
+Vi kan også gøre så at vi har kun små bogstaver i vores navne. Lad os bruge vores danske version, og vi anvende `rename_with()` og specificerer `tolower`.
+
+<!-- Ændre navne til små bogstaver -->
+```{r}
+titanic_clean_dansk %>%
+  rename_with(tolower)  %>% 
+  head() 
+```
+
+Prøve også at erstatte `tolower` med `toupper`.
+
+###  dplyr verbs: `arrange()`
+
+Man anvender `arrange()` for at vælge rækkefølgen på observationer. I nedenstående tager vi datarammen `titanic_clean` og arrangerer observationer efter variablen `Fare`. Det sker således at, personer som betalt mindst er på toppen af de resultarende dataramme, og personer som betalt mest er på bunden.
+
+```{r}
+# Arrange by increasing Fare
+titanic_clean %>%
+  arrange(Fare) %>%
+  head()
+```
+
+Hvis man gerne vil få det omvendt - at personer som betalt mest er på toppen af datarammen, kan man bruge `desc()` omkring `Fare`, som i nedenstående:
+
+```{r}
+# Arrange by decreasing Fare
+titanic_clean %>%
+  arrange(desc(Fare)) %>%
+  head()
+```
+
+
+## Ændre data med `recode()`
+
+Med `recode()` kan man ændre hvordan en variable ser ud - fk. male/female kan ændres til 0/1, som i følgende.
+
+```{r} 
+ titanic_clean %>%
+   mutate(Sex = recode(Sex,  "male" = 1, "female" = 0)) %>%
+   select(PassengerId,Name,Survived,Sex) %>% head()
+```
+Bemærk at vi benytte `recode()` indenfor funktionen `mutate`: vi lave en ny variable af samme navn, men med ændret værdier indenfor variablen.
+
+Hvis vi gerne vil skifter fra 0/1 til male/female er vi nødt til at skrive ``1`` / ``0`` for at specificie at vi har værdier som er tal, og vi gerne vil kalde dem for nogle andet ("male"/"female" i dette tilfælde):
+
+```{r} 
+ titanic_clean %>%
+   mutate(Sex = recode(Sex,  male = 1, female = 0)) %>%
+   mutate(Sex = recode(Sex,  `1` = "male", `0` = "female")) %>%
+   select(PassengerId,Name,Survived,Sex) %>% head()
+```
+
+
+
+## Visualisering: bruge som input i ggplot2
+
+Man kan lave nogle bearbejdning med en `tidyverse` kommando, og så specificerer de resulterende dataramme som data i et `ggplot`. I `tidyverse` stil kan man bruge `%>%` til at forbinde den `tidyverse` kommando med den `ggplot2` kode. I dette tilfælde specificerer man ikke den data indenfor funktionen `ggplot`. I nedenstående eksempel tager vi `titanic_clean` og så lave et barplot af antallet af passagerer som rejste i hver af de tre klass.
+
+<!-- Tag titanic_clean og lave et barplot -->
+```{r,fig.width=3,fig.height=4}
+titanic_clean %>% 
+  ggplot(aes(x=Pclass,fill=as.factor(Pclass))) + 
+  geom_bar(stat="count") +
+  theme_minimal()
+```
+
+Lad os gøre det lidt mere kompliceret, ved at tage `titanic_clean`, lave en ny kolon der hedder `Adult`, og så bruge den resulterende dataramme i et `ggplot`, hvor vi lave et plot med `Adult` på x-aksen for at tælle op antallet af adults og children.
+
+<!-- Lave Adult kolon og lave et barplot -->
+```{r,fig.width=3,fig.height=4}
+titanic_clean %>% 
+   mutate(Adult = ifelse(Age>=18,"Adult","Child")) %>% 
+   ggplot(aes(x=Adult,fill=Adult)) + 
+   geom_bar(stat="count") + 
+   theme_minimal()
+```
+
+Vi kan se, at der var 600 Adults og lidt over 100 Children ombord skibet.
+
+<!-- ```{r,tidy=FALSE} -->
+<!-- titanic %>% -->
+<!--   summarise(meanFare = mean(Fare)) -->
+<!-- ``` -->
+
+
+<!-- ```{r,tidy=FALSE} -->
+<!-- ageSummary <- titanic_clean %>% -->
+<!--     summarise(meanAge = mean(Age),  -->
+<!--         sdAge = sd(Age), -->
+<!--         minAge = min(Age), -->
+<!--         maxAge = max(Age),  -->
+<!--         count = n())  -->
+<!-- ``` -->
+
+
+
+<!-- ### Kombinere med filter() -->
+
+<!-- ```{r,tidy=FALSE} -->
+<!-- titanic %>% -->
+<!--   filter(Sex == 'female') %>% -->
+<!--   summarise(meanFare = mean(Fare), numSurv = sum(Survived)) -->
+<!-- ``` -->
+
+<!-- ```{r,tidy=FALSE} -->
+<!-- titanic %>% -->
+<!--   group_by(Sex) %>% -->
+<!--   summarise(meanFare = mean(Fare), numSurv = sum(Survived)/n()) -->
+<!-- ``` -->
+
+
+
+
+
+<!-- `recode()` Ændrer hvordan en variable ser ud (fk. male/female kan ændres til 0/1) -->
+
+<!-- ```{r} -->
+<!-- titanic_clean %>%  -->
+<!--   mutate(Sex = recode(Sex,  "male" = 1, "female" = 0)) %>%  -->
+<!--   select(PassengerId,Name,Survived,Sex) %>% head() -->
+<!-- ``` -->
+
+<!-- `count()` Tæller op observationer. -->
+
+<!-- ```{r} -->
+<!-- titanic %>% -->
+<!--   filter(Sex %in% c("female","male")) %>% -->
+<!--   count(Sex) %>% -->
+<!--   head() -->
+<!-- ``` -->
+
+<!-- Mere indviklet `filter`: -->
+
+<!-- ```{r} -->
+<!-- age40 <- titanic %>% -->
+<!--   filter(Age == 40 & Sex %in% c("female","male")) %>% -->
+<!--   count(Sex) -->
+<!-- age40 -->
+<!-- ``` -->
+
+
+
+## Problemstillinger
+
+
+__1__) Lav quizzen på Absalon - "Quiz - tidyverse - part 1"
+
+*Vi øver os med titanic. Inlæs de data og lave oprydningen med følgende kode:*
+
+```{r,echo=TRUE,eval=FALSE,comment=FALSE,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(titanic)
+titanic <- as_tibble(titanic_train)
+
+titanic_clean <- titanic %>% 
+    select(-Cabin) %>% 
+    drop_na()
+```
+
+__2__) `select()`. Fjerne variablen `Name` fra `titanic_clean`.
+
+
+```{r,tidy=FALSE,echo=TRUE,eval=FALSE}
+titanic_clean %>% 
+    select(...) #redigere her
+```
+
+```{r,tidy=FALSE,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+    select(-Name)
+```
+
+* Tilføj også `head()` for at få kun de første 6 rækker
+* Prøv at erstatte `head()` med `glimpse()` - det er bare en anden måde at kigge på datarammen.
+
+__3__) `select()`. Lave en ny dataramme fra `titanic_clean` med kun variabler `Name`, `Pclass` og `Fare`.
+
+```{r,tidy=FALSE,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+    select(Fare,Pclass,Name)
+```
+
+* Gør det en forskel, hvilke rækkefølger man skriver `Name`, `Pclass` og `Fare`?
+
+__4__) `select()`. I stedet for at specificere bestemt kolonner navn, skriv `starts_with("S")` indenfor `select()`. Hvad sker der?
+
+```{r,tidy=FALSE,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+    select(starts_with("S"))
+```
+
+* Prøve også `contains("ar")`
+
+```{r,tidy=FALSE,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+    select(contains("ar"))
+```
+
+
+__5__) `filter()`. Lave en ny dataramme fra `titanic_clean` med alle personer som er `male` og over 30 år gammel.
+
+
+```{r,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+  filter(Sex=="male" & Age>30) %>%
+  head()
+```
+
+__6__) `filter()`. Lave en ny dataramme fra `titanic_clean` med alle passagerer som er mellem 10 og 15 og rejst enten første eller anden klass. 
+
+
+```{r,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+  filter(Age>=10 & Age<=15 & (Pclass==1 | Pclass==2))
+```
+
+* Hvor mange observationer er der i den ny dataramme?
+* Prøve at tilføje `%>% count()` til kommandoen - få man så samme tal?
+
+```{r,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+  filter(Age>=10 & Age<=15 & (Pclass==1 | Pclass==2)) %>% count()
+```
+    
+__7__) *`filter()` og `select()` : kombinering med `%>%`* 
+
+Lave en ny dataramme fra `titanic_clean` med alle passagerer som er male og survived, og angiv kun kolonner `Name`, `Age` og `Fare`.
+
+```{r,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+     filter(Sex=="male" & Survived==1) %>% 
+     select(Name,Age,Fare)
+```
+
+__8__) *`filter()` og `select()` kombinering med `%>%`* 
+
+Lave en ny dataramme fra `titanic_clean` med kun variabler `Name` og `Age` og dernæst specificere kun de passagerer som er over 60.
+
+```{r,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+     select(Name,Age) %>% 
+     filter(Age>60)
+```
+
+* Få man så den samme sæt observationer hvis du skriver dine `select()` og `filter()` funktioner omvendt her? Hvorfor?
+
+```{r,echo=FALSE,eval=FALSE}
+titanic_clean %>% 
+     filter(Age>60) %>%
+     select(Name,Age)
+```
+
+
+__9__) *`Mutate()`*. Lave en ny dataramme fra `titanic_clean` som hedder `FareRounded` som viser `Fare` rundet til det nærmest integar (hint: benytte funktionen `round()`).
+
+
+```{r,echo=FALSE,eval=FALSE}
+titanic_clean %>%
+    mutate(FareRounded = round(Fare))
+```
+
+__10__) *`Mutate()`*. Lave en ny dataramme fra `titanic_clean` med en ny kolon som hedder `Family` som angiver `TRUE` hvis `Parch` er ikke nul, ellers `FALSE`.
+
+```{r,echo=FALSE,eval=FALSE}
+titanic_clean %>% mutate("Family"=Parch>0)
+```
+
+* Anvende `ifelse` til at gøre variablen mere intuitive - "Family" og "Not family".
+
+__11__) *`Arrange()`*. Lave en ny dataramme fra `titanic_clean` med observationerne arrangerede således at de yngst er på toppen og ældste er på bunden. Kig på resultatet - hvad kan du fortælle om den yngste passager ombord skibet Titanic?
+
+```{r,eval=FALSE,echo=FALSE}
+titanic_clean %>% 
+  arrange(Age)
+```
+
+* Hvad kan du fortælle om den ældste passager ombord skibet? Overlevede de? Hvad med de andre ældste passagerer?
+
+```{r,eval=FALSE,echo=FALSE}
+titanic_clean %>% 
+  arrange(desc(Age))
+```
+
+__12__) *`Arrange()` og kombinering med andre verber*. Lave en ny dataramme fra `titanic_clean` med kun personer med `SibSp>0` og som gik ombord skibet i Southampton (`S` for variablen `Embarked`), arrangere de resulterende observationer efter `Fare` (højeste på toppen) og angiv kun kolonnerne `Name`, `Age` og `Fare`.
+
+```{r,eval=FALSE,echo=FALSE}
+titanic_clean %>% 
+  filter(SibSp>0 & Embarked=="S") %>%
+  arrange(desc(Fare)) %>%
+  select(Name,Age,Fare)
+```
+
+
+__13__) *Rename*. Fra `titanic_clean` angiv kun variabler `Survived`,`Ticket`, og `Name` og ændre deres navne til `Overlevede`, `Billet` og `Navn`.  
+
+* Gøre variabler navne til store bogstaver ved at anvende `rename_with()`.
+
+__14__) *Lave et plot*. Fra `titanic_clean` bruge `filter()` til at lave en ny dataramme kun med personer under 30 og bruge den til at lave et barplot som viser antallet af personer opdelt efter Pclass. Bruge følgende struktur for koden:
+
+```{r,eval=FALSE,echo=TRUE}
+titanic_clean %>% 
+  filter(...) %>% #rediger linjen
+  ggplot(aes(...)) + .... #tilføj plot
+```
+
+__15__) *Lave et plot*. Fra `titanic_clean`, bruge `mutate()` til at lave et nyt kolon der hedder `with_siblings_spouses` der er `TRUE` hvis `SibSp` ikke er nul. Brug den til at lave boxplots som viser `Fare` på y-aksen og `with_siblings_spouses` på x-aksen.
+
+```{r,eval=FALSE,echo=FALSE}
+titanic_clean %>%
+  mutate(with_siblings_spouses=SibSp>0) %>% 
+  ggplot(aes(x=with_siblings_spouses,y=Fare,fill=with_siblings_spouses)) + 
+  scale_y_continuous(trans="log2") +
+  geom_boxplot() + theme_minimal()
+```
+
+* Ekstra: Ændre skalen på y-aksen for at gøre plottet klarer at fortolke.
+
+## Kommentarer
+
+I morgen arbejder vi videre med tidyverse.

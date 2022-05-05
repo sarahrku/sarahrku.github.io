@@ -1,0 +1,479 @@
+# Grundlæggende R {#basics}
+
+
+## Inledning til kapitel
+
+Jeg har prøvet at opsummere nogle grundlæggende ting, som I skal vide før vi går videre i kurset. Derefter er der nogle problemstillinger som jeg anbefaler at I arbejder igennem, for at tjekke jeres forståelse af koncepterne og udfylder eventuelle huller i jeres viden.
+
+Det er helt fint, hvis I ikke har set de hele før. Skrive til mig gerne, hvis I har nogle spørgsmål, som vi kan diskutere i vores næste lektion.
+
+## Rstudio
+
+Det allerførste man skulle gør, hvis man ikke har brugt RStudio før, er at downloade den gratis på nettet:
+
+https://www.rstudio.com/products/rstudio/download/#download
+
+Vi kommer fremadrettet til at være meget afhængig af nogle af dets funktionalitet til at lave blandt andet R Markdown dokumenter. R Markdown bliver præsenteret i vores næste lektion.
+
+### De forskellige vinduer i RStudio
+
+Hvis man ikke har et kendskab til RStudio, kan man tjekke det her for at lære de forskellige vinduer at kende:
+
+https://bookdown.org/ndphillips/YaRrr/the-four-rstudio-windows.html
+
+* Man skrive kode i Source (øverst til venstre)
+* Man kører kode ved at tryk CMD+ENTER (eller WIN-KEY+ENTER)
+* Kode køres ind i Console (som plejer at være nederst til venstre, selvom det er øverst til højere i billedet).
+* Environment - her kan man se, alle objekter i workspace-en.
+
+## Sætte working directory
+
+Når man arbejde på et projekt, er det nyttigt at vide, den _working directory_ som R arbejder fra - det er det sted, hvor R forsøger at åbne eller gemme filer, medmindre man angiver et andet path.
+ 
+```{r,eval=FALSE}
+getwd() #se nuværende working directory
+list.dirs(path = ".", recursive = FALSE) #se mappe indenfor working directory
+setwd("~/Documents/") #sætte en ny working directory (C:/Users/myname/Documents hvis man bruger Windows)
+```
+
+## R pakker
+
+R pakker er simpelthen en samling af funktioner (eller datasæt i nogle tilfælde), som udvider hvad er tilgængelige i base-R (den R man få, uden at indlæse nogle som helst pakke). I R er der mange tusind R pakke (faktisk op mod 100,000), som plejer at være tilgængelige på __CRAN__ (https://cran.r-project.org/). Indenfor biologiske fag er der også mange flere på __Bioconductor__ (https://www.bioconductor.org/), og nogle gange er R-pakke også installeret direkte fra __Github__.
+
+I dette kursus arbejder vi rigtig meget med en pakke der hedder __tidyverse__. Før man indlæse det, skal man først sikre sig, at pakken er installeret på systemet:
+
+```{r,eval=FALSE}
+install.packages("tidyverse")
+```
+
+Alle pakker på __CRAN__ er installeret på samme måde. Når man bruger en R pakke, skal man først indlæse den ved at bruge `library()`:
+
+```{r}
+library(tidyverse)
+```
+
+I dette tilfælde kan man se, at __tidyverse__ er faktisk en samling af otte andre pakke, som blev indlæste. Vi kommer til at arbejde med disse pakker fra kapitel tre (vi starter med __ggplot2__ og så nogle af de andre pakke fra __tidyverse__ fra kapitel fire)
+
+## Hvor kommer data fra?
+
+De data, vi arbejde med i kurset stammer fra forskellige steder.
+
+### Indbygget datasæt
+
+I R er der mange indbygget datasæt som er meget brugbare for at vise eller lege med koncepter, som især gøre dem populære for undervisningsmateriale. Indbygget datasæt kan være tilgænglige indenfor mange pakke, men `library(datasets)` er den mest brugt (der er også mange indenfor `library(ggplot2)`. For eksempel, for at indlæse datasættet, der hedder 'iris', kan man bruge `data()`:
+
+```{r}
+library(datasets)
+data(iris)
+```
+
+Så er en _dataramme_ tilgængelige som en _objekt_ i _workspacen_ - se "Environment" fane på højere side i RStudio, eller indtaste `ls()`, så bør du kunne se en objekt med navn 'iris'. Man kan kun arbejde med objekter som er en del af workspacen.
+
+### Importering af data fra .txt fil
+
+Det er meget hyppigt, at man har sin data i formen af en .txt fil eller .xlsx fil på sin computer. Den nemmeste måde at få åbnet en .txt fil er ved at bruge `read.table()`, som i nedenstående:
+
+```{r,eval=F}
+data <- read.table("mydata.txt") #indlæse data filen mydata.txt som er i working directory
+head(data)
+```
+
+Huske at hvis data har kolonner navne, så skal man bruge `header=T` for at undgå, at den første række i data bliver disse navne i stedet for virkelige observationer.
+
+```{r,eval=F}
+data <- read.table("mydata.txt",header=T) #indlæse data filen mydata.txt som er i working directory
+head(data)
+```
+
+### Importering af data fra Excel
+
+Der findes også en hjælpsom pakke, der kan indlæse Excel-ark direkte ind i R:
+
+```{r,eval=F}
+library(readxl)
+data <- read_excel("data.xlsx")
+data
+```
+
+## Vectorer i R
+
+
+```{r}
+a <- 1:5
+```
+
+
+```{r}
+a <- c(1,2,3,4,5)
+a
+```
+
+
+```{r}
+c <- c("cat","mouse","horse","sheep","dog")
+c
+```
+
+### logicals med vectorer
+
+```{r}
+b <- a %in% c(1,2)
+b
+```
+
+
+```{r}
+is.numeric(c)
+```
+
+
+## Dataramme koncepter
+
+http://www.r-tutor.com/r-introduction/data-frame
+
+Mange af de ting, som vi laver i R tager udgangspunkten i datarammer. 
+
+<!-- height <-  c(140,187,154,132,165) -->
+<!-- age <- c(34,31,25,43,29) -->
+<!-- score <- c(56,82,48,75,79) -->
+
+```{r}
+mydf <- data.frame("personID"=1:5, "height"=c(140,187,154,132,165), "age"=c(34,31,25,43,29))
+mydf
+```
+
+Huske, at vores `data.frame`, ligesom et matrix (i R: ``matrix()``) har to dimensioner - række og kolonner Forskellen mellem en matrix og en dataramme er, at datarammer kan indeholde mange forskellige data typer (herunder numeriske, faktorer, karakterer osv.), men matrix indeholder kun numeriske data. For eksempel
+
+```{r}
+mydf$colour <- c("red","blue","green","orange","purple")
+mydf
+```
+
+er en dataramme med forskellige data type men følgende er en matrix
+
+```{r}
+matrix(c(1, 2, 3, 4, 5, 6), 
+    nrow=3,
+    ncol=2)
+```
+
+med kun numeriske data, som kan bruges til matematik operationer (matrix multiplikation osv.). I dette kursus beskæftiger os primært med datarammer.
+
+### Subsets af datarammer
+
+```{r,eval=FALSE}
+mydf[række indekser, kolonner indekser]  #not run
+```
+
+
+```{r}
+mydf[1:2, 2]  #first two rows, second column only
+```
+
+
+Man kan kigge på en subset af rækkerne i de data ved at 
+
+```{r}
+mydf[mydf$height>=165,] #alle rækker i datarammen med height = 165 eller over
+```
+
+Man kan også bruge %in%
+
+```{r}
+mydf[mydf$personID %in% c(1,3,5),] #alle personer med personID 1,3 eller 5 
+```
+
+Personer med personID, der ikke er 1,3 eller 5
+
+```{r}
+mydf[!(mydf$personID %in% c(1,3,5)),] #alle personer med personID 2 eller 4
+```
+
+
+## Descriptive statistics
+
+
+### Simulere data fra distributions
+
+Se for eksempel:
+
+http://www.r-tutor.com/elementary-statistics/probability-distributions/normal-distribution
+
+Man kan nemt lave sin egne 'fake' data ved at simulere det fra nogle distributioner. Det vil typiske være den normale distribution, idet den normale distribution opstå mest hyppigt i den virkelige verden (huske den klassiske klokke-form). I R kan man bruge funktionen `rnorm` til at simulere data - først angiver man, hvor mange observationer man vil have, og så den mean og standard deviation, som er de to parametre som er nødvendige til at beskrive en normal distribution.
+
+```{r}
+x <- rnorm(25,mean=0,sd=1) #standard normal distribution
+x #så har vi 25 værdier fra en normal distribution med mean=0 og standard deviation=1.
+```
+
+Her har vi kun 25 værdier, men hvis dataen er store, måske vil vi hellere kun kigge på de første (eller sidste) værdier:
+
+```{r}
+head(x) #første 6
+tail(x) #sidste 6
+x[1] #første værdi
+x[length(x)] #sidste data point
+```
+
+Bemærk, at til forskellen af Python og mange andre programmering sprog, R bruger 1-baserende indicer - det betyder, at den første værdi er `x[1]` og __ikke__ `x[0]` som i Python.
+
+### Measures of central tendency
+
+function | Description
+--- | ---
+`mean()` | mean $\bar{x}_{i} = \frac{1}{n}\sum_{i=1}^{n} x_{i}$
+`median()` | median value
+`max()` | maximum value
+`min()` | minimum value
+`var()` | variance $s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_{i} - \bar{x}_{i})^2$
+`sd()` | standard deviation $s$
+
+Lad os afprøve dem på vores simulerede data:
+
+```{r}
+my_mean <- mean(x)
+my_median <- median(x)
+my_max <- max(x)
+my_min <- min(x)
+my_var <- var(x)
+my_sd <- sd(x)
+c(my_mean,my_median,my_max,my_min,my_var,my_sd)
+```
+
+Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
+
+```{r}
+summary(x)
+```
+
+### `tapply()`
+
+En meget brugbart funktion, som er værd at vide, er `tapply()`. 
+
+```{r}
+data(iris)
+tapply(iris$Sepal.Length,iris$Species,mean) # ovenstående i kun en linje
+```
+
+Her tager vi en variabel der hedder `Sepal.Length`, opdele den i henhold til `Species`, og beregner `mean` for enhver af de tre `Species` (setosa, versicolor og virginica). Man kan opnå det samme resultat ved at beregne `mean` for de tre `Species` hver for sig:
+
+```{r}
+# gennemsnit Sepal Length for Species setosa
+mean_setosa <- mean(iris$Sepal.Length[iris$Species=="setosa"])
+
+# gennemsnit Sepal Length for Species versicolor
+mean_versi <- mean(iris$Sepal.Length[iris$Species=="versicolor"]) 
+
+# gennemsnit Sepal Length for Species virginica
+mean_virgin <- mean(iris$Sepal.Length[iris$Species=="virginica"])
+
+c(mean_setosa,mean_versi,mean_virgin)
+```
+
+Hvis der er mange grupper, så er der en stor fordele ved at brug `tapply` her. Det er også værd at ved koncepten, fordi vi kommer til lære en lignende koncept i __tidyverse__ (med `group_by` og `summarise`).
+
+## Statistike analyse
+
+<!-- Her er nogle koncepter der jeg forventer, at I har mere eller mindre set før begyndelsen af dette kursus. Jeg forventer ikke at I huske alle detaijler, derfor gå jeg hurtige igennem både koncepter og hvordan man bruger dem i R (vigtigt) undervejs, på de tidspunkter vi støder ind i dem. Hvis der er dog noget, at du som den enkelte studerende slet ikke har set før, anbefelder jeg, at du tjekker på Google hvad det gå ud på. -->
+
+Det er bare en kort oversigt over nogle af de grundlæggende analyser man kan lave i R, som man kan referere til. 
+
+### 1 sample t-test
+
+Første simulere vi noget data fra normal distribution med mean = 3.
+
+```{r}
+set.seed(290223) # bare for at få den samme resultat hver gang
+x <- rnorm(10,3,1)
+```
+
+Nullhypotsen vs alternativ hypotesen:
+
+* $H_{0}: \mu = 3$,  VS 
+* $H_{1}: \mu \neq 3$ 
+
+Lave test i R:
+
+```{r}
+t.test(x,mu = 3)
+```
+
+p-værdien er 0.2818, som er > 0.05, så forkaster vi ikke nullhypotesen, og konkluderer at $mu = 3$. 
+
+### 2-sample t-test
+
+Samme variance:
+
+```{r}
+x <- rnorm(10,3,1)
+y <- rnorm(10,5,1)
+
+t.test(x,y,var.equal = T)
+```
+
+
+Variance forskellige:
+
+```{r}
+x <- rnorm(10,3,1)
+y <- rnorm(10,5,3)
+
+t.test(x,y,var.equal = F) #var.equal=F er 'default' så man behøver ikke at specifere
+```
+
+### Paired t-test
+
+```{r}
+before <- rnorm(10,3,1)
+after <- rnorm(10,5,3)
+
+t.test(before,after,paired=T)
+```
+
+### ANOVA
+
+Her har man flere grupper i stedet for to. 
+
+* Grupper må være normale fordelt
+* Variancen må være de samme i alle grupper
+
+For k grupper, er nul/alternativhypotese:
+
+* $H_{0}: \mu_{1} = \mu_{2} = \ldots = \mu_{k}$
+* $H_{1}:$ ikke alle middelværdier er enes 
+
+```{r}
+group1 <- rnorm(50,10,3)
+group2 <- rnorm(55,10,3)
+group3 <- rnorm(48,5,3)
+
+#data må være i en dataramme, med den ene kolon = vores værdier, og den anden kolon = grupper
+y <- c(group1,group2,group3)
+x <- c(rep("G1",50),rep("G2",55),rep("G3",48))
+mydf <- data.frame("group"=x,"values"=y)
+```
+
+```{r}
+mylm <- lm(values~group,data=mydf)
+anova(mylm)
+```
+
+P-værdien er 1.877e-15 (<0.05), så nulhypotesen er forkastet til fordele af alternativhypotesen. Bemærke at det er til trods af, at to af de tre grupper kommer fra en normal fordeling med præcis de samme middelværdier (det er nok, at den trejde gruppe har en anden middelværdi).
+
+### Correlations
+
+Måler sammenhængen mellem to variabler:
+
+* $>0$ betyder, at der er en postiv sammenhæng
+* $<0$ betyder, at der er en negativ sammenhæng
+* $=0$ betyder, at der er ingen sammenhængen mellem de to variabler
+
+```{r}
+data(cars)
+cor(cars$speed, cars$dist) 
+```
+
+```{r}
+cor.test(cars$speed, cars$dist) 
+```
+
+
+<!-- * Hypotesetest - hvad betyder 'nullhypotese' og 'alternativhypotese'? -->
+<!-- * t-test - funktionen i R. Hvad er forudsætningerne til at lave en t-test? -->
+<!-- * chi-sq test -->
+<!-- * correlations (sammenhænge) -->
+<!-- * linær regræssion, i den baserende omfang. -->
+
+<!-- Vi arbejder lidt med koncepterne i vores første opgaver, hvor jeg gå igennem, især i de steder hvor I få mest problemmer. Dermed sikre vi, at i har et stærkt grundlag til resten af kurset. -->
+
+### Linær regression
+
+Formål: finde den bedste rette linje:
+
+```{r}
+plot(cars$speed,cars$dist)
+abline(lm(dist ~ speed, data=cars) )
+```
+
+Man bruger `lm()` og huske at det skrives som `lm(y~x,data=mydata)`, hvor i dette tilfælde er x `speed` (x-aksen i ovenstående plot) og y er `dist` (y-aksen i ovenståen plot), for `mydata` = `cars`. 
+
+```{r}
+mylm <- lm(dist ~ speed, data=cars)  # build linear regression model
+mylm
+```
+
+
+## Problemstillinger
+
+
+1) Jeg har lavet en quiz i Absalon, hedder "Quiz - Basics" - som jeg anbefaler, at I starter med.
+
+### Grundlæggende R
+
+2) Åben en ny fil i Rstudio, ved at trykke på "File" > "New File" > "R script". Køre følgende kode og tjekke, I forstå outputtet.
+
+```{r,eval=FALSE}
+2+2
+x <- 4
+x <- x+2
+sqrt(x)
+sqrt(x)^2
+rnorm(10,2,2)
+log10(100)
+```
+
+Huske at den nemmeste måde at kører kode er ved at trykke CMD+ENTER (Mac) eller WIN-KEY+ENTER (Windows).
+
+3) Åbne op og kigge på nogle af de indbygget datasæt som vi bruger i kurset. Prøve `head()`, `summary()` osv. Prøve også fk. `?cars` for at se en beskrivelse.
+
+```{r,eval=FALSE}
+data(iris)
+data(cars)
+data(sleep)
+data(PlantGrowth)
+head(chickwts)
+#se her for andre:
+library(help = "datasets")
+```
+
+
+4) Lave en `data.frame` (dataramme) med tre kolonner som hedder "navn", "alder" og "farve". Sørge for, at den har 8 rækker. 
+
+```{r,eval=F}
+mydf <- data.frame("navn"= ...) #not run, slette "..." og skrive data
+dim(mydf) # otte række og tre kolonner
+mydf
+```
+
+5) Subsets
+
+
+5) Lads os lave plotter i 'baseR'. Vi kommer til at omdefinere hvordan vi laver plotter, når vi arbejder med `ggplot2`, men det er nyttigt at have et kendskab til baseR plotter. Jeg giver nogle muligheder for datasættet, der hedder "iris" - afprøve dem for nogle af de andre ovenstående indbygget datasæt, som I kiggede på.
+
+```{r,eval=F}
+plot(iris$Sepal.Length,iris$Sepal.Width)
+hist(iris$Sepal.Width)
+boxplot(iris$Sepal.Length~iris$Species)
+```
+
+Man kan også gøre plotterne lidt pænere ved at give dem en titel/aksen-navne osv. Prøve `?plot` for at se nogle muligheder, og tilføje `ylab`, `xlab`, `main` (titel) i én af plotterne. Lege også med `col` (farver).
+
+6) Øve med at åbne en fil, der sidder i Absalon og hedder "reactions.txt". Kopiere filen ind i egen working directory (fk. Downloads or Documents - huske man kan sætte en working directory `setwd("~/Documents/")`) og bruge `read.table()` (giv objektet et navn, e.g. `data`). Huske at tjekke, om filen har en 'header' og bruge således `header=T` hvis nødvendigt.  
+
+7) Kolonner navne "subject" og "condition" indlæses som data type 'int' (heltal) men skulle hellere være 'factorer' (fordi de er kvalitatitiv). Gøre dem til facktorer, fk.
+
+```{r,eval=FALSE}
+data$subject <- as.factor(data$subject) #gøre subject til en faktor
+## gøre den samme her for condition:
+data$...
+```
+
+8) Bruge `mean` til at beregne den gennemsnitlige reaktion tid (RT) for hver af de to konditioner. Nu prøve at anvende `tapply` til at gøre den samme.
+
+9) Bemærke at vores data er 'paired' - det er den samme sæt "subject"s for hver af de to "conditions"s (altså "subject" = 1 har en værdi for både "condition" = 1 og "condition" = 2). 
+
+Lave en scatter-plot af reaktioner tider mellem de to "condition"s.
+
+10) Lave en paired-t-test `t.test(x,y,paired=T)`. Hvad er p-værdien? Hvad er nulhypotesen og alternativ hypotesen? Er der en forskel mellem de to konditioner?
+
+*OBS: "reactions.txt" er emnet af video 2 i det næste kapitel om R Markdown.*

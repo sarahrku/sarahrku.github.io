@@ -1,0 +1,628 @@
+# Visualising trends
+
+```{r, echo=FALSE,fig.width = 1,fig.height=1,comment=FALSE,warning=FALSE,out.width="15%"}
+# Bigger fig.width
+library(png)
+library(knitr)
+include_graphics("plots/hex-tidyverse.png")
+```
+
+
+```{r,comment=FALSE,message=FALSE,echo=TRUE}
+#load packages
+library(ggplot2)
+library(tidyverse)
+library(gridExtra)
+library(broom)
+library(glue)
+```
+
+
+```{r,comment=FALSE,message=FALSE,echo=FALSE}
+eukaryotes <- read_tsv("https://www.dropbox.com/s/3u4nuj039itzg8l/eukaryotes.tsv?dl=1")
+```
+
+
+## Indledning og læringsmålene
+
+
+### Læringsmålene
+
+I skal være i stand til at
+
+* Anvende `nest()` og `map()` strukturen til at gentage en korrelation analyse over flere forskellige datasæt.
+* Bruge `ggplot` funktion `geom_smooth()` til at visualisere lineær regression eller loess trend linjer.
+* Kombinere `map()` og `lm()` til at beregne regression statistike for flere lineær regression modeller og tilføje dem til plottet til at gøre det mere informativ.
+
+
+### Introduktion til chapter
+
+I dette chapter demonstranter jeg hvordan man anvende den `nest()` og `map()` struktur som vi så sidste gange til at lave statistiske analyser med korrelation og lineær regression. Vi lærer hvordan vi kan visualisere trends og korrelations og tilføj relevante statistikker til plots til at gøre dem endnu mere informativ.
+
+### Video ressourcer
+
+(OBS: kunne desværre ikke nå videoerne til i dag pga. forkølelse/travlhed men kan eventuelle lave dem senere hvis der er efterspørgsel)
+
+* Video 0: Korrelation koefficient med `nest()` og `map()`
+* Video 1: Lineær regression linjer med ggplot2
+* Video 2: Lineær regression med `nest()` og `map()`
+* Video 3: Tilføj labels med `lm()` statistik på plottet
+
+## `nest()` og `map()`: eksempel med korrelation
+
+Vi kigger på korrelation analyse først men gentage samme struktur med `nest()` og `map()` når vi gennemgå lineær regression.
+
+### Korrelation analyse i R
+
+Man kan lave en korrelation analyse i R ved at anvende `cor.test()`. For eksempel, forestille os at vi gerne vil finde ud af korrelationen mellem gc content (variablen `gc`) og genes (variablen `genes`) for de data `eukaryotes` fra sidste lektion. Vi plotter en histogram og beslutter os for at lave korrelation mellem `gc` og den transformerede variable `log10(genes)`.
+
+```{r,fig.width=7,fig.height=3.5}
+eukaryotes %>% 
+  mutate(log10_size_mb = log10(size_mb)) %>%
+  select(log10_size_mb,gc) %>% 
+  pivot_longer(everything()) %>%
+  ggplot(aes(x=value,fill=name)) + 
+  geom_histogram(bins=40,colour="black") +
+  facet_wrap(~name,scales="free") +
+  theme_bw()
+```
+
+
+
+Vi mistænkter, at der kan være nogle sub-struturer indenfor de data - for eksempel over de forskellige organismer grupper i variablen `Group`. Vi benytter alligevel `cor.test()` til at teste for korrelation mellem `gc` og `log10(size_mb)` over hele datasæt:
+
+```{r}
+my_cor_test <- cor.test(eukaryotes$gc,log10(eukaryotes$size_mb))
+my_cor_test
+```
+Her vil jeg også gerne introducerer en funktion der hedder `glance()` som findes i R-pakken `broom`. Funktionen `glance()` anvendes til at tage den output fra en statistiske test (fk. `cor.test()`) og lave det om til et __tidy__ dataramme. Det gøre det nemmere for eksempel til at lave et plot, eller samler op statistikker fra forskellige tests.
+
+```{r,results="hold",message=FALSE,warning=FALSE,comment=FALSE}
+library(broom)
+glance(my_cor_test)
+```
+
+Vi kan se at over hele datasæt, er der en signifikant negativ korrelation (estimate `r round(my_cor_test$estimate,3)` og p-værdi `r signif(my_cor_test$p.value)`) mellem de to variabler, men vi er dog stadig mistænksom overfor eventuelle forskelligheder blandt de fem grupper fra variablen `group`. 
+
+Vi vil gerne gentage vores nalyse for hver af de fem grupper fra `group`. En god tilgang til at undersøge det er at bruge den ramme med `group_by()` og `nest()` som vi lært sidste gange.
+
+### Korrelation over flere datasæt på en gang
+
+Lad os først tjekke fordelingen af de to variabler opdelt efter variablen `group`. Bemærk at når de to variabler er i forskellige kolonner er vi nødt til at først få vores data i long form med `pivot_longer()`.
+
+```{r,fig.width=7,fig.height=3.5}
+eukaryotes %>% 
+  mutate(log10_size_mb = log10(size_mb)) %>%
+  select(log10_size_mb,gc,group) %>% 
+  pivot_longer(-group) %>%
+  ggplot(aes(x=value,fill=group)) + 
+  geom_histogram(bins=40,alpha=0.5,colour="black") +
+  scale_fill_brewer(palette = "Set1") +
+  facet_wrap(~name,scales="free") +
+  theme_bw()
+```
+
+Vi kan se, at der er forskelligheder blandt de fem grupper og der kan forekommer forskellige sammenhænge mellem de to variabler. Vi benytter i følgende den `group_by()` + `nest()` ramme som blev introducerede sidste lektion. 
+
+__Definere korrelation funktion__
+
+Lad os definere den korrelation test mellem `gc` og `size_mb` i en funktion: 
+
+```{r}
+cor_test <- ~cor.test(.x$gc,log10(.x$size_mb))
+```
+
+Husk:
+
+* Brug `~` lige i starten for at fortælle R, at vi arbejde med en funktion.
+* Specificer det indiv datasæt indenfor `cor.test()` med `.x` (husk at `map()` her fungere over en list af datasæt, så indenfor et datasæt specificerer 
+vi kolonner `gc` og `size_mb` ved `.x$gc` og `.x$size_mb`).
+
+Vi vil gerne få statistikker fra `cor.test()` i en pænt form så vi tilføjer `glance()` i funktionen: 
+
+```{r}
+cor_test <- ~cor.test(.x$gc,log10(.x$size_mb)) %>% glance()
+```
+
+__Benytte `group_by()` + `nest()`__
+
+For at lave et `cor.test()` til hver af de fem grupper i variablen `group()`, skal vi først anvende `nest()`:
+
+```{r}
+eukaryotes_nest <- eukaryotes %>% 
+  group_by(group) %>% 
+  nest()
+eukaryotes_nest
+``` 
+
+Vi har fået vores fem sub-datasæt i en list der hedder `data`.
+
+__Bruge map() på de nested datasæt__
+
+Nu lad os køre vores funktion på den nested data. Vi bruger `map()` til at lave samme funktion for hver af de fem datasæt. Vi bruger `map` indenfor `mutate` til at lave en ny kolon der hedder `test_stats`, hvor resultaterne for hver af de fem tests kan lagres.
+
+```{r}  
+eukaryotes_cor <- eukaryotes_nest %>% 
+  mutate(
+    test_stats=map(data,cor_test),
+    )
+eukaryotes_cor
+```
+
+
+For at kunne se de statistics skal man bruge funktionen `unnest()` på variablen `test_stats`:
+
+```{r}
+eukaryotes_cor <- eukaryotes_cor %>%
+  unnest(test_stats)
+eukaryotes_cor
+```
+
+Vi kan bruge den direkte i et plot. Lad os fokusere på den korrelaton koefficient i kolonnen `estimate` og omsætte den til et plot:
+
+```{r,eval=TRUE,fig.width=4,fig.height=4}
+cor_plot <- eukaryotes_cor %>%
+  ggplot(aes(x=group,y=estimate,fill=group)) + 
+  geom_bar(stat="identity",colour="black") +
+  scale_fill_brewer(palette = "Set3") + 
+  ylab("Corrlation estimate") +
+  theme_classic() 
+cor_plot
+```
+
+Vi kan gå videre med vores plot og tilføje nogle labels efter p-værdien for at gøre det mere informativ - lad os først gå videre til at lave en lignende analyse med lineær regression.
+
+## Visualisering af lineær regression med ggplot2
+
+### Lineær trends
+
+Man kan benytter lineær regression til at visualisere trends i de data. For eksempel kan man se i følgende scatter plot mellem `body_mass_g` og `bill_length_mm` i datasættet `penguins` at der er plottet en bedste rette linje igennem punkterne, som viser, at der er en postiv sammenhæng mellem de to variabler.
+
+```{r,echo=FALSE,fig.width=5,fig.height=4}
+library(palmerpenguins)
+penguins <- drop_na(penguins)
+ggplot(penguins,aes(x=body_mass_g,y=bill_length_mm)) + 
+  geom_point() + 
+  theme_minimal() + 
+  geom_smooth(method="lm",se=FALSE)
+```
+
+Den bedste rette linje har en formel $y = a + bx$, hvor $a$ er den "intercept" og $b$ er den "slope" (hælde) af linjen. Idéen med simpel lineær regression er, at man gerne vil finde den bedste mulige værdier for $a$ og $b$ for at plotte ovenstående linje således, at afstanden mellem linjen og punkterne bliver minimeret. Uden at gå i detaljer om hvordan det beregnes, kan man bruger `lm` indenfor R til at finde den bedste rette linje. For eksempel:
+
+```{r}
+lm(bill_length_mm~body_mass_g,data=penguins)
+```
+
+Her kan man se, at den intercept er 27.15 og den slope er 0.004 - det betyder, at hvis `body_mass_g` stiger ved 1, så ville den forventet `bill_length_mm` stiger ved 0.004. Man kan således bruge linjen til at lave forudsigelser. For eksempel, hvis jeg vejede en ny pingvin og fandt ud af, at den vejede 5000 gramms, kunne jeg bruge min linje som den bedste gætte på dens bill længde:
+
+```{r}
+y <- 27.150722 + 0.004003  * 5000
+y
+```
+
+Så kan man se, jeg forventer en pingvin af 5000 g til at have en bill length af omkring 47.2 mm. Den kan også visualiseres i et plot: 
+
+```{r,echo=FALSE,fig.width=5,fig.height=4}
+ggplot(penguins,aes(x=body_mass_g,y=bill_length_mm)) + 
+  geom_point() + 
+  theme_minimal() + 
+  geom_smooth(method="lm",se=FALSE) + 
+  geom_vline(xintercept = 5000,lty=2,colour="red") + 
+  geom_hline(yintercept = 47.16572,lty=2,colour="red")
+```
+
+### plotting lineær trend lines with `geom_smooth()`
+
+Indbygget i `ggplot2` er en funktion der hedder `geom_smooth()` som kan bruges til at tilføje den bedste rette linje til plottet. Man benytte den simpelthen ved at specificere ` + geom_smooth(method="lm")` indenfor plot kommando:
+
+```{r,echo=TRUE,fig.width=5,fig.height=4}
+ggplot(penguins,aes(x=body_mass_g,y=bill_length_mm)) + 
+  geom_point() + 
+  theme_minimal() + 
+  geom_smooth(method="lm",se=FALSE)
+```
+
+Det er nemt at bruge (bare tilføj en kode linje) og at man kan få en konfidensinterval med, hvis man gerne vil have den: i ovenstående plot specificeret jeg `se=FALSE` men hvis jeg angiv `se=TRUE` (default), får jeg følgende plot:
+
+```{r,echo=TRUE,fig.width=5,fig.height=4}
+ggplot(penguins,aes(x=body_mass_g,y=bill_length_mm)) + 
+  geom_point() + 
+  theme_minimal() + 
+  geom_smooth(method="lm",se=TRUE)
+```
+
+
+### plotting multiple lineær trend lines with `geom_smooth()`
+
+For at tilføje en bedste rette linje til hver af de tre `species` i stedet for samtlige data, er det meget nemt i `ggplot`: man angiver bare `colour=species`:
+
+```{r,echo=TRUE,fig.width=5,fig.height=4}
+ggplot(penguins,aes(x=body_mass_g,y=bill_length_mm,colour=species)) + 
+  geom_point() + 
+  theme_minimal() + 
+  geom_smooth(method="lm",se=FALSE)
+```
+
+Så kan vi se, at der faktisk er tre forskellige trends her, så det giver god mening at bruge de tre forskellige linjer i stedet for kun en.
+
+### Plot trends med `method=="loess"` i ggplot.
+
+I `ggplot` er vi ikke begrænset til `method="lm"` indenfor `geom_smooth()`. Lad os afpøve i stedet `method="loess"`:
+
+```{r,echo=TRUE,fig.width=5,fig.height=4}
+library(palmerpenguins)
+penguins <- na.omit(penguins)
+ggplot(penguins,aes(x=body_mass_g,y=bill_length_mm,colour=species)) + 
+  geom_point() + 
+  theme_minimal() + 
+  geom_smooth(method="loess",se=FALSE)
+```
+
+Så kan man fange trends som ikke nødvendigvis er lineær. Men det er mere ligefrem at beskrive en lineær trend og bruge den til at beregne de nødvendige statistik til at støtte vores observationer.
+
+## Plot linear regresion estimates
+
+For at finde vores estimates og tjekke signifikansen af de lineær trend, skal man arbejde direkte med den lineær model funktion `lm` som i ovenstående:
+
+```{r}
+my.lm <- lm(bill_length_mm~body_mass_g,data=penguins)
+my.lm
+```
+
+For at finde ud af den signifikans kan man kigge på `summary`
+
+```{r}
+summary(my.lm)
+```
+
+De tal, som er vigtige her:
+
+* Den p-værdi: `<2e-16` - den trend er statistiske signifikant.
+* Den R-squared værdi - det viser den proportion af variancen i `bill_length_mm` som `body_mass_g` forklarer. Det er svarende til den korrelation koefficient squared og kan fortolkes således - 
+  + hvis R-squared er tæt på 1, så er der tæt på en perfekt korrespondens mellem `bill_length_mm` og `body_mass_g`. 
+  + hvis R-squared er tæt på 0, så er der nærmeste ingen korrespondens.
+  
+### Iteratively estimating multiple trends
+
+Vi kan benytte de koncepter som vi lært i sidste lektion, og som er samme som ovenpå i vores korrelation analyse.
+
+Vi vil gerne lave en model med `lm` som ovenpå, og vi tilføje `glance()` til at få de model statistikker i en pæn form.
+
+```{r}
+lm_model_func <- ~lm(bill_length_mm~body_mass_g,data=.x) %>% glance()
+```
+
+Vi bruge `group_by` til at opdele efter de tre `species` og så nest de tre datarammer:
+
+```{r}
+penguins %>% 
+  group_by(species) %>%
+  nest()
+```
+
+Vi lave en lineær model på hver af de tre datasæt med `map` og ved at specifice funktion som vi defineret ovenpå. Vi bruger `mutate` ligesom før til at tilføje resulterende statistikker som en ny kolon der hedder `lm_stats`:
+
+```{r}
+penguins_lm <- penguins %>% 
+  group_by(species) %>%
+  nest() %>% 
+  mutate(
+    lm_stats=map(data,lm_model_func),
+    )
+penguins_lm
+```
+
+Til sidste bruger vi funkction `unnest` på vores statistikker:
+
+```{r}
+penguins_lm <- penguins_lm %>%
+  unnest(cols=lm_stats)
+penguins_lm
+```
+
+
+<!-- ```{r} -->
+<!-- penguins_lm <- penguins %>%  -->
+<!--   group_by(species) %>% -->
+<!--   nest() %>% -->
+<!--   mutate(lm_model = map(data,~lm(bill_length_mm~body_mass_g,data=.x))) %>% -->
+<!--   mutate( -->
+<!--          lm_intercept = map_dbl(lm_model,~.x$coefficients[1]), #intercept -->
+<!--          lm_slope = map_dbl(lm_model,~.x$coefficients[2]), #slope -->
+<!--          lm_pval = map_dbl(lm_model,~summary(.x)$coefficients[2,4]), #slope signifikans -->
+<!--          lm_rsquared = map_dbl(lm_model,~summary(.x)$r.squared) #rsquared -->
+<!--         ) -->
+<!-- penguins_lm -->
+<!-- ``` -->
+
+Så kan vi se, at vi har fået en dataramme med vores lineær model statistics. Lad os omsætte dem til et plot for at sammenligne dem over de tre `species` af pingvin.
+
+```{r,fig.width=8,fig.height=4}
+penguins_lm %>% 
+  select(species,r.squared,p.value) %>%
+  mutate("-log10pval" = -log10(p.value)) %>%
+  select(-p.value) %>%
+  pivot_longer(-species) %>%
+  ggplot(aes(x=species,y=value,fill=species)) + 
+  geom_bar(stat="identity") + 
+  scale_fill_brewer(palette = "Set2") +
+  facet_wrap(~name,scale="free",ncol=4) +
+  theme_bw()
+```
+
+
+### Lave og tilføje labels til dit regression plot
+
+Som nævnt tidligere, kan det være nyttig at tilføje nogle labels til vores plots med de statistikker, vi lige har beregnet. I tilfældet af vores lineær regression trend lines, vi vil gerne tilføje de r-squared værdier og de p-værdier. 
+
+Til at gøre det kan man bruge følgende kode. Vi tage vores datasæt `penguins_lm` med vores beregnet statistikker og bruge den til at lave en datasæt som kan bruges i `geom_text()` i vores trend plot. Funktionen `glue()` (fra pakken `glue()`) er bare en nyttig måde at tilføj de `r.squared` og `p.value` værdier sammen i en string som beskriver vores forskellige trends
+
+```{r,comment=FALSE,warning=FALSE,message=FALSE}
+library(glue)  # for putting the values together in a label
+label_data <- penguins_lm %>%
+  mutate(
+    rsqr = signif(r.squared, 2),  # round to 2 significant digits
+    pval = signif(p.value, 2),
+    label = glue("r^2 = {rsqr}, p-value = {pval}")
+  ) %>%
+  select(species, label)
+label_data
+```
+
+Vi kan tilføje vores label data indenfor `geom_text()`. `x` og `y` specificere hvor i plottet teksten skal være, og husk at specificere `data=label_data` og `label=label` skal stå indenfor `aes()` når det handler om en variable i `label_data`.
+
+```{r,echo=TRUE,fig.width=6,fig.height=4}
+ggplot(penguins, aes(body_mass_g, flipper_length_mm, colour=species)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_text(
+    x = 5500, 
+    y = c(175,180,185),
+    data = label_data, aes(label = label), #specify label data from above
+    size = 4
+  ) + 
+  scale_color_brewer(palette = "Set2") +
+  theme_minimal() 
+```
+
+
+### `case_when()`: adding bar plot text
+
+Det vil også være rart at tilføje vores p-værdier i vores barplot fra ovenstående korrelation analyse. Den kan laves igen med `geom_text`. Husk at vi bruge lokale aethetics funktion `aes()` indenfor `geom_text()`. Her specificerer vi at parameteren `label` skal være vores p-værdier fra vores datasæt. Parameteren `vjust` bruges til at få de tal lidt ovenpå søjlerne.
+
+```{r,eval=TRUE,fig.width=4,fig.height=4}
+cor_plot + 
+  geom_text(aes(label = round(p.value,3)), vjust = -0.5)
+```
+
+Lad os transformere de p-værdi kolon til en der viser signifikans i formen af stjerne (det ses meget ofte indenfor præsentationer og publikationer). Her kan man bruge `case_when` - det ligner `ifelse` men kan benyttes i tilfældet hvor der er flere en to muligheder. Man angiver de forskellige muligheder og separerer hvad sker hvis `TRUE` med tilde (for eksempel hvis p-værdien er mindre end 0.001 så få kolonnen `sig` tre stjerne). Her er `p.value < 0.001` skrev i linjen før `p.value < 0.01` så dette tilfælde få prioritet (hvis p-værdien er mindre end 0.001 få `sig` så tre stjerner i stedet for to). 
+
+```{r}
+eukaryotes_cor_sig <- eukaryotes_cor %>%
+  select(-data) %>% 
+  mutate(sig = case_when(p.value < 0.001 ~ "***",
+                         p.value < 0.01 ~ "**",
+                         p.value < 0.05 ~ "*",
+                         p.value < 0.1 ~ ".",
+                         p.value >= 0.1 ~ "n.s"))
+
+eukaryotes_cor_sig %>% select(group,sig) #viser hvordan det ser ud
+```
+
+Nu at vi har fået en ny kolon der hedder `sig` kan det anvendes indenfor `geom_text` som i forudgående plot.
+
+```{r,eval=TRUE,fig.width=4,fig.height=4}
+cor_plot <- eukaryotes_cor_sig %>%
+  ggplot(aes(x=group,y=estimate,fill=group)) + 
+  geom_bar(stat="identity",colour="black") +
+  scale_fill_brewer(palette = "Set3") + 
+  ylab("Corrlation estimate") +
+  theme_classic()  + 
+  geom_text(aes(label = sig),size=5, vjust = -0.1)
+cor_plot
+```
+
+
+Mere om adding labels to barplots: https://r-graphics.org/recipe-bar-graph-labels
+
+
+## Problemstillinger
+
+__0__) Quizzen på Absalon.
+
+Husk at have indlæste følgende:
+
+```{r,eval=FALSE,echo=TRUE}
+library(tidyverse)
+library(broom)
+data(mtcars)
+data(iris)
+```
+
+
+__1__) *Korrelation øvelse*
+
+* Brug `data(mtcars)` og `cor.test()` til at lave et test af korrelationen mellem variablerne `qsec` og `drat`. 
+
+```{r,echo=FALSE,eval=FALSE}
+cor.test(mtcars %>% pull(qsec),mtcars %>% pull(drat)) 
+```
+
+* Tip: hvis du foretrækker at undgå `$` i analysen til at speciefice en kolon indenfor `cor.test()` kan du bruge `mtcars %>% pull(qsec)` i stedet for `mtcars$qsec`.
+* Tilføj funktionen `glance()` til din resultat fra `cor.test()` til at se de statistikker i __tidy__ form. Kan du genkende de statistikker fra `cor.test()` i den resulterende dataramme?
+
+```{r,echo=FALSE,eval=FALSE}
+cor.test(mtcars %>% pull(qsec),mtcars %>% pull(drat)) %>% glance()
+```
+
+__2__) *Korrelation øvelse*
+
+Vælg `Species` `setosa` fra `iris` (`data(iris)`) og brug `cor.test()` til at beregne korrelationen mellem `Sepal.Width` og `Sepal.Length`.
+
+* Angiv resultaterne i __tidy__ form.
+
+__3__) *Nesting øvelse*
+
+For datasættet `mtcars` anvende `group_by()` og `nest()` til at få en nested datasæt opdelt efter variablen `cyl`.
+
+* Hvor mange datasæt har du fået indenfor kolonnen `data`?
+
+```{r,echo=FALSE,eval=FALSE}
+mtcars %>% group_by(cyl) %>% nest()
+```
+
+* Tilføj en ny kolon med `mutate` der hedder `n_rows` som beregner antallet af række i hver af de tre datasæt - brug følgende struktur (først angiv kolonnen som indeholder vores list af datasæt, og så angive funktionen som beregner antallet af række).
+
+```{r,eval=F,echo=T}
+mtcars %>% 
+  group_by(cyl) %>% 
+  nest() %>%
+  mutate("n_rows" = map(???,???)) #erstatte ??? her
+```
+
+```{r,echo=FALSE,eval=FALSE}
+mtcars %>% 
+  group_by(cyl) %>% 
+  nest() %>%
+  mutate("n_rows" = map_dbl(data,nrow)) #erstatte ??? her
+```
+
+* Hvad få du indenfor din ny kolonnen? Prøve at andre `map` til `map_dbl` og se hvad der sker.
+* Beholde `map` og tilføj `%>% unnest(n_rows)` i stedet for og se hvad der sker.
+
+```{r,echo=FALSE,eval=FALSE}
+mtcars %>% 
+  group_by(cyl) %>% 
+  nest() %>%
+  mutate("n_rows" = map(data,nrow)) %>% unnest(n_rows) #erstatte ??? her
+```
+
+
+
+
+__4__) *Multiple korrelation*
+
+Vi vil gerne beregne den korrelation mellem variablerne `qsec` og `drat` til hver af de tre datasæt.
+
+* Tilpasse følgende funktion så at vi teste korrelation mellem de to variabler.
+* Tilføje `glance()` så at vi få vores data i __tidy__ form.
+
+```{r,eval=FALSE}
+cor_test <- ~cor.test(.x$qsec,???) #erstatte ??? og tilføj glance funktion
+```
+
+
+```{r,eval=FALSE,echo=FALSE}
+cor_test <- ~cor.test(.x$qsec,.x$drat) %>% glance()
+```
+
+
+* Brug map i nedenstående med din funktion til at beregne de korrelation til hver af de tre datasæt.
+* Huske at `unnest` kolonnen med dine korrelation statistikker bagefter. 
+
+```{r,eval=F,echo=T}
+mtcars %>% 
+  group_by(cyl) %>% 
+  nest() %>%
+  mutate(cor_stats = ???) #erstatte ??? her og husk unnest
+```
+
+```{r,echo=FALSE,eval=FALSE}
+mtcars %>% 
+  group_by(cyl) %>% 
+  nest() %>%
+  mutate(cor_stats = map(data,cor_test)) %>%
+  unnest(cor_stats) 
+```
+
+* Lave et barplot af `estimate` med den resulterende dataramme 
+
+__5__) *Multiple korrelation øvelse*
+
+Lave samme analyse som __4__) men 
+  
+* nest de data efter `gear`
+* beregne korrelationen mellem `wt` og `drat`
+  
+```{r,echo=FALSE,eval=FALSE}
+cor_test <- ~cor.test(.x$wt,.x$drat)  %>% glance()
+
+mtcars %>% 
+  group_by(gear) %>% 
+  nest() %>%
+  mutate(cor_stats = map(data,cor_test)) %>%
+  unnest(cor_stats) 
+```
+
+
+__6__) *Linear regression øvelse*
+
+
+Brug `data(iris)` og anvende `lm()` til at finde den forventet `Petal.Length` med hensyn til `Petal.Width`. 
+
+* Hvad er den intercept og slope af den beregnet linje?
+* Tilføj funktionen `glance()` og angive værdier `r.squared` og `p.value`.
+
+```{r,eval=FALSE,echo=TRUE}
+lm(??? ~ ???,data=???) #erstatte ???
+```
+
+```{r,echo=FALSE,eval=FALSE}
+lm(Petal.Length ~ Petal.Width, data = iris) %>% glance()
+```
+
+__7__) Lave et scatter plot af Petal.Width på x-aksen og Petal.Length på y-aksen.
+
+* Tilføje linjen `geom_smooth(method="smooth")` 
+* Ændre linjen til `geom_smooth(method="lm")`
+* Ændre linjen til `geom_smooth(method="lm",se=FALSE)`
+* Nu specificer en forskellige farve efter Species. Er der forskellige trends?
+
+```{r,echo=FALSE,eval=FALSE}
+iris %>%
+  ggplot(aes(x=Petal.Width,y=Petal.Length,colour=Species)) + 
+  geom_point() + 
+  geom_smooth(method="lm",se=FALSE) +
+  theme_classic()
+```
+
+
+Vi vil gerne lave samme analyse for hver af de tre Species.
+
+__8__) *Lineær regression øvelse over multiple datasæt*
+
+Vi vil gerne udføre lineær regression med Petal.Length og Petal.Width som i __6__), men opdelt efter de tre Species. 
+* Lave en funktion ved at tilpasse følgende kode. Passe på hvad `data` skal være lig med her (når vi skriver en funktion).
+* Tilføj `glance()`.
+
+```{r,echo=TRUE,eval=FALSE}
+lm_model_func <- ???lm(??? ~ ???,data=???) #erstat ??? 
+```
+
+* Anvende `group_by()` og `nest()`
+* Anvende `map()` med din funktion indenfor `mutate()` til at tilføje en ny kolon som hedder `lm_stats` til din dataramme.
+* Husk at `unnest` kolonnen `lm_stats`til at kunne se statistikker.
+
+```{r,echo=FALSE,eval=FALSE}
+
+```
+
+
+__9__) *Tilføj statistik til plottet*
+
+Vi vil gerne tilføj de statistikker vi lige har beregnet i __8__) til plottet vi lavet i __7__).
+
+Kopiere koden fra sektionen "Lave og tilføje labels til dit regression plot" og tilpasse den til din analyse med `iris`.
+
+__10__) *Tilføj statistik til plottet*
+
+
+Vi vil gerne tilføj de statistikker vi lige har beregnet i __4__) til et bar plot af vores korrelation estimates.
+
+Kopiere koden fra sektionen "`case_when()`: adding bar plot text" og tilpasse den til din analyse med `mtcars`.
+
+
+
+## Næste uge
+
+Clustering af data ind i forskellige grupper - kmeans/hierarchical clustering (kun undervisning på tirsdag og workshop på fredag).

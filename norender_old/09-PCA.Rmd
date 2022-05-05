@@ -1,0 +1,439 @@
+# Principal component analysis (PCA)
+
+```{r,comment=FALSE,message=FALSE,warning=FALSE}
+library(tidyverse)
+library(broom)
+```
+
+
+## Indledning og læringsmålene
+
+
+### Læringsmålene
+
+* Forstå koncepten bag PCA
+* Benytte PCA i R og lave et plot af de data i to dimensioner
+* Vurdere den relative variance forklarede af de forskellige components
+* Anvende PCA til at vurdere variablernes bidrag til principal components
+
+### Introduktion til chapter
+
+Principal component analysis er en meget populær og benyttet metode og kan anvendes til bla. at visualisere data med en høj antal dimensioner i et enktelt scatter plot med to dimensioner. Det er meget nyttige for at se de underliggende struktur i de data og indenfor biologi er det meget brugt til at visualisere hvor de forskellige samples sidder relative til hinhanden - for eksempel for at se, om de controls og treatment samples fremgå i samme steder i et plot.
+
+### Video ressourcer
+
+
+* Video 1 - hvad er PCA?
+
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/556581604
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/556581604")
+```
+
+
+
+* Video 2 - hvordan man lave PCA i R og få output i tidy form
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/556581588
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/556581588")
+```
+
+
+* Video 3 - hvordan man visualisere de data (principal components, rotation matrix)
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/556787141
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/556787141")
+```
+
+
+
+## Hvad er principal component analysis (PCA)?
+
+I vores sidste lektion arbejdede vi med `penguins`, hvor vi så at der faktisk var fire numeriske variabler - altså fire dimensioner - som blev brugt til at lave k-means clustering.
+
+```{r}
+library(palmerpenguins)
+penguins <- penguins %>% 
+  drop_na() %>%
+  mutate(year=as.factor(year))
+
+penguins %>% select(where(is.numeric)) %>% head()
+```
+
+Når man lave et plot af de data for at vise de forskellige clusters, få man et problem - hvilke to variable skal plottes? Man kan plotte hver eneste pair af variabler. For eksempel kan man prøve en pakke der hedder `GGally`, som automatiske kan plotte de forskellige pairs af numeriske variabler og beregner korrelationen mellem variablerne.
+
+```{r}
+require(GGally)
+penguins %>% 
+  ggscatmat(columns = 3:6 ,color = "species", corMethod = "pearson") + 
+  scale_color_brewer(palette = "Set2") +
+  theme_bw()
+```
+
+
+Problemmet er, at så snart antallet af dimensioner bliver større end 4, bliver det alt for kompleks og plads krævende.
+
+En løsning til problemmet er at "projekt" de data ned indtil et mindre antal demensioner (fk. kun 2 dimensioner). Disse dimensioner fanger oplysninger fra alle variablerne i datasættet, og derfor når man lave et scatter plot, få man repræsenteret det hele datasæt i stedet for kun to udvalgt variabler. Metoden for at lave disse såkaldte 'projektion' kaldes for 'princial component analysis'.
+
+### Simpel eksempel med to dimensioner
+
+Man kan prøve at forstå hvordan PCA fungere ved at kigge på en simpel eksempel med 2 dimensioner:
+
+```{r,fig.width=4,fig.height=4}
+#simulere data med en høj korrelation
+a <- rnorm(250,1,2)
+b <- a + rnorm(250,0,.5)
+df <- tibble(a,b)
+ggplot(df,aes(a,b)) + 
+  geom_point() + 
+  theme_minimal()
+```
+
+Vi kan se her, at der er en meget store korrelation mellem a og b. Selvom de data er plottet i 2 dimensioner kan de næsten forklares af én bedste rette linje.
+
+
+```{r,fig.width=4,fig.height=4}
+df <- tibble(a,b)
+ggplot(df,aes(a,b)) + 
+  geom_point() + 
+  theme_minimal() + 
+  geom_smooth(method="lm",se=FALSE)
+```
+
+
+Med andre ord kan vi næsten forklare de data i kun en dimension - punkternes afstand langt linjen. Når man tager alle punkterne og beskriver dem langt en linje som bedste beskrive variancen i de data,  kaldes den linje for den første principal component (PC1). Man kan dernæst beskriver en anden linje som er vinkelret til PC1 som bedste forklarer variancen i de data som ikke var fanget af PC1 - det kaldes for den anden princal component (PC2).
+
+Vi kan se her PC1 og PC2 plottet:
+
+```{r, echo=FALSE,fig.width = 1,fig.height=1,comment=FALSE,warning=FALSE,out.width="50%"}
+# Bigger fig.width
+library(png)
+library(knitr)
+include_graphics("plots/pca_dem.png")
+```
+
+Når vi tager PC1 and PC2 og plotter dem som henholdvis x-aksen og y-aksen, svarer det til in drejning af akserne i plottet (vi finder PC1 og PC2 fra funktionen `prcomp` som jeg forklarer i næste sektion):
+
+```{r,fig.width=4,fig.height=4}
+dat <- augment(prcomp(df),df)
+ggplot(dat,aes(x=.fittedPC1,y=.fittedPC2)) + 
+  geom_point() + 
+  theme_minimal() + 
+  geom_smooth(method="lm")
+```
+
+Vi kan se her, at de data flyder de plads i de plot bedre en før (og bemærk at de askse skala er blev meget mindre i de ny y-aksen, da de data spreder sig meget mindre langt PC2 i forhold til PC1.)
+
+Det her er kun en eksempel hvor vores oprindelige data ligger i to dimensions (to variabler), for at gøre det nemt at visualisere dem i et plot, men de fleste datasæt (fk penguins, iris osv.) har flere end to dimensioner. Vi kan godt lave samme process, hvor vi definerer PC1 som forklarer så meget af variancen i de data som muligt, og dernæst PC2 som forklarer nogle af variancen ikke fanget af PC1, og dernæst PC3 osv., efter hvor mange dimensioner de data har. I mange praktisk situationer vælger man de første to componenter, som er mest vigtige, da de forklarer mest af variancen i de data i forhold til de andre componenter.
+
+"So to sum up, the idea of PCA is simple — reduce the number of variables of a data set, while preserving as much information as possible."
+https://builtin.com/data-science/step-step-explanation-principal-component-analysis
+
+## Fit PCA to data in R
+
+```{r}
+library(broom)
+```
+
+Lad os skifte tilbage til nogle virkelige data for at benytte `prcomp`: datasættet `penguins`. Med `prcomp` fokuserer vi kun på numeriske variabler, så vi bruger `select` med `where(is.numeric)` og så anvender scaling ved at specificere `scale = TRUE` indenfor funktionen `prcomp`.
+
+<!-- ```{r} -->
+<!-- biopsy <- read_csv("https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv") -->
+<!-- ``` -->
+
+```{r}
+pca_fit <- penguins %>%
+  select(where(is.numeric)) %>% # retain only numeric columns
+  prcomp(scale = TRUE) # do PCA on scaled data
+
+summary(pca_fit)
+```
+
+`Proportion of Variance` indikerer hvor meget af variancen i de data blev forklaret af de forskellige komponenter. Vi kan se, at `PC1` forklaret omkring 69\% og de første to komponenter sammen forklarer 88\% af variancen i de data. Derfor hvis vi viser et plot af de første to komponenter ved vi, at vi har fanget rigtig meget oplysninger om de fire variabler i datasæsttet.
+
+## Integrere PCA resultater med broom-pakke
+
+Der er flere ting som kan være nyttige at lave med vores PCA resultater:
+
+* Lave et plot af de data med de første to principal components
+* Se for meget af variancen i de data blev forklaret af de forskellige components
+* Bruge den rotation matrix til at se, hvordan variabler sidder med hensyn til hinanen
+
+For at få lavet vores plot af de principal componenter kan vi benytter `augment` ligesom vi gjorde i vores sidste lektion med k-means clustering. Her få vi værdierne til hver af de fire principal components med sammen med den oprindelige datasæt.
+
+```{r}
+pca_fit_augment <- pca_fit %>% 
+  augment(penguins) # add original dataset back in
+
+pca_fit_augment
+```
+
+Vi kan tage `pca_fit_augment` og lave et plot af de første to principal components:
+
+```{r,fig.width=5,fig.height=4}
+pca_fit_augment  %>% 
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color = species)) + 
+  geom_point() +
+  theme_bw()
+```
+
+Vi kan også integrere de clusters som vi fik fra funktionen `kmeans` i vores PCA ved at anvende `augment` på resultaterne fra `kmeans` og vores data som allerede har resultaterne fra `pca`. Da både PCA og k-means fanger oplysninger om strukturen af de data baserede på de fire numeriske variabler, kan man forventer en bedre sammenligning mellem de to (i forhold til at sammenligne de clusters med et plot med kun to af variablerne).
+
+```{r,fig.width=5,fig.height=4}
+penguins_scaled <- penguins %>% select(where(is.numeric)) %>% scale
+
+kclust <- kmeans(penguins_scaled,centers = 3)
+
+kclust %>% augment(pca_fit_augment)  %>% 
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color = .cluster)) + 
+  geom_point() +
+  theme_bw()
+```
+
+__Output med tidy__
+
+Næste kan vi kigge på variancen i de data som er fanget af hver af de forskellige components. Vi kan udtrække oplysningerne ved at benytte funktionen `tidy()` fra pakken `broom`, og ved at angiv `matrix = "eigenvalues"` indenfor `tidy`.
+
+Det kaldes for "eigenvalues" fordi, hvis man kigger på matematikken bag principal component analysis, tager man udgangspunkt i en covariance matrix - altså det beskriver sammenhængen eller korrelationen mellem de forskellige variabler. Man bruger denne covariance matrix til at beregne de såkaldte eigenvalues og deres tilsvarende eigenvectors.
+
+Det er faktisk den største eigenvalue som fortæller os om den første principal component - det fortæller os hvor meget af variancen i de data den første principal component fanger - jo større det er relativ til de andre eigenvalues, jo mere variancen man forklarer med den første principal component. Og den næste største fortæller os om den anden prinical component og så videre.
+
+```{r}
+pca_fit_tidy <- pca_fit %>%
+  tidy(matrix = "eigenvalues")
+pca_fit_tidy
+```
+
+Lad os visualisere de tal her i procenttal, med at specificere `labels = scales::percent_format()` indenfor `scale_y_continuous` - så vi bare ændre på de tal som kan ses på y-aksen.
+
+```{r,fig.width=3,fig.height=4}
+pca_fit_tidy %>%
+  ggplot(aes(x = PC, y = percent)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  scale_y_continuous(
+    labels = scales::percent_format(), #convert labels to percent format
+  ) +
+  theme_minimal()
+```
+
+
+På den ene side hvis der er meget variance som er forklaret ved de første components (for eksempel den første og den anden tilsammen), betyder det at der er en del redundans i de data, på grund af at mange af de variabler har en tæt sammenhæng med hinanden. På den anden side hvis der er meget lille andel af variancen som er forklaret af de første components, betyder det at det er svært at beskrive de data i mindre dimensioner (fordi der næsten er ingen sammenhæng mellem variablerne) - i dette tilfælde er PCA mindre effektiv.
+
+### Rotation matrix to extract variable contributions
+
+De eigenvalues kan anvendes til at find ud af variancen i de data, men deres tilsvarende eigenvectors fortæller os om, hvordan de forskellige variabler er kombineret til at få de endelige principal component værdier, som vi bruger fk. i et scatter plot. De eigenvectors bruges til at lave et matrix som hedder 'rotation matrix'. 
+
+Jeg anvender pivot_wide for at få vores matrix mere klart at se. Vi kan se at vi har variablerne her på rækkerne og de forskellige prinicpal components i kolonnerne.
+
+
+```{r}
+pca_fit_rotate <- pca_fit %>%
+  tidy(matrix = "rotation") %>% 
+  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value")
+pca_fit_rotate
+```
+
+Den rotation matrix fortæller os hvordan man beregner værdierne af de principal components for alle observationer. For eksempel tager vi vores første observation, beregne 0.45 gange de bill length, og så minus 0.4 gang de bill depth, og så plus 0.58 x den flipper length og så plus 0.55 x body_mass. Og så har vi værdien for observationen langt den første princip komponent. 
+
+Vi kan andvende den rotation matrix til at se hvordan de forskellige variabler relatere til hinhanden. Variablerne som er tæt på hinanden i plottet ligner hinanden. Vi kan se at flipper_length og body_mass ligner hinhanen ret meget i vores datasæt, mens bill_depth sidder over til venstre langt den første principal component, så det måske indeholder nogle oplysninger om pingvinerne, der ikke kunne fanges i de andre variabler.
+
+```{r}
+library(ggrepel)
+pca_fit_rotate %>%
+  ggplot(aes(x=PC1,y=PC2,colour=column)) + 
+  geom_point(size=3) + 
+  geom_text_repel(aes(label=column)) + 
+  theme_minimal()
+```
+
+
+### Pakken `factoextra`
+
+<!-- To save work making a plot manually, we can just plot this values directly from `pca_fit` using a package `factoextra`: -->
+
+R-pakken `factoextra` kan avendes til at lave et lignende plot fra de rotation matrix automatiske, og den arbejder ovenpå `ggplot2` så man kan ændret temaet osv. Man kan se hvordan de fungere i følgende kode.
+
+* Man få det varians procenttal på akserne.
+* Lokationer af pilehovederne er fra den rotation matrix.
+* Jo mindre vinklen mellem to linjer er, og tættere på de er til hinanden
+* Jo nærmere til den cirkle pilehoveredne er, jo mere indflydelse den variable har i de principal components.
+
+
+```{r,comment=FALSE,message=FALSE}
+library(factoextra)
+fviz_pca_var(pca_fit, col.var="steelblue",repel = TRUE)+
+  theme_minimal()
+```
+
+
+
+## Quiz og problemstillinger
+
+__0__) Quiz på Absalon
+
+__1__) Download følgende datasæt ved at køre følgende kode chunk:
+
+```{r}
+  
+# the column names of the dataset
+names <- c('id_number', 'diagnosis', 'radius_mean', 
+           'texture_mean', 'perimeter_mean', 'area_mean', 
+           'smoothness_mean', 'compactness_mean', 
+           'concavity_mean','concave_points_mean', 
+           'symmetry_mean', 'fractal_dimension_mean',
+           'radius_se', 'texture_se', 'perimeter_se', 
+           'area_se', 'smoothness_se', 'compactness_se', 
+           'concavity_se', 'concave_points_se', 
+           'symmetry_se', 'fractal_dimension_se', 
+           'radius_worst', 'texture_worst', 
+           'perimeter_worst', 'area_worst', 
+           'smoothness_worst', 'compactness_worst', 
+           'concavity_worst', 'concave_points_worst', 
+           'symmetry_worst', 'fractal_dimension_worst')
+  
+# get the data from the URL and assign the column names
+cancer <- read.csv(url("https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data"), col.names=names)
+cancer <- as_tibble(cancer)
+cancer <- as.data.frame(cancer%>%select(-id_number))
+```
+
+
+__1__)  Anvend funktionen `ggscatmat` fra pakken `GGally` til at lave et plot hvor man sammenligne fem af de variabler. 
+
+* Man kan lave en tilfældig sample af fem variabler med at angive `columns = sample(2:31,5)` indenfor `ggscatmat`.
+* Give farver efter factor variablen `diagnosis` og vælger "person" som `corMethod`.
+* Opfatter du, at der er en del redundans i de data (altså er der høje korrelationer mellem de forskellige variabler)?
+
+```{r,echo=FALSE,eval=FALSE}
+library(GGally)
+cancer %>% 
+  ggscatmat(columns = sample(2:31,5) ,color = "diagnosis", corMethod = "pearson") + 
+  scale_color_brewer(palette = "Set2") +
+  theme_bw()
+```
+
+__2__) Benyt funktionen `prcomp` til at beregne en principal component analysis af de data.
+
+* Husk at det skal kun være numeriske variabler og angiv `scale=TRUE` indenfor funktionen.
+* Lav et `summary` af resultaterne. Hvad er proportionen af variancen forklaret af den første principal component?
+* Hvad er proportionen af variancen forklaret af den første to principal components tilsammen?
+
+```{r,echo=FALSE,eval=FALSE}
+pca_fit <- cancer %>% select(-diagnosis) %>% prcomp(scale=TRUE)
+summary(pca_fit)
+```
+
+__3__) *Augment og plot* Anvend `augment` til at tilføje de rådata til ovenstående resultater fra `prcomp`.
+
+* Brug den til at lave et scatter plot af de første to principal components
+* Giv farver efter `diagnosis`
+
+```{r,echo=FALSE,eval=FALSE}
+pca_fit_augment <- pca_fit %>% 
+  augment(cancer) # add original dataset back in
+
+pca_fit_augment
+```
+
+
+```{r,echo=FALSE,eval=FALSE}
+pca_fit_augment  %>% 
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color = diagnosis)) + 
+  geom_point() +
+  theme_bw()
+```
+
+
+__4__) *Integrere kmeans clustering* Lav et clustering med `kmeans` på de data, med to clusters. 
+
+* Augment resultaterne til din rå data (med de `prcomp` resultater allerede tilføjet). 
+* Lav et plot og give farver efter `.cluster` og forme efter `diagnosis`.
+* Sammenligne de clusters med `diagnosis`.
+
+
+```{r,echo=FALSE,eval=FALSE}
+cancer_scaled <- cancer %>% select(where(is.numeric)) %>% scale
+
+kclust <- kmeans(cancer_scaled,centers = 2)
+
+kclust %>% augment(pca_fit_augment)  %>% 
+  ggplot(aes(x=.fittedPC1, y=.fittedPC2, color = .cluster)) + 
+  geom_point(aes(shape=diagnosis)) +
+  theme_bw()
+```
+
+__5__) *tidy form og variancen* Anvende `tidy(matrix = "eigenvalues")` til at få den bidrage af de forskellige components til variancen i de data.
+
+* Lav et barplot som viser de components på x-aksen og `percent` på y-aksen.
+
+```{r,echo=FALSE,eval=FALSE}
+pca_fit_tidy <- pca_fit %>%
+  tidy(matrix = "eigenvalues")
+pca_fit_tidy
+
+pca_fit_tidy %>%
+  ggplot(aes(x = PC, y = percent)) +
+  geom_bar(stat="identity", fill="steelblue") +
+  scale_y_continuous(
+    labels = scales::percent_format(), #convert labels to percent format
+  ) +
+  theme_minimal()
+```
+
+__6__) *tidy form og rotation matrix* Anvende `tidy(matrix = "rotation")` til at få den rotation matrix.
+
+* Anvend `pivot_wider` til at få den til wide form
+* Lav et scatter plot som viser de forskellige variabler relativ til hinanden
+* Anvend `geom_text_repel` til at give labels til de variabler
+
+
+```{r,echo=FALSE,eval=FALSE}
+pca_fit_rotate <- pca_fit %>%
+  tidy(matrix = "rotation") %>% 
+  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value")
+pca_fit_rotate
+
+
+library(ggrepel)
+pca_fit_rotate %>%
+  ggplot(aes(x=PC1,y=PC2,colour=column)) + 
+  geom_point(show.legend = F) + 
+  geom_text_repel(aes(label=column),show.legend = F) + 
+  theme_minimal()
+```
+
+__7__) *Ekstra øvelse* tilpas kode på andre datasæt
+
+* `iris`
+* `mtcars`
+* `decathlon2` (indbygget data fra pakken `factoextra`)
+
+
+<!-- ```{r} -->
+<!-- output <- cancer$diagnosis -->
+
+<!-- t_test_stats <- map_df(cancer %>% select(-diagnosis), -->
+<!--        ~t.test(.x~as.factor(output)) %>% -->
+<!--          glance) %>% -->
+<!--   mutate("var"=names(cancer %>% select(-diagnosis)),.before=1) %>% -->
+<!--   arrange(p.value) -->
+<!-- t_test_stats -->
+<!-- ``` -->
+
+
+## Ekstra læsning
+
+Step by step explanation: https://builtin.com/data-science/step-step-explanation-principal-component-analysis
+
+PCA tidyverse style fra claus wilke: https://clauswilke.com/blog/2020/09/07/pca-tidyverse-style/
+
+More PCA in tidyverse framework: https://tbradley1013.github.io/2018/02/01/pca-in-a-tidy-verse-framework/

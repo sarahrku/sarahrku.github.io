@@ -1,0 +1,741 @@
+# Forbine tables, iterations og funktioner
+
+```{r, echo=FALSE,fig.width = 1,fig.height=1,comment=FALSE,warning=FALSE,out.width="15%"}
+# Bigger fig.width
+library(png)
+library(knitr)
+include_graphics("plots/hex-tidyverse.png")
+```
+
+
+```{r,comment=FALSE,message=FALSE,echo=FALSE}
+library(ggplot2)
+library(tidyverse)
+library(gridExtra)
+```
+
+## Inledning og læringsmålene
+
+### Læringsmålene
+
+I skal være i stand til at:
+
+* Anvende `map()` - funktioner til at udføre beregninger iterativt over flere kolonner og `nest()` til at lave analyser over forskellige dele af datasættet.
+* Kombinere `map()` med custom funktioner til at forbedre reproducerbarhed i analyser.
+
+### Introduktion til Chapter
+
+
+Det er også ofte tilfældet indenfor biologi, at man har sine data værdier over forskellige kolonner som refererer til rigtige mange samples, replikater eller konditioner. Vi beskæftiger os med de `map()` funktioner, som kan benyttes til at lave iterativ baserende analyser i `R`.
+
+### Video ressourcer
+
+
+* Video 1: Introduction to map functions for iterating over columns
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/549630848
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/549630848")
+```
+
+
+
+* Video 2: Introduction to custom functions and combining them with map
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/549630825
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/549630825")
+```
+
+
+
+* Video 3: Introduction to nest functions for breaking data into sections
+
+Link her hvis det ikke virker nedenunder: https://player.vimeo.com/video/549630798
+```{r,echo=FALSE}
+library("vembedr")
+
+embed_url("https://vimeo.com/549630798")
+```
+
+
+## Iterativ processer med `map()` fuktioner
+
+Når man lave en interativ proces, vil man gerne lave samme ting gentagne gange. Det kan være for eksempel, at vi har ti variabler og vi gerne vil beregne middelværdien for hver variable. Indenfor biologi er det et meget realistisk scenarie, for eksempel hvis man har mange replikater, konditioner eller tidspunkter og gerne vil beregne noget på dem alle sammen - det kan være at man gerne vil normalisere ekspressionsniveauerne over forskellige gener, osv.
+
+I resten af dette kapitel, lad os beskæftige os med en datasæt der hedder `eukaryotes`, som indeholder meget oplysninger om forskellige organismer som hører til eukaryotes - for eksempel deres navne, gruppe, sub-gruppe, antal proteins/genes, genom størrelse og så videre. Man kan få de data indlæste med følgende kommando og se en list over for de forskellige kolon navne nedenfor.
+
+```{r}
+eukaryotes <- read_tsv("https://www.dropbox.com/s/3u4nuj039itzg8l/eukaryotes.tsv?dl=1")
+```
+
+Vi tager udgangspunkt i kun fire variabler, så for at gøre tingene mere enkel, har jeg brugt `select()` til at kun får de fire variabler `organism_name`,`center`,`group` og `subgroup` i en dataramme. 
+
+```{r}
+#eukaryotes_full <- eukaryotes
+eukaryotes_subset <- eukaryotes %>% select(organism_name, center, group, subgroup)
+eukaryotes_subset %>% head()
+```
+
+Lad os forestille os, at vi er interesseret i antallet af unikke organismer (variablen `organism_name`). Der er en funktion der hedder `n_distinct` som beregner antallet af unikke værdier i en vector/variable. Her vælger vi `organism_name` og så tilføjer `n_distinct()`.
+
+```{r}
+eukaryotes_subset %>% 
+  select(organism_name) %>% 
+  n_distinct()
+```
+
+
+Lad os forestille os, at vi også er interesseret i antallet af unikke værdier i variablerne `center`, `group` og `subgroup` - som er de tre andre kolonner i datasættet. Vi har forskellige muligheder:
+
+* Skrive dem ud - men hvad nu hvis vi havde 100 variabler at håndtere?
+
+```{r,results="hold"}
+eukaryotes_subset %>% select(organism_name) %>% n_distinct()
+eukaryotes_subset %>% select(center) %>% n_distinct()
+eukaryotes_subset %>% select(group) %>% n_distinct()
+eukaryotes_subset %>% select(subgroup) %>% n_distinct()
+```
+
+* Vi kræver en mere automatiske løsning på det. Vi bruger ikke tid på det her, men der er den traditionele programmering løsning: for loop, som fungerer også i R:
+
+```{r,results="hold"}
+col_names <- names(eukaryotes_subset)
+
+for(column_name in col_names)
+{
+  print(eukaryotes_subset %>% 
+          select(column_name) %>% 
+          n_distinct())
+}
+```
+
+Man i teorien kan holde sig til for loops men jeg vil gerne præsentere den `tidyverse` løsning, som bliver mere intuitiv og nemmere for ændre at læse koden når man er vant til det (det integrerer også bedre med de andre `tidyverse` pakker).
+
+### Introduktion til `map()` funktioner
+
+Den `tidyverse` løsning til at lave iterativ processer er såkaldte `map()` funktioner, som er en del af pakken `purrr` og er stadig relative nye. Jeg introducerer dem her frem for de base-R løsninger ikke bare fordi de er `tidyverse`, men fordi de er en meget fleksibelt og nemt at forstå tilgang, når man vænner sig til dem.
+
+Jeg viser hvordan de fungere igennem `eukaryotes` og bagefter introducerer dem i konteksten af custom funktioner og `nest()` som kan bruges til at opdele datasættet indtil forskellige dele (ovenpå hvori man kan lave flere iterativ processer).
+
+`map()` er det `tidyverse` svar til en for loop (eller `apply` hvis man har kendskab til det). Man anvender `map()` ved at angiv funktionen navn `n_distinct` indenfor `map()`, og `map()` beregner `n_distinct()` for hver kolon i datasættet.
+
+```{r}
+eukaryotes_subset %>% map(n_distinct) #do 'n_distinct' for every single column
+```
+Så kan man se, at vi har fået en `list` tilbage, med en tal som viser antallet af unikke værdier til hver af de fire kolonner. Det fungerer lidt som den base-R funktion `apply`, men med `apply` skal man bruge `2` i anden plads til at fortælle, at vi gerne vil iterate over kolonnerne.
+
+```{r}
+apply(eukaryotes_subset,2,n_distinct)
+```
+
+Bemærk at vi har fået her en vector af tal tilbage, men vi fået en `list` med `map`. Der er faktisk andre varianter af `map` som kan benyttes til at give resultatet som andre data typer. For eksempel, kan man bruge `map_dbl()` til at få en double `dbl` tilbage - en vector af tal ligesom vi fået med `apply` i ovenstående. 
+
+```{r}
+# Apply n_distinct to all variables, returning a double
+eukaryotes_subset %>% map_dbl(n_distinct)
+```
+
+Man kan også bruge `map_df()` for at få en dataramme (`tibble`) tilbage - det er særligt nyttigt for os, fordi vi tager altid udgangspunkt i en dataramme når vi skal få lavet et plot.
+
+```{r}
+# Apply n_distinct to all variables, returning a dataframe
+eukaryotes_subset %>% map_df(n_distinct)
+```
+
+For eksempel, kan man tilføje de tal fra `map_df` direkte ind i et ggplot.
+
+```{r,fig.width=5,fig.height=2}
+eukaryotes_subset %>% 
+  map_df(n_distinct) %>% 
+  pivot_longer(everything(), names_to = "variable", values_to = "count") %>%
+  ggplot(aes(x = variable, y = count,fill = variable)) +
+  geom_col() +
+  coord_flip() + 
+  theme_minimal()
+```
+
+
+<!-- ### Map funktion med arguments -->
+
+<!-- En ting som er vigtig at husk - hvis man gerne vil tilføje arguments indenfor de funktioner de specificer med `map()` så skal man tilføj `~` som i følgende: -->
+
+<!-- ```{r} -->
+<!-- eukaryotes_subset %>% map_df(n_distinct) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- eukaryotes_subset %>% map_df(~.x %>% n_distinct(na.rm=TRUE)) -->
+<!-- ``` -->
+
+
+### Reference for the different map functions
+
+
+
+<!-- ```{r, echo=FALSE,out.height="100%",fig.cap="reference: https://adv-r.hadley.nz/functionals.html"} -->
+<!-- # Bigger fig.width -->
+<!-- library(png) -->
+<!-- library(knitr) -->
+<!-- include_graphics("plots/map-list.png") -->
+<!-- ``` -->
+
+
+Funktion    | Beskrivelse
+----------- | -----------------
+`map_lgl()` | returns a logical
+`map_int()` | returns an integer vector
+`map_dbl()` | returns a double vector
+`map_chr()` | returns a character vector
+`map_df()`  | returns a data frame
+
+
+
+## Custom functions
+
+Vi kan lave vores egne funktioner og betnytter dem indenfor map til at yderligere øge fleksibiliteten i R. For eksempel, kan det være at vi har en bestemt idé overfor, hvordan vi gerne vil normalisere vores data, og der eksisterer ikke en relevant funktion indenfor R i forvejen.
+
+### Simple functions
+
+Vi starter med en simpel funktion fra base-R og så forklare den i den table bagefter. Vi bruger mest en anden form af funktioner i __tidyverse__ som vi kigger på næste, men koncepten er den samme.
+
+```{r}
+my_function <- function(.x)
+{
+  return(sum(.x)/length(.x))
+}
+```
+
+Kode                 | Beskrivelse
+-------------------- | -----------------------------
+`my_function_name`   | funktion navn
+`<- function(.x)`    | fortæl R, at vi lave en funktion med nogle data `.x`
+`sum(.x)/length(.x)` | brug data `.x` til at beregne middelværdi
+`return()`           | hvad funktionen skal output - her middelværdi
+
+
+Lad også afprøve vores nye funccion ved at beregne den gennemsnitlige værdi for `Sepal.Length` i `iris`.
+
+```{r,results="hold"}
+my_function(iris$Sepal.Length)
+mean(iris$Sepal.Length)
+```
+
+
+### Custom functions with mapping
+
+Indenfor den `tidyverse` bruger man en lidt anden måde at skrive samme funktion på.
+
+```{r}
+my_function <- ~ sum(.x)/length(.x)
+```
+
+* `~` betyder at vi definere en funktion
+* `.x` betyder de data, der vi angiver funktionen (for eksempel variablen `Sepal.Length` fra `iris`). Man bruger den symbol `.x` hver gang og R ved automatiske hvad det betyder.
+
+Vi kan bruge `my_function` indenfor `map()` for at beregne den gennemsnitlige værdi for alle variabler (uden Species), og vi kan se at vi få tilsvarende resultat til funktionen `mean()`:
+
+```{r,results="hold"}
+iris %>% 
+  select(-Species) %>% 
+  map_df(my_function)
+
+iris %>% 
+  select(-Species) %>% 
+  map_df(mean)
+```
+
+Man kan også placere funktionen direkte indenfor `map_df` i stedet for at kalde den for nogle (fk. `my_funktion`):
+
+```{r}
+iris %>%
+  select(-Species) %>%
+  map_df(~ sum(.x)/length(.x)) #for each data column, compute the sum and divide by the length
+```
+
+Vi kan godt specificere andre funktioner. 
+
+```{r}
+iris %>%
+  map_df(~nth(.x,10)) #tag hver kolon, kalde det for .x og finde 10. værdi
+```
+
+eller når `nth` is a __tidyverse__ funktion kan vi bruge `%>%`:
+
+```{r}
+iris %>%
+  map_df(~.x %>% nth(10)) #tag hver kolon, kalde det for .x og finde 10. værdi
+```
+
+Antallet af distinkt værdier som ikke er `NA`:
+
+```{r}
+#tag hver kolon, kalde det for .x og beregne n_distinct
+
+iris %>%
+  map_df(~n_distinct(.x,na.rm = TRUE))
+
+iris %>%
+  map_df(~.x %>% n_distinct(na.rm = TRUE)) #fordi n_dinstict er fra tidyverse
+```
+
+Bemærk at hvis det er en indbygget funktion og vi benytter default parametre (altså na.rm = FALSE i ovenstående) kan man bare skrive:
+
+```{r}
+iris %>%
+  map_df(n_distinct)
+```
+
+Et andet eksempel: tilføje 3 og square:
+
+```{r}
+iris %>%
+  select(-Species) %>%
+  map_df(~(.x + 3)^2) %>% head()
+```
+
+Jo mere funktionen bliver indviklet, jo mere mening det giver at specificere den udenfor den `map()` funktion:
+
+```{r}
+my_function <- ~(.x - mean(.x))^2 + 0.5*(.x - sd(.x))^2 #en lang funktion
+
+iris %>%
+  select(-Species) %>%
+  map_df(my_function) #beregne my_function for hver kolon og output en dataramme 
+```
+
+## Nesting `nest()`
+
+Vi kommer til at se i næste lektion, at det er meget nyttige at bruge funktionen `nest()` for at få svar på adskillige statistiske spørgsmål. Det kan være for eksempel:
+
+* Vi har lavet 10 eksperimental under lidt forskellige konditioner, og gerne vil lave præcis samme analyse på alle 10.
+* Vi har 5 forskellige type bakterier med 3 replikater til hver, og gerne vil transformere de data på samme måde efter bakterien og replikat.
+
+Funktionen `nest()` kan virke lidt abstract i starten men koncepten er faktisk ret simpelt. Vi kan opelde vores datasæt (som indeholder vores forskellige konditioner/replikats etc.) med `group_by()` og så bruge `nest()` til at gemme de opdelt "sub" datasæt i en list. De bliver gemt indenfor en kolon i en `tibble`, og det gøre det bekvemt at arbejde med de forskellige datasæt på samme tid (med hjælp af `map()`).
+
+```{r, echo=FALSE,out.width="100%",fig.cat="reference: https://rstudio-education.github.io/tidyverse-cookbook/transform-tables.html"}
+# Bigger fig.width
+library(png)
+library(knitr)
+include_graphics("plots/tidyr-nest.png")
+```
+
+Lad os opdele `eurkaryotes_subset` efter variablen 'group' og anvende `nest()`:
+
+```{r}
+eukaryotes_subset_nested <- eukaryotes_subset %>% 
+  group_by(group) %>% 
+  nest()
+
+eukaryotes_subset_nested
+```
+
+Vi kan se at vi har to variabler - `group` og `data`. Variablen `data` er indeholde faktisk fem dataramme (tibble), for eksempel den første datasæt har kun observationerne hvor `group` er lig med "Other", den anden dataset har kun observationerne hvor `group` er lig med "Protists" osv.
+
+Vi kan tjekke ved at kig på den første datasæt: her er to måder at gøre det på:
+
+```{r}
+first_dataset <- eukaryotes_subset_nested$data[[1]] 
+first_dataset <- eukaryotes_subset_nested %>% pluck("data",1)
+first_dataset %>% head()
+```
+
+Hvis vi gerne vil tilbage til vores oprindeligt datasæt, kan vi brug `unnest()` og specificer kolonnen `data`:
+
+```{r}
+eukaryotes_subset_nested %>% 
+  unnest(data) %>% 
+  head()
+```
+
+Spørgsmålet er: hvordan kan vi inddrage "nested" data indenfor vores analyser?
+
+### Anvende map() med nested data
+
+De fleste gange vi arbejder med nested data, er fordi vi gerne vil lave samme ting på hver af de "sub" datasæt. Derfor hænger det sammen med funktionen `map()`. Den typiske process er:
+
+* Tag nested datasæt
+* Tilføj en ny kolon med `mutate()`, hvor vi:
+* Tag hver datasæt fra kolonnen `data` og brug `map()`, i nedenstående tilfælde til at finde antallet af rækkerne.
+
+```{r}
+eukaryotes_subset_nested %>% 
+  mutate(n_row = map_dbl(data,nrow))
+```
+
+Vi kan også bruge en custom funktion. I nedenstående beregne man antallet af unikke organisme fra variablen `orangism_name` i datasættet. Husk:
+
+* `~` betyder at vi lave en funktion, som kommer til at fungere for alle de fem datasæt.
+* Tag et datasæt og kalde det for `.x` - det referer til en bestemt datasæt fra en af de fem datasæt som hører under kolonnen `data` i den `nest()` data.
+* Vælg variablen `organism_name` fra `.x`
+* Beregn `n_dinstinct`
+
+```{r}
+n_distinct_organisms <- ~ .x %>% #take data
+  select(organism_name) %>%  #select organism name
+  n_distinct #give back distinct
+```
+
+```{r}
+#repeat function for each of the five datasets:
+eukaryotes_subset_nested %>% 
+  mutate(n_organisms = map_dbl(data, n_distinct_organisms))
+```
+
+Her er en anden eksempel. Her handler det om de `eukaryotes` data (ikke den subset), som har oplysninger om fk. GC-content med variablen `gc`. Her bruger vi `pull` i stedet for `select` - det er næsten den samme men med `pull()` få vi en vector som fungerer med `median` som er en base-R funktion. 
+
+```{r}
+func_gc <- ~ .x %>% 
+  pull(gc) %>%       # ligesom select men vi har bruge for en vector for at beregne median
+  median(.x,na.rm=T) # `na.rm` fjerne `NA` værdier)
+
+ekaryotes_gc_by_group <- eukaryotes %>% 
+  group_by(group) %>% 
+  nest() %>% 
+  mutate("median_gc"=map_dbl(data, func_gc))
+ekaryotes_gc_by_group
+```
+
+
+Og jeg kan bruge resultatet ind i et plot ligesom vi plejer:
+
+```{r,fig.width=4,fig.height=2}
+ekaryotes_gc_by_group %>% 
+  ggplot(aes(x=group,y=median_gc,fill=group)) + 
+  geom_bar(stat="identity") + 
+  coord_flip() +
+  theme_minimal() 
+```
+
+
+__flere statistik på en gang__
+
+Lave funktionerne:
+
+```{r,eval=TRUE}
+func_genes <-    ~ .x %>% pull(genes)     %>% median(.x,na.rm=T)
+func_proteins <- ~ .x %>% pull(proteins)  %>% median(.x,na.rm=T)
+func_size <-     ~ .x %>% pull(size_mb)   %>% median(.x,na.rm=T)
+```
+
+Anvende `nest()`:
+
+```{r,eval=TRUE}
+eukaryotes_nested <- eukaryotes %>% 
+  group_by(group) %>% 
+  nest() 
+```
+
+Tilføje resultatet over de fem datasæt med `mutate()`:
+
+```{r,eval=TRUE}
+eukaryotes_stats <- eukaryotes_nested %>%
+  mutate(mean_genes = map_dbl(data,func_genes),
+         proteins = map_dbl(data,func_proteins),
+         mean_size_mb = map_dbl(data,func_size))
+```
+
+Husk at fjerne kolonnen `data` før man anvende `pivot_longer()` (ellers får man en advarsel):
+
+```{r,fig.height=3,fig.width=8}
+eukaryotes_stats %>% 
+  select(-data) %>%
+  pivot_longer(-group) %>%
+  ggplot(aes(x=group,y=value,fill=group)) + 
+  geom_bar(stat="identity") + 
+  facet_wrap(~name,scales="free",ncol=4) + 
+  theme_bw()
+```
+
+
+
+
+## Problemstillinger
+
+__1__) Lave Quiz på Absalon "Quiz - tables, maps and functions"
+
+__2__) *`left_join()` øvelse*. Kør følgende kode:
+
+```{r}
+superheroes <- tribble(
+       ~name, ~alignment,  ~gender,          ~publisher,
+   "Magneto",      "bad",   "male",            "Marvel",
+     "Storm",     "good", "female",            "Marvel",
+  "Mystique",      "bad", "female",            "Marvel",
+    "Batman",     "good",   "male",                "DC",
+     "Joker",      "bad",   "male",                "DC",
+  "Catwoman",      "bad", "female",                "DC",
+   "Hellboy",     "good",   "male", "Dark Horse Comics"
+  )
+
+publishers <- tribble(
+  ~publisher, ~yr_founded,
+        "DC",       1934L,
+    "Marvel",       1939L,
+     "Image",       1992L
+  )
+```
+
+Vi har to tables - `superheroes` og `publishers`. Hvilke kolon kan man bruge til at forbinde de to tables? Brug `left_join()` til at tilføje oplysninger fra `publishers` til datarammen `superheroes`.
+
+```{r,echo=FALSE,eval=FALSE}
+superheroes %>% left_join(publishers,by="publisher") %>% head()
+```
+
+* Få man alle observationer fra superheroes med i resultatet?
+* Benyt `inner_join()` til at forbinde publishers til superheroes - få man så nu alle observationer med?
+* Benyt  `full_join()` til at forbinde publishers til superheroes - hvor mange observationer få man med nu? Hvorfor?
+
+
+```{r,echo=FALSE,eval=FALSE}
+superheroes %>% inner_join(publishers)
+```
+
+```{r,echo=FALSE,eval=FALSE}
+superheroes %>% full_join(publishers)
+```
+
+
+__3__) *`left_join()` øvelse*.
+
+```{r}
+data(iris)
+iris2 <- as_tibble(iris)
+names(iris2) <- c("sample1","sample2","sample3","sample4","Species")
+samp_table <- tribble(
+                      ~sample, ~part, ~measure,
+                      #------|-------|--------#
+                      "sample1", "Sepal", "Length",
+                      "sample2", "Sepal", "Width",
+                      "sample3", "Petal", "Length",
+                      "sample4", "Sepal", "Width"
+                     )
+
+
+head(iris2)
+samp_table
+```
+
+Man kan se, at vi har to tables - `iris2` og `sample_table`. `iris2` er ikke særlig informativ med hensyn til hvad de samples er, men oplysningerne stå i `sample_table`. Bruge `left_join()` til at tilføje `sample_table` til `iris2` for at få en dataramme som indeholder både de data og de samples oplysninger.
+
+```{r,echo=FALSE,eval=FALSE}
+iris2 %>% 
+  pivot_longer(-Species,names_to="sample") %>%
+  left_join(samp_table,by = "sample") %>% head()
+```
+
+
+__4__) *`map()` øvelse* 
+
+Eksempel:
+```{r}
+diamonds %>% select(cut,color,depth) %>% map_df(n_distinct)
+```
+
+Husk også referencen med de forskellige varianter af `map()` som kan bruges for at få en anden output type.
+
+Indlæse `diamonds` med `data(diamonds)`. Brug `map()` funktioner til at beregne følgende:
+
+* Select variabler `carat`, `depth`, `table` og `price` og beregne den median værdi til hver. Resultatet skulle være en list (anvende deault `map()` funktion).
+* Select variabler `cut`, `color` og `clarity` og beregne antallet af distinkt værdier til hver. Resultatet skal være en double.
+* Select alle variabler og return de datatyper (funktion en `typeof()`). Resultatet skal være en dataramme.
+
+```{r,results="hold",eval=FALSE,echo=FALSE}
+data(diamonds)
+diamonds %>% select(carat,depth,table,price) %>% map(median)
+diamonds %>% select(cut,color,clarity) %>% map_dbl(n_distinct)
+diamonds %>% map_df(typeof)
+```
+
+
+__5__) *`map()` øvelse med funktioner* 
+
+Indlæse `diamonds` med `data(diamonds)`. 
+
+Husk at når man inddrager nogle data `.x`, for eksempel når man vil bruge en custom funktion eller specificer non-default indstillinger såsom `na.rm=TRUE` (for at fjerne `NA` værdier i beregningen) i funktionen, skal man angiv `~` i starten:
+
+```{r,eval=FALSE,echo=TRUE}
+diamonds %>% map_df(n_distinct) #specificere funktion unden instillinger
+diamonds %>% map_df(~n_distinct(.x,na.rm = TRUE)) #non-default funktion
+```
+
+* Afprøve følgende kode linjer og beskrive hvad der sker.
+
+```{r,echo=TRUE,eval=FALSE}
+diamonds %>% select(carat, depth, price) %>% map_df(~(.x-mean(.x)) )
+diamonds %>% select(carat, depth, price) %>% map_df(~ifelse(.x>mean(.x),"big_value","small_value"))
+diamonds %>% filter(cut=="Ideal") %>% select("color","clarity") %>% map(~sum(.x==nth(.x,1)))
+```
+
+Brug funktioner indenfor `map()` til at beregne følgende:
+
+* Select alle variabler og output den 100th observation. Resultatet skal være en list.
+* Select variabler `carat`, `depth`, `table` og `price` og for hver kolon tilføj tre og så tag square (`^2`). Resultatet skal være en dataramme.
+* Select variabler `carat`, `depth`, `table` og `price` og angiv `TRUE` hvis den første værdi er større en den median værdi, ellers `FALSE`. Resultatet skal være en logical.
+* Select variabler `carat`, `depth`, `table` og `price` og beregne den `log2` transformering til være. Resultatet skal være en dataramme. Brug resulterende dataramme til at lave et scatter plot af $\log2$(`caret`) på x-aksen og $\log2$(`price`) på y-aksen.
+
+```{r,results="hold",echo=FALSE,eval=FALSE}
+diamonds %>% map(~.x %>% nth(100))
+diamonds %>% map(~nth(.x,100))
+diamonds %>% select(carat,depth,table,price) %>% map_df(~(.x+3)^2)
+diamonds %>% select(depth,carat,table,price) %>% map_lgl(~nth(.x,100)>median(.x))
+diamonds %>% select(carat,depth,table,price) %>% map_df(~log2(.x))
+```
+
+
+__6__) *nest øvelse*
+
+__a__) For datasættet `iris`, anvend `group_by(Species)` og tilføj dernæst `nest()`, og kigger på resultatet.
+
+```{r,eval=FALSE,echo=FALSE}
+iris %>% 
+  group_by(Species) %>% 
+  nest()
+```
+
+* tilføj `pull(data)` og se på resultatet
+* tilføj prøve også `pluck("data",1)` for at se den første dataramme.
+* tilføj `unnest(data)` i stedet for og se på resultatet
+* tilføj følgende i stedet for og prøve at forstå hvad der sker:
+    + `mutate(new_column_nrow = map_dbl(data,nrow))`
+    + `mutate(new_column_cor = map_dbl(data,~cor(.x$Sepal.Width,.x$Sepal.Length)))`
+    + `mutate(new_column_sum_SW = map_dbl(data,~.x %>% pull(Sepal.Width) %>% sum))`
+* Bemærk at vi har brugt `map_dbl` til at få tal som vi nemt kan læse i kolonner - prøve bare `map()` i stedet for og se resultatet. Man er nødt til at bruge `unnest()` til at se resultatet i dette tilfælde.
+
+
+```{r,eval=FALSE,echo=FALSE}
+iris %>% 
+  group_by(Species) %>% 
+  nest() %>% 
+  mutate(new_column_nrow = map_dbl(data,mean)) %>%
+  mutate(new_column_cor = map_dbl(data,~mean(.x$Sepal.Width/.x$Sepal.Length))) %>%
+  mutate(new_column_sum_SW = map_dbl(data,~.x %>% pull(Sepal.Width) %>% sum))
+```
+
+__b__)
+
+* Afprøve følgende funktioner indenfor samme ramme og angiv hensigtsmæssigt kolon navne i `mutate()`.
+
+```{r,eval=FALSE,echo=TRUE}
+my_func_1 <- ~.x %>% 
+  pull(Petal.Length,Petal.Width) %>% 
+  sum
+
+my_func_2 <- ~cor(.x$Sepal.Width,.x$Sepal.Length)
+
+
+my_func_3 <- ~ t.test(.x$Petal.Width,.x$Sepal.Length)$statistic
+```
+
+
+__c__)
+
+* Indenfor samme ramme tilføj selv kode linjer som beregner til hver af de tre datasæt:
+    + den maksimum værdi
+    + den maksimum værdi for `Petal.Width`
+    + den gennemsnitlige værdi af `Petal.Width/Petal.Length`
+    + den gennemsnitlige værdi af `Sepal.Width>3`
+
+```{r,eval=FALSE,echo=FALSE}
+iris %>% 
+  group_by(Species) %>% 
+  nest() %>% 
+  mutate(new_column_max = map_dbl(data,max)) %>%
+  mutate(new_column_maxPW = map_dbl(data,~.x %>% pull(Petal.Width) %>% max)) %>%
+  mutate(new_column_SWover3 = map_dbl(data,my_func_2))
+```
+
+__d__)
+
+* Lav et barplot for nogle dine beregninger, adskilte efter de forskellige statistikker. 
+  + Husk at få fjernet kolonnen `data` før man anvende `pivot_long()`.
+
+__7__) *Introduktion til næste lektion*
+
+For at se værdien af at bruge `group_by()` og `nest()` kan vi gennemgå en simpel eksampel som indledning til vores næste lektion. 
+
+Tag funktionen:
+
+```{r}
+my_func <- ~ t.test(.x$Petal.Width,.x$Sepal.Length)
+```
+
+* anvend `group_by(Species)` og dernæst `nest()` som i sidste spørgsmål
+* tilføj `mutate()` til at lave en ny kolon som hedder `t_test` og bruge funktionen indenfor `map()`.
+* tilføj `pull(t_test)` - man får de tre t-test frem, som man lige har beregnet.
+* prøv `unnest(t_test)` i stedet for `pull(t_test)` - man får en advarsel fordi de t-test resultater ikke er i en god form til at vise indenfor en dataramme. Vi vil gerne gøre dem tidy først.
+
+
+```{r,echo=FALSE,eval=FALSE}
+iris %>% 
+  group_by(Species) %>% 
+  nest() %>% 
+  mutate(t_test = map(data,my_func)) %>% 
+  pull(t_test)
+```
+
+
+-------------
+
+* Nu installer R-pakken `broom` (`install.packages("broom")`)
+* Lav samme som ovenstående men bruge følgende funktion i stedet for.
+* `glance()` få de statistik fra `t.test()` ind i en pæn form (__tidy__)
+
+```{r}
+library(broom)
+my_func <- ~ t.test(.x$Petal.Width,.x$Sepal.Length) %>% glance()
+```
+
+* Tilføj `pull` eller `unnest` som før og se på resultatet.
+* Man får en pæn dataramme frem med alle de forskellige statistik fra `t.test()`.
+
+```{r,echo=FALSE,eval=FALSE}
+iris %>% 
+  group_by(Species) %>% 
+  nest() %>% 
+  mutate(t_test = map(data,my_func)) %>% 
+  unnest(t_test)
+```
+
+
+<!-- __8__) *dobbelt `map()` øvelse* -->
+
+<!-- Bruge koden eksempel for `eukaryotes` data til at beregne en dataramme af middelværdier efter både `Species` og de fire variabler med målinger. -->
+
+<!-- ```{r} -->
+<!-- iris_nested_means <- iris %>%  -->
+<!--   group_by(Species) %>%  -->
+<!--   nest() %>%  -->
+<!--   mutate(means = map(data,                    #for each sub-dataset -->
+<!--                      ~map_df(.x,mean)))       #calculate the mean of each column and return as a data frame -->
+
+<!-- iris_mean_tib <- iris_nested_means %>%  -->
+<!--   select(means) %>%  -->
+<!--   unnest(means) -->
+<!-- iris_mean_tib -->
+<!-- ``` -->
+
+
+<!-- ```{r} -->
+<!-- library(RColorBrewer) -->
+<!-- iris_mean_tib %>%  -->
+<!--   pivot_longer(-Species) %>% -->
+<!--   ggplot(aes(x=Species,fill=Species,y=value)) +  -->
+<!--     geom_bar(stat="identity") +  -->
+<!--     scale_fill_brewer(palette="Set2") + -->
+<!--     facet_grid(~name) + -->
+<!--     theme_bw() -->
+<!-- ``` -->
+
+
+
+## Ekstra notater og næste gang
+
+
+https://r4ds.had.co.nz/iteration.html
+https://sanderwuyts.com/en/blog/purrr-tutorial/
+
