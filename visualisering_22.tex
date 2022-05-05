@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-02}
+\date{Last updated: 2022-05-05}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.12055193  0.69772093  1.07580565 -0.23546727  0.71866700 -1.32677754
-##  [7]  0.03419063 -0.09919032  1.71477185 -0.26985550 -1.10938022  1.68083572
-## [13]  0.62768517 -0.97259026  0.66536629 -1.55877236 -0.17774910  1.89879786
-## [19] -0.22021773 -0.80990979 -0.87608150 -1.18278748  1.59573737  0.25318056
-## [25] -0.02744638
+##  [1]  0.37937203 -0.26210802  1.00359808 -2.61115536 -0.41206936  1.24997732
+##  [7] -1.15282268  1.72417607  0.66669696 -0.32221255  0.48005789 -1.06891159
+## [13] -1.31796905 -0.60533016 -0.68681223 -0.15145410  1.73887866  0.03664377
+## [19] -0.64918448 -0.48692478  0.31601820 -0.16449719 -1.45818571 -2.52345333
+## [25]  0.31640940
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.1205519  0.6977209  1.0758056 {-}0.2354673  0.7186670 {-}1.3267775}
+\DocumentationTok{\#\# [1]  0.3793720 {-}0.2621080  1.0035981 {-}2.6111554 {-}0.4120694  1.2499773}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.80990979 {-}0.87608150 {-}1.18278748  1.59573737  0.25318056 {-}0.02744638}
+\DocumentationTok{\#\# [1] {-}0.4869248  0.3160182 {-}0.1644972 {-}1.4581857 {-}2.5234533  0.3164094}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.1205519}
+\DocumentationTok{\#\# [1] 0.379372}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.02744638}
+\DocumentationTok{\#\# [1] 0.3164094}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.08868342 -0.02744638  1.89879786 -1.55877236  1.00859065  1.00428614
+## [1] -0.2384505 -0.2621080  1.7388787 -2.6111554  1.2322799  1.1100811
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.55877 -0.80991 -0.02745  0.08868  0.69772  1.89880
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -2.6112 -0.6868 -0.2621 -0.2385  0.3794  1.7389
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -3394,9 +3394,11 @@ Man kan bruge \texttt{geom\_text()} til at tilføje tekst på punkterne direkte 
 \begin{Highlighting}[]
 \FunctionTok{data}\NormalTok{(mtcars)}
 
+\NormalTok{mtcars}\SpecialCharTok{$}\NormalTok{my\_labels }\OtherTok{\textless{}{-}} \FunctionTok{row.names}\NormalTok{(mtcars) }\CommentTok{\#take row names and set as a variable}
+
 \FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{my\_labels)) }\SpecialCharTok{+} 
   \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -3409,7 +3411,7 @@ For at gøre det nemmere at læse kan man også fjerne selve punkterne:
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
   \CommentTok{\#geom\_point() +}
-  \FunctionTok{geom\_text}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{my\_labels)) }\SpecialCharTok{+} 
   \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -3434,7 +3436,7 @@ For at anvende pakken \texttt{ggrepel} for det \texttt{mtcars} datasæt, erstatt
 \FunctionTok{library}\NormalTok{(ggrepel)}
 \FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{my\_labels)) }\SpecialCharTok{+} 
   \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -3455,7 +3457,7 @@ I ovenstående har jeg fået en advarsel. Jeg prøver hvad jeg er blevet bedt om
 \FunctionTok{library}\NormalTok{(ggrepel)}
 \FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars),}\AttributeTok{max.overlaps =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{my\_labels),}\AttributeTok{max.overlaps =} \DecValTok{20}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -3473,7 +3475,7 @@ Hvis man gerne vil fremhæve et bestemt område i plottet, kan man bruge funktio
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{my\_labels)) }\SpecialCharTok{+}
   \FunctionTok{annotate}\NormalTok{(}\StringTok{"rect"}\NormalTok{,}\AttributeTok{xmin=}\DecValTok{18}\NormalTok{,}\AttributeTok{xmax=}\DecValTok{23}\NormalTok{,}\AttributeTok{ymin=}\FloatTok{2.5}\NormalTok{,}\AttributeTok{ymax=}\DecValTok{3}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.2}\NormalTok{,}\AttributeTok{fill=}\StringTok{"orange"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
@@ -3492,7 +3494,7 @@ Man kan også benytte den samme funktion til at tilføje nogle tekst på et best
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{mpg,}\AttributeTok{y=}\NormalTok{wt)) }\SpecialCharTok{+} 
   \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
-  \FunctionTok{geom\_text\_repel}\NormalTok{(}\AttributeTok{label=}\FunctionTok{row.names}\NormalTok{(mtcars)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{my\_labels)) }\SpecialCharTok{+}
   \FunctionTok{annotate}\NormalTok{(}\StringTok{"rect"}\NormalTok{,}\AttributeTok{xmin=}\DecValTok{18}\NormalTok{,}\AttributeTok{xmax=}\DecValTok{23}\NormalTok{,}\AttributeTok{ymin=}\FloatTok{2.5}\NormalTok{,}\AttributeTok{ymax=}\DecValTok{3}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.2}\NormalTok{,}\AttributeTok{fill=}\StringTok{"orange"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{,}\AttributeTok{x=}\DecValTok{25}\NormalTok{,}\AttributeTok{y=}\FloatTok{2.75}\NormalTok{,}\AttributeTok{label=}\StringTok{"Cars of interest"}\NormalTok{,}\AttributeTok{col=}\StringTok{"orange"}\NormalTok{) }\SpecialCharTok{+} 
   \FunctionTok{theme\_minimal}\NormalTok{()}
@@ -3928,6 +3930,1207 @@ Her er min løsning:
 R Graphics cookbook
 
 \url{https://r-graphics.org/}
+
+\hypertarget{data}{%
+\chapter{Bearbejdning dag 1}\label{data}}
+
+\includegraphics[width=0.15\linewidth]{plots/hex-tidyverse}
+
+\hypertarget{inledning-og-luxe6ringsmuxe5lene}{%
+\section{Inledning og læringsmålene}\label{inledning-og-luxe6ringsmuxe5lene}}
+
+I skal være i stand til at:
+
+\begin{itemize}
+\tightlist
+\item
+  Beskrive generelle hvad R-pakken \texttt{Tidyverse} kan benyttes til.
+\item
+  Beskrive en tibble og genkende når et datasæt er betragtet som ``tidy''.
+\item
+  Benytte nogle vigtige \texttt{Tidyverse}-verbs til at bearbejde data (\texttt{filter()},\texttt{select()}, \texttt{mutate()}, \texttt{rename()}, \texttt{arrange()}, \texttt{recode()}).
+\item
+  Bruge \texttt{\%\textgreater{}\%} til at forbinde \texttt{Tidyverse}-verber sammen og at overføre data til et plot.
+\end{itemize}
+
+\hypertarget{video-ressourcer-2}{%
+\section{Video ressourcer}\label{video-ressourcer-2}}
+
+\begin{itemize}
+\item
+  \textbf{Begynd ved at læse 5.3.1}: ``Principen med `tidy data'\,'' og 5.4 `lidt om tibbles' nedenunder, og så se følgende videoer.
+\item
+  \textbf{Video 1} - rydde op i datasættet \texttt{titanic} med \texttt{select()} og \texttt{drop\_na()}
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/706266697}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Video 2} - \texttt{tidyverse} verber: \texttt{select} og \texttt{filter}
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/705136725}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Video 3} - flere \texttt{tidyverse} verber
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Lave en ny kolon med \texttt{mutate()}
+  \item
+    Ændre variabelnavne med \texttt{rename()}
+  \item
+    Ændre på værdierne med \texttt{recode()}
+  \item
+    Ændre rækkefølgen af observationerne med \texttt{arrange()}
+  \item
+    Bruge tidyverse kommandoer som input i \texttt{ggplot2()}
+  \end{itemize}
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/706266885}
+
+\hypertarget{hvad-er-tidyverse}{%
+\section{Hvad er Tidyverse?}\label{hvad-er-tidyverse}}
+
+\textbf{Tidyverse} er en samling af pakker i R, som man bruger til at bearbejde datasæt. Formålet er ikke nødvendigvis at erstatte funktionaliteten af base-pakken, men til at bygge på den. Som vi kommer til at se i detaljer, \textbf{tidyverse} deler faktisk meget af den samme tankegang bag \textbf{ggplot2} - men i stedet for at bruge \texttt{+} til at bygge komponenter op i et plot, bruger man \texttt{\%\textgreater{}\%} (udtales `pipe') til at tilknytte de forskellige funktioner til hinanden.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.45\textwidth,height=\textheight]{plots/tidyverse2_packages.png}
+\caption{Most common tidyverse packages}
+\end{figure}
+
+Lad os starte med at indlæse pakken \textbf{tidyverse}. Vær opmærksom på, at har du ikke pakken på din computer, kan det tage lidt tid at installere - det er pga. de mange pakke der \textbf{tidyverse} er afhængig af, der enten skal også installeres eller opdateres.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("tidyverse)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+Du kan se, at det faktisk er ikke kun én, men otte pakke som er blevet indlæst. Man kan godt indlæse alle pakke individuelt ved at bruge fk. \texttt{library(dplyr)}, men det er meget bekvemt at indlæse alle på samme tid med brugen af \texttt{library(tidyverse)}. Her er nogle beskrivelser af de pakker:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+\toprule
+pakke & korte beskrivelse \\
+\midrule
+\endhead
+\texttt{readr} & indlæse data \\
+\texttt{ggplot2} & plot data \\
+\texttt{tibble} & lave ``tibbles'' - \textbf{\emph{tidyverse}}'s svar på datarammer (data.frame). \\
+\texttt{tidyr} & skifte imellem data forms (fk. `long' \textgreater{} `wide' format, eller omvendt) \\
+\texttt{purrr} & functional programming, gentalelse \\
+\texttt{dplyr} & manipulere tibbles - beholde delmængder, skabe nye variabler, beregne oversigtsstatistikker osv. \\
+\texttt{stringr} & manipulere strings (ikke brugt i dette kursus) \\
+\texttt{forcats} & FOR CATegorical data (factors); håndtere faktor variabler \\
+\bottomrule
+\end{longtable}
+
+Man kan også indlæse alle pakke individuelt ved at bruge fk. \texttt{library(dplyr)}, men det er meget bekvemt bare at indlæse alle på samme tid med brugen af \texttt{library(tidyverse)}.
+
+\hypertarget{princippen-med-tidy-data}{%
+\subsection{Princippen med `tidy data'}\label{princippen-med-tidy-data}}
+
+Idéen bag \textbf{tidyverse} er, at hvis alle datasæt følger præcis den samme struktur, så er det ligefrem at bearbejde med vores data, til præcis som vi gerne vil have det. Datasæt som har den struktur hedder ``tidy data''. For at betragte et datasæt som ``tidy'', må det opfylde tre kriterie:
+
+\begin{itemize}
+\tightlist
+\item
+  Hver variabel i datasættet har sin egen kolonne
+\item
+  Hver observation i datasættet har sin egen række
+\item
+  Hver værdi i datasættet få sin egen cell
+\end{itemize}
+
+Iris er et godt eksempel af \textbf{tidy data}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(iris)}
+\FunctionTok{head}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa
+\end{verbatim}
+
+Hver variabel (\texttt{Sepal.Length}, \texttt{Sepal.Width}, \texttt{Petal.Length}, \texttt{Petal.Width} og \texttt{Species}) har sin egen kolon, og hver observation (e.g.~1,2,3, osv.) har sin egen række. Derudover har hver cell sin egen data værdi og det er dermed meget klart at læse og forstå dataframen ved øjnene.
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth,height=\textheight]{plots/tidy-1.png}
+\caption{Principper af tidy data}
+\end{figure}
+
+Det er tilfældet, at de fleste af datasæt i dette kursus hører til ``tidy data'', især i disse notater, hvor vi benytter en del af indbygget datasæt. Nogle gange kan det dog være, at vi er nødt til at gøre noget, til at lave et datasæt om til en ``tidy datasæt''. R-pakker \textbf{dplyr} og \textbf{tidyr} er velegnet til at hjælpe med at transformere et datasæt til en, der er ``tidy'', og bagefter kan man forsætte i den sædvanlige måde med at analyse datasættet. Bemærk dog, at bar fordi et datasæt er ``tidy'', betyder det ikke nødvendigvis, at det er klart til at analysere, for der kan godt være, at man har bruge for at filtrere eller rydde op i det. Pakken \textbf{dplyr} indeholder mange funktioner til at håndtere
+
+\hypertarget{lidt-om-tibbles}{%
+\section{\texorpdfstring{Lidt om \texttt{tibbles}}{Lidt om tibbles}}\label{lidt-om-tibbles}}
+
+En \texttt{tibble} er det \texttt{tidyverse} svar på en \texttt{data.frame} fra base-R. De ligner hinanden meget og derfor skal man ikke tænk for meget over forskellen, men der er nogle opdateret aspekter i en \texttt{tibble} - for eksempel bruger en \texttt{tibble} ikke \texttt{row.names}, og når man visualiserer en \texttt{tibble} i R Markdown, få man lidt ekstra oplysninger, såsom dimensioner og data typer. Bemærk, at de fleste \texttt{tidyverse} funktioner fungerer lige så godt uanset om man har en \texttt{tibble} eller en \texttt{data.frame}. Bemærk, at jeg vedligeholder ordet `dataframe' indenfor almindelig tekst.
+
+Man kan lave sin egen \texttt{tibble} på samme måde som en \texttt{data.frame}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tibble}\NormalTok{(}\AttributeTok{x=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}\AttributeTok{y=}\FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"c"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##       x y    
+##   <int> <chr>
+## 1     1 a    
+## 2     2 b    
+## 3     3 c
+\end{verbatim}
+
+Man kan også lave en \texttt{tribble}, som er den samme som en \texttt{tibble} men har en lidt anderledes måde at indsætte data på. For eksempel er følgende tilsvarende til den overstående tibble:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tribble}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{x, }\SpecialCharTok{\textasciitilde{}}\NormalTok{y,}
+       \DecValTok{1}\NormalTok{, }\StringTok{"a"}\NormalTok{,}
+       \DecValTok{2}\NormalTok{, }\StringTok{"b"}\NormalTok{,}
+       \DecValTok{3}\NormalTok{, }\StringTok{"c"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##       x y    
+##   <dbl> <chr>
+## 1     1 a    
+## 2     2 b    
+## 3     3 c
+\end{verbatim}
+
+Den fleste \texttt{tidyverse} kode fungerer lige så godt uanset om man har en \texttt{tibble} eller en \texttt{data.frame}.
+
+Man kan lave en \texttt{data.frame} om til en \texttt{tibble} som i følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{as\_tibble}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 150 x 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # ... with 140 more rows
+\end{verbatim}
+
+\hypertarget{transition-fra-base-til-tidyverse}{%
+\section{Transition fra base til tidyverse}\label{transition-fra-base-til-tidyverse}}
+
+Jeg introducerer \textbf{tidyverse} gennem et meget berømt datasæt som hedder \textbf{titanic} - det er ikke biologiske data men er stadigvæk ret interessant, og sjovt at manipulere på.
+
+\textbf{titanic} er brugt som en del af en åben konkurrence på hjemmesiden Kaggle, hvor mindst 31.000 personer indtil videre har arbejdet på at lave den bedste model til at forudsige, hvem der overlever katastrofen - linket er her, hvor du kan også læse om baggrunden til datasættet \url{https://www.kaggle.com/c/titanic}.
+
+\hypertarget{om-titanic-datasuxe6t}{%
+\subsection{\texorpdfstring{Om \textbf{Titanic} datasæt}{Om Titanic datasæt}}\label{om-titanic-datasuxe6t}}
+
+Man kan downloade datasættet, der hedder \texttt{titanic\_train}, direkte fra Kaggle, men der er faktisk en R-pakke, der hedder \texttt{titanic} som gøre det mere bekvemt:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("titanic") \#hvis ikke allerede installerede}
+\FunctionTok{library}\NormalTok{(titanic)}
+\end{Highlighting}
+\end{Shaded}
+
+Her er beskrivelsen for pakken:
+
+\emph{\textbf{titanic} is an R package containing data sets providing information on the fate of passengers on the fatal maiden voyage of the ocean liner ``Titanic'', summarized according to economic status (class), sex, age and survival. These data sets are often used as an introduction to machine learning on Kaggle.}
+
+Vi vil gerne bruge \texttt{titanic\_train} fordi det er datasættet, der bliver brugt på Kaggle til at træne maskinelærings modeller (som bliver testet på \texttt{titanic\_test} for at evaluere, hvor god modellen er). Til at gøre tingene nemmere, lad os bare omdøb \texttt{titanic\_train} til \texttt{titanic} og anvende \texttt{glimpse}, der er fra pakken \texttt{dplyr}, på datasættet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(titanic\_train)}
+\FunctionTok{glimpse}\NormalTok{(titanic)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 891
+## Columns: 12
+## $ PassengerId <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,~
+## $ Survived    <int> 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1~
+## $ Pclass      <int> 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 2, 3, 3~
+## $ Name        <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl~
+## $ Sex         <chr> "male", "female", "female", "female", "male", "male", "mal~
+## $ Age         <dbl> 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 39, 14, ~
+## $ SibSp       <int> 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 0, 1, 0~
+## $ Parch       <int> 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0~
+## $ Ticket      <chr> "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37~
+## $ Fare        <dbl> 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 51.8625,~
+## $ Cabin       <chr> "", "C85", "", "C123", "", "", "E46", "", "", "", "G6", "C~
+## $ Embarked    <chr> "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S", "S"~
+\end{verbatim}
+
+Jeg har også kopieret de variable beskrivelser her:
+
+\begin{itemize}
+\tightlist
+\item
+  PassengerId: unique index for each passenger
+\item
+  Survived: Whether or not the passenger survived. 0 = No, 1 = Yes.
+\item
+  Pclass: Ticket class: 1 = 1st Class, 2 = 2nd Class, 3 = 3rd Class.
+\item
+  Name: A character string containing the name of each passenger.
+\item
+  Sex: Character strings for passenger sex (``male''/ ``female'').
+\item
+  Age: Age in years.
+\item
+  SibSp: The number of siblings/spouses aboard the titanic with the passenger
+\item
+  Parch: The number of parents/children aboard the titanic with the passenger
+\item
+  Ticket: Another character string containing the ticket ID of the passenger.
+\item
+  Fare: The price paid for tickets in pounds Sterling (Keep in mind that unskilled workers made around 1 pound a week - these were expensive tickets!)
+\item
+  Cabin: The cabin number of the passengers (character).
+\item
+  Embarked: Where passengers boarded the titanic. C = Cherbourg, Q = Queenstown, S = Southampton).
+\end{itemize}
+
+\hypertarget{titanic-oprydning}{%
+\subsection{Titanic: oprydning}\label{titanic-oprydning}}
+
+Der er faktisk nogle rengøring i datasættet vi skal tage os af, før vi kan komme videre med analysen. Vi kan se fra \texttt{glimpse(titanic)} ovenpå at der er 891 observationer. De fleste (687) passagerer har faktisk ingenting for variabel \texttt{Cabin}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(titanic}\SpecialCharTok{$}\NormalTok{Cabin}\SpecialCharTok{==}\StringTok{""}\NormalTok{) }\CommentTok{\#ingenting for variabelen \textquotesingle{}cabin\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 687
+\end{verbatim}
+
+Andre har mere end én cabin. Det ser ikke særlig \textbf{tidy} ud, og man kan hellere ikke forestille sig at få meget insigt fra variablen, så vi vælger at fjerne hele kolon med funktionen \texttt{select()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_no\_cabin }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(titanic, }\SpecialCharTok{{-}}\NormalTok{Cabin) }
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{select()} er en af de kerne funktioner i \textbf{tidyverse} - her angiver vi, hvilke kolonner vi gerne vil beholde eller fjerne fra datasættet. I dette tilfælde har vi specificeret \texttt{-Cabin}, som betyder, at vi \emph{ikke} vil have variablen \texttt{Cabin} med, men gerne vil beholde resten af kolonnerne. Prøv selv at køre \texttt{select(titanic,\ Cabin)} i stedet for - så får vi kun \texttt{Cabin} og fjerner resten af vores variabler.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(titanic\_no\_cabin)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 891
+## Columns: 11
+## $ PassengerId <int> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,~
+## $ Survived    <int> 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1~
+## $ Pclass      <int> 3, 1, 3, 1, 3, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 2, 3, 3~
+## $ Name        <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl~
+## $ Sex         <chr> "male", "female", "female", "female", "male", "male", "mal~
+## $ Age         <dbl> 22, 38, 26, 35, 35, NA, 54, 2, 27, 14, 4, 58, 20, 39, 14, ~
+## $ SibSp       <int> 1, 1, 0, 1, 0, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 0, 1, 0~
+## $ Parch       <int> 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0~
+## $ Ticket      <chr> "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37~
+## $ Fare        <dbl> 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 8.4583, 51.8625,~
+## $ Embarked    <chr> "S", "C", "S", "S", "S", "Q", "S", "S", "S", "C", "S", "S"~
+\end{verbatim}
+
+Næste tjekker vi efter \texttt{NA} i datasættet. \texttt{NA} er hvordan R betegner manglende værdier. Man kan se i følgende, mens de fleste variabler ikke har \texttt{NA} værdier, har variablen \texttt{Age} 177 \texttt{NA}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(titanic\_no\_cabin))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## PassengerId    Survived      Pclass        Name         Sex         Age 
+##           0           0           0           0           0         177 
+##       SibSp       Parch      Ticket        Fare    Embarked 
+##           0           0           0           0           0
+\end{verbatim}
+
+I dette tilfælde vælger jeg at fjerne alle passagerer som har \texttt{NA} i stedet for deres alder. Til dette formål bruger jeg funktionen \texttt{drop\_na}, som fjerner alle observationer, der har \texttt{NA} i mindst èn variabel.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\OtherTok{\textless{}{-}} \FunctionTok{drop\_na}\NormalTok{(titanic\_no\_cabin)}
+\FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(titanic\_clean))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## PassengerId    Survived      Pclass        Name         Sex         Age 
+##           0           0           0           0           0           0 
+##       SibSp       Parch      Ticket        Fare    Embarked 
+##           0           0           0           0           0
+\end{verbatim}
+
+Nu kan vi tjekke igen, hvor mange observationer og variabel vi har tilbage.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(titanic\_clean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 11
+## $ PassengerId <int> 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19~
+## $ Survived    <int> 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1~
+## $ Pclass      <int> 3, 1, 3, 1, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 3, 2, 2, 3~
+## $ Name        <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl~
+## $ Sex         <chr> "male", "female", "female", "female", "male", "male", "mal~
+## $ Age         <dbl> 22, 38, 26, 35, 35, 54, 2, 27, 14, 4, 58, 20, 39, 14, 55, ~
+## $ SibSp       <int> 1, 1, 0, 1, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 1, 0, 0, 0~
+## $ Parch       <int> 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0~
+## $ Ticket      <chr> "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37~
+## $ Fare        <dbl> 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 51.8625, 21.0750~
+## $ Embarked    <chr> "S", "C", "S", "S", "S", "S", "S", "S", "C", "S", "S", "S"~
+\end{verbatim}
+
+Vi har beholdt 714 observationer og 11 variabler, og datasættet opfylder kriteren for at være \textbf{tidy}.
+
+\hypertarget{pipe}{%
+\subsection{Pipe}\label{pipe}}
+
+Man kan faktisk gøre den samme som i ovenstående ved at bruge pipe \texttt{\%\textgreater{}\%}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\OtherTok{\textless{}{-}}\NormalTok{ titanic }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# we take the titanic dataset}
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Cabin) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# select the bits we want}
+    \FunctionTok{drop\_na}\NormalTok{() }\CommentTok{\# then remove the NAs}
+\end{Highlighting}
+\end{Shaded}
+
+Man bruger pipe \texttt{\%\textgreater{}\%} til at kombinere adskillige tidyverse funktioner i den samme kommando - linjen slutter med \texttt{\%\textgreater{}\%}, der fortæller, at vi skal bruge resultatet fra den linje som inputtet i den næste linje. Logikken er således, at vi starter med en dataframe, gør dernæst én ting ad gangen, og så slutter med en ny dataframe (som vi kan gemme med \texttt{\textless{}-}).
+
+Bemærk, at processen ligner den, man bruger i \textbf{ggplot2}, men forskellen er at man bruger \texttt{\%\textgreater{}\%} i stedet for \texttt{+} i denne ramme. Bemærk også her, at ligesom i \textbf{ggplot2}, skriver jeg koden over flere linjer. Det er ikke et krav men det gøre det nemmere at læse og forstå koden.
+
+For at illustrerer logikken, kan man se, at følgende to linjer er tilsvarende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#take x and apply some function f}
+\FunctionTok{f}\NormalTok{(x)    }\CommentTok{\#traditional approach}
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ f }\CommentTok{\#tidyverse approach}
+\end{Highlighting}
+\end{Shaded}
+
+I begge tilfælde starter vi med \texttt{x}, og så anvender vi funktionen \texttt{f} med \texttt{x} som argument - en kæmpe fordel med den tidyverse løsning er, at når man har flere funktioner, slipper man for at anvende mange parenteser, og rækkefølgen man skriver funktionerne læses fra venstre til højre og ikke omvendt, se for eksempel følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#take x, apply f, then apply g, then apply h}
+\FunctionTok{h}\NormalTok{(}\FunctionTok{g}\NormalTok{(}\FunctionTok{f}\NormalTok{(x)))          }\CommentTok{\#traditional approach}
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ f }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ g }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ h }\CommentTok{\#tidyverse approach}
+\end{Highlighting}
+\end{Shaded}
+
+På sammen måde i vores titanic oprydning kan man både pakke funktionen \texttt{select()} ind i funktionen \texttt{drop\_na()}, eller bruge den \textbf{tidyverse} løsning, ligesom i nedenstående - de to giver det tilsvarende resultat: første bruger vi \texttt{select()} til at fjerne kolonnen \texttt{Cabin}, og så bruger vi \texttt{drop\_na()} til at fjerne alle række med mindste én \texttt{NA} .
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\OtherTok{\textless{}{-}} \FunctionTok{drop\_na}\NormalTok{(}\FunctionTok{select}\NormalTok{(titanic,}\SpecialCharTok{{-}}\NormalTok{Cabin))}
+
+\NormalTok{titanic\_clean }\OtherTok{\textless{}{-}}\NormalTok{ titanic }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Cabin) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{drop\_na}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{bearbejdning-af-data-dplyr}{%
+\section{\texorpdfstring{Bearbejdning af data: \texttt{dplyr}}{Bearbejdning af data: dplyr}}\label{bearbejdning-af-data-dplyr}}
+
+Pakken \texttt{dplyr} er nok den meste brugbare pakke til at bearbejde dataframes. Jeg gennemgår nogle af de meste almindelige muligheder med pakken, og der er også en ``cheatsheet'' som du kan downloade som reference: \url{https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf}. Jeg tager afsæt i følgende funktioner, og dækker flere gennem de forskellige øvelese og øvrige emner.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+dplyr verbs & beskrivelse \\
+\midrule
+\endhead
+\texttt{select()} & udvælge kolonner (\emph{variabler}) \\
+\texttt{filter()} & udvælge rækker (\emph{observationer}) \\
+\texttt{arrange()} & sortere rækker \\
+\texttt{mutate()} & tilføje eller ændre eksisterende kolonner \\
+\texttt{rename()} & ændre variabler navne \\
+\texttt{recode()} & ændre selve data \\
+\texttt{group\_by()} & dele datasættet op efter en variabel \\
+\texttt{summarise()} & aggregere rækker, findes ofte tilknyttet til \texttt{group\_by()} \\
+\bottomrule
+\end{longtable}
+
+Bemærk, at alle disse funktioner tager udgangspunkt i en dataframe, og man får altid en ny dataframe som outputtet. Ved at kunne bruge disse funktioner og kombinere dem (ved hjælp af \texttt{\%\textgreater{}\%}), har man godt styr på bearbejdningen af datarammer.
+
+\hypertarget{dplyr-verbs-select}{%
+\subsection{\texorpdfstring{dplyr verbs: \texttt{select()}}{dplyr verbs: select()}}\label{dplyr-verbs-select}}
+
+Som vi lige har set i ovenstående, med \texttt{select()} udvælger man bestemte \textbf{variabler}. Vi kan vælger at beholde, fjerne eller andre rækkefølgen af variablerne i dataframe. Som eksempel, her beholder vi kun variablerne \texttt{Name} og \texttt{Age}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(Name, Age) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 2
+## $ Name <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Florence ~
+## $ Age  <dbl> 22, 38, 26, 35, 35, 54, 2, 27, 14, 4, 58, 20, 39, 14, 55, 2, 31, ~
+\end{verbatim}
+
+Hvis vi gerne vil fjerne en variabel fra en dataframe, kan vi bruge et minustegn. I nedenstående fjerner vi \texttt{Name} og \texttt{Age} fra dataframe:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Name, }\SpecialCharTok{{-}}\NormalTok{Age) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 9
+## $ PassengerId <int> 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19~
+## $ Survived    <int> 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1~
+## $ Pclass      <int> 3, 1, 3, 1, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 3, 2, 2, 3~
+## $ Sex         <chr> "male", "female", "female", "female", "male", "male", "mal~
+## $ SibSp       <int> 1, 1, 0, 1, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 1, 0, 0, 0~
+## $ Parch       <int> 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0~
+## $ Ticket      <chr> "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37~
+## $ Fare        <dbl> 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 51.8625, 21.0750~
+## $ Embarked    <chr> "S", "C", "S", "S", "S", "S", "S", "S", "C", "S", "S", "S"~
+\end{verbatim}
+
+\hypertarget{hjuxe6lper-funktioner-til-select}{%
+\subsubsection{\texorpdfstring{Hjælper funktioner til \texttt{select()}}{Hjælper funktioner til select()}}\label{hjuxe6lper-funktioner-til-select}}
+
+Hjælper funktioner til funktionen \texttt{select()} kan være brugbare hvis du gerne vil udvælge bestemte variabler efter nogle kriterier. Jeg har samlet nogle funktioner nedenfor og inddrager eksempler i problemstillingerne.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+\toprule
+select helper & beskrivelse \\
+\midrule
+\endhead
+\texttt{starts\_with()} & starts with a prefix \\
+\texttt{ends\_with()} & ends with a prefix \\
+\texttt{contains()} & contains a literal string \\
+\texttt{matches()} & matches a regular expression \\
+\texttt{num\_range()} & a numerical range like x01, x02, x03. \\
+\texttt{one\_of()} & variables in character vector. \\
+\texttt{everything()} & all variables. \\
+\texttt{where()} & fk. takes a function and returns all variables for which the function returns TRUE: \\
+\bottomrule
+\end{longtable}
+
+Fk
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"P"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 714 x 3
+##    PassengerId Pclass Parch
+##          <int>  <int> <int>
+##  1           1      3     0
+##  2           2      1     0
+##  3           3      3     0
+##  4           4      1     0
+##  5           5      3     0
+##  6           7      1     0
+##  7           8      3     1
+##  8           9      3     2
+##  9          10      2     0
+## 10          11      3     1
+## # ... with 704 more rows
+\end{verbatim}
+
+Særligt brugbar it statistik analyse er \texttt{where()}, især når kombinerede med \texttt{is.numeric}. Eksempelvis i følgende kode udvælger man kun numeriske variabler fra datasættet \texttt{titanic\_clean}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 714 x 7
+##    PassengerId Survived Pclass   Age SibSp Parch  Fare
+##          <int>    <int>  <int> <dbl> <int> <int> <dbl>
+##  1           1        0      3    22     1     0  7.25
+##  2           2        1      1    38     1     0 71.3 
+##  3           3        1      3    26     0     0  7.92
+##  4           4        1      1    35     1     0 53.1 
+##  5           5        0      3    35     0     0  8.05
+##  6           7        0      1    54     0     0 51.9 
+##  7           8        0      3     2     3     1 21.1 
+##  8           9        1      3    27     0     2 11.1 
+##  9          10        1      2    14     1     0 30.1 
+## 10          11        1      3     4     1     1 16.7 
+## # ... with 704 more rows
+\end{verbatim}
+
+\hypertarget{dplyr-verbs-filter}{%
+\subsection{\texorpdfstring{dplyr verbs: \texttt{filter()}}{dplyr verbs: filter()}}\label{dplyr-verbs-filter}}
+
+Med funktionen \texttt{select()} udvælger man bestemte \textbf{variabler}. Man anvender til gengæld funktionen \texttt{filter()} til at udvælge bestemte \textbf{observationer} (rækker) fra dataframe. I nedenstående beholder jeg rækkerne, hvor variablen \texttt{Age} er lig med 50. Bemærk, at vi bevarer alle variabler i dataframe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Age }\SpecialCharTok{==} \DecValTok{50}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 10
+## Columns: 11
+## $ PassengerId <int> 178, 260, 300, 435, 459, 483, 527, 545, 661, 724
+## $ Survived    <int> 0, 1, 1, 0, 1, 0, 1, 0, 1, 0
+## $ Pclass      <int> 1, 2, 1, 1, 2, 3, 2, 1, 1, 2
+## $ Name        <chr> "Isham, Miss. Ann Elizabeth", "Parrish, Mrs. (Lutie Davis)~
+## $ Sex         <chr> "female", "female", "female", "male", "female", "male", "f~
+## $ Age         <dbl> 50, 50, 50, 50, 50, 50, 50, 50, 50, 50
+## $ SibSp       <int> 0, 0, 0, 1, 0, 0, 0, 1, 2, 0
+## $ Parch       <int> 0, 1, 1, 0, 0, 0, 0, 0, 0, 0
+## $ Ticket      <chr> "PC 17595", "230433", "PC 17558", "13507", "F.C.C. 13531",~
+## $ Fare        <dbl> 28.7125, 26.0000, 247.5208, 55.9000, 10.5000, 8.0500, 10.5~
+## $ Embarked    <chr> "C", "S", "C", "S", "S", "S", "S", "C", "S", "S"
+\end{verbatim}
+
+Man kan også vælge intervaller - for eksempel hvis man vil vælge alle som er i halvtredserne.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(Age }\SpecialCharTok{\textgreater{}=} \DecValTok{50} \SpecialCharTok{\&}\NormalTok{ Age }\SpecialCharTok{\textless{}} \DecValTok{60}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 11
+##   PassengerId Survived Pclass Name          Sex     Age SibSp Parch Ticket  Fare
+##         <int>    <int>  <int> <chr>         <chr> <dbl> <int> <int> <chr>  <dbl>
+## 1           7        0      1 "McCarthy, M~ male     54     0     0 17463  51.9 
+## 2          12        1      1 "Bonnell, Mi~ fema~    58     0     0 113783 26.6 
+## 3          16        1      2 "Hewlett, Mr~ fema~    55     0     0 248706 16   
+## 4          95        0      3 "Coxon, Mr. ~ male     59     0     0 364500  7.25
+## 5         125        0      1 "White, Mr. ~ male     54     0     1 35281  77.3 
+## 6         151        0      2 "Bateman, Re~ male     51     0     0 S.O.P~ 12.5 
+## # ... with 1 more variable: Embarked <chr>
+\end{verbatim}
+
+Man kan også kombinere betingelser fra forskellige kolonner, for eksempel i nedenstående vælger vi alle personer som er kvinder \textbf{og} som rejste ved første klasse.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(Sex }\SpecialCharTok{==} \StringTok{\textquotesingle{}female\textquotesingle{}} \SpecialCharTok{\&}\NormalTok{ Pclass }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 11
+##   PassengerId Survived Pclass Name          Sex     Age SibSp Parch Ticket  Fare
+##         <int>    <int>  <int> <chr>         <chr> <dbl> <int> <int> <chr>  <dbl>
+## 1           2        1      1 Cumings, Mrs~ fema~    38     1     0 PC 17~  71.3
+## 2           4        1      1 Futrelle, Mr~ fema~    35     1     0 113803  53.1
+## 3          12        1      1 Bonnell, Mis~ fema~    58     0     0 113783  26.6
+## 4          53        1      1 Harper, Mrs.~ fema~    49     1     0 PC 17~  76.7
+## 5          62        1      1 Icard, Miss.~ fema~    38     0     0 113572  80  
+## 6          89        1      1 Fortune, Mis~ fema~    23     3     2 19950  263  
+## # ... with 1 more variable: Embarked <chr>
+\end{verbatim}
+
+Vi kan også inddrage flere symboler. For eksempel i nedenståenden vælger vi personer som er kvinder \textbf{og} som rejste i \textbf{enten} første eller anden klass \textbf{og} som er \textbf{i} trediverne. Huske at tilføje runde parenteser omkring de to \texttt{Pclass} - prøv selv at fjerne dem og se, hvad der sker.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(Sex }\SpecialCharTok{==} \StringTok{\textquotesingle{}female\textquotesingle{}} \SpecialCharTok{\&}\NormalTok{ (Pclass }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{|}\NormalTok{ Pclass }\SpecialCharTok{==} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ Age }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{30}\SpecialCharTok{:}\DecValTok{39}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 43
+## Columns: 11
+## $ PassengerId <int> 2, 4, 62, 99, 191, 212, 216, 219, 231, 258, 259, 270, 310,~
+## $ Survived    <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1~
+## $ Pclass      <int> 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 1, 2~
+## $ Name        <chr> "Cumings, Mrs. John Bradley (Florence Briggs Thayer)", "Fu~
+## $ Sex         <chr> "female", "female", "female", "female", "female", "female"~
+## $ Age         <dbl> 38, 35, 38, 34, 32, 35, 31, 32, 35, 30, 35, 35, 30, 31, 30~
+## $ SibSp       <int> 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0~
+## $ Parch       <int> 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0~
+## $ Ticket      <chr> "PC 17599", "113803", "113572", "231919", "234604", "F.C.C~
+## $ Fare        <dbl> 71.2833, 53.1000, 80.0000, 23.0000, 13.0000, 21.0000, 113.~
+## $ Embarked    <chr> "C", "S", "", "S", "S", "S", "C", "C", "S", "S", "C", "S",~
+\end{verbatim}
+
+\hypertarget{comparitiver-reference}{%
+\subsection{Comparitiver reference}\label{comparitiver-reference}}
+
+Her er en tabel af comparitiver (kopirede fra grundlæggende R) - de er brugbare i både \texttt{filter()} og i baseR (fordi koncepten bag er den samme, bare tilgang er ænderledes).
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+comparitive & beskrivelse \\
+\midrule
+\endhead
+\texttt{\textless{}} & less than \\
+\texttt{\textgreater{}} & greater than \\
+\texttt{\textless{}=} & less than or equal to \\
+\texttt{\textgreater{}=} & greater than or equal to \\
+\texttt{==} & equal to \\
+\texttt{!=} & not equal to \\
+\texttt{\&} & and \\
+\texttt{\%in\%} & in \\
+\texttt{\textbar{}} & or \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{kombinere-filter-og-select}{%
+\subsection{\texorpdfstring{Kombinere \texttt{filter()} og \texttt{select()}}{Kombinere filter() og select()}}\label{kombinere-filter-og-select}}
+
+Man kan også kombinere både \texttt{filter()} og \texttt{select()} i samme kommando, som i følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(Sex }\SpecialCharTok{==} \StringTok{\textquotesingle{}female\textquotesingle{}} \SpecialCharTok{\&}\NormalTok{ (Pclass }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{|}\NormalTok{ Pclass }\SpecialCharTok{==} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ Age }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{30}\SpecialCharTok{:}\DecValTok{39}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(Name, Fare)  }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 43
+## Columns: 2
+## $ Name <chr> "Cumings, Mrs. John Bradley (Florence Briggs Thayer)", "Futrelle,~
+## $ Fare <dbl> 71.2833, 53.1000, 80.0000, 23.0000, 13.0000, 21.0000, 113.2750, 7~
+\end{verbatim}
+
+Bemærk at man bør passe på rækkefølgen, som man anvender de forskellige funktioner. For eksempel hvis man bytter rundt \texttt{filter()} og \texttt{select()} i ovenstående, få man en advarsel - prøv selv at køre følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#virker ikke!!!!!\#\#\#\#\#}
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(Name, Fare)  }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(Sex }\SpecialCharTok{==} \StringTok{\textquotesingle{}female\textquotesingle{}} \SpecialCharTok{\&}\NormalTok{ (Pclass }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{|}\NormalTok{ Pclass }\SpecialCharTok{==} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ Age }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{30}\SpecialCharTok{:}\DecValTok{39}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Det er fordi, hvis man første vælger at beholde variablerne \texttt{Name} og \texttt{Age}, så findes de andre variabler ikke mere i de resulterende dataframe, som bliver dernæst brugt i funktionen \texttt{filter()} - man kan derfor ikke benytte funktionen \texttt{filter()} på variablerne \texttt{Pclass},\texttt{Sex} og \texttt{Age}.
+
+\hypertarget{dplyr-verbs-mutate}{%
+\subsection{\texorpdfstring{dplyr verbs: \texttt{mutate()}}{dplyr verbs: mutate()}}\label{dplyr-verbs-mutate}}
+
+Man kan avende funktionen \texttt{mutate()} til at tilføje en ny variable til en dataframe. I nedenstående tilføjer jeg en ny variabel med navnet \texttt{Adult}, der angiver om personen kan betragtes som en voksen (hvis vedkommende er mindst 18 år gammel).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_with\_Adult }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Adult =}\NormalTok{ Age}\SpecialCharTok{\textgreater{}=}\DecValTok{18}\NormalTok{)}
+
+\NormalTok{titanic\_with\_Adult }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(Adult) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ glimpse }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 1
+## $ Adult <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, T~
+\end{verbatim}
+
+\#Så kan man se, at der er 601 voksne og 113 børn som passagerere på skibet.
+
+Bemærk her, at jeg gemmer resultatet som en ny dataframe, der hedder \texttt{titanic\_with\_Adult}, og derefter bruger jeg \texttt{glimpse()} på det nye objekt \texttt{titanic\_with\_Adult} for at se, hvordan min nye dataframe ser ud. I forudgående eksempler havde jeg ikke gemt resultatet - bare brugt \texttt{glimpse()} for at se resultatet på skærmen. \textbf{Hvis du gerne vil bruge din resulterende dataframe videre, så skal du husk at gemme den (med brugen af \texttt{\textless{}-} tegn)}
+
+\textbf{funktionen \texttt{ifelse()} indenfor \texttt{mutate()}}
+
+Jeg kan oprette variablen \texttt{Adult} sådan at den er mere informativ end bare \texttt{TRUE} eller \texttt{FALSE}. Jeg anvender funktionen \texttt{ifelse()}, der giver mulighed for at angive, at jeg gerne vil have teksten ``adult'' hvis udsagnet \texttt{Age\textgreater{}=18} er TRUE, og hvis FALSE vil jeg have teksten ``child'':
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ifelse}\NormalTok{(Age}\SpecialCharTok{\textgreater{}=}\DecValTok{18}\NormalTok{,}\StringTok{"adult"}\NormalTok{,}\StringTok{"child"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Fuktionen \texttt{ifelse()} bruges indenfor funktionen \texttt{mutate()}, fordi vi er i gang med at oprette en ny variable \texttt{Adult} - \texttt{ifelse()} giver bare mulighed for at fortælle, hvordan den nye variablen skal ser ud.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Adult =} \FunctionTok{ifelse}\NormalTok{(Age}\SpecialCharTok{\textgreater{}=}\DecValTok{18}\NormalTok{,}\StringTok{"adult"}\NormalTok{,}\StringTok{"child"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(Age,Adult) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 2
+## $ Age   <dbl> 22, 38, 26, 35, 35, 54, 2, 27, 14, 4, 58, 20, 39, 14, 55, 2, 31,~
+## $ Adult <chr> "adult", "adult", "adult", "adult", "adult", "adult", "child", "~
+\end{verbatim}
+
+Så er variablen lidt mere informativ end før.
+
+\hypertarget{rename}{%
+\subsection{\texorpdfstring{\texttt{rename()}}{rename()}}\label{rename}}
+
+Man kan bruge \texttt{rename()} til at ændre navnet på en eller flere variabler i datasættet. Som eksempel bruger jeg \texttt{rename()} til at give en variable navnet \texttt{Years} i stedet for \texttt{Age} (bemærk at variablen \texttt{Age} findes ikke længere).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Years =}\NormalTok{ Age) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 11
+## $ PassengerId <int> 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19~
+## $ Survived    <int> 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1~
+## $ Pclass      <int> 3, 1, 3, 1, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 3, 2, 2, 3~
+## $ Name        <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl~
+## $ Sex         <chr> "male", "female", "female", "female", "male", "male", "mal~
+## $ Years       <dbl> 22, 38, 26, 35, 35, 54, 2, 27, 14, 4, 58, 20, 39, 14, 55, ~
+## $ SibSp       <int> 1, 1, 0, 1, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 1, 0, 0, 0~
+## $ Parch       <int> 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0~
+## $ Ticket      <chr> "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37~
+## $ Fare        <dbl> 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 51.8625, 21.0750~
+## $ Embarked    <chr> "S", "C", "S", "S", "S", "S", "S", "S", "C", "S", "S", "S"~
+\end{verbatim}
+
+Man kan også ændre navne på flere kolonner samtidigt - for eksempel, i følgende laver jeg nogle oversættelsesarbejde:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_dansk }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{Overlevede =}\NormalTok{ Survived,}
+         \AttributeTok{Navn =}\NormalTok{ Name,}
+         \AttributeTok{Klasse =}\NormalTok{ Pclass)}
+\end{Highlighting}
+\end{Shaded}
+
+Så du kan se, at jeg har ændrede de variabler navne. Jeg kalder den nye dataframe for \texttt{titanic\_clean\_dansk}, så jeg min danske udgave er blevet gemt et sted.
+
+Man kan også gøre sådan, at man har kun små bogstaver i de variabler navne. Jeg benytter den danske version, og Jeg anvender \texttt{rename\_with()} og specificerer \texttt{tolower}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_dansk }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename\_with}\NormalTok{(tolower)  }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#all variable names are lower case only}
+  \FunctionTok{glimpse}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 11
+## $ passengerid <int> 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19~
+## $ overlevede  <int> 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1~
+## $ klasse      <int> 3, 1, 3, 1, 3, 1, 3, 3, 2, 3, 1, 3, 3, 3, 2, 3, 3, 2, 2, 3~
+## $ navn        <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl~
+## $ sex         <chr> "male", "female", "female", "female", "male", "male", "mal~
+## $ age         <dbl> 22, 38, 26, 35, 35, 54, 2, 27, 14, 4, 58, 20, 39, 14, 55, ~
+## $ sibsp       <int> 1, 1, 0, 1, 0, 0, 3, 0, 1, 1, 0, 0, 1, 0, 0, 4, 1, 0, 0, 0~
+## $ parch       <int> 0, 0, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0~
+## $ ticket      <chr> "A/5 21171", "PC 17599", "STON/O2. 3101282", "113803", "37~
+## $ fare        <dbl> 7.2500, 71.2833, 7.9250, 53.1000, 8.0500, 51.8625, 21.0750~
+## $ embarked    <chr> "S", "C", "S", "S", "S", "S", "S", "S", "C", "S", "S", "S"~
+\end{verbatim}
+
+Prøv også at erstatte \texttt{tolower} med \texttt{toupper}.
+
+\hypertarget{dplyr-verbs-recode}{%
+\subsection{\texorpdfstring{dplyr verbs: \texttt{recode()}}{dplyr verbs: recode()}}\label{dplyr-verbs-recode}}
+
+Med \texttt{recode()} kan man ændre hvordan en variable ser ud - fk. male/female kan ændres til 0/1, som i følgende.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Sex =} \FunctionTok{recode}\NormalTok{(Sex,  }\StringTok{"male"} \OtherTok{=} \DecValTok{0}\NormalTok{, }\StringTok{"female"} \OtherTok{=} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+   \FunctionTok{select}\NormalTok{(PassengerId,Name,Sex) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 3
+## $ PassengerId <int> 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19~
+## $ Name        <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl~
+## $ Sex         <dbl> 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1~
+\end{verbatim}
+
+Bemærk den måde, at funktionen \texttt{recode()} er blevet brugt indenfor funktionen \texttt{mutate()}: jeg lavede en ny variable af samme navn, men med ændret værdier indenfor variablen.
+
+Hvis vi gerne vil skifter omvendt fra 0/1 til male/female er vi nødt til at skrive \texttt{1} / \texttt{0} for at specificie at vi har værdier som er tal, og vi gerne vil kalde dem for nogle andet (``male''/``female'' i dette tilfælde):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#recodes variable Sex and then recodes it back to original form again}
+\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Sex =} \FunctionTok{recode}\NormalTok{(Sex,  }\AttributeTok{male =} \DecValTok{1}\NormalTok{, }\AttributeTok{female =} \DecValTok{0}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Sex =} \FunctionTok{recode}\NormalTok{(Sex,  }\StringTok{\textasciigrave{}}\AttributeTok{1}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"male"}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{0}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"female"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#note use of \textasciigrave{}\textasciigrave{} in the numbers }
+   \FunctionTok{select}\NormalTok{(PassengerId,Name,Sex) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 3
+## $ PassengerId <int> 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19~
+## $ Name        <chr> "Braund, Mr. Owen Harris", "Cumings, Mrs. John Bradley (Fl~
+## $ Sex         <chr> "male", "female", "female", "female", "male", "male", "mal~
+\end{verbatim}
+
+\hypertarget{dplyr-verbs-arrange}{%
+\subsection{\texorpdfstring{dplyr verbs: \texttt{arrange()}}{dplyr verbs: arrange()}}\label{dplyr-verbs-arrange}}
+
+Man anvender \texttt{arrange()} for at vælge rækkefølgen på observationerne. I nedenstående tager vi datarammen \texttt{titanic\_clean} og arrangerer observationer efter variablen \texttt{Fare}. Det sker således at, personer som betalt mindst er på toppen af de resultarende dataramme, og personer som betalt mest er på bunden.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Arrange by increasing Fare}
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(Fare) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 11
+## $ PassengerId <int> 180, 264, 272, 303, 598, 807, 823, 379, 873, 327, 844, 819~
+## $ Survived    <int> 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0~
+## $ Pclass      <int> 3, 1, 3, 3, 3, 1, 1, 3, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3~
+## $ Name        <chr> "Leonard, Mr. Lionel", "Harrison, Mr. William", "Tornquist~
+## $ Sex         <chr> "male", "male", "male", "male", "male", "male", "male", "m~
+## $ Age         <dbl> 36.0, 40.0, 25.0, 19.0, 49.0, 39.0, 38.0, 20.0, 33.0, 61.0~
+## $ SibSp       <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0~
+## $ Parch       <int> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0~
+## $ Ticket      <chr> "LINE", "112059", "LINE", "LINE", "LINE", "112050", "19972~
+## $ Fare        <dbl> 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 4.~
+## $ Embarked    <chr> "S", "S", "S", "S", "S", "S", "S", "C", "S", "S", "C", "S"~
+\end{verbatim}
+
+Hvis man gerne vil få det omvendt - at personer som betalt mest er på toppen af datarammen, kan man bruge \texttt{desc()} omkring \texttt{Fare}, som i nedenstående:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Arrange by decreasing Fare}
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(Fare)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 714
+## Columns: 11
+## $ PassengerId <int> 259, 680, 738, 28, 89, 342, 439, 312, 743, 119, 300, 381, ~
+## $ Survived    <int> 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1~
+## $ Pclass      <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
+## $ Name        <chr> "Ward, Miss. Anna", "Cardeza, Mr. Thomas Drake Martinez", ~
+## $ Sex         <chr> "female", "male", "male", "male", "female", "female", "mal~
+## $ Age         <dbl> 35.00, 36.00, 35.00, 19.00, 23.00, 24.00, 64.00, 18.00, 21~
+## $ SibSp       <int> 0, 0, 0, 3, 3, 3, 1, 2, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1~
+## $ Parch       <int> 0, 1, 0, 2, 2, 2, 4, 2, 2, 1, 1, 0, 0, 0, 2, 1, 0, 1, 2, 1~
+## $ Ticket      <chr> "PC 17755", "PC 17755", "PC 17755", "19950", "19950", "199~
+## $ Fare        <dbl> 512.3292, 512.3292, 512.3292, 263.0000, 263.0000, 263.0000~
+## $ Embarked    <chr> "C", "C", "C", "S", "S", "S", "S", "C", "C", "C", "C", "C"~
+\end{verbatim}
+
+\hypertarget{visualisering-bruge-som-input-i-ggplot2}{%
+\section{Visualisering: bruge som input i ggplot2}\label{visualisering-bruge-som-input-i-ggplot2}}
+
+Efter man har lavet bearbejdning med tidyverse kommandoer, kan man specificere de resulterende dataframe som data i funktionen \texttt{ggplot()}. Man benytter \texttt{\%\textgreater{}\%} til at forbinde de \texttt{dpylr} kommandoer med den \texttt{ggplot} funktion, og I dette tilfælde behøver man ikke at angive navnet på datasættet indenfor funktionen \texttt{ggplot}. I nedenstående eksempel tager jeg udgangspunkt i \texttt{titanic\_clean} og så laver jeg et barplot som viser antallet af passagerer som rejste i hver af de tre klass.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Pclass,}\AttributeTok{fill=}\FunctionTok{as.factor}\NormalTok{(Pclass))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-253-1.pdf}
+
+Jeg gør det lidt mere kompliceret i følgende, ved at tage \texttt{titanic\_clean}, lave en ny kolon der hedder \texttt{Adult}, og så bruge den resulterende dataframe med funktionen \texttt{ggplot}, hvor jeg laver et plot med \texttt{Adult} på x-aksen for at tælle op antallet af voksne og børn.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Adult =} \FunctionTok{ifelse}\NormalTok{(Age}\SpecialCharTok{\textgreater{}=}\DecValTok{18}\NormalTok{,}\StringTok{"Adult"}\NormalTok{,}\StringTok{"Child"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Adult,}\AttributeTok{fill=}\NormalTok{Adult)) }\SpecialCharTok{+} 
+   \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"count"}\NormalTok{) }\SpecialCharTok{+} 
+   \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-254-1.pdf}
+
+Så viser det, at der var 600 Adults og lidt over 100 Children ombord skibet.
+
+\hypertarget{problemstillinger-4}{%
+\section{Problemstillinger}\label{problemstillinger-4}}
+
+\textbf{Problem 1}) Lav quizzen på Absalon - ``Quiz - tidyverse - part 1''
+
+\emph{Vi øver os med titanic. Inlæs de data og lave oprydningen med følgende kode:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(titanic)}
+\NormalTok{titanic }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(titanic\_train)}
+
+\NormalTok{titanic\_clean }\OtherTok{\textless{}{-}}\NormalTok{ titanic }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Cabin) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Adult =} \FunctionTok{ifelse}\NormalTok{(Age}\SpecialCharTok{\textgreater{}=}\DecValTok{18}\NormalTok{,}\StringTok{"adult"}\NormalTok{,}\StringTok{"child"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Survived =} \FunctionTok{recode}\NormalTok{(Survived,  }\StringTok{\textasciigrave{}}\AttributeTok{1}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"yes"}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{0}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"yes"}\NormalTok{)) }
+    
+\FunctionTok{glimpse}\NormalTok{(titanic\_clean) }\CommentTok{\#take a look!}
+
+\CommentTok{\#recode embarked so we have the place names}
+\CommentTok{\#include ifelse and count}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Problem 2}) \texttt{select()}. Fjern variablen \texttt{Name} fra \texttt{titanic\_clean}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(...) }\CommentTok{\#redigere her}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Tilføj også \texttt{head()} for at få kun de første 6 rækker
+\item
+  Prøv at erstatte \texttt{head()} med \texttt{glimpse()} - det er bare en anden måde at kigge på datarammen.
+\end{itemize}
+
+\textbf{Problem 3}) \texttt{select()}. Lave en ny dataramme fra \texttt{titanic\_clean} med kun variabler \texttt{Name}, \texttt{Pclass} og \texttt{Fare}.
+
+\begin{itemize}
+\tightlist
+\item
+  Gør det en forskel, hvilke rækkefølger man skriver \texttt{Name}, \texttt{Pclass} og \texttt{Fare}?
+\end{itemize}
+
+\textbf{Problem 4}) \texttt{select()}. I stedet for at specificere bestemt kolonner navn, skriv \texttt{starts\_with("S")} indenfor \texttt{select()}. Hvad sker der?
+
+\begin{itemize}
+\tightlist
+\item
+  Prøve også \texttt{contains("ar")}
+\end{itemize}
+
+\textbf{Problem 5}) \texttt{filter()}. Lave en ny dataramme fra \texttt{titanic\_clean} med alle personer som er \texttt{male} og over 30 år gammel.
+
+\textbf{Problem 6}) \texttt{filter()}. Lave en ny dataramme fra \texttt{titanic\_clean} med alle passagerer som er mellem 10 og 15 og rejst enten første eller anden klass.
+
+\begin{itemize}
+\tightlist
+\item
+  Hvor mange observationer er der i den ny dataramme?
+\item
+  Prøve at tilføje \texttt{\%\textgreater{}\%\ count()} til kommandoen - få man så samme tal?
+\end{itemize}
+
+\textbf{Problem 7}) \emph{\texttt{filter()} og \texttt{select()} : kombinering med \texttt{\%\textgreater{}\%}}
+
+Lave en ny dataramme fra \texttt{titanic\_clean} med alle passagerer som er male og survived, og angiv kun kolonner \texttt{Name}, \texttt{Age} og \texttt{Fare}.
+
+\textbf{Problem 8}) \emph{\texttt{filter()} og \texttt{select()} kombinering med \texttt{\%\textgreater{}\%}}
+
+Lave en ny dataramme fra \texttt{titanic\_clean} med kun variabler \texttt{Name} og \texttt{Age} og dernæst specificere kun de passagerer som er over 60.
+
+\begin{itemize}
+\tightlist
+\item
+  Få man så den samme sæt observationer hvis du skriver dine \texttt{select()} og \texttt{filter()} funktioner omvendt her? Hvorfor?
+\end{itemize}
+
+\textbf{Problem 9}) \emph{\texttt{Mutate()}}. Lave en ny dataramme fra \texttt{titanic\_clean} som hedder \texttt{FareRounded} som viser \texttt{Fare} rundet til det nærmest integar (hint: benytte funktionen \texttt{round()}).
+
+\textbf{Problem 10}) \emph{\texttt{Mutate()}} og \emph{\texttt{ifelse()}}. Lave en ny dataramme fra \texttt{titanic\_clean} med en ny kolon som hedder \texttt{Family} som angiver \texttt{TRUE} hvis \texttt{Parch} er ikke nul, ellers \texttt{FALSE}.
+
+\begin{itemize}
+\tightlist
+\item
+  Anvende \texttt{ifelse} til at gøre variablen mere intuitive - ``Family'' og ``Not family''.
+\end{itemize}
+
+\textbf{Problem 11}) \emph{\texttt{Mutate()}} og \emph{\texttt{ifelse()}}
+
+Kig en gang til på beskrivelsen af følgende to variabler i datasættet:
+
+\begin{itemize}
+\item
+  SibSp: The number of siblings/spouses aboard the titanic with the passenger
+\item
+  Parch: The number of parents/children aboard the titanic with the passenger
+\item
+  Lav en ny variabel \texttt{Solo} som viser ``Yes'' hvis passageren rejste alene, og ``No'' hvis passageren rejste med andre.
+\item
+  Lav den nye variabel om til at være en factor.
+\item
+  Gem resultaterne dataramme så du kan bruge din nye variabel videre.
+\end{itemize}
+
+\textbf{Problem 11}) \emph{\texttt{Recode()}}
+
+I variablen \texttt{Embarked}:
+
+\begin{itemize}
+\tightlist
+\item
+  C står for Cherbourg
+\item
+  Q står for Queenstown
+\item
+  S står for Southampton
+\end{itemize}
+
+\textbf{a}) Anvend \texttt{recode} (indenfor \texttt{mutate}) til at ændre teksten i variablen \texttt{Embarked}, for at gøre dem mere informativ at læse. Husk at gemme dit output så du kan bruge resultaterende dataframe videre.
+
+\textbf{b}) Erstat \texttt{recode} med \texttt{recode\_factor} og sammenlign datatypen af variablen \texttt{Embarked} i din resultaterende dataframe.
+
+\textbf{Problem 12)}
+
+\begin{itemize}
+\tightlist
+\item
+  Prøv at anvende funktionen \texttt{count} for at tælle op hvor mange rejste alene/med andre.
+\item
+  Prøv med to variabler indenfor \texttt{count} (for eksempel skriv \texttt{Solo,Embarked})
+\end{itemize}
+
+Resultatet ser sådan ud:
+
+\begin{verbatim}
+## # A tibble: 7 x 3
+##   Solo  Embarked          n
+##   <fct> <fct>         <int>
+## 1 No    "Southampton"   229
+## 2 No    "Queenstown"      9
+## 3 No    "Cherbourg"      72
+## 4 Yes   "Southampton"   325
+## 5 Yes   "Queenstown"     19
+## 6 Yes   "Cherbourg"      58
+## 7 Yes   ""                2
+\end{verbatim}
+
+\textbf{Problem 12}) \emph{\texttt{Arrange()}}. Lave en ny dataramme fra \texttt{titanic\_clean} med observationerne arrangerede således at de yngst er på toppen og ældste er på bunden. Kig på resultatet - hvad kan du fortælle om den yngste passager ombord skibet Titanic?
+
+\begin{itemize}
+\tightlist
+\item
+  Hvad kan du fortælle om den ældste passager ombord skibet? Overlevede de? Hvad med de andre ældste passagerer?
+\end{itemize}
+
+\textbf{Problem 13}) \emph{\texttt{Arrange()} og kombinering med andre verber}. Lave en ny dataramme fra \texttt{titanic\_clean} med kun personer med \texttt{SibSp\textgreater{}0} og som gik ombord skibet i Southampton (\texttt{S} for variablen \texttt{Embarked}), arrangere de resulterende observationer efter \texttt{Fare} (højeste på toppen) og angiv kun kolonnerne \texttt{Name}, \texttt{Age} og \texttt{Fare}.
+
+\textbf{Problem 14}) \emph{Rename}. Fra \texttt{titanic\_clean} angiv kun variabler \texttt{Survived},\texttt{Ticket}, og \texttt{Name} og ændre deres navne til \texttt{Overlevede}, \texttt{Billet} og \texttt{Navn}.
+
+\begin{itemize}
+\tightlist
+\item
+  Gøre variabler navne til store bogstaver ved at anvende \texttt{rename\_with()}.
+\end{itemize}
+
+\textbf{Problem 16}) \emph{Lave et plot}. Fra \texttt{titanic\_clean} bruge \texttt{filter()} til at lave en ny dataramme kun med personer under 30 og bruge den til at lave et barplot som viser antallet af personer opdelt efter Pclass. Bruge følgende struktur for koden:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(...) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#rediger linjen}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(...)) }\SpecialCharTok{+}\NormalTok{ .... }\CommentTok{\#tilføj plot}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Problem 17}) \emph{Lave et plot}. Fra \texttt{titanic\_clean}, bruge \texttt{mutate()} til at lave et nyt kolon der hedder \texttt{with\_siblings\_spouses} der er \texttt{TRUE} hvis \texttt{SibSp} ikke er nul. Brug den til at lave boxplots som viser \texttt{Fare} på y-aksen og \texttt{with\_siblings\_spouses} på x-aksen.
+
+\begin{itemize}
+\tightlist
+\item
+  Ekstra: Ændre skalen på y-aksen for at gøre plottet klarer at fortolke.
+\end{itemize}
+
+\hypertarget{kommentarer}{%
+\section{Kommentarer}\label{kommentarer}}
+
+I morgen arbejder vi videre med tidyverse.
 
   \bibliography{book.bib,packages.bib}
 
