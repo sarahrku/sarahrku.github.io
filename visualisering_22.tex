@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.5420779  0.7317360 -0.6122096  1.7417406  0.5055379  0.3211640
-##  [7] -0.3151674 -1.1599510  0.7434557 -0.6771026  0.2848019 -1.1874511
-## [13]  0.7312959 -0.2130847  1.8068287 -0.1093650 -1.0857583  1.1592119
-## [19] -1.3552779  0.1336251  1.1944754 -0.7628169 -0.7829073 -0.4322301
-## [25] -0.7649608
+##  [1] -0.87919290  0.44611307 -0.62350937 -0.33142229 -0.71874989 -0.89822065
+##  [7]  1.30146934  1.29166809  0.77711147  1.31673688  0.52800997  1.02956118
+## [13]  1.01053796  1.37108289 -0.70407947 -1.24930388  0.25753806  0.29848839
+## [19]  0.86216060  0.03862223  1.10354339  1.49529686  0.57586170 -0.85457694
+## [25]  0.18845832
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.5420779  0.7317360 {-}0.6122096  1.7417406  0.5055379  0.3211640}
+\DocumentationTok{\#\# [1] {-}0.8791929  0.4461131 {-}0.6235094 {-}0.3314223 {-}0.7187499 {-}0.8982207}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.1336251  1.1944754 {-}0.7628169 {-}0.7829073 {-}0.4322301 {-}0.7649608}
+\DocumentationTok{\#\# [1]  0.03862223  1.10354339  1.49529686  0.57586170 {-}0.85457694  0.18845832}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.5420779}
+\DocumentationTok{\#\# [1] {-}0.8791929}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.7649608}
+\DocumentationTok{\#\# [1] 0.1884583}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.01750673 -0.10936504  1.80682867 -1.35527786  0.84015092  0.91659747
+## [1]  0.3053282  0.4461131  1.4952969 -1.2493039  0.7462926  0.8638823
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.35528 -0.76282 -0.10937  0.01751  0.73130  1.80683
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -1.2493 -0.6235  0.4461  0.3053  1.0296  1.4953
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -4938,8 +4938,8 @@ Jeg gør det lidt mere kompliceret i følgende, ved at tage \texttt{titanic\_cle
 
 Så viser det, at der var 600 Adults og lidt over 100 Children ombord skibet.
 
-\hypertarget{ekstra-misc-funktioner-som-du-skal-vide}{%
-\section{Ekstra misc funktioner som du skal vide}\label{ekstra-misc-funktioner-som-du-skal-vide}}
+\hypertarget{misc-funktioner-som-er-nyttige-at-vide}{%
+\section{Misc funktioner som er nyttige at vide}\label{misc-funktioner-som-er-nyttige-at-vide}}
 
 \hypertarget{pull}{%
 \subsection{Pull}\label{pull}}
@@ -4974,6 +4974,27 @@ Så kan man se at mænd og kvinder har signifikant forskellige alder i gennemsni
 
 \hypertarget{slice}{%
 \subsection{Slice}\label{slice}}
+
+Med funktionen \texttt{Slice} kan man kigge på nogle bestemte observationer, for eksempel, viser følgende de to passagerer der betalt mest for billeten (variable \texttt{Fare}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(Fare)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Name,Age) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   Name                                 Age
+##   <chr>                              <dbl>
+## 1 Ward, Miss. Anna                      35
+## 2 Cardeza, Mr. Thomas Drake Martinez    36
+\end{verbatim}
+
+Se udvidet muligheder her: \url{https://dplyr.tidyverse.org/reference/slice.html}
 
 \hypertarget{problemstillinger-4}{%
 \section{Problemstillinger}\label{problemstillinger-4}}

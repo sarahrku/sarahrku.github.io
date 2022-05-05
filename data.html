@@ -302,7 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.7.8" data-path="data.html"><a href="data.html#dplyr-verbs-arrange"><i class="fa fa-check"></i><b>5.7.8</b> dplyr verbs: <code>arrange()</code><span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="5.8" data-path="data.html"><a href="data.html#visualisering-bruge-som-input-i-ggplot2"><i class="fa fa-check"></i><b>5.8</b> Visualisering: bruge som input i ggplot2<span></span></a></li>
-<li class="chapter" data-level="5.9" data-path="data.html"><a href="data.html#ekstra-misc-funktioner-som-du-skal-vide"><i class="fa fa-check"></i><b>5.9</b> Ekstra misc funktioner som du skal vide<span></span></a>
+<li class="chapter" data-level="5.9" data-path="data.html"><a href="data.html#misc-funktioner-som-er-nyttige-at-vide"><i class="fa fa-check"></i><b>5.9</b> Misc funktioner som er nyttige at vide<span></span></a>
 <ul>
 <li class="chapter" data-level="5.9.1" data-path="data.html"><a href="data.html#pull"><i class="fa fa-check"></i><b>5.9.1</b> Pull<span></span></a></li>
 <li class="chapter" data-level="5.9.2" data-path="data.html"><a href="data.html#slice"><i class="fa fa-check"></i><b>5.9.2</b> Slice<span></span></a></li>
@@ -1082,8 +1082,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-254-1.png" width="288" /></p>
 <p>Så viser det, at der var 600 Adults og lidt over 100 Children ombord skibet.</p>
 </div>
-<div id="ekstra-misc-funktioner-som-du-skal-vide" class="section level2 hasAnchor" number="5.9">
-<h2><span class="header-section-number">5.9</span> Ekstra misc funktioner som du skal vide<a href="data.html#ekstra-misc-funktioner-som-du-skal-vide" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="misc-funktioner-som-er-nyttige-at-vide" class="section level2 hasAnchor" number="5.9">
+<h2><span class="header-section-number">5.9</span> Misc funktioner som er nyttige at vide<a href="data.html#misc-funktioner-som-er-nyttige-at-vide" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="pull" class="section level3 hasAnchor" number="5.9.1">
 <h3><span class="header-section-number">5.9.1</span> Pull<a href="data.html#pull" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>I tidyverse arbejder vi meget med dataframes - tilgagen er således at man tager udgangspunkt i en dataframe, får en dataframe som resultat og så arbejde videre på den dataframe. Nogle gange kan det dog være at man gerne vil udtrække en variabel som vector fra en dataframe, fk. hvis man gerne vil bruge den i en bestemt statistik metode.</p>
@@ -1106,26 +1106,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="slice" class="section level3 hasAnchor" number="5.9.2">
 <h3><span class="header-section-number">5.9.2</span> Slice<a href="data.html#slice" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Med funktionen <code>Slice</code> kan man kigge på nogle bestemte observationer, for eksempel, viser følgende de to passagerer der betalt mest for billeten (variable <code>Fare</code>).</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data.html#cb266-1" aria-hidden="true" tabindex="-1"></a>titanic <span class="sc">%&gt;%</span> </span>
+<span id="cb266-2"><a href="data.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Fare)) <span class="sc">%&gt;%</span></span>
+<span id="cb266-3"><a href="data.html#cb266-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name,Age) <span class="sc">%&gt;%</span> </span>
+<span id="cb266-4"><a href="data.html#cb266-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   Name                                 Age
+##   &lt;chr&gt;                              &lt;dbl&gt;
+## 1 Ward, Miss. Anna                      35
+## 2 Cardeza, Mr. Thomas Drake Martinez    36</code></pre>
+<p>Se udvidet muligheder her: <a href="https://dplyr.tidyverse.org/reference/slice.html" class="uri">https://dplyr.tidyverse.org/reference/slice.html</a></p>
 </div>
 </div>
 <div id="problemstillinger-4" class="section level2 hasAnchor" number="5.10">
 <h2><span class="header-section-number">5.10</span> Problemstillinger<a href="data.html#problemstillinger-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Problem 1</strong>) Lav quizzen på Absalon - “Quiz - tidyverse - part 1”</p>
 <p><em>Vi øver os med titanic. Inlæs de data og lave oprydningen med følgende kode:</em></p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data.html#cb266-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb266-2"><a href="data.html#cb266-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
-<span id="cb266-3"><a href="data.html#cb266-3" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(titanic_train)</span>
-<span id="cb266-4"><a href="data.html#cb266-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-5"><a href="data.html#cb266-5" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span> </span>
-<span id="cb266-6"><a href="data.html#cb266-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>Cabin) <span class="sc">%&gt;%</span> </span>
-<span id="cb266-7"><a href="data.html#cb266-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb266-8"><a href="data.html#cb266-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Adult =</span> <span class="fu">ifelse</span>(Age<span class="sc">&gt;=</span><span class="dv">18</span>,<span class="st">&quot;adult&quot;</span>,<span class="st">&quot;child&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb266-9"><a href="data.html#cb266-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Survived =</span> <span class="fu">recode</span>(Survived,  <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;yes&quot;</span>, <span class="st">`</span><span class="at">0</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;yes&quot;</span>)) </span>
-<span id="cb266-10"><a href="data.html#cb266-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb266-11"><a href="data.html#cb266-11" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(titanic_clean) <span class="co">#take a look!</span></span>
-<span id="cb266-12"><a href="data.html#cb266-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb266-13"><a href="data.html#cb266-13" aria-hidden="true" tabindex="-1"></a><span class="co">#recode embarked so we have the place names</span></span>
-<span id="cb266-14"><a href="data.html#cb266-14" aria-hidden="true" tabindex="-1"></a><span class="co">#include ifelse and count</span></span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb268-2"><a href="data.html#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
+<span id="cb268-3"><a href="data.html#cb268-3" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(titanic_train)</span>
+<span id="cb268-4"><a href="data.html#cb268-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-5"><a href="data.html#cb268-5" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span> </span>
+<span id="cb268-6"><a href="data.html#cb268-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>Cabin) <span class="sc">%&gt;%</span> </span>
+<span id="cb268-7"><a href="data.html#cb268-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb268-8"><a href="data.html#cb268-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Adult =</span> <span class="fu">ifelse</span>(Age<span class="sc">&gt;=</span><span class="dv">18</span>,<span class="st">&quot;adult&quot;</span>,<span class="st">&quot;child&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb268-9"><a href="data.html#cb268-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Survived =</span> <span class="fu">recode</span>(Survived,  <span class="st">`</span><span class="at">1</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;yes&quot;</span>, <span class="st">`</span><span class="at">0</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;yes&quot;</span>)) </span>
+<span id="cb268-10"><a href="data.html#cb268-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb268-11"><a href="data.html#cb268-11" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(titanic_clean) <span class="co">#take a look!</span></span>
+<span id="cb268-12"><a href="data.html#cb268-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb268-13"><a href="data.html#cb268-13" aria-hidden="true" tabindex="-1"></a><span class="co">#recode embarked so we have the place names</span></span>
+<span id="cb268-14"><a href="data.html#cb268-14" aria-hidden="true" tabindex="-1"></a><span class="co">#include ifelse and count</span></span></code></pre></div>
 <!-- `count()` Tæller op observationer. -->
 <!-- ```{r} -->
 <!-- titanic %>% -->
@@ -1134,8 +1145,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!--   head() -->
 <!-- ``` -->
 <p><strong>Problem 2</strong>) <code>select()</code>. Fjern variablen <code>Name</code> fra <code>titanic_clean</code>.</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="data.html#cb267-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span> </span>
-<span id="cb267-2"><a href="data.html#cb267-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(...) <span class="co">#redigere her</span></span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="data.html#cb269-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb269-2"><a href="data.html#cb269-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(...) <span class="co">#redigere her</span></span></code></pre></div>
 <ul>
 <li>Tilføj også <code>head()</code> for at få kun de første 6 rækker</li>
 <li>Prøv at erstatte <code>head()</code> med <code>glimpse()</code> - det er bare en anden måde at kigge på datarammen.</li>
@@ -1215,9 +1226,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- titanic_clean %>% mutate(Embarked = recode(Embarked,C="Cherbourg",Q="Queenstown",S="Southampton")) -->
 <!-- ``` -->
 <p><strong>Problem 16</strong>) <em>Lave et plot</em>. Fra <code>titanic_clean</code> bruge <code>filter()</code> til at lave en ny dataramme kun med personer under 30 og bruge den til at lave et barplot som viser antallet af personer opdelt efter Pclass. Bruge følgende struktur for koden:</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="data.html#cb269-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span> </span>
-<span id="cb269-2"><a href="data.html#cb269-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(...) <span class="sc">%&gt;%</span> <span class="co">#rediger linjen</span></span>
-<span id="cb269-3"><a href="data.html#cb269-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(...)) <span class="sc">+</span> .... <span class="co">#tilføj plot</span></span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="data.html#cb271-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb271-2"><a href="data.html#cb271-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(...) <span class="sc">%&gt;%</span> <span class="co">#rediger linjen</span></span>
+<span id="cb271-3"><a href="data.html#cb271-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(...)) <span class="sc">+</span> .... <span class="co">#tilføj plot</span></span></code></pre></div>
 <p><strong>Problem 17</strong>) <em>Lave et plot</em>. Fra <code>titanic_clean</code>, bruge <code>mutate()</code> til at lave et nyt kolon der hedder <code>with_siblings_spouses</code> der er <code>TRUE</code> hvis <code>SibSp</code> ikke er nul. Brug den til at lave boxplots som viser <code>Fare</code> på y-aksen og <code>with_siblings_spouses</code> på x-aksen.</p>
 <ul>
 <li>Ekstra: Ændre skalen på y-aksen for at gøre plottet klarer at fortolke.</li>

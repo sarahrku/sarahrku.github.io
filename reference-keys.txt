@@ -122,7 +122,7 @@ rename
 dplyr-verbs-recode
 dplyr-verbs-arrange
 visualisering-bruge-som-input-i-ggplot2
-ekstra-misc-funktioner-som-du-skal-vide
+misc-funktioner-som-er-nyttige-at-vide
 pull
 slice
 problemstillinger-4
