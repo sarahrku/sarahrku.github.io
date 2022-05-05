@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.87919290  0.44611307 -0.62350937 -0.33142229 -0.71874989 -0.89822065
-##  [7]  1.30146934  1.29166809  0.77711147  1.31673688  0.52800997  1.02956118
-## [13]  1.01053796  1.37108289 -0.70407947 -1.24930388  0.25753806  0.29848839
-## [19]  0.86216060  0.03862223  1.10354339  1.49529686  0.57586170 -0.85457694
-## [25]  0.18845832
+##  [1] -0.02400155  0.99539694  0.76643022  0.72438311  0.39055774  0.25014064
+##  [7] -0.50894388 -0.11269016  1.05331719 -0.39197021 -0.31730218  0.33312221
+## [13]  1.04383633 -1.34874309 -0.10292372 -0.72254198  0.88587614 -0.59737072
+## [19]  0.05102266 -0.76867681 -0.22957723  0.01818003 -0.68153083 -0.89241709
+## [25] -1.33165474
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.8791929  0.4461131 {-}0.6235094 {-}0.3314223 {-}0.7187499 {-}0.8982207}
+\DocumentationTok{\#\# [1] {-}0.02400155  0.99539694  0.76643022  0.72438311  0.39055774  0.25014064}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.03862223  1.10354339  1.49529686  0.57586170 {-}0.85457694  0.18845832}
+\DocumentationTok{\#\# [1] {-}0.76867681 {-}0.22957723  0.01818003 {-}0.68153083 {-}0.89241709 {-}1.33165474}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.8791929}
+\DocumentationTok{\#\# [1] {-}0.02400155}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.1884583}
+\DocumentationTok{\#\# [1] {-}1.331655}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.3053282  0.4461131  1.4952969 -1.2493039  0.7462926  0.8638823
+## [1] -0.06072324 -0.10292372  1.05331719 -1.34874309  0.50986013  0.71404491
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.2493 -0.6235  0.4461  0.3053  1.0296  1.4953
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.34874 -0.59737 -0.10292 -0.06072  0.39056  1.05332
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -5001,7 +5001,9 @@ Se udvidet muligheder her: \url{https://dplyr.tidyverse.org/reference/slice.html
 
 \textbf{Problem 1}) Lav quizzen på Absalon - ``Quiz - tidyverse - part 1''
 
-\emph{Vi øver os med titanic. Inlæs de data og lave oprydningen med følgende kode:}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Vi øver os med titanic. Inlæs datasættet og lav overstående oprydningen med følgende kode:}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5022,7 +5024,9 @@ Se udvidet muligheder her: \url{https://dplyr.tidyverse.org/reference/slice.html
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Problem 2}) \texttt{select()}. Fjern variablen \texttt{Name} fra \texttt{titanic\_clean}.
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 2}) \texttt{select()}. Fjern variablen \texttt{Name} fra \texttt{titanic\_clean} (du behøver ikke at gemme din nye dataframe).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -5034,12 +5038,12 @@ Se udvidet muligheder her: \url{https://dplyr.tidyverse.org/reference/slice.html
 \begin{itemize}
 \tightlist
 \item
-  Tilføj også \texttt{head()} for at få kun de første 6 rækker
-\item
-  Prøv at erstatte \texttt{head()} med \texttt{glimpse()} - det er bare en anden måde at kigge på datarammen.
+  Tilføj også \texttt{glimpse()} for at se et overblik (man kan også bruge \texttt{head()})
 \end{itemize}
 
-\textbf{Problem 3}) \texttt{select()}. Lave en ny dataramme fra \texttt{titanic\_clean} med kun variabler \texttt{Name}, \texttt{Pclass} og \texttt{Fare}.
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 3}) \texttt{select()}. Lave en ny dataframe fra \texttt{titanic\_clean} med kun variabler \texttt{Name}, \texttt{Pclass} og \texttt{Fare}.
 
 \begin{itemize}
 \tightlist
@@ -5047,29 +5051,48 @@ Se udvidet muligheder her: \url{https://dplyr.tidyverse.org/reference/slice.html
   Gør det en forskel, hvilke rækkefølger man skriver \texttt{Name}, \texttt{Pclass} og \texttt{Fare}?
 \end{itemize}
 
-\textbf{Problem 4}) \texttt{select()}. I stedet for at specificere bestemt kolonner navn, skriv \texttt{starts\_with("S")} indenfor \texttt{select()}. Hvad sker der?
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 4}) \emph{\texttt{select()} og hjælper funktoner}. I stedet for at specificere bestemt kolonner navn, skriv \texttt{starts\_with("S")} indenfor \texttt{select()}. Hvad sker der?
 
 \begin{itemize}
-\tightlist
 \item
-  Prøve også \texttt{contains("ar")}
+  Prøv også \texttt{contains("ar")}
+\item
+  Prøv også \texttt{-any\_of(c("Survived","Pclass","FavouriteColour"))} og \texttt{-all\_of(c("Survived","Pclass","FavouriteColour")}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{all\_of} er mere stramt end \texttt{any\_of} - hvad er forskellen?
+  \end{itemize}
+\item
+  (Ekstra) prøv også \texttt{matches("\^{}S{[}i\textbar{}u{]}")} - kan du gisner på hvad det betyder (se nedenunder)?
 \end{itemize}
 
-\textbf{Problem 5}) \texttt{filter()}. Lave en ny dataramme fra \texttt{titanic\_clean} med alle personer som er \texttt{male} og over 30 år gammel.
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 5}) \texttt{filter()}. Lave en ny dataframe fra \texttt{titanic\_clean} med alle personer som er \texttt{male} \textbf{og} over 30 år gammel.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 6}) \texttt{filter()}. Lave en ny dataramme fra \texttt{titanic\_clean} med alle passagerer som er mellem 10 og 15 og rejst enten første eller anden klass.
 
 \begin{itemize}
 \tightlist
 \item
-  Hvor mange observationer er der i den ny dataramme?
+  Hvor mange observationer er der i den nye dataframe?
 \item
   Prøve at tilføje \texttt{\%\textgreater{}\%\ count()} til kommandoen - få man så samme tal?
 \end{itemize}
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \textbf{Problem 7}) \emph{\texttt{filter()} og \texttt{select()} : kombinering med \texttt{\%\textgreater{}\%}}
 
-Lave en ny dataramme fra \texttt{titanic\_clean} med alle passagerer som er male og survived, og angiv kun kolonner \texttt{Name}, \texttt{Age} og \texttt{Fare}.
+Lave en ny dataramme fra \texttt{titanic\_clean} med alle passagerer som er ``male'' og overlevede (variablen \texttt{Survived} er ``yes''), og angiv kun kolonner \texttt{Name}, \texttt{Age} og \texttt{Fare}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 8}) \emph{\texttt{filter()} og \texttt{select()} kombinering med \texttt{\%\textgreater{}\%}}
 
@@ -5078,18 +5101,24 @@ Lave en ny dataramme fra \texttt{titanic\_clean} med kun variabler \texttt{Name}
 \begin{itemize}
 \tightlist
 \item
-  Få man så den samme sæt observationer hvis du skriver dine \texttt{select()} og \texttt{filter()} funktioner omvendt her? Hvorfor?
+  Få man så den samme sæt observationer hvis du skriver dine \texttt{select()} og \texttt{filter()} funktionerne omvendt her? Hvorfor?
 \end{itemize}
 
-\textbf{Problem 9}) \emph{\texttt{Mutate()}}. Lave en ny dataramme fra \texttt{titanic\_clean} som hedder \texttt{FareRounded} som viser \texttt{Fare} rundet til det nærmest integar (hint: benytte funktionen \texttt{round()}).
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 9}) \emph{\texttt{Mutate()}}. Lave en ny dataframe fra \texttt{titanic\_clean} som hedder \texttt{FareRounded} og viser \texttt{Fare} rundet til det nærmest integar (hint: benyt funktionen \texttt{round()}).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 10}) \emph{\texttt{Mutate()}} og \emph{\texttt{ifelse()}}. Lave en ny dataramme fra \texttt{titanic\_clean} med en ny kolon som hedder \texttt{Family} som angiver \texttt{TRUE} hvis \texttt{Parch} er ikke nul, ellers \texttt{FALSE}.
 
 \begin{itemize}
 \tightlist
 \item
-  Anvende \texttt{ifelse} til at gøre variablen mere intuitive - ``Family'' og ``Not family''.
+  Anvende \texttt{ifelse} til at gøre variablen mere intuitiv - ``Family'' og ``Not family''.
 \end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 11}) \emph{\texttt{Mutate()}} og \emph{\texttt{ifelse()}}
 
@@ -5105,10 +5134,18 @@ Kig en gang til på beskrivelsen af følgende to variabler i datasættet:
 \item
   Lav den nye variabel om til at være en factor.
 \item
-  Gem resultaterne dataramme så du kan bruge din nye variabel videre.
+  Gem også dit output (som \texttt{titanic\_clean} igen) så du kan bruge din nye variable videre.
 \end{itemize}
 
-\textbf{Problem 11}) \emph{\texttt{Recode()}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{  ... }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 12}) \emph{\texttt{Recode()}}
 
 I variablen \texttt{Embarked}:
 
@@ -5122,19 +5159,12 @@ I variablen \texttt{Embarked}:
   S står for Southampton
 \end{itemize}
 
-\textbf{a}) Anvend \texttt{recode} (indenfor \texttt{mutate}) til at ændre teksten i variablen \texttt{Embarked}, for at gøre dem mere informativ at læse. Husk at gemme dit output så du kan bruge resultaterende dataframe videre.
+\textbf{a}) Anvend \texttt{recode} (indenfor \texttt{mutate}) til at ændre værdierne i variablen \texttt{Embarked} således at man får de fulde navne af de steder folk gik ombord skibet, i stedet for kun den første bogstav. Gem også dit output (som \texttt{titanic\_clean} igen) så du kan bruge din nye variable videre.
 
-\textbf{b}) Erstat \texttt{recode} med \texttt{recode\_factor} og sammenlign datatypen af variablen \texttt{Embarked} i din resultaterende dataframe.
+\textbf{b}) Erstat \texttt{recode} med \texttt{recode\_factor} og sammenlign datatypen af variablen \texttt{Embarked} i din nye dataframe.
 
-\textbf{Problem 12)}
-
-\begin{itemize}
-\tightlist
-\item
-  Prøv at anvende funktionen \texttt{count} for at tælle op hvor mange rejste alene/med andre.
-\item
-  Prøv med to variabler indenfor \texttt{count} (for eksempel skriv \texttt{Solo,Embarked})
-\end{itemize}
+\textbf{c}) * Prøv at anvende funktionen \texttt{count} for at tælle op hvor mange gik om bord i de forskellige steder.
+* Prøv med to variabler indenfor \texttt{count} : \texttt{Solo} og \texttt{Embarked}
 
 Resultatet ser sådan ud:
 
@@ -5151,7 +5181,23 @@ Resultatet ser sådan ud:
 ## 7 Yes   ""                2
 \end{verbatim}
 
-\textbf{Problem 12}) \emph{\texttt{Arrange()}}. Lave en ny dataramme fra \texttt{titanic\_clean} med observationerne arrangerede således at de yngst er på toppen og ældste er på bunden. Kig på resultatet - hvad kan du fortælle om den yngste passager ombord skibet Titanic?
+\begin{itemize}
+\tightlist
+\item
+  Man kan se, at der er to passagerer hvor der ikke er noget skrevet i \texttt{Embarked}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Rejste de alene?
+  \item
+    Fjern dem fra datasættet.
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 13}) \emph{\texttt{Arrange()}}. Lave en ny dataramme fra \texttt{titanic\_clean} med observationerne arrangerede således at de yngst er på toppen og ældste er på bunden. Kig på resultatet - hvad kan du fortælle om den yngste passager ombord skibet Titanic?
 
 \begin{itemize}
 \tightlist
@@ -5159,15 +5205,21 @@ Resultatet ser sådan ud:
   Hvad kan du fortælle om den ældste passager ombord skibet? Overlevede de? Hvad med de andre ældste passagerer?
 \end{itemize}
 
-\textbf{Problem 13}) \emph{\texttt{Arrange()} og kombinering med andre verber}. Lave en ny dataramme fra \texttt{titanic\_clean} med kun personer med \texttt{SibSp\textgreater{}0} og som gik ombord skibet i Southampton (\texttt{S} for variablen \texttt{Embarked}), arrangere de resulterende observationer efter \texttt{Fare} (højeste på toppen) og angiv kun kolonnerne \texttt{Name}, \texttt{Age} og \texttt{Fare}.
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Problem 14}) \emph{Rename}. Fra \texttt{titanic\_clean} angiv kun variabler \texttt{Survived},\texttt{Ticket}, og \texttt{Name} og ændre deres navne til \texttt{Overlevede}, \texttt{Billet} og \texttt{Navn}.
+\textbf{Problem 14}) \emph{\texttt{Arrange()} og kombinering med andre verber}. Lave en ny dataramme fra \texttt{titanic\_clean} med kun personer med \texttt{SibSp\textgreater{}0} og som gik ombord skibet i Southampton (\texttt{S} for variablen \texttt{Embarked}), arrangere de resulterende observationer efter \texttt{Fare} (højeste på toppen) og angiv kun kolonnerne \texttt{Name}, \texttt{Age} og \texttt{Fare}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 15}) \emph{Rename}. Fra \texttt{titanic\_clean} angiv kun variabler \texttt{Survived},\texttt{Ticket}, og \texttt{Name} og ændre deres navne til \texttt{Overlevede}, \texttt{Billet} og \texttt{Navn}.
 
 \begin{itemize}
 \tightlist
 \item
   Gøre variabler navne til store bogstaver ved at anvende \texttt{rename\_with()}.
 \end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 16}) \emph{Lave et plot}. Fra \texttt{titanic\_clean} bruge \texttt{filter()} til at lave en ny dataramme kun med personer under 30 og bruge den til at lave et barplot som viser antallet af personer opdelt efter Pclass. Bruge følgende struktur for koden:
 
@@ -5178,6 +5230,8 @@ Resultatet ser sådan ud:
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(...)) }\SpecialCharTok{+}\NormalTok{ .... }\CommentTok{\#tilføj plot}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 17}) \emph{Lave et plot}. Fra \texttt{titanic\_clean}, bruge \texttt{mutate()} til at lave et nyt kolon der hedder \texttt{with\_siblings\_spouses} der er \texttt{TRUE} hvis \texttt{SibSp} ikke er nul. Brug den til at lave boxplots som viser \texttt{Fare} på y-aksen og \texttt{with\_siblings\_spouses} på x-aksen.
 
@@ -5190,7 +5244,33 @@ Resultatet ser sådan ud:
 \hypertarget{kommentarer}{%
 \section{Kommentarer}\label{kommentarer}}
 
-I morgen arbejder vi videre med tidyverse.
+\begin{itemize}
+\tightlist
+\item
+  \texttt{matches("\^{}S{[}i\textbar{}u{]}")} betyder
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{\^{}S} variabel navn skal starter med en S
+  \item
+    \texttt{{[}i\textbar{}u{]}} den næste bogstav i variabel navnet skal være enten i eller u
+  \end{itemize}
+\item
+  OBS det er ikke vigtigt at lære pattern matching i kurset men det er meget brugbart i andre sammenhænge!
+\end{itemize}
+
+Næste gange arbejder vi videre med tidyverse.
+
+\begin{itemize}
+\tightlist
+\item
+  Group\_by og summarise
+\item
+  Pivot
+\item
+  Join funktioner
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 

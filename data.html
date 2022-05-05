@@ -1122,7 +1122,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="problemstillinger-4" class="section level2 hasAnchor" number="5.10">
 <h2><span class="header-section-number">5.10</span> Problemstillinger<a href="data.html#problemstillinger-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Problem 1</strong>) Lav quizzen på Absalon - “Quiz - tidyverse - part 1”</p>
-<p><em>Vi øver os med titanic. Inlæs de data og lave oprydningen med følgende kode:</em></p>
+<hr />
+<p><em>Vi øver os med titanic. Inlæs datasættet og lav overstående oprydningen med følgende kode:</em></p>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data.html#cb268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb268-2"><a href="data.html#cb268-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
 <span id="cb268-3"><a href="data.html#cb268-3" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(titanic_train)</span>
@@ -1144,39 +1145,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!--   count(Sex) %>% -->
 <!--   head() -->
 <!-- ``` -->
-<p><strong>Problem 2</strong>) <code>select()</code>. Fjern variablen <code>Name</code> fra <code>titanic_clean</code>.</p>
+<hr />
+<p><strong>Problem 2</strong>) <code>select()</code>. Fjern variablen <code>Name</code> fra <code>titanic_clean</code> (du behøver ikke at gemme din nye dataframe).</p>
 <div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="data.html#cb269-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span> </span>
 <span id="cb269-2"><a href="data.html#cb269-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(...) <span class="co">#redigere her</span></span></code></pre></div>
 <ul>
-<li>Tilføj også <code>head()</code> for at få kun de første 6 rækker</li>
-<li>Prøv at erstatte <code>head()</code> med <code>glimpse()</code> - det er bare en anden måde at kigge på datarammen.</li>
+<li>Tilføj også <code>glimpse()</code> for at se et overblik (man kan også bruge <code>head()</code>)</li>
 </ul>
-<p><strong>Problem 3</strong>) <code>select()</code>. Lave en ny dataramme fra <code>titanic_clean</code> med kun variabler <code>Name</code>, <code>Pclass</code> og <code>Fare</code>.</p>
+<hr />
+<p><strong>Problem 3</strong>) <code>select()</code>. Lave en ny dataframe fra <code>titanic_clean</code> med kun variabler <code>Name</code>, <code>Pclass</code> og <code>Fare</code>.</p>
 <ul>
 <li>Gør det en forskel, hvilke rækkefølger man skriver <code>Name</code>, <code>Pclass</code> og <code>Fare</code>?</li>
 </ul>
-<p><strong>Problem 4</strong>) <code>select()</code>. I stedet for at specificere bestemt kolonner navn, skriv <code>starts_with("S")</code> indenfor <code>select()</code>. Hvad sker der?</p>
+<hr />
+<p><strong>Problem 4</strong>) <em><code>select()</code> og hjælper funktoner</em>. I stedet for at specificere bestemt kolonner navn, skriv <code>starts_with("S")</code> indenfor <code>select()</code>. Hvad sker der?</p>
 <ul>
-<li>Prøve også <code>contains("ar")</code></li>
+<li><p>Prøv også <code>contains("ar")</code></p></li>
+<li><p>Prøv også <code>-any_of(c("Survived","Pclass","FavouriteColour"))</code> og <code>-all_of(c("Survived","Pclass","FavouriteColour")</code></p>
+<ul>
+<li><code>all_of</code> er mere stramt end <code>any_of</code> - hvad er forskellen?</li>
+</ul></li>
+<li><p>(Ekstra) prøv også <code>matches("^S[i|u]")</code> - kan du gisner på hvad det betyder (se nedenunder)?</p></li>
 </ul>
-<p><strong>Problem 5</strong>) <code>filter()</code>. Lave en ny dataramme fra <code>titanic_clean</code> med alle personer som er <code>male</code> og over 30 år gammel.</p>
+<hr />
+<p><strong>Problem 5</strong>) <code>filter()</code>. Lave en ny dataframe fra <code>titanic_clean</code> med alle personer som er <code>male</code> <strong>og</strong> over 30 år gammel.</p>
+<hr />
 <p><strong>Problem 6</strong>) <code>filter()</code>. Lave en ny dataramme fra <code>titanic_clean</code> med alle passagerer som er mellem 10 og 15 og rejst enten første eller anden klass.</p>
 <ul>
-<li>Hvor mange observationer er der i den ny dataramme?</li>
+<li>Hvor mange observationer er der i den nye dataframe?</li>
 <li>Prøve at tilføje <code>%&gt;% count()</code> til kommandoen - få man så samme tal?</li>
 </ul>
+<hr />
 <p><strong>Problem 7</strong>) <em><code>filter()</code> og <code>select()</code> : kombinering med <code>%&gt;%</code></em></p>
-<p>Lave en ny dataramme fra <code>titanic_clean</code> med alle passagerer som er male og survived, og angiv kun kolonner <code>Name</code>, <code>Age</code> og <code>Fare</code>.</p>
+<p>Lave en ny dataramme fra <code>titanic_clean</code> med alle passagerer som er “male” og overlevede (variablen <code>Survived</code> er “yes”), og angiv kun kolonner <code>Name</code>, <code>Age</code> og <code>Fare</code>.</p>
+<hr />
 <p><strong>Problem 8</strong>) <em><code>filter()</code> og <code>select()</code> kombinering med <code>%&gt;%</code></em></p>
 <p>Lave en ny dataramme fra <code>titanic_clean</code> med kun variabler <code>Name</code> og <code>Age</code> og dernæst specificere kun de passagerer som er over 60.</p>
 <ul>
-<li>Få man så den samme sæt observationer hvis du skriver dine <code>select()</code> og <code>filter()</code> funktioner omvendt her? Hvorfor?</li>
+<li>Få man så den samme sæt observationer hvis du skriver dine <code>select()</code> og <code>filter()</code> funktionerne omvendt her? Hvorfor?</li>
 </ul>
-<p><strong>Problem 9</strong>) <em><code>Mutate()</code></em>. Lave en ny dataramme fra <code>titanic_clean</code> som hedder <code>FareRounded</code> som viser <code>Fare</code> rundet til det nærmest integar (hint: benytte funktionen <code>round()</code>).</p>
+<hr />
+<p><strong>Problem 9</strong>) <em><code>Mutate()</code></em>. Lave en ny dataframe fra <code>titanic_clean</code> som hedder <code>FareRounded</code> og viser <code>Fare</code> rundet til det nærmest integar (hint: benyt funktionen <code>round()</code>).</p>
+<hr />
 <p><strong>Problem 10</strong>) <em><code>Mutate()</code></em> og <em><code>ifelse()</code></em>. Lave en ny dataramme fra <code>titanic_clean</code> med en ny kolon som hedder <code>Family</code> som angiver <code>TRUE</code> hvis <code>Parch</code> er ikke nul, ellers <code>FALSE</code>.</p>
 <ul>
-<li>Anvende <code>ifelse</code> til at gøre variablen mere intuitive - “Family” og “Not family.”</li>
+<li>Anvende <code>ifelse</code> til at gøre variablen mere intuitiv - “Family” og “Not family.”</li>
 </ul>
+<hr />
 <p><strong>Problem 11</strong>) <em><code>Mutate()</code></em> og <em><code>ifelse()</code></em></p>
 <p>Kig en gang til på beskrivelsen af følgende to variabler i datasættet:</p>
 <ul>
@@ -1184,22 +1199,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Parch: The number of parents/children aboard the titanic with the passenger</p></li>
 <li><p>Lav en ny variabel <code>Solo</code> som viser “Yes” hvis passageren rejste alene, og “No” hvis passageren rejste med andre.</p></li>
 <li><p>Lav den nye variabel om til at være en factor.</p></li>
-<li><p>Gem resultaterne dataramme så du kan bruge din nye variabel videre.</p></li>
+<li><p>Gem også dit output (som <code>titanic_clean</code> igen) så du kan bruge din nye variable videre.</p></li>
 </ul>
-<p><strong>Problem 11</strong>) <em><code>Recode()</code></em></p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data.html#cb270-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  ... </span></code></pre></div>
+<hr />
+<p><strong>Problem 12</strong>) <em><code>Recode()</code></em></p>
 <p>I variablen <code>Embarked</code>:</p>
 <ul>
 <li>C står for Cherbourg</li>
 <li>Q står for Queenstown</li>
 <li>S står for Southampton</li>
 </ul>
-<p><strong>a</strong>) Anvend <code>recode</code> (indenfor <code>mutate</code>) til at ændre teksten i variablen <code>Embarked</code>, for at gøre dem mere informativ at læse. Husk at gemme dit output så du kan bruge resultaterende dataframe videre.</p>
-<p><strong>b</strong>) Erstat <code>recode</code> med <code>recode_factor</code> og sammenlign datatypen af variablen <code>Embarked</code> i din resultaterende dataframe.</p>
-<p><strong>Problem 12)</strong></p>
-<ul>
-<li>Prøv at anvende funktionen <code>count</code> for at tælle op hvor mange rejste alene/med andre.</li>
-<li>Prøv med to variabler indenfor <code>count</code> (for eksempel skriv <code>Solo,Embarked</code>)</li>
-</ul>
+<p><strong>a</strong>) Anvend <code>recode</code> (indenfor <code>mutate</code>) til at ændre værdierne i variablen <code>Embarked</code> således at man får de fulde navne af de steder folk gik ombord skibet, i stedet for kun den første bogstav. Gem også dit output (som <code>titanic_clean</code> igen) så du kan bruge din nye variable videre.</p>
+<p><strong>b</strong>) Erstat <code>recode</code> med <code>recode_factor</code> og sammenlign datatypen af variablen <code>Embarked</code> i din nye dataframe.</p>
+<p><strong>c</strong>) * Prøv at anvende funktionen <code>count</code> for at tælle op hvor mange gik om bord i de forskellige steder.
+* Prøv med to variabler indenfor <code>count</code> : <code>Solo</code> og <code>Embarked</code></p>
 <p>Resultatet ser sådan ud:</p>
 <pre><code>## # A tibble: 7 × 3
 ##   Solo  Embarked          n
@@ -1211,24 +1225,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 Yes   &quot;Queenstown&quot;     19
 ## 6 Yes   &quot;Cherbourg&quot;      58
 ## 7 Yes   &quot;&quot;                2</code></pre>
-<p><strong>Problem 12</strong>) <em><code>Arrange()</code></em>. Lave en ny dataramme fra <code>titanic_clean</code> med observationerne arrangerede således at de yngst er på toppen og ældste er på bunden. Kig på resultatet - hvad kan du fortælle om den yngste passager ombord skibet Titanic?</p>
+<ul>
+<li>Man kan se, at der er to passagerer hvor der ikke er noget skrevet i <code>Embarked</code>.
+<ul>
+<li>Rejste de alene?</li>
+<li>Fjern dem fra datasættet.</li>
+</ul></li>
+</ul>
+<hr />
+<p><strong>Problem 13</strong>) <em><code>Arrange()</code></em>. Lave en ny dataramme fra <code>titanic_clean</code> med observationerne arrangerede således at de yngst er på toppen og ældste er på bunden. Kig på resultatet - hvad kan du fortælle om den yngste passager ombord skibet Titanic?</p>
 <ul>
 <li>Hvad kan du fortælle om den ældste passager ombord skibet? Overlevede de? Hvad med de andre ældste passagerer?</li>
 </ul>
-<p><strong>Problem 13</strong>) <em><code>Arrange()</code> og kombinering med andre verber</em>. Lave en ny dataramme fra <code>titanic_clean</code> med kun personer med <code>SibSp&gt;0</code> og som gik ombord skibet i Southampton (<code>S</code> for variablen <code>Embarked</code>), arrangere de resulterende observationer efter <code>Fare</code> (højeste på toppen) og angiv kun kolonnerne <code>Name</code>, <code>Age</code> og <code>Fare</code>.</p>
-<p><strong>Problem 14</strong>) <em>Rename</em>. Fra <code>titanic_clean</code> angiv kun variabler <code>Survived</code>,<code>Ticket</code>, og <code>Name</code> og ændre deres navne til <code>Overlevede</code>, <code>Billet</code> og <code>Navn</code>.</p>
+<hr />
+<p><strong>Problem 14</strong>) <em><code>Arrange()</code> og kombinering med andre verber</em>. Lave en ny dataramme fra <code>titanic_clean</code> med kun personer med <code>SibSp&gt;0</code> og som gik ombord skibet i Southampton (<code>S</code> for variablen <code>Embarked</code>), arrangere de resulterende observationer efter <code>Fare</code> (højeste på toppen) og angiv kun kolonnerne <code>Name</code>, <code>Age</code> og <code>Fare</code>.</p>
+<hr />
+<p><strong>Problem 15</strong>) <em>Rename</em>. Fra <code>titanic_clean</code> angiv kun variabler <code>Survived</code>,<code>Ticket</code>, og <code>Name</code> og ændre deres navne til <code>Overlevede</code>, <code>Billet</code> og <code>Navn</code>.</p>
 <ul>
 <li>Gøre variabler navne til store bogstaver ved at anvende <code>rename_with()</code>.</li>
 </ul>
-<!-- __Problem 15__) *`recode()`* Tjek kursus notaterne og se funktionen `recode()`. Afpøve den ved at ændre værdierne i variablen `Embarked` således at man få de fulde navne af de steder folk gik ombord skibet, i stedet for kun den første bogstav. Fra data beskrivelsen: -->
-<!-- * Embarked: Where passengers boarded the titanic. C = Cherbourg, Q = Queenstown, S = Southampton). -->
-<!-- ```{r,echo=FALSE,eval=FALSE} -->
-<!-- titanic_clean %>% mutate(Embarked = recode(Embarked,C="Cherbourg",Q="Queenstown",S="Southampton")) -->
-<!-- ``` -->
+<hr />
 <p><strong>Problem 16</strong>) <em>Lave et plot</em>. Fra <code>titanic_clean</code> bruge <code>filter()</code> til at lave en ny dataramme kun med personer under 30 og bruge den til at lave et barplot som viser antallet af personer opdelt efter Pclass. Bruge følgende struktur for koden:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="data.html#cb271-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span> </span>
-<span id="cb271-2"><a href="data.html#cb271-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(...) <span class="sc">%&gt;%</span> <span class="co">#rediger linjen</span></span>
-<span id="cb271-3"><a href="data.html#cb271-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(...)) <span class="sc">+</span> .... <span class="co">#tilføj plot</span></span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="data.html#cb272-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb272-2"><a href="data.html#cb272-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(...) <span class="sc">%&gt;%</span> <span class="co">#rediger linjen</span></span>
+<span id="cb272-3"><a href="data.html#cb272-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(...)) <span class="sc">+</span> .... <span class="co">#tilføj plot</span></span></code></pre></div>
+<hr />
 <p><strong>Problem 17</strong>) <em>Lave et plot</em>. Fra <code>titanic_clean</code>, bruge <code>mutate()</code> til at lave et nyt kolon der hedder <code>with_siblings_spouses</code> der er <code>TRUE</code> hvis <code>SibSp</code> ikke er nul. Brug den til at lave boxplots som viser <code>Fare</code> på y-aksen og <code>with_siblings_spouses</code> på x-aksen.</p>
 <ul>
 <li>Ekstra: Ændre skalen på y-aksen for at gøre plottet klarer at fortolke.</li>
@@ -1236,7 +1257,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="kommentarer" class="section level2 hasAnchor" number="5.11">
 <h2><span class="header-section-number">5.11</span> Kommentarer<a href="data.html#kommentarer" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>I morgen arbejder vi videre med tidyverse.</p>
+<ul>
+<li><code>matches("^S[i|u]")</code> betyder
+<ul>
+<li><code>^S</code> variabel navn skal starter med en S</li>
+<li><code>[i|u]</code> den næste bogstav i variabel navnet skal være enten i eller u</li>
+</ul></li>
+<li>OBS det er ikke vigtigt at lære pattern matching i kurset men det er meget brugbart i andre sammenhænge!</li>
+</ul>
+<p>Næste gange arbejder vi videre med tidyverse.</p>
+<ul>
+<li>Group_by og summarise</li>
+<li>Pivot</li>
+<li>Join funktioner</li>
+</ul>
 
 </div>
 </div>
