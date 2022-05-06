@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-05}
+\date{Last updated: 2022-05-06}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.82910847 -0.53386831 -0.39172072  0.25524155 -1.57954187  1.10612929
-##  [7] -1.11505846  1.75967233 -1.10299604  0.29157814  0.05729913  1.08137189
-## [13]  0.92700681 -0.09588220  0.42006834 -1.40514758 -0.29402623 -0.24631446
-## [19] -0.40340367  0.80977580  0.13030977 -0.75231152 -0.98618900 -1.26485511
-## [25] -1.25762302
+##  [1] -0.81752849  1.02936547 -0.02137237  0.29705358  0.64636584 -1.55652340
+##  [7]  3.67342098 -1.25220031 -0.29748700 -0.31916024  1.53229043  0.01842547
+## [13] -0.76631278 -1.65575267  0.39168351 -1.04451234 -0.05181583  0.63326878
+## [19] -0.23545499  0.78407639 -1.01874973 -2.08089975 -1.79568240  0.19812303
+## [25]  1.39326909
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.8291085 {-}0.5338683 {-}0.3917207  0.2552416 {-}1.5795419  1.1061293}
+\DocumentationTok{\#\# [1] {-}0.81752849  1.02936547 {-}0.02137237  0.29705358  0.64636584 {-}1.55652340}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.8097758  0.1303098 {-}0.7523115 {-}0.9861890 {-}1.2648551 {-}1.2576230}
+\DocumentationTok{\#\# [1]  0.7840764 {-}1.0187497 {-}2.0808998 {-}1.7956824  0.1981230  1.3932691}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.8291085}
+\DocumentationTok{\#\# [1] {-}0.8175285}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}1.257623}
+\DocumentationTok{\#\# [1] 1.393269}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.2167837 -0.2940262  1.7596723 -1.5795419  0.8029464  0.8960728
+## [1] -0.09264439 -0.05181583  3.67342098 -2.08089975  1.59430377  1.26265742
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.5795 -0.9862 -0.2940 -0.2168  0.2916  1.7597
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -2.08090 -1.01875 -0.05182 -0.09264  0.63327  3.67342
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -5015,12 +5015,9 @@ Se udvidet muligheder her: \url{https://dplyr.tidyverse.org/reference/slice.html
     \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Cabin) }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
     \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Adult =} \FunctionTok{ifelse}\NormalTok{(Age}\SpecialCharTok{\textgreater{}=}\DecValTok{18}\NormalTok{,}\StringTok{"adult"}\NormalTok{,}\StringTok{"child"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Survived =} \FunctionTok{recode}\NormalTok{(Survived,  }\StringTok{\textasciigrave{}}\AttributeTok{1}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"yes"}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{0}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"yes"}\NormalTok{)) }
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Survived =} \FunctionTok{recode}\NormalTok{(Survived,  }\StringTok{\textasciigrave{}}\AttributeTok{1}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"yes"}\NormalTok{, }\StringTok{\textasciigrave{}}\AttributeTok{0}\StringTok{\textasciigrave{}} \OtherTok{=} \StringTok{"no"}\NormalTok{)) }
     
 \FunctionTok{glimpse}\NormalTok{(titanic\_clean) }\CommentTok{\#take a look!}
-
-\CommentTok{\#recode embarked so we have the place names}
-\CommentTok{\#include ifelse and count}
 \end{Highlighting}
 \end{Shaded}
 
