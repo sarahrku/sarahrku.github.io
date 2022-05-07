@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-06}
+\date{Last updated: 2022-05-07}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.81752849  1.02936547 -0.02137237  0.29705358  0.64636584 -1.55652340
-##  [7]  3.67342098 -1.25220031 -0.29748700 -0.31916024  1.53229043  0.01842547
-## [13] -0.76631278 -1.65575267  0.39168351 -1.04451234 -0.05181583  0.63326878
-## [19] -0.23545499  0.78407639 -1.01874973 -2.08089975 -1.79568240  0.19812303
-## [25]  1.39326909
+##  [1]  0.368508103  0.535219673 -1.689094263  0.916773716 -0.009424711
+##  [6] -1.495850098 -0.209933913  0.416895672 -1.129106578 -0.680560295
+## [11] -1.909460538  1.008650554 -0.895850394 -0.082434803 -0.583352062
+## [16] -0.471947115  0.500016909  0.588269090 -0.031086594  0.691126336
+## [21]  0.509911643 -0.305526264 -1.266397567 -0.865612721  0.281442177
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,14 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.81752849  1.02936547 {-}0.02137237  0.29705358  0.64636584 {-}1.55652340}
+\DocumentationTok{\#\# [1]  0.368508103  0.535219673 {-}1.689094263  0.916773716 {-}0.009424711}
+\DocumentationTok{\#\# [6] {-}1.495850098}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.7840764 {-}1.0187497 {-}2.0808998 {-}1.7956824  0.1981230  1.3932691}
+\DocumentationTok{\#\# [1]  0.6911263  0.5099116 {-}0.3055263 {-}1.2663976 {-}0.8656127  0.2814422}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.8175285}
+\DocumentationTok{\#\# [1] 0.3685081}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 1.393269}
+\DocumentationTok{\#\# [1] 0.2814422}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +666,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.09264439 -0.05181583  3.67342098 -2.08089975  1.59430377  1.26265742
+## [1] -0.2323530 -0.0824348  1.0086506 -1.9094605  0.7023231  0.8380472
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,7 +679,7 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 
 \begin{verbatim}
 ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -2.08090 -1.01875 -0.05182 -0.09264  0.63327  3.67342
+## -1.90946 -0.86561 -0.08243 -0.23235  0.50002  1.00865
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -5281,6 +5282,1125 @@ Næste gange arbejder vi videre med tidyverse.
 \item
   Join funktionerne
 \end{itemize}
+
+\hypertarget{bearbejdning-dag-2}{%
+\chapter{Bearbejdning dag 2}\label{bearbejdning-dag-2}}
+
+\includegraphics[width=0.15\linewidth]{plots/hex-tidyverse}
+
+\hypertarget{indledning-og-luxe6ringsmuxe5lene}{%
+\section{Indledning og læringsmålene}\label{indledning-og-luxe6ringsmuxe5lene}}
+
+I dag arbejder du videre med \texttt{tidyverse}, især på pakken \texttt{dplyr} og \texttt{tidyr}, som kan bruges til at ændre på strukturen af et datasæt, således at det passer til den struktur, som kræves for at blandt andet lave plots med \texttt{ggplot2}.
+
+Det er ofte tilfældet indenfor biologi, at man har sit data i et dataframe og nogle ekstra sample oplysninger i en anden dataframe. Derfor vil vi gerne have en måde, at forbinde de to dataframes i R, som gør, at vi kan inddrage de ekstra oplysninger når vi lave plots af de data.
+
+\hypertarget{luxe6ringsmuxe5lene-1}{%
+\subsection{Læringsmålene}\label{luxe6ringsmuxe5lene-1}}
+
+Du skal være i stand til at
+
+\begin{itemize}
+\tightlist
+\item
+  Benytte kombinationen af \texttt{group\_by()} og \texttt{summarise()}.
+\item
+  Forstå forskellen mellem \texttt{wide} og \texttt{long} data og bruge \texttt{pivot\_longer()} til at facilitere plotting
+\item
+  Benytte \texttt{left\_join()} eller øvrige join funktioner til at tilføje sample information til datasættet.
+\end{itemize}
+
+\hypertarget{videoer}{%
+\subsection{Videoer}\label{videoer}}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 1 - vi skal kig lidt nærmere på \texttt{group\_by()} + \texttt{summarise()} og forbinde \texttt{tidyverse} kode og \texttt{ggplot2} kode sammen med \%\textgreater\%/+.
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/546910681}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 2 - wide/long data forms og \texttt{pivot\_longer()} og bruge den i ggplot2
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/707081191}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 3 - eksempel med titanic summary statistics
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/707223997}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 4: left\_join() of tables with extra sample information and plot
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/707082269}
+
+\hypertarget{group_by-med-summarise-i-dplyr-pakken}{%
+\section{\texorpdfstring{\texttt{group\_by()} med \texttt{summarise()} i dplyr-pakken}{group\_by() med summarise() i dplyr-pakken}}\label{group_by-med-summarise-i-dplyr-pakken}}
+
+Med kombination af \texttt{group\_by()} med \texttt{summarise()} kan man finde numeriske svar på spørgsmålet: havde mænd eller kvinde en højre sandsynlighed for at overleve tragedien?
+
+Lad os starte med løsningen med \texttt{tapply} til at udregne proportionen af mænd og kvinde der overlevede: følgende kode svarer til, at man opdeler variablen \texttt{Survived} efter den katagoriske variable \texttt{Sex} og tager middelværdien. Det giver dermed proportionen der overlevede efter køn (da \texttt{Survived} er kodet sådan at 1 betyder at man overlevede og \texttt{0} betyder at man ikke overlevede).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\OtherTok{\textless{}{-}}\NormalTok{ titanic }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Cabin) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{drop\_na}\NormalTok{()}
+
+\CommentTok{\#tapply løsning }
+\FunctionTok{tapply}\NormalTok{(titanic\_clean}\SpecialCharTok{$}\NormalTok{Survived,titanic\_clean}\SpecialCharTok{$}\NormalTok{Sex,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    female      male 
+## 0.7547893 0.2052980
+\end{verbatim}
+
+Lad os skifter over til den \texttt{tidyverse} løsning. Lad os tage udgangspunkt i \texttt{summarise()}: som et eksempel af hvordan man bruger funktionen, vil vi beregner en variable der hedder ``medianFare'' som er lig med \texttt{median(fare)}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\StringTok{"medianFare"}\OtherTok{=}\FunctionTok{median}\NormalTok{(Fare))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##   medianFare
+##        <dbl>
+## 1       15.7
+\end{verbatim}
+
+Vi får faktisk en ny dataramme her, med kun variablen som vi lige har specificeret. Vi er interesseret i proportionen, der overlevede, så vi tager middelværdien af variablen \texttt{Survived}. Lad os gøre det med \texttt{summarise()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{meanSurvived =} \FunctionTok{mean}\NormalTok{(Survived))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##   meanSurvived
+##          <dbl>
+## 1        0.406
+\end{verbatim}
+
+Få at svare på spørgsmålet er vi også nødt til at opdele efter kolonnen \texttt{Sex}. Vi kan bruge den kombinering af \texttt{group\_by()} og \texttt{summarise()} - vi opdele efter \texttt{Sex} ved at anvende funktionen \texttt{group\_by()} og derefter bruger \texttt{summarise()} til at oprette en kolon der hedder \texttt{meanSurvived}, der viser proportionen der overlevede for female and male.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#tidyverse løsning}
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{meanSurvived =} \FunctionTok{mean}\NormalTok{(Survived))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   Sex    meanSurvived
+##   <chr>         <dbl>
+## 1 female        0.755
+## 2 male          0.205
+\end{verbatim}
+
+Lad os tage resultatet fra ovenpå og visualiserer det i et barplot, som i nedenstående:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{meanSurvived =} \FunctionTok{mean}\NormalTok{(Survived)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sex,}\AttributeTok{y=}\NormalTok{meanSurvived,}\AttributeTok{fill=}\NormalTok{Sex)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-292-1.pdf}
+
+\hypertarget{reference-af-summarise-funktioner}{%
+\subsection{\texorpdfstring{Reference af \texttt{summarise()} funktioner}{Reference af summarise() funktioner}}\label{reference-af-summarise-funktioner}}
+
+Nogle fuktioner man ofte bruge med \texttt{summarise()} (der er mange andre muligheder).
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+fuktion & beskrivelse \\
+\midrule
+\endhead
+\texttt{mean()} & to give us the mean value of a variable. \\
+\texttt{sd()} & to give us the standard deviation of a variable. \\
+\texttt{min()} & giving us the lowest value of a variable. \\
+\texttt{max()} & giving us the highest value of a variable. \\
+\texttt{n()} & giving us the number of observations in a variable. and many more. \\
+\texttt{first()} & first values \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{flere-summary-statistic-puxe5-uxe9n-gang}{%
+\subsection{Flere summary statistic på én gang}\label{flere-summary-statistic-puxe5-uxe9n-gang}}
+
+Vi kan også lave flere summary statistics på én gang. For eksempel, lad os anvende funktionen \texttt{group\_by} med Sex igen, men beregner flere forskellige summary statistics:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary\_by\_sex }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{(),                    }\CommentTok{\#count}
+            \AttributeTok{meanSurvived =} \FunctionTok{mean}\NormalTok{(Survived),  }\CommentTok{\#middelværdi survived}
+            \AttributeTok{meanAge =} \FunctionTok{mean}\NormalTok{(Age),            }\CommentTok{\#middelværdi age}
+            \AttributeTok{propFirst =} \FunctionTok{sum}\NormalTok{(Pclass}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()) }\CommentTok{\#proportionen i første klass}
+\NormalTok{titanic\_clean\_summary\_by\_sex}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 5
+##   Sex    count meanSurvived meanAge propFirst
+##   <chr>  <int>        <dbl>   <dbl>     <dbl>
+## 1 female   261        0.755    27.9     0.326
+## 2 male     453        0.205    30.7     0.223
+\end{verbatim}
+
+Igen kan denne summary table bruges som et datasæt til at lave et plot med \texttt{ggplot2}. Bemærk at her bruger vi \texttt{stat="identity"}, fordi vi skal ikke tælle observationerne op, men bare plot præcis de tal som er i datarammen på y-aksen. I nedenstående laver vi barplots for \texttt{meanAge} og \texttt{propFirst} - de er plottet ved at bruge to forskellige \texttt{ggplot} kommandoer og bemærk, at det er plottet ved siden af hinanden med en funktion der hedder \texttt{grid.arrange()} fra R-pakken \texttt{gridExtra}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plotA }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{titanic\_clean\_summary\_by\_sex,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sex,}\AttributeTok{y=}\NormalTok{meanAge,}\AttributeTok{fill=}\NormalTok{Sex)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+
+\NormalTok{plotB }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{titanic\_clean\_summary\_by\_sex,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sex,}\AttributeTok{y=}\NormalTok{propFirst,}\AttributeTok{fill=}\NormalTok{Sex)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\FunctionTok{grid.arrange}\NormalTok{(plotA,plotB,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{) }\CommentTok{\#plot both together}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-294-1.pdf}
+
+Vi kan se, at females var i gennemsnit lidt yngere end males, og havde en højere sandsynlighed for at være i første klass. Et interessant spørgsmål er, hvordan man kan lave ovenstående plots uden at bruge to forskellige \texttt{ggplot} kommandoer - altså, en automatiske løsning hvor vi kan plotte flere summary statistiks med kun én \texttt{ggplot} kommando. Vi kommer til at se hvordan man gøre det med at første lave datasættet om til long form.
+
+\hypertarget{mere-kompliceret-group_by}{%
+\subsection{\texorpdfstring{Mere kompliceret \texttt{group\_by()}}{Mere kompliceret group\_by()}}\label{mere-kompliceret-group_by}}
+
+Lad os også beregne hvor mange passagerer der var efter både deres klass, og hvor de gik ombord skibet:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+   \FunctionTok{group\_by}\NormalTok{(Embarked, Pclass) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# group by multiple variables... }
+   \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Embarked'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 10 x 3
+## # Groups:   Embarked [4]
+##    Embarked Pclass count
+##    <chr>     <int> <int>
+##  1 ""            1     2
+##  2 "C"           1    74
+##  3 "C"           2    15
+##  4 "C"           3    41
+##  5 "Q"           1     2
+##  6 "Q"           2     2
+##  7 "Q"           3    24
+##  8 "S"           1   108
+##  9 "S"           2   156
+## 10 "S"           3   290
+\end{verbatim}
+
+Man kan se at de flest gik om bord i Southampton (S), men der var også forholdsvis mange første klass passagerer der gik om bord i Cherbourg (C). Lad os gå videre med vores \texttt{Survived} eksempel og beregne proportionen der overlevede efter de tre variabler \texttt{Adult}, \texttt{Sex} og \texttt{Pclass}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary\_survived }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Adult =} \FunctionTok{ifelse}\NormalTok{(Age}\SpecialCharTok{\textgreater{}=}\DecValTok{18}\NormalTok{,}\StringTok{"Adult"}\NormalTok{,}\StringTok{"Child"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Adult,Sex,Pclass) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{meanSurvived =} \FunctionTok{mean}\NormalTok{(Survived))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Adult', 'Sex'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary\_survived}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 12 x 4
+## # Groups:   Adult, Sex [4]
+##    Adult Sex    Pclass meanSurvived
+##    <chr> <chr>   <int>        <dbl>
+##  1 Adult female      1       0.974 
+##  2 Adult female      2       0.903 
+##  3 Adult female      3       0.418 
+##  4 Adult male        1       0.371 
+##  5 Adult male        2       0.0682
+##  6 Adult male        3       0.133 
+##  7 Child female      1       0.875 
+##  8 Child female      2       1     
+##  9 Child female      3       0.543 
+## 10 Child male        1       1     
+## 11 Child male        2       0.818 
+## 12 Child male        3       0.233
+\end{verbatim}
+
+Og så kan vi også bruge resultatet ind i en \texttt{ggplot}, hvor vi kombinerer de tre variabler og adskiller efter \texttt{Pclass}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(titanic\_clean\_summary\_survived,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sex,}\AttributeTok{y=}\NormalTok{meanSurvived,}\AttributeTok{fill=}\NormalTok{Adult)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Pclass) }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Proportion survived"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-297-1.pdf}
+
+\hypertarget{funktionen-ungroup}{%
+\subsection{\texorpdfstring{Funktionen \texttt{ungroup}}{Funktionen ungroup}}\label{funktionen-ungroup}}
+
+Nogle gange når man er færdig med en proces, men gerne vil arbejde videre på et dataframe, er det nyttigt at anvende \texttt{ungroup()} på datasættet igen. Det er meste relevant i længere projektor men som eksempel kig på følgende kode og bemærk at der står ``Groups: Adult {[}2{]}'' på toppen af den nye dataframe med summary statistics:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Adult =} \FunctionTok{ifelse}\NormalTok{(Age}\SpecialCharTok{\textgreater{}=}\DecValTok{18}\NormalTok{,}\StringTok{"Adult"}\NormalTok{,}\StringTok{"Child"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Adult,Sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{meanSurvived =} \FunctionTok{mean}\NormalTok{(Survived))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Adult'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 3
+## # Groups:   Adult [2]
+##   Adult Sex    meanSurvived
+##   <chr> <chr>         <dbl>
+## 1 Adult female        0.772
+## 2 Adult male          0.177
+## 3 Child female        0.691
+## 4 Child male          0.397
+\end{verbatim}
+
+Bemærk at vi først anvendte \texttt{group\_by} på både \texttt{Adult} og \texttt{Sex}, men hver gange man lave en beregning bliver én opdeling fjernet - i dette tilfælde opdeler man ikke længere efter \texttt{Sex} men man stadig opdeler efter \texttt{Adult}. Det er ikke et problem hvis vi ikke vil arbejde videre med dataframen. Men forstil at vi gerne vil vide, hvad den maksimum chance for survival er ud fra de fire tal beregnede. Der vi ikke vil adskille efter en kategorisk variabel dropper vi \texttt{group\_by()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\StringTok{"maxChance"} \OtherTok{=} \FunctionTok{max}\NormalTok{(meanSurvived))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   Adult maxChance
+##   <chr>     <dbl>
+## 1 Adult     0.772
+## 2 Child     0.691
+\end{verbatim}
+
+Man kan dog se, at outtputtet er blevet adskilt efter variablen \texttt{Adult}. For at undgå disse bør man første anvende \texttt{ungroup} for at få fjernet effekten af \texttt{group\_by()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\StringTok{"maxChance"} \OtherTok{=} \FunctionTok{max}\NormalTok{(meanSurvived))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##   maxChance
+##       <dbl>
+## 1     0.772
+\end{verbatim}
+
+\hypertarget{pivot_longerpivot_wider-med-tidyr-pakken}{%
+\section{\texorpdfstring{\texttt{pivot\_longer()}/\texttt{pivot\_wider()} med Tidyr-pakken}{pivot\_longer()/pivot\_wider() med Tidyr-pakken}}\label{pivot_longerpivot_wider-med-tidyr-pakken}}
+
+\textbf{Tidy data} findes i to former: wide data og long data. Det kan være nyttigt at transformere dataframen fra den ene form til den anden, for fk. at lave et bemstemt plot med \texttt{ggplot2}-pakken. Indenfor pakken \texttt{tidyr} er der funktioner som kan bruges til at lave disse transformeringer.
+
+Inden vi begynde at kigge lidt nærmere på \texttt{tidyr} skal vi beskrive, hvad betyder long data og wide data.
+
+\begin{figure}
+\includegraphics[width=0.75\linewidth]{plots/original-dfs-tidy} \caption{source: https://www.garrickadenbuie.com/project/tidyexplain/}\label{fig:unnamed-chunk-301}
+\end{figure}
+
+\textbf{Wide data}: Her har man en kolon til hver variabel og en række til hver observation. Det gøre de data nem at forstå og denne data type findes ofte indenfor biologi - for eksempel hvis man har forskellige samples (treatments, controls, conditions osv.) som variabler.
+
+\textbf{Long data}: Med long data har man værdier samlet i en enkel kolon og en kolon som en slags nøgle, som fortæller også hvilken variable hver værdi hørte til i den wide format. Datasættet er stadig betragtet som \textbf{tidy} men informationen opbevares på en anden måde. Det er lidt sværer at læse men nemmere at arbejde med når man analyser de data.
+
+Når man transformer data fra wide til long eller omvendt, kaldes det for \textbf{reshaping}.
+
+\hypertarget{tidyr-pakke---oversigt}{%
+\subsection{Tidyr pakke - oversigt}\label{tidyr-pakke---oversigt}}
+
+Her er en oversigt over de fire vigtigste funktioner fra R-pakken \texttt{tidyr}. Vi fokuserer mest på \texttt{pivot} funktionerne men det kan være nyttigt at bruge \texttt{separate} og \texttt{unite} en gang i mellem.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+\texttt{tidr} funktion & Beskrivelse \\
+\midrule
+\endhead
+\texttt{pivot\_longer()} & short til long \\
+\texttt{pivot\_wider()} & long til short \\
+\texttt{separate()} & opdele strings fra en kolon til to \\
+\texttt{unite()} & tilføje strings sammen ind fra to til én kolon \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{wide---long-med-pivot_longer}{%
+\subsection{\texorpdfstring{Wide -\textgreater{} Long med \texttt{pivot\_longer()}}{Wide -\textgreater{} Long med pivot\_longer()}}\label{wide---long-med-pivot_longer}}
+
+Lad os arbejde med datasættet \texttt{Iris}. Man få Iris i long form med følgende kommando. Her vil man gerne tage alle numeriske kolonner og placerer deres værdier i en enkel kolon \texttt{value} (med en nøgle kolon \texttt{name} til at skelne imellem de forskellige variabler).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \FunctionTok{where}\NormalTok{(is.numeric))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 600 x 3
+##    Species name         value
+##    <fct>   <chr>        <dbl>
+##  1 setosa  Sepal.Length   5.1
+##  2 setosa  Sepal.Width    3.5
+##  3 setosa  Petal.Length   1.4
+##  4 setosa  Petal.Width    0.2
+##  5 setosa  Sepal.Length   4.9
+##  6 setosa  Sepal.Width    3  
+##  7 setosa  Petal.Length   1.4
+##  8 setosa  Petal.Width    0.2
+##  9 setosa  Sepal.Length   4.7
+## 10 setosa  Sepal.Width    3.2
+## # ... with 590 more rows
+\end{verbatim}
+
+At beholde numeriske kolonner svarer i dette tilfælde til at man ikke vil have variablen \texttt{Species} med i den enkel kolon:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{Species)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 600 x 3
+##    Species name         value
+##    <fct>   <chr>        <dbl>
+##  1 setosa  Sepal.Length   5.1
+##  2 setosa  Sepal.Width    3.5
+##  3 setosa  Petal.Length   1.4
+##  4 setosa  Petal.Width    0.2
+##  5 setosa  Sepal.Length   4.9
+##  6 setosa  Sepal.Width    3  
+##  7 setosa  Petal.Length   1.4
+##  8 setosa  Petal.Width    0.2
+##  9 setosa  Sepal.Length   4.7
+## 10 setosa  Sepal.Width    3.2
+## # ... with 590 more rows
+\end{verbatim}
+
+Her er et billede der illustrerer wide og long form med datasættet \texttt{iris}:
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{plots/wide_to_long} \caption{wide til long med Iris}\label{fig:unnamed-chunk-304}
+\end{figure}
+
+Til venstre har vi målingerne i datasættet over fire forskellige kolonner som hedder \texttt{Sepal.Length}, \texttt{Sepal.Width}, \texttt{Petal.Length} og \texttt{Petal.Width}, og en ekstra kolon der skelne imellem de tre \texttt{Species}. Til højre har vi fået alle målingerne ind i en enkel kolon der hedder \texttt{values}, og så bruger man en anden `nøgle' kolon der hedder \texttt{name} til at fortælle os om det er en måling for \texttt{Sepal.Length} eller \texttt{Sepal.Width} osv.
+
+Jeg kan kalde de kolonner navne for målingerne og nøglen til nogle andre en default: for eksempel i nedenstående skal målingerne hedde \texttt{measurements} og nøglen hedde \texttt{trait}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris.long }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{Species,}
+                                    \AttributeTok{names\_to =} \StringTok{"trait"}\NormalTok{,}
+                                    \AttributeTok{values\_to =} \StringTok{"measurement"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=1\linewidth]{plots/wide_to_long_names}
+
+Man kan for eksempel bruge den long form den til at visualisere samtlige mulige boxplots opdelt efter Species og trait på samme plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(iris.long,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{measurement,}\AttributeTok{x=}\NormalTok{Species,}\AttributeTok{fill=}\NormalTok{Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{trait) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-307-1.pdf}
+
+\hypertarget{separate}{%
+\subsection{\texorpdfstring{\texttt{separate()}}{separate()}}\label{separate}}
+
+Funktionen \texttt{separate()} fra pakken \texttt{tidyr} kan bruges til at opdele to forskellige dele som eksisterer i samme kolon. For eksempel, i \texttt{iris} har vi variabler med navne \texttt{Sepal.Width}, \texttt{Sepal.Length} osv. - man kan forestille sig, at opdele disse navne over to kolonner i stedet for en - fk. ``Sepal'' og ``Width'' i tilfældet af \texttt{Sepal.Width}. I nedenstående kan man se, hvordan man anvende \texttt{separate()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{Species, }\AttributeTok{names\_to =} \StringTok{"trait"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"measurement"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{separate}\NormalTok{(}\AttributeTok{col =}\NormalTok{ trait, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"part"}\NormalTok{, }\StringTok{"measure"}\NormalTok{),}\AttributeTok{sep =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{."}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+##   Species part  measure measurement
+##   <fct>   <chr> <chr>         <dbl>
+## 1 setosa  Sepal Length          5.1
+## 2 setosa  Sepal Width           3.5
+## 3 setosa  Petal Length          1.4
+## 4 setosa  Petal Width           0.2
+## 5 setosa  Sepal Length          4.9
+## 6 setosa  Sepal Width           3
+\end{verbatim}
+
+Man specificerer variablen \texttt{trait}, og at det skal opdeles til to variabler \texttt{part} og \texttt{measure}. Vi angiver \texttt{sep\ =\ "\textbackslash{}\textbackslash{}."} som betyder, at vi gerne vil have \texttt{part} som delen af \texttt{trait} foran `.' og \texttt{measure} som delen af \texttt{trait} efter \texttt{.}. Vi bruger ``\textbackslash.'' til at fortælle, at vi er interesseret i punktum og ikke en ``anonym character'', som punktum plejer at betyde i ``string''-sprog. Man behøver faktisk ikke at specifice \texttt{sep\ =\ "\textbackslash{}\textbackslash{}."} i dette tilfælde - som standard kigger funktionen efter `non-character' tegne og bruger dem til at lave opdelingen.
+
+Samme resultat:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{Species, }\AttributeTok{names\_to =} \StringTok{"trait"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"measurement"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{separate}\NormalTok{(}\AttributeTok{col =}\NormalTok{ trait, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"part"}\NormalTok{, }\StringTok{"measure"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+##   Species part  measure measurement
+##   <fct>   <chr> <chr>         <dbl>
+## 1 setosa  Sepal Length          5.1
+## 2 setosa  Sepal Width           3.5
+## 3 setosa  Petal Length          1.4
+## 4 setosa  Petal Width           0.2
+## 5 setosa  Sepal Length          4.9
+## 6 setosa  Sepal Width           3
+\end{verbatim}
+
+Bruger resultatet i et plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{Species, }\AttributeTok{names\_to =} \StringTok{"trait"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"measurement"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{separate}\NormalTok{(}\AttributeTok{col =}\NormalTok{ trait, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"part"}\NormalTok{, }\StringTok{"measure"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{measurement,}\AttributeTok{x=}\NormalTok{part,}\AttributeTok{fill=}\NormalTok{part)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{measure) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-310-1.pdf}
+
+Se også \texttt{unite()} som gøre det modsatte til \texttt{separate()}.
+
+\hypertarget{eksempel-titanic-summary-statistics}{%
+\section{Eksempel: Titanic summary statistics}\label{eksempel-titanic-summary-statistics}}
+
+Her er et eksempel med datasættet \texttt{titanic} der inddrager mange af de tidyverse koncepter vi har lært indtil videre.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{group\_by()} og \texttt{summarise()}
+\end{itemize}
+
+Vi laver vores summary statistics som i ovenstående.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary\_by\_sex }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{group\_by}\NormalTok{(Sex) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{count =} \FunctionTok{n}\NormalTok{(),}
+            \AttributeTok{meanSurvived =} \FunctionTok{mean}\NormalTok{(Survived),}
+            \AttributeTok{meanAge =} \FunctionTok{mean}\NormalTok{(Age),}
+            \AttributeTok{propFirst =} \FunctionTok{sum}\NormalTok{(Pclass}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{pivot\_longer()}
+\end{itemize}
+
+Vi transformerer eller \textbf{reshape} datarammen fra wide data til long data. Vi vil få kun de numeriske summary statistics samlede i en enkel kolon, så variablen \texttt{Sex} skal ikke med.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary\_by\_sex }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\SpecialCharTok{{-}}\NormalTok{Sex)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 8 x 3
+##   Sex    name           value
+##   <chr>  <chr>          <dbl>
+## 1 female count        261    
+## 2 female meanSurvived   0.755
+## 3 female meanAge       27.9  
+## 4 female propFirst      0.326
+## 5 male   count        453    
+## 6 male   meanSurvived   0.205
+## 7 male   meanAge       30.7  
+## 8 male   propFirst      0.223
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{ggplot()} med \texttt{facet\_grid()}
+\end{itemize}
+
+Vi kombinerer \texttt{pivot\_longer()} med et plot af vores summary statistics og benytte \texttt{facet\_grid()} til at separere ved de forskellige statistiker.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary\_by\_sex }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\SpecialCharTok{{-}}\NormalTok{Sex) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sex,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{Sex)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-313-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{facet\_wrap()}
+\end{itemize}
+
+Vi laver den sammen som ovenstående men specificerer \texttt{facet\_wrap()} i stedet for \texttt{facet\_grid()} - indenfor \texttt{facet\_wrap()} kan man bruge indstillingen \texttt{scales="free"} som gøre, at de fire plots få hver deres egne akse limits.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean\_summary\_by\_sex }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\SpecialCharTok{{-}}\NormalTok{Sex) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sex,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{Sex)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name,}\AttributeTok{scales=}\StringTok{"free"}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{4}\NormalTok{) }\SpecialCharTok{+}  
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-314-1.pdf}
+
+\hypertarget{demonstration-af-pivot_wider}{%
+\subsection{\texorpdfstring{Demonstration af \texttt{pivot\_wider()}}{Demonstration af pivot\_wider()}}\label{demonstration-af-pivot_wider}}
+
+Det er også brugbart at kende måden at man skifter fra long form til wide form.
+
+\begin{itemize}
+\tightlist
+\item
+  Wide -\textgreater{} Long
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_summary\_long }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_clean\_summary\_by\_sex }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\SpecialCharTok{{-}}\NormalTok{Sex)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Long -\textgreater{} Wide
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_summary\_long }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =} \StringTok{"name"}\NormalTok{,}\AttributeTok{values\_from =} \StringTok{"value"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 5
+##   Sex    count meanSurvived meanAge propFirst
+##   <chr>  <dbl>        <dbl>   <dbl>     <dbl>
+## 1 female   261        0.755    27.9     0.326
+## 2 male     453        0.205    30.7     0.223
+\end{verbatim}
+
+Parametre er:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{names\_from} - nøglekolon som skal udgør flere kolonner i den nye dataframe
+\item
+  \texttt{values\_from} - selve værdier, som skal være i de nye kolonner i den wide form
+\end{itemize}
+
+\hypertarget{left_join-forbinde-dataframes}{%
+\section{\texorpdfstring{\texttt{left\_join()}: forbinde dataframes}{left\_join(): forbinde dataframes}}\label{left_join-forbinde-dataframes}}
+
+Vi tager udgangspunkt i følgende to dataframes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gene\_table }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(}\FunctionTok{read.table}\NormalTok{(}\StringTok{"https://www.dropbox.com/s/6ll8ezrskly8joi/mouse\_2gene\_expr.txt?dl=1"}\NormalTok{,}\AttributeTok{header=}\NormalTok{T))}
+\NormalTok{coldata }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(}\FunctionTok{read.table}\NormalTok{(}\StringTok{"https://www.dropbox.com/s/jlrszakmqlnmu2m/bottomly\_phenodata.txt?dl=1"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Lad os kigge først på datasættet \texttt{gene\_table}, som viser genekspression målinger over forskellige samples i mus.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gene\_table}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 22
+##   gene     SRX033480 SRX033488 SRX033481 SRX033489 SRX033482 SRX033490 SRX033483
+##   <chr>        <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>
+## 1 ENSMUSG~      158.      182.     119.       155.     167.      164.       180.
+## 2 ENSMUSG~      143.      118.      91.6      106.     157.       95.1      131.
+## 3 ENSMUSG~      132.      117.     100.       116.      88.1     125.       124.
+## # ... with 14 more variables: SRX033476 <dbl>, SRX033478 <dbl>,
+## #   SRX033479 <dbl>, SRX033472 <dbl>, SRX033473 <dbl>, SRX033474 <dbl>,
+## #   SRX033475 <dbl>, SRX033491 <dbl>, SRX033484 <dbl>, SRX033492 <dbl>,
+## #   SRX033485 <dbl>, SRX033493 <dbl>, SRX033486 <dbl>, SRX033494 <dbl>
+\end{verbatim}
+
+Man kan se, at der er 22 kolonner i datasættet - én der refererer til et gen navn og 21 der er forskellige samples fra eksperimentet. Men det ikke er klart, hvad den enkel sample egentlig er. Lad os derfor kigge på de sample oplysninger, som kan være nyttige at inddrage i vores analyse/plotter for at undersøge eventualle batch effekter osv.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{coldata}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 21 x 5
+##    sample    num.tech.reps strain   batch lane.number
+##    <chr>             <int> <chr>    <int>       <int>
+##  1 SRX033480             1 C57BL.6J     6           1
+##  2 SRX033488             1 C57BL.6J     7           1
+##  3 SRX033481             1 C57BL.6J     6           2
+##  4 SRX033489             1 C57BL.6J     7           2
+##  5 SRX033482             1 C57BL.6J     6           3
+##  6 SRX033490             1 C57BL.6J     7           3
+##  7 SRX033483             1 C57BL.6J     6           5
+##  8 SRX033476             1 C57BL.6J     4           6
+##  9 SRX033478             1 C57BL.6J     4           7
+## 10 SRX033479             1 C57BL.6J     4           8
+## # ... with 11 more rows
+\end{verbatim}
+
+Man kan se forskellige oplysninger om de 21 samples, blandt andet den strain af mus hver sample stammer fra og den batch. Her refererer \texttt{batch} på de forskellige omstændigheder eller tidspunkter de samples var blevet samlet. Hvis man er interesset i om der er en forskel i ekspressionsniveau mellem de to strains, kan det være, at man er nødt til at kontrolle efter batch for at sikre at forskellen skyldes \texttt{strain} og ikke tekniske effekter pga. \texttt{batch}.
+
+\hypertarget{funktionen-left_join-fra-dplyr-pakken}{%
+\subsection{\texorpdfstring{Funktionen \texttt{left\_join()} fra dplyr-pakken}{Funktionen left\_join() fra dplyr-pakken}}\label{funktionen-left_join-fra-dplyr-pakken}}
+
+Funktionen \texttt{left\_join()} er en del af pakken \texttt{dplyr} som vi har arbejdet meget med indtil videre i kurset.
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+funktion & Beskrivelse \\
+\midrule
+\endhead
+\texttt{left\_join()} & Join matching rows from second table to the first \\
+\texttt{right\_join()} & Join matching rows from the first table to the second \\
+\texttt{inner\_join()} & Join two tables, returning all rows present in both \\
+\texttt{full\_join()} & Join data with all possible rows present \\
+\bottomrule
+\end{longtable}
+
+Vi fokuserer her på funktionen \texttt{left\_join()} fordi den er den meste brugbart i biologiske data analyser, men vi kigger også på de øvrige funktioner gennem problemstillingerne nedenunder. Her er en grafiske demonstration af \texttt{left\_join()}:
+
+\textbackslash begin\{figure\}
+\includegraphics[width=0.6\linewidth]{plots/left_join} \textbackslash caption\{left\_join graphical demonstration (source \url{https://mgimond.github.io/ES218/Week03c.html})\}\label{fig:unnamed-chunk-320}
+\textbackslash end\{figure\}
+
+Det særligt med \texttt{left\_join} i forhold til de andre funktioner, er at \texttt{left\_join} bevarer samtlige data i dataframen man tager udgangspunkt i - det vil sige \texttt{df} i ovenstående billede, selvom \texttt{d} matchet ikke med en frugt i \texttt{dj}. I ovenstående genekspression eksempel betyder det, at man bevarer alle målinger i \texttt{gene\_table}, uanset om der er oplysninger om deres pågældende samples.
+
+\hypertarget{anvende-left_join-for-vores-dataset.}{%
+\subsection{\texorpdfstring{Anvende \texttt{left\_join()} for vores dataset.}{Anvende left\_join() for vores dataset.}}\label{anvende-left_join-for-vores-dataset.}}
+
+Ligesom man matcher kolonnen \texttt{y} i \texttt{df} og \texttt{dj} i ovenstående eksempel, skal vi også have en kolon vi kan matcher. Vi vil gerne bruge kolonnen \texttt{sample} fra \texttt{sample\_info} til at sammenligne med de forskellige sample navne i \texttt{gene\_table}, men første er vi nødt til at lave \texttt{gene\_table} om til long-form, således at sample navne fremgår i en enkel kolon, \texttt{sample} (der kan bruges i \texttt{left\_join}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gene\_table\_long }\OtherTok{\textless{}{-}}\NormalTok{ gene\_table }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{gene,}
+               \AttributeTok{names\_to =} \StringTok{"sample"}\NormalTok{,}
+               \AttributeTok{values\_to =} \StringTok{"expression"}\NormalTok{) }
+\NormalTok{gene\_table\_long}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 63 x 3
+##    gene               sample    expression
+##    <chr>              <chr>          <dbl>
+##  1 ENSMUSG00000006517 SRX033480       158.
+##  2 ENSMUSG00000006517 SRX033488       182.
+##  3 ENSMUSG00000006517 SRX033481       119.
+##  4 ENSMUSG00000006517 SRX033489       155.
+##  5 ENSMUSG00000006517 SRX033482       167.
+##  6 ENSMUSG00000006517 SRX033490       164.
+##  7 ENSMUSG00000006517 SRX033483       180.
+##  8 ENSMUSG00000006517 SRX033476       263.
+##  9 ENSMUSG00000006517 SRX033478       276.
+## 10 ENSMUSG00000006517 SRX033479       328.
+## # ... with 53 more rows
+\end{verbatim}
+
+Dernæst kan vi tilføje oplysninger data fra \texttt{sample\_info}. Her angiver vi \texttt{by\ =\ "sample"} fordi det er navnet til kolonnen som vi geerne vil bruge til at forbinde de to datarammer - altså, det er med i begge to datarammer, så \texttt{left\_join()} kan bruge den som en slags nøgle til at vide, hvor alle de forskellige oplysninger skal tilføjes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_join }\OtherTok{\textless{}{-}}\NormalTok{ gene\_table\_long  }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{left\_join}\NormalTok{(coldata,}\AttributeTok{by=}\StringTok{"sample"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Nu at vi har fået forbundet de to datarammer, kan man inddrage de ekstra oplysninger vi har fået i et plot. Her laver vi et plot med en farve til hver strain og et plot med en farve til hver batch.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gg2 }\OtherTok{\textless{}{-}}\NormalTok{ data\_join }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{expression,}\AttributeTok{x=}\FunctionTok{as.factor}\NormalTok{(strain),}\AttributeTok{fill=}\NormalTok{gene)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{gene,}\AttributeTok{scales=}\StringTok{"free"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Expression split according to strain"}\NormalTok{)}
+\NormalTok{gg2}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-323-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gg1 }\OtherTok{\textless{}{-}}\NormalTok{ data\_join }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{expression,}\AttributeTok{x=}\FunctionTok{as.factor}\NormalTok{(batch),}\AttributeTok{fill=}\NormalTok{gene)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{gene,}\AttributeTok{scales=}\StringTok{"free"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Expression split according to batch"}\NormalTok{)}
+
+\NormalTok{gg1}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-324-1.pdf}
+
+\hypertarget{problemstillinger-5}{%
+\section{Problemstillinger}\label{problemstillinger-5}}
+
+\textbf{Problem 1}) Lav quizzen - ``Quiz - tidyverse - part 2''.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Vi øver os med titanic. Inlæs de data og lave oprydningen med følgende kode:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(titanic)}
+\NormalTok{titanic }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(titanic\_train)}
+
+\NormalTok{titanic\_clean }\OtherTok{\textless{}{-}}\NormalTok{ titanic }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Cabin) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{drop\_na}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 2)} Fra \texttt{titanic\_clean} beregn den gennemsnits alder af alle passagerer ombord skibet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{titanic\_clean }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarise}\NormalTok{(....) }\CommentTok{\#rediger her}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  I samme kommando beregne også den maksimum alder og minimum alder, samt proportionen af passagerer, der er under 18. Datarammen skal ser sådan ud:
+\end{itemize}
+
+\begin{verbatim}
+## # A tibble: 1 x 4
+##   mean_alder max_alder min_alder under_18p
+##        <dbl>     <dbl>     <dbl>     <dbl>
+## 1       29.7        80      0.42     0.158
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 3)}
+
+\textbf{a)} Beregne samme summary statistics som i sidste problem men anvende \texttt{group\_by()} til at først opdeler efter variablen \texttt{Pclass}.
+
+\textbf{b)} Brug din nye summary statistikker dataframe til at lave et barplot med \texttt{stat="identity"} som viser den gennemsnitlige alder på y-aksen opdelt efter \texttt{Pclass} på x-aksen (tænke lidt over data typen på \texttt{Pclass})
+
+\textbf{c)} Anvend \texttt{pivot\_longer()} på din summary statistikker dataframe (brug indstilling \texttt{cols\ =\ -Pclass})
+
+\textbf{d)} Brug din long-form dataframe af summary statistikker til at lave plots af samtlige summary statistikker med én \texttt{ggplot} kommando (adskil dem ved at benytte facet og opdele efter \texttt{Pclass} indenfor hvert plot, ligesom i følgende).
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-330-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 4)}
+
+\textbf{a)} Beregne samme summary statistics som i \textbf{2}) men anvende \texttt{group\_by()} til at først opdele efter både variablerne \texttt{Pclass} og \texttt{Sex}.
+
+\begin{itemize}
+\tightlist
+\item
+  Man får en advarsel ``\texttt{summarise()} has grouped output by `Pclass' \ldots{}'' som du kan se bort fra her (det betyder at din dataframe er stadig betragtet som opdelte efter \texttt{Pclass} hvis du laver flere beregninger på den).
+\end{itemize}
+
+\textbf{b)} Brug \texttt{pivot\_longer} til at få datasættet i long form (tænk over hvilke variabler skal være i indstillingen \texttt{cols}), hvor nøglekolonnen hedder \texttt{stat} og kolonnen med værdierne hedder \texttt{values}.
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'Pclass'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\textbf{c)} Lav et plot af din summary statistikker, som er i long form og ser ud som følgende plot.
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-333-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 5)} \emph{\texttt{group\_by()} med tre variabler og \texttt{summarise()}}. Afprøv en kombination med tre forskellige variabler (vælg selv) indenfor \texttt{group\_by()} og bruge \texttt{summarise()} til at beregne middelværdien for \texttt{Fare}.
+
+\begin{itemize}
+\tightlist
+\item
+  Lave et plot for at visualisere datasættet. Idé: som mulighed kan man tilføje variabler til \texttt{facet\_grid()} - for eksempel \texttt{facet\_grid(\textasciitilde{}Var1\ +\ Var2)}.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 6)} \emph{\texttt{pivot\_longer()}} Lav følgende plot
+
+\begin{itemize}
+\tightlist
+\item
+  Først lave to nye variabler fra \texttt{SibSp} og \texttt{Parch}, hvor der står ``yes'' hvis værdien er større end 0
+\item
+  \texttt{select} nødvendige variabler
+\item
+  Lave om til long form (tænk over hvilke variabler skal være i en enkel kolon)
+\item
+  Brug din long form dataframe til at lave plottet
+\end{itemize}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-335-1.pdf}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 7)} \emph{\texttt{Pivot\_wider()}} Vi har en \texttt{tribble} som jeg har kopiret fra \url{https://r4ds.had.co.nz/index.html}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{people }\OtherTok{\textless{}{-}} \FunctionTok{tribble}\NormalTok{(}
+  \SpecialCharTok{\textasciitilde{}}\NormalTok{name,             }\SpecialCharTok{\textasciitilde{}}\NormalTok{names,  }\SpecialCharTok{\textasciitilde{}}\NormalTok{values,}
+  \CommentTok{\#{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}|{-}{-}{-}{-}{-}{-}{-}{-}|{-}{-}{-}{-}{-}{-}}
+  \StringTok{"Phillip Woods"}\NormalTok{,   }\StringTok{"age"}\NormalTok{,       }\DecValTok{45}\NormalTok{,}
+  \StringTok{"Phillip Woods"}\NormalTok{,   }\StringTok{"height"}\NormalTok{,   }\DecValTok{186}\NormalTok{,}
+  \StringTok{"Jessica Cordero"}\NormalTok{, }\StringTok{"age"}\NormalTok{,       }\DecValTok{37}\NormalTok{,}
+  \StringTok{"Jessica Cordero"}\NormalTok{, }\StringTok{"height"}\NormalTok{,   }\DecValTok{156}\NormalTok{,}
+  \StringTok{"Brady Smith"}\NormalTok{,     }\StringTok{"age"}\NormalTok{,       }\DecValTok{23}\NormalTok{,}
+  \StringTok{"Brady Smith"}\NormalTok{,     }\StringTok{"height"}\NormalTok{,   }\DecValTok{177}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Brug \texttt{pivot\_wider()} på \texttt{people}. Vi er nødt til at specificer som minimum \texttt{names\_from} og \texttt{values\_from} indenfor \texttt{pivot\_wider()} - prøv at angiv de relevante variabler
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 8)} \emph{\texttt{left\_join()} øvelse}. Kør følgende kode med to tribbles:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{superheroes }\OtherTok{\textless{}{-}} \FunctionTok{tribble}\NormalTok{(}
+       \SpecialCharTok{\textasciitilde{}}\NormalTok{name, }\SpecialCharTok{\textasciitilde{}}\NormalTok{alignment,  }\SpecialCharTok{\textasciitilde{}}\NormalTok{gender,          }\SpecialCharTok{\textasciitilde{}}\NormalTok{publisher,}
+   \StringTok{"Magneto"}\NormalTok{,      }\StringTok{"bad"}\NormalTok{,   }\StringTok{"male"}\NormalTok{,            }\StringTok{"Marvel"}\NormalTok{,}
+     \StringTok{"Storm"}\NormalTok{,     }\StringTok{"good"}\NormalTok{, }\StringTok{"female"}\NormalTok{,            }\StringTok{"Marvel"}\NormalTok{,}
+  \StringTok{"Mystique"}\NormalTok{,      }\StringTok{"bad"}\NormalTok{, }\StringTok{"female"}\NormalTok{,            }\StringTok{"Marvel"}\NormalTok{,}
+    \StringTok{"Batman"}\NormalTok{,     }\StringTok{"good"}\NormalTok{,   }\StringTok{"male"}\NormalTok{,                }\StringTok{"DC"}\NormalTok{,}
+     \StringTok{"Joker"}\NormalTok{,      }\StringTok{"bad"}\NormalTok{,   }\StringTok{"male"}\NormalTok{,                }\StringTok{"DC"}\NormalTok{,}
+  \StringTok{"Catwoman"}\NormalTok{,      }\StringTok{"bad"}\NormalTok{, }\StringTok{"female"}\NormalTok{,                }\StringTok{"DC"}\NormalTok{,}
+   \StringTok{"Hellboy"}\NormalTok{,     }\StringTok{"good"}\NormalTok{,   }\StringTok{"male"}\NormalTok{, }\StringTok{"Dark Horse Comics"}
+\NormalTok{  )}
+
+\NormalTok{publishers }\OtherTok{\textless{}{-}} \FunctionTok{tribble}\NormalTok{(}
+  \SpecialCharTok{\textasciitilde{}}\NormalTok{publisher, }\SpecialCharTok{\textasciitilde{}}\NormalTok{yr\_founded,}
+        \StringTok{"DC"}\NormalTok{,       1934L,}
+    \StringTok{"Marvel"}\NormalTok{,       1939L,}
+     \StringTok{"Image"}\NormalTok{,       1992L}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Vi har to dataframes - \texttt{superheroes} og \texttt{publishers}. Hvilken kolon kan man bruge til at forbinde de to dataframes? Brug \texttt{left\_join()} til at tilføje oplysninger \textbf{fra} \texttt{publishers} \textbf{til} datarammen \texttt{superheroes}.
+
+\begin{itemize}
+\tightlist
+\item
+  Få man alle observationerne fra dataframen \texttt{superheroes} med i din nye dataframe?
+\item
+  Benyt \texttt{inner\_join()} til at forbinde \texttt{publishers} til \texttt{superheroes} - få man så nu alle observationer med denne gang?
+\item
+  Benyt \texttt{full\_join()} til at forbinde \texttt{publishers} til \texttt{superheroes} - hvor mange observationer få man med nu? Hvorfor?
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 9)} \emph{\texttt{left\_join()} øvelse}.
+
+Køre nedenstående kode, hvor der er to dataframes - \texttt{iris2} og \texttt{sample\_table}. Dataframen \texttt{iris2} er ikke særlig informativ med hensyn til hvad de forskellige samples egentlige er, men oplysningerne om dem står i \texttt{sample\_table}. Brug \texttt{left\_join()} til at tilføje \texttt{sample\_table} til \texttt{iris2} for at få en dataramme som indeholder både de data og de samples oplysninger.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(iris)}
+\NormalTok{iris2 }\OtherTok{\textless{}{-}} \FunctionTok{as\_tibble}\NormalTok{(iris)}
+\FunctionTok{names}\NormalTok{(iris2) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"sample1"}\NormalTok{,}\StringTok{"sample2"}\NormalTok{,}\StringTok{"sample3"}\NormalTok{,}\StringTok{"sample4"}\NormalTok{,}\StringTok{"Species"}\NormalTok{)}
+
+\NormalTok{samp\_table }\OtherTok{\textless{}{-}} \FunctionTok{tribble}\NormalTok{(}
+                      \SpecialCharTok{\textasciitilde{}}\NormalTok{sample, }\SpecialCharTok{\textasciitilde{}}\NormalTok{part, }\SpecialCharTok{\textasciitilde{}}\NormalTok{measure,}
+                      \CommentTok{\#{-}{-}{-}{-}{-}{-}|{-}{-}{-}{-}{-}{-}{-}|{-}{-}{-}{-}{-}{-}{-}{-}\#}
+                      \StringTok{"sample1"}\NormalTok{, }\StringTok{"Sepal"}\NormalTok{, }\StringTok{"Length"}\NormalTok{,}
+                      \StringTok{"sample2"}\NormalTok{, }\StringTok{"Sepal"}\NormalTok{, }\StringTok{"Width"}\NormalTok{,}
+                      \StringTok{"sample3"}\NormalTok{, }\StringTok{"Petal"}\NormalTok{, }\StringTok{"Length"}\NormalTok{,}
+                      \StringTok{"sample4"}\NormalTok{, }\StringTok{"Sepal"}\NormalTok{, }\StringTok{"Width"}
+\NormalTok{                     )}
+
+
+\NormalTok{iris2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 150
+## Columns: 5
+## $ sample1 <dbl> 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5.4, 4.8, 4.~
+## $ sample2 <dbl> 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.4, 3.~
+## $ sample3 <dbl> 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6, 1.~
+## $ sample4 <dbl> 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.~
+## $ Species <fct> setosa, setosa, setosa, setosa, setosa, setosa, setosa, setosa~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{samp\_table }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 4
+## Columns: 3
+## $ sample  <chr> "sample1", "sample2", "sample3", "sample4"
+## $ part    <chr> "Sepal", "Sepal", "Petal", "Sepal"
+## $ measure <chr> "Length", "Width", "Length", "Width"
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 10)} \emph{\texttt{Separate()} øvelse}
+
+\begin{itemize}
+\tightlist
+\item
+  Tag udgangspunkt i datasættet \texttt{titanic\_clean} og benyt funktionen \texttt{Separate()} til at opdele variablen \texttt{Name} ind til to variabler, ``Surname'' og ``Rest'' (Godt råd: brug \texttt{sep=",\ "} for at undgå, at man få en unødvendig mellemrum lige før ``Rest'').
+\item
+  Anvend \texttt{Separate()} en gang til, men for at opdele variablen \texttt{Rest} into to variabler, ``Title'' og ``Names''. Hvad bruger man som \texttt{sep}? (Hint: brug ``\textbackslash\textbackslash{}'' foran en punktum).
+\item
+  Beregn summary statistikker for hver ``Title'' - mange passagerer, gennemsnits alder, proportionen der overlevede, og proportionen der rejste i første klass.
+\item
+  Arrange din ny dataframe efter hvor mange personer der er for hver ``Title'' - mest på toppen og mindst på bunden.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 11)} Valgfri ekstra hvis man er færdig: lav en ny dataramme med alle passagerer, der hedder ``Alice'' eller ``Elizabeth'' (brug Google her).
+
+\hypertarget{analyse-og-visualisering-af-biologiske-datasuxe6t-konkurrence}{%
+\section{Analyse og visualisering af biologiske datasæt konkurrence!}\label{analyse-og-visualisering-af-biologiske-datasuxe6t-konkurrence}}
+
+\hypertarget{ekstra-links-2}{%
+\section{Ekstra links}\label{ekstra-links-2}}
+
+Cheatsheet: \url{https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf}
 
   \bibliography{book.bib,packages.bib}
 
