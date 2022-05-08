@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-07}
+\date{Last updated: 2022-05-08}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.368508103  0.535219673 -1.689094263  0.916773716 -0.009424711
-##  [6] -1.495850098 -0.209933913  0.416895672 -1.129106578 -0.680560295
-## [11] -1.909460538  1.008650554 -0.895850394 -0.082434803 -0.583352062
-## [16] -0.471947115  0.500016909  0.588269090 -0.031086594  0.691126336
-## [21]  0.509911643 -0.305526264 -1.266397567 -0.865612721  0.281442177
+##  [1] -0.265972531 -0.331498322  0.940048362  0.825606719 -0.298060821
+##  [6]  1.477987148  0.739834277 -1.142197869 -0.862502040 -0.270543385
+## [11] -1.166426383  0.488526059 -2.068365786 -0.559946692  0.146608556
+## [16] -0.034220778 -0.384662006  0.006655856  0.913806759 -0.250762540
+## [21]  0.551690717 -0.402548685 -0.598887172 -1.021604469  0.650150378
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,14 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.368508103  0.535219673 {-}1.689094263  0.916773716 {-}0.009424711}
-\DocumentationTok{\#\# [6] {-}1.495850098}
+\DocumentationTok{\#\# [1] {-}0.2659725 {-}0.3314983  0.9400484  0.8256067 {-}0.2980608  1.4779871}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  0.6911263  0.5099116 {-}0.3055263 {-}1.2663976 {-}0.8656127  0.2814422}
+\DocumentationTok{\#\# [1] {-}0.2507625  0.5516907 {-}0.4025487 {-}0.5988872 {-}1.0216045  0.6501504}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.3685081}
+\DocumentationTok{\#\# [1] {-}0.2659725}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.2814422}
+\DocumentationTok{\#\# [1] 0.6501504}
 \end{Highlighting}
 \end{Shaded}
 
@@ -666,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.2323530 -0.0824348  1.0086506 -1.9094605  0.7023231  0.8380472
+## [1] -0.1166914 -0.2659725  1.4779871 -2.0683658  0.6624508  0.8139108
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.90946 -0.86561 -0.08243 -0.23235  0.50002  1.00865
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -2.0684 -0.5599 -0.2660 -0.1167  0.5517  1.4780
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -6064,7 +6063,7 @@ Funktionen \texttt{left\_join()} er en del af pakken \texttt{dplyr} som vi har a
 
 \begin{longtable}[]{@{}ll@{}}
 \toprule
-funktion & Beskrivelse \\
+funktion & Beskrivelse (kopiret \\
 \midrule
 \endhead
 \texttt{left\_join()} & Join matching rows from second table to the first \\
@@ -6178,7 +6177,7 @@ Nu at vi har fået forbundet de to datarammer, kan man inddrage de ekstra oplysn
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Problem 2)} Fra \texttt{titanic\_clean} beregn den gennemsnits alder af alle passagerer ombord skibet.
+\textbf{Problem 2)} Fra \texttt{titanic\_clean} beregn den gennemsnitlige alder af alle passagerer ombord skibet.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6223,7 +6222,9 @@ Nu at vi har fået forbundet de to datarammer, kan man inddrage de ekstra oplysn
 \begin{itemize}
 \tightlist
 \item
-  Man får en advarsel ``\texttt{summarise()} has grouped output by `Pclass' \ldots{}'' som du kan se bort fra her (det betyder at din dataframe er stadig betragtet som opdelte efter \texttt{Pclass} hvis du laver flere beregninger på den).
+  OBS: Man får en advarsel ``\texttt{summarise()} has grouped output by `Pclass' \ldots{}'' fordi din dataframe er stadig betragtet som opdelte efter \texttt{Pclass}, som du skal tage i betragtning hvis du laver flere beregninger på den.
+\item
+  Brug til sidste \texttt{ungroup()} på din nye dataframe fir at være sikker på, at den ikke længere er opdelt efter en variabel.
 \end{itemize}
 
 \textbf{b)} Brug \texttt{pivot\_longer} til at få datasættet i long form (tænk over hvilke variabler skal være i indstillingen \texttt{cols}), hvor nøglekolonnen hedder \texttt{stat} og kolonnen med værdierne hedder \texttt{values}.
@@ -6243,6 +6244,8 @@ Nu at vi har fået forbundet de to datarammer, kan man inddrage de ekstra oplysn
 
 \begin{itemize}
 \tightlist
+\item
+  Anvend \texttt{ungroup()} når du er færdig med summarise
 \item
   Lave et plot for at visualisere datasættet. Idé: som mulighed kan man tilføje variabler til \texttt{facet\_grid()} - for eksempel \texttt{facet\_grid(\textasciitilde{}Var1\ +\ Var2)}.
 \end{itemize}

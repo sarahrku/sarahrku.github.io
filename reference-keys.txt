@@ -149,5 +149,7 @@ left_join-forbinde-dataframes
 funktionen-left_join-fra-dplyr-pakken
 anvende-left_join-for-vores-dataset.
 problemstillinger-5
-analyse-og-visualisering-af-biologiske-datasæt-konkurrence
 ekstra-links-2
+fig:unnamed-chunk-20
+fig:unnamed-chunk-23
+fig:unnamed-chunk-39
