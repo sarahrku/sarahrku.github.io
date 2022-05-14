@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.924426488  0.073510503  1.114479769  0.008979678 -0.247115622
-##  [6] -0.207441639 -0.535396502 -1.146572183  0.924120019 -0.781595439
-## [11] -0.236799154 -0.291483916  0.765920309  0.200878390 -0.176209802
-## [16]  1.044110153  1.523515297 -0.741189270 -0.880689861 -0.988952599
-## [21] -1.319001605  2.979136211  1.349703144  0.723721764  1.047398302
+##  [1]  0.16113839  0.61983404 -0.89539852 -0.59826445  0.81307631  0.48695536
+##  [7] -0.26138001 -0.63480789 -0.06877512  1.80140971 -0.00868779  1.53065566
+## [13]  0.45604041  0.13806549  1.10601203 -0.02854804 -1.19955880  0.63396742
+## [19] -1.02564787 -0.10643780 -0.35683066  0.71869615 -0.25390956 -1.29426256
+## [25]  0.02690959
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,14 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.924426488  0.073510503  1.114479769  0.008979678 {-}0.247115622}
-\DocumentationTok{\#\# [6] {-}0.207441639}
+\DocumentationTok{\#\# [1]  0.1611384  0.6198340 {-}0.8953985 {-}0.5982644  0.8130763  0.4869554}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.9889526 {-}1.3190016  2.9791362  1.3497031  0.7237218  1.0473983}
+\DocumentationTok{\#\# [1] {-}0.10643780 {-}0.35683066  0.71869615 {-}0.25390956 {-}1.29426256  0.02690959}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.9244265}
+\DocumentationTok{\#\# [1] 0.1611384}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 1.047398}
+\DocumentationTok{\#\# [1] 0.02690959}
 \end{Highlighting}
 \end{Shaded}
 
@@ -666,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.1311440 -0.1762098  2.9791362 -1.3190016  1.0588868  1.0290223
+## [1]  0.07041006 -0.00868779  1.80140971 -1.29426256  0.63115003  0.79444951
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.3190 -0.7412 -0.1762  0.1311  0.9241  2.9791
+##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+## -1.294263 -0.356831 -0.008688  0.070410  0.619834  1.801410
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -7701,7 +7700,7 @@ Tag funktionen:
 \hypertarget{luxe6ringsmuxe5lene-3}{%
 \subsection{Læringsmålene}\label{luxe6ringsmuxe5lene-3}}
 
-I skal være i stand til at
+Du skal være i stand til at
 
 \begin{itemize}
 \tightlist
@@ -7710,7 +7709,7 @@ I skal være i stand til at
 \item
   Bruge \texttt{ggplot} funktion \texttt{geom\_smooth()} til at visualisere lineær regression eller loess-kurver.
 \item
-  Kombinere \texttt{map()}/\texttt{nest()} og \texttt{lm()} til at beregne regression statistikker for flere lineær regression modeller på samme tid.
+  Kombinere \texttt{map()}/\texttt{nest()} og \texttt{lm()} til at beregne regression statistikker for flere lineær regression modeller på samme tid og sammenligne dem med \texttt{anova()}.
 \end{itemize}
 
 \hypertarget{introduktion-til-chapter}{%
@@ -7720,8 +7719,6 @@ I dette kapitel viser jeg flere eksempler på processen, hvor man anvender \text
 
 \hypertarget{video-ressourcer-4}{%
 \subsection{Video ressourcer}\label{video-ressourcer-4}}
-
-\emph{OBS: Jeg sagde ``antal gener'' flere gange i videoerne men variablen \texttt{log10\_size\_mb} er faktisk genomstørrelse i megabases.}
 
 \begin{itemize}
 \tightlist
@@ -7737,7 +7734,11 @@ I dette kapitel viser jeg flere eksempler på processen, hvor man anvender \text
   \end{itemize}
 \end{itemize}
 
+\emph{OBS: Jeg sagde ``antal gener'' flere gange i videoen men variablen \texttt{log10\_size\_mb} er faktisk genomstørrelse i megabases.}
+
 Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/709225323}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \begin{itemize}
 \tightlist
@@ -7755,6 +7756,8 @@ Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/70
 
 Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/709225203}
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \begin{itemize}
 \tightlist
 \item
@@ -7769,6 +7772,8 @@ Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/70
 
 Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/709225158}
 
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
 \begin{itemize}
 \tightlist
 \item
@@ -7782,6 +7787,8 @@ Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/70
 \end{itemize}
 
 Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/709225266}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \begin{itemize}
 \tightlist
@@ -7798,7 +7805,8 @@ Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/70
 \hypertarget{nest-og-map-eksempel-med-korrelation}{%
 \section{\texorpdfstring{\texttt{nest()} og \texttt{map()}: eksempel med korrelation}{nest() og map(): eksempel med korrelation}}\label{nest-og-map-eksempel-med-korrelation}}
 
-Man kan lave en korrelation analyse i R ved at benytte \texttt{cor.test()}. For eksempel, forestille dig at du gerne vil finde ud af korrelationen mellem GC-indehold (variablen \texttt{gc}, procent G/C bases i genomet) og genomstørrelse (variablen \texttt{log10\_size\_mb}) for datasættet \texttt{eukaryotes} fra sidste lektion.
+Man laver en korrelationsanalyse i R ved at benytte \texttt{cor.test()} (\texttt{cor()} virker også hvis du kun vil beregne koefficient og ikke signifikans). Forestille dig at du gerne vil finde ud af korrelationen mellem GC-indehold (variablen \texttt{gc}, procent G/C bases i genomet) og genomstørrelse (variablen \texttt{log10\_size\_mb}) i datasættet \texttt{eukaryotes} fra sidste lektion.
+
 I følgende plotter jeg en density mellem \texttt{gc} og den transformerede variable \texttt{log10\_size\_mb} som er log10 genomstørrelse.
 
 \begin{Shaded}
@@ -7827,7 +7835,7 @@ I følgende plotter jeg en density mellem \texttt{gc} og den transformerede vari
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-425-1.pdf}
 
-Plottet ser ud til at have flere topper og jeg mistænker, at der kan være nogle sub-struturer indenfor de data - ekempelvis pga. de forskellige organismer grupper i variablen \texttt{Group}. I følgende benytter jeg alligevel \texttt{cor.test()} til at teste for korrelation mellem \texttt{gc} og \texttt{log10\_size\_mb} over hele datasæt:
+Plottet ser ud til at have flere ``peaks'' og jeg mistænker, at der kan være nogle sub-struturer indenfor de data - ekempelvis pga. de forskellige organismer grupper i variablen \texttt{Group} (Animals, Plants osv.). I følgende benytter jeg alligevel \texttt{cor.test()} til at teste for korrelation mellem \texttt{gc} og \texttt{log10\_size\_mb} over hele datasæt:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7851,7 +7859,7 @@ Plottet ser ud til at have flere topper og jeg mistænker, at der kan være nogl
 ## -0.1470715
 \end{verbatim}
 
-Outputtet fra \texttt{cor.test} (og mange andre metoder i R) er ikke særlig egnet til at bruge indenfor en dataframe, så jeg introducerer en funktion der hedder \texttt{glance()} som findes i R-pakken \texttt{broom}. Funktionen \texttt{glance()} anvendes til at tage den output fra en statistiske test (fk. \texttt{cor.test()}) og lave det om til et \textbf{tidy} dataramme. Det gøre det nemmere for eksempel til at lave et plot, eller samler op statistikker fra forskellige tests.
+Outputtet fra \texttt{cor.test} (og mange andre metoder i R) er ikke særlig egnet til at bruge indenfor en dataframe, så jeg introducerer en funktion der hedder \texttt{glance()} som findes i R-pakken \texttt{broom}. Funktionen \texttt{glance()} anvendes til at tage outputtet fra en statistiske test (fk. \texttt{cor.test()} eller \texttt{lm()}) og lave det om til et \textbf{tidy} dataramme. Det gør det nemmere eksempelvis til at lave et plot, eller samler op statistikker fra forskellige tests.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7867,9 +7875,9 @@ FALSE      <dbl>     <dbl>    <dbl>     <int>    <dbl>     <dbl> <chr>     <chr>
 FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson'~ two.sided
 \end{verbatim}
 
-Vi kan se at over hele datasættet, er der en signifikant negativ korrelation (estimate -0.147 og p-værdi \ensuremath{8.25054\times 10^{-55}}) mellem de to variabler, men vi er dog stadig mistænksom overfor eventuelle forskelligheder blandt de fem grupper fra variablen \texttt{group}.
+Man kan se, at over hele datasættet, er der en signifikant negativ korrelation (estimate -0.147 og p-værdi \ensuremath{8.25054\times 10^{-55}}) mellem de to variabler. Men jeg er imidlertid stadig mistænksom overfor eventuelle forskelligheder blandt de fem grupper fra variablen \texttt{group}.
 
-Vi vil gerne gentage den samme analyse for de fem grupper fra variablen \texttt{group} hver for sig. En god tilgang til at undersøge det er at bruge den ramme med \texttt{group\_by()} og \texttt{nest()} som vi lært sidste gange.
+Jeg vil gerne gentage den samme analyse for de fem grupper fra variablen \texttt{group} hver for sig. En god tilgang til at undersøge det er at bruge den ramme med \texttt{group\_by()} og \texttt{nest()} som vi lært sidste gange.
 
 \hypertarget{korrelation-over-flere-datasuxe6t-puxe5-en-gang}{%
 \subsection{Korrelation over flere datasæt på en gang}\label{korrelation-over-flere-datasuxe6t-puxe5-en-gang}}
@@ -7896,11 +7904,11 @@ Jeg tjekker først fordelingen af de to variabler opdelt efter variablen \texttt
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-428-1.pdf}
 
-Vi kan se, at der er forskelligheder blandt de fem grupper og der sagtens kan forekommer forskellige sammenhænge mellem de to variabler. Vi benytter i følgende den \texttt{group\_by()} + \texttt{nest()} ramme som blev introducerede sidste lektion.
+Man kan se, at der er forskelligheder blandt de fem grupper og der sagtens kan forekommer forskellige sammenhænge mellem de to variabler. Jeg benytter i følgende den \texttt{group\_by()} + \texttt{nest()} ramme som blev introducerede sidste lektion.
 
 \textbf{Step 1: Benytte \texttt{group\_by()} + \texttt{nest()}}
 
-Jeg anvender \texttt{group\_by} på variablen \texttt{group} og så funktionen \texttt{nest()} for at adskille \texttt{eukaryotes} i fem forskellige datasæt (lagrede i samme dataframe i en kolonne der hedder \texttt{data}):
+Jeg anvender \texttt{group\_by()} på variablen \texttt{group} og så funktionen \texttt{nest()} for at adskille \texttt{eukaryotes} i fem forskellige datasæt (lagrede i samme dataframe i en kolonne der hedder \texttt{data}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7930,11 +7938,11 @@ Lad os definere den korrelation test mellem \texttt{gc} og \texttt{log10\_size\_
 \begin{itemize}
 \tightlist
 \item
-  Brug \texttt{\textasciitilde{}} lige i starten for at fortælle R, at vi arbejde med en funktion.
+  Brug \texttt{\textasciitilde{}} lige i starten for at fortælle R, at man arbejder med en funktion.
 \item
   Specificer et bestemt datasæt (som er en delemængde af \texttt{eukaryotes}) indenfor \texttt{cor.test()} med \texttt{.x}
 \item
-  For det bestemt datasæt benytter jeg \texttt{.x\ \%\textgreater{}\%\ pull(gc)} og \texttt{.x\ \%\textgreater{}\%\ pull(size\_mb)} til at udtrække de relevante værdier for at udføre testen \texttt{cor.test}.
+  For det bestemt datasæt benytter jeg \texttt{.x\ \%\textgreater{}\%\ pull(gc)} og \texttt{.x\ \%\textgreater{}\%\ pull(size\_mb)} til at udtrække de relevante vectorer for at udføre testen \texttt{cor.test}.
 \end{itemize}
 
 \begin{Shaded}
@@ -8028,7 +8036,7 @@ Bemærk at den overordnede process her med \texttt{cor.test} ligner processen hv
 \hypertarget{lineuxe6r-trends}{%
 \subsection{Lineær trends}\label{lineuxe6r-trends}}
 
-Man kan se i følgende scatter plot mellem \texttt{bill\_length\_mm} og \texttt{body\_mass\_g} i datasættet \texttt{penguins}, at der er plottet en bedste rette linje igennem punkterne, som viser, at der er en positiv sammenhæng mellem de to variabler.
+Vi skifter over til datasættet \texttt{penguins} som findes i pakken \texttt{palmerpenguins}. Man kan se i følgende scatter plot mellem \texttt{bill\_length\_mm} og \texttt{body\_mass\_g}, at der er plottet en bedste rette linje igennem punkterne, som viser, at der er en positiv sammenhæng mellem de to variabler.
 
 \begin{verbatim}
 ## `geom_smooth()` using formula 'y ~ x'
@@ -8163,7 +8171,7 @@ Så kan man fange trends som ikke nødvendigvis er lineær. Men det er mere lige
 \hypertarget{plot-linear-regresion-estimates}{%
 \section{Plot linear regresion estimates}\label{plot-linear-regresion-estimates}}
 
-For at finde vores estimates og tjekke signifikansen af de lineær trend, arbejder man direkte med den lineær model funktion \texttt{lm} som i ovenstående:
+For at finde vores estimates og tjekke signifikansen af de lineær trend, arbejder man direkte med den lineær model funktion \texttt{lm()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8235,7 +8243,7 @@ Vi kan benytte den samme proces som ovenpå i korrelation analysen. Vi bruge \te
 ## 3 Chinstrap <tibble [68 x 7]>
 \end{verbatim}
 
-Vi vil gerne lave en model med \texttt{lm} som ovenpå, og vi tilføje \texttt{glance()} til at få de model statistikker i en pæn form.
+Jeg definenerer en funktion hvor man lave lineær regression og tilføjer \texttt{glance()} til at få de model statistikker i en pæn form.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8244,7 +8252,7 @@ Vi vil gerne lave en model med \texttt{lm} som ovenpå, og vi tilføje \texttt{g
 \end{Highlighting}
 \end{Shaded}
 
-Vi kører en lineær model på hver af de tre datasæt med \texttt{map} og ved at specifice funktion som vi defineret ovenpå. Vi bruger \texttt{mutate} ligesom før til at tilføje resulterende statistikker som en ny kolon der hedder \texttt{lm\_stats}:
+Vi kører en lineær model på hver af de tre datasæt med \texttt{map} og ved at specificere funktionen \texttt{lm\_model\_func} som vi definerede ovenpå. Vi bruger \texttt{mutate} ligesom før til at tilføje statistikkerne som en ny kolon der hedder \texttt{lm\_stats}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8309,7 +8317,7 @@ Så kan vi se, at vi har fået en dataramme med vores lineær model statistikker
 \hypertarget{funktion-glue-for-at-tilfuxf8je-labels}{%
 \subsection{\texorpdfstring{Funktion \texttt{glue()} for at tilføje labels}{Funktion glue() for at tilføje labels}}\label{funktion-glue-for-at-tilfuxf8je-labels}}
 
-Det kan være nyttig at tilføje nogle etiketter til vores plots med statistikkerne, vi lige har beregnet. Til at gøre det kan man bruge følgende kode. Vi tage vores datasæt \texttt{penguins\_lm} med vores beregnet statistikker og bruge den til at lave en datasæt som kan bruges i \texttt{geom\_text()} i vores trend plot. Funktionen \texttt{glue()} (fra pakken \texttt{glue}) er bare en nyttig måde at tilføj de \texttt{r.squared} og \texttt{p.value} værdier sammen i en ``string'', som beskriver vores forskellige trends (lidt som \texttt{paste} fra base-R)
+Det kan være nyttigt at tilføje nogle etiketter til vores plots med statistikkerne, vi lige har beregnet. Til at gøre det kan man bruge følgende kode. Vi tage vores datasæt \texttt{penguins\_lm} med vores beregnet statistikker og bruge den til at lave en datasæt som kan bruges i \texttt{geom\_text()} i vores trend plot. Funktionen \texttt{glue()} (fra pakken \texttt{glue}) er bare en nyttig måde at tilføj de \texttt{r.squared} og \texttt{p.value} værdier sammen i en ``string'', som beskriver vores forskellige trends (lidt som \texttt{paste} fra base-R)
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8362,7 +8370,7 @@ Vi kan tilføje vores label data indenfor \texttt{geom\_text()}. \texttt{x} og \
 \hypertarget{multiple-regression-and-model-comparison}{%
 \section{Multiple regression and model comparison}\label{multiple-regression-and-model-comparison}}
 
-Man kan også bruge den samme ramme i ovenstående til at sammenligne forskellige modeller - her definer jeg \texttt{lm\_model\_func} der har kun \texttt{sex} som uafhængige variabel og så bygger jeg op på den model ved at definere \texttt{lm\_model\_func2} og \texttt{lm\_model\_func3}, hvor jeg tilføjer ekstra uafhængige variabler \texttt{bill\_length\_mm} og \texttt{flipper\_length\_mm}. Jeg er interesset i, hvor meget af variansen i \texttt{body\_mass\_g} de tre variabler forklarer tilsammen, og om der er forskelligeheder efter de tre arter i \texttt{species}.
+Man kan også bruge den samme ramme i ovenstående til at sammenligne forskellige modeller over samme tre datasæt - her definerer jeg \texttt{lm\_model\_func}, der har kun \texttt{sex} som uafhængige variabel og så bygger jeg op på den model ved at definere \texttt{lm\_model\_func2} og \texttt{lm\_model\_func3}, hvor jeg tilføjer ekstra uafhængige variabler \texttt{bill\_length\_mm} og \texttt{flipper\_length\_mm}. Jeg er interesseret i, hvor meget af variansen i \texttt{body\_mass\_g} de tre variabler forklarer tilsammen, og om der er forskelligeheder efter de tre arter i \texttt{species}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8505,7 +8513,7 @@ Se følgende kode for når man anvende \texttt{anova} og \texttt{tidy} på model
 ## 2    143 13332955.     1 551805.      5.92  0.0162
 \end{verbatim}
 
-Man kan se, at p-værdien er 0.016 som er signifikant og betyder at den mere `indviklet' model der også inddrager \texttt{bill\_length\_mm} er den model, vi accepteror (effekten af variablen \texttt{bill\_length\_mm} på \texttt{body\_mass\_g} er signifikant).
+Man kan se, at p-værdien er 0.016 som er signifikant og betyder at den mere `indviklet' model der også inddrager \texttt{bill\_length\_mm} er den model, vi accepterer (dvs. effekten af variablen \texttt{bill\_length\_mm} på \texttt{body\_mass\_g} er signifikant så vores `final' m).
 
 Man kan lave en lignende sammenligne mellem samtlige par modeller over de tre arter:
 
@@ -8577,7 +8585,9 @@ I følgende tilføjer jeg funktionen \texttt{geom\_signif} til plottet - det til
 \hypertarget{problemstillinger-7}{%
 \section{Problemstillinger}\label{problemstillinger-7}}
 
-\textbf{0}) Quizzen på Absalon.
+\textbf{Problem 1}) Quizzen på Absalon.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 Husk at have indlæste følgende:
 
@@ -8585,12 +8595,12 @@ Husk at have indlæste følgende:
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(tidyverse)}
 \FunctionTok{library}\NormalTok{(broom)}
-\FunctionTok{data}\NormalTok{(mtcars)}
+\FunctionTok{data}\NormalTok{(msleep)}
 \FunctionTok{data}\NormalTok{(iris)}
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{1}) \emph{Korrelation øvelse}
+\textbf{Problem 2}) \emph{Korrelation øvelse}
 
 \begin{itemize}
 \item
@@ -8598,23 +8608,26 @@ Husk at have indlæste følgende:
 \item
   Tip: hvis du foretrækker at undgå \texttt{\$} i analysen til at speciefice en kolon indenfor \texttt{cor.test()} kan du bruge \texttt{mtcars\ \%\textgreater{}\%\ pull(qsec)} i stedet for \texttt{mtcars\$qsec}.
 \item
-  Tilføj funktionen \texttt{glance()} til din resultat fra \texttt{cor.test()} til at se de statistikker i \textbf{tidy} form. Kan du genkende de statistikker fra \texttt{cor.test()} i den resulterende dataramme?
+  Tilføj funktionen \texttt{glance()} til din resultat fra \texttt{cor.test()} til at se de statistikker i
+  \textbf{tidy} form (installer pakken \texttt{broom} hvis nødvendigt). Kan du genkende de statistikker fra \texttt{cor.test()} i den resulterende dataramme?
 \end{itemize}
 
-\textbf{2}) \emph{Nesting øvelse}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-For datasættet \texttt{msleep} anvende \texttt{group\_by()} og \texttt{nest()} til at få en nested datasæt opdelt efter variablen \texttt{vore}.
+\textbf{Problem 3)} \emph{Nesting øvelse}
+
+For datasættet \texttt{msleep} anvende \texttt{group\_by()} og \texttt{nest()} til at få en nested dataframe hvor datasættet er opdelt efter variablen \texttt{vore} og kalder det for \texttt{msleep\_nest}.
 
 \begin{itemize}
 \tightlist
 \item
-  Tilføj en ny kolon med \texttt{mutate} der hedder \texttt{n\_rows} som beregner antallet af række i hver af de fire datasæt - husk følgende struktur (først angiv kolonnen som indeholder vores list af datasæt, og så angive funktionen som beregner antallet af række).
+  Tilføj en ny kolon til \texttt{msleep\_nest} med \texttt{mutate}, der hedder \texttt{n\_rows} og viser antallet af rækker i hvert af de fire datasæt - husk følgende struktur:
 \end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mtcars }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(cyl) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(vore) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\StringTok{"n\_rows"} \OtherTok{=} \FunctionTok{map}\NormalTok{(???,???)) }\CommentTok{\#erstatte ??? her}
 \end{Highlighting}
@@ -8623,12 +8636,12 @@ For datasættet \texttt{msleep} anvende \texttt{group\_by()} og \texttt{nest()} 
 \begin{itemize}
 \tightlist
 \item
-  I dette tilfælde kan man ændre \texttt{map} til \texttt{map\_dbl}.
+  I dette tilfælde kan man ændre \texttt{map} til \texttt{map\_dbl} - gøre det.
 \end{itemize}
 
-\textbf{4}) \emph{Multiple korrelation}
+\textbf{Problem 4)} \emph{Multiple korrelation}
 
-Vi vil gerne beregne den korrelation mellem variablerne \texttt{sleep\_total} og \texttt{sleep\_rm} til hver af de tre datasæt.
+Vi vil gerne beregne den korrelation mellem variablerne \texttt{sleep\_total} og \texttt{sleep\_rm} til hver af de fire datasæt lagret i \texttt{msleep\_nest}
 
 \begin{itemize}
 \tightlist
@@ -8645,47 +8658,52 @@ Vi vil gerne beregne den korrelation mellem variablerne \texttt{sleep\_total} og
 \end{Shaded}
 
 \begin{itemize}
-\tightlist
 \item
-  Brug map i nedenstående med din funktion til at beregne de korrelation til hver af de fire datasæt.
+  Brug \texttt{map()} indenfor \texttt{mutate()} med din funktion for at beregne de korrelation statistikker til hver af de fire datasæt.
 \item
   Unnest din nye kolonne bagefter
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{msleep }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(vore) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{cor\_stats =}\NormalTok{ ???) }\CommentTok{\#erstatte ??? her og husk unnest}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{itemize}
-\tightlist
 \item
   Lave barplots af \texttt{estimate} og \texttt{-log10(p.value)} med den resulterende dataramme
 \end{itemize}
 
-\textbf{6}) \emph{Linear regression øvelse}
+\textbf{Problem 5)} \emph{Linear regression øvelse}
 
-Brug \texttt{data(iris)} og anvende \texttt{lm()} til at finde den forventet \texttt{Petal.Length} med hensyn til \texttt{Petal.Width}.
+Åbn \texttt{LungCapData} (herunder \texttt{Age.Groups})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LungCapData }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1"}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(LungCapData) }\CommentTok{\#se variabler navne}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   LungCap Age Height Smoke Gender Caesarean
+## 1   6.475   6   62.1    no   male        no
+## 2  10.125  18   74.7   yes female        no
+## 3   9.550  16   69.7    no female       yes
+## 4  11.125  14   71.0    no   male        no
+## 5   4.800   5   56.9    no   male        no
+## 6   6.225  11   58.7    no female        no
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LungCapData}\SpecialCharTok{$}\NormalTok{Age.Group }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(LungCapData}\SpecialCharTok{$}\NormalTok{Age,}\AttributeTok{breaks=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{19}\NormalTok{),}\AttributeTok{right=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{include.lowest =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{levels}\NormalTok{(LungCapData}\SpecialCharTok{$}\NormalTok{Age.Group) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"\textless{}13"}\NormalTok{,}\StringTok{"13{-}14"}\NormalTok{,}\StringTok{"15{-}16"}\NormalTok{,}\StringTok{"17+"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{itemize}
-\tightlist
+\item
+  Anvende \texttt{lm()} til at finde den forventet \texttt{LungCap} med hensyn til \texttt{Age} som uafhængig variabel.
 \item
   Hvad er den intercept og slope af den beregnet linje?
 \item
   Tilføj funktionen \texttt{glance()} og angive værdier \texttt{r.squared} og \texttt{p.value}.
 \end{itemize}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{lm}\NormalTok{(??? }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ???,}\AttributeTok{data=}\NormalTok{???) }\CommentTok{\#erstatte ???}
-\end{Highlighting}
-\end{Shaded}
-
-\textbf{7}) Lave et scatter plot af Petal.Width på x-aksen og Petal.Length på y-aksen.
+\textbf{Problem 6}) Lave et scatter plot af Age på x-aksen og LungCap på y-aksen.
 
 \begin{itemize}
 \tightlist
@@ -8696,32 +8714,89 @@ Brug \texttt{data(iris)} og anvende \texttt{lm()} til at finde den forventet \te
 \item
   Ændre linjen til \texttt{geom\_smooth(method="lm",se=FALSE)}
 \item
-  Nu specificer en forskellige farve efter Species. Er der forskellige trends?
+  Nu specificer en forskellige farve efter \texttt{Smoke}.
 \end{itemize}
-
-Vi vil gerne lave samme analyse for hver af de tre Species.
 
 \textbf{8}) \emph{Lineær regression øvelse over multiple datasæt}
 
-Vi vil gerne udføre lineær regression med Petal.Length og Petal.Width som i \textbf{6}), men opdelt efter de tre Species.
-* Lave en funktion ved at tilpasse følgende kode. Passe på hvad \texttt{data} skal være lig med her (når vi skriver en funktion).
-* Tilføj \texttt{glance()}.
+Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter variablen \texttt{Smoke}. \emph{OBS: Vi følger sammen process som i kursus notaterne men med LungCapData i stedet for Penguins}.
+
+\textbf{a}) Anvende \texttt{group\_by()} og \texttt{nest()} for at opdele dit datsasæt efter \texttt{Smoke}
+
+\textbf{b})
+
+\begin{itemize}
+\tightlist
+\item
+  Lave en funktion, \texttt{lm\_model\_func}, hvor du laver en lineær regression med \texttt{LungCap} som afhængig variabel og \texttt{Age} som uafhængig variabel på et datasæt \texttt{.x}.
+\item
+  Tilføj \texttt{glance()} til \texttt{lm\_model\_func}.
+\end{itemize}
+
+\textbf{c})
+
+\begin{itemize}
+\tightlist
+\item
+  Anvende \texttt{map()} med din funktion indenfor \texttt{mutate()} til at tilføje en ny kolon som hedder \texttt{lm\_stats} til din dataramme.
+\item
+  Husk at \texttt{unnest} kolonnen \texttt{lm\_stats}til at kunne se statistikker.
+\end{itemize}
+
+\textbf{d}) Fortolkning - er variablen \texttt{lungCap} bedre forklaret er variablen \texttt{Age} i rygere eller ikke-rygere?
+
+\textbf{Problem 10)}
+
+\textbf{a}) I nedenstående er tre modeller, alle med \texttt{LungCap} som afhængig variabel alle som tager højde for \texttt{Age}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{lm\_model\_func }\OtherTok{\textless{}{-}}\NormalTok{ ???}\FunctionTok{lm}\NormalTok{(??? }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ???,}\AttributeTok{data=}\NormalTok{???) }\CommentTok{\#erstat ??? }
+\NormalTok{my\_lm\_func }\OtherTok{\textless{}{-}}  \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age                  ,}\AttributeTok{data=}\NormalTok{.x)}
+\NormalTok{my\_lm\_func2 }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ Gender         ,}\AttributeTok{data=}\NormalTok{.x)}
+\NormalTok{my\_lm\_func3 }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ Gender }\SpecialCharTok{+}\NormalTok{ Height,}\AttributeTok{data=}\NormalTok{.x)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{itemize}
 \tightlist
 \item
-  Anvende \texttt{group\_by()} og \texttt{nest()}
-\item
-  Anvende \texttt{map()} med din funktion indenfor \texttt{mutate()} til at tilføje en ny kolon som hedder \texttt{lm\_stats} til din dataramme.
-\item
-  Husk at \texttt{unnest} kolonnen \texttt{lm\_stats}til at kunne se statistikker.
+  Anvende \texttt{map} til at lave tre nye kolonner i \texttt{LungCapData\_nest}, en til være af de tre modeller, med outputtet fra at lave modellerne på de to datasæt til rygere og ikke-rygere.
 \end{itemize}
+
+\textbf{b}) Skrive en funktion \texttt{my\_r2\_func}, der udtrækker ``r.squared'' værdierne fra dine modeller, og lav tre yderligere kolonner i \texttt{LungCapData\_nest}, hvor du køre din funktion på dine modeller med \texttt{map} (outputtet skal være dbl).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_r2\_func }\OtherTok{\textless{}{-}}\NormalTok{ ...}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LungCapData\_nest }\OtherTok{\textless{}{-}}\NormalTok{ LungCapData\_nest }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{"Age\_only\_R2"} \OtherTok{=}\NormalTok{ ...,}
+         \StringTok{"Age\_Gender\_R2"} \OtherTok{=}\NormalTok{ ...,}
+         \StringTok{"Age\_Gender\_Height\_R2"}\OtherTok{=}\NormalTok{ ...)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{c)} Omsæt dine r.squared værdier til et plot
+
+\textbf{Problem 11}
+
+\textbf{a}) Skriv en funktion (eller kopier funktionen fra kursusnotaterne) hvor man anvende \texttt{anova()} til at sammenligne to modeller, \texttt{.x} og \texttt{.y} og udtrækker p-værdien.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_aov\_func }\OtherTok{\textless{}{-}}\NormalTok{ ...}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{b}) Anvend din funktion med \texttt{map2} til at sammenligne de tre modeller fra sidste spørgsmål.
+
+\textbf{c}) Lave et plot med dine resultater.
+
+\textbf{d}) Tilføj signifikans annotations på plottet med funktionen \texttt{geom\_signif()} (tilpas gerne kode fra kursusnotaterne).
 
 \hypertarget{ekstra}{%
 \section{Ekstra}\label{ekstra}}
