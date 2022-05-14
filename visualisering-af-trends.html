@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 8 Visualisering af trends | Analyse og visualisering af biologiske datasæt - 2022</title>
+  <meta name="description" content="Course materials for Analyse og visualisering af biologiske datasæt 2022" />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 8 Visualisering af trends | Analyse og visualisering af biologiske datasæt - 2022" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Course materials for Analyse og visualisering af biologiske datasæt 2022" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Visualisering af trends | Analyse og visualisering af biologiske datasæt - 2022" />
+  
+  <meta name="twitter:description" content="Course materials for Analyse og visualisering af biologiske datasæt 2022" />
+  
+
+<meta name="author" content="Sarah Rennie" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="functional-programming-med-purrr-pakken.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/vembedr-0.1.5/css/vembedr.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Visualisering kursus</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Grundlæggende R<span></span></a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#inledning-til-kapitel"><i class="fa fa-check"></i><b>1.1</b> Inledning til kapitel<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#rstudio"><i class="fa fa-check"></i><b>1.2</b> RStudio<span></span></a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#de-forskellige-vinduer-i-rstudio"><i class="fa fa-check"></i><b>1.2.1</b> De forskellige vinduer i RStudio<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#working-directory"><i class="fa fa-check"></i><b>1.3</b> Working directory<span></span></a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#r-pakker"><i class="fa fa-check"></i><b>1.4</b> R pakker<span></span></a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#hvor-kommer-vores-data-fra"><i class="fa fa-check"></i><b>1.5</b> Hvor kommer vores data fra?<span></span></a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#indbyggede-datasæt"><i class="fa fa-check"></i><b>1.5.1</b> Indbyggede datasæt<span></span></a></li>
+<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#importering-af-data-fra-.txt-fil"><i class="fa fa-check"></i><b>1.5.2</b> Importering af data fra .txt fil<span></span></a></li>
+<li class="chapter" data-level="1.5.3" data-path="index.html"><a href="index.html#importering-af-data-fra-excel"><i class="fa fa-check"></i><b>1.5.3</b> Importering af data fra Excel<span></span></a></li>
+<li class="chapter" data-level="1.5.4" data-path="index.html"><a href="index.html#kaggle"><i class="fa fa-check"></i><b>1.5.4</b> Kaggle<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#beregninger-i-r"><i class="fa fa-check"></i><b>1.6</b> Beregninger i R<span></span></a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="index.html"><a href="index.html#vectorer"><i class="fa fa-check"></i><b>1.6.1</b> Vectorer<span></span></a></li>
+<li class="chapter" data-level="1.6.2" data-path="index.html"><a href="index.html#datatyper"><i class="fa fa-check"></i><b>1.6.2</b> datatyper<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#dataframes"><i class="fa fa-check"></i><b>1.7</b> Dataframes<span></span></a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#delmægder-af-dataframes"><i class="fa fa-check"></i><b>1.7.1</b> Delmægder af dataframes<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#descriptive-statistics"><i class="fa fa-check"></i><b>1.8</b> Descriptive statistics<span></span></a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="index.html"><a href="index.html#simulere-data-fra-den-normale-fordeling"><i class="fa fa-check"></i><b>1.8.1</b> Simulere data fra den normale fordeling<span></span></a></li>
+<li class="chapter" data-level="1.8.2" data-path="index.html"><a href="index.html#measures-of-central-tendency"><i class="fa fa-check"></i><b>1.8.2</b> Measures of central tendency<span></span></a></li>
+<li class="chapter" data-level="1.8.3" data-path="index.html"><a href="index.html#tapply"><i class="fa fa-check"></i><b>1.8.3</b> <code>tapply()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#statistike-tester"><i class="fa fa-check"></i><b>1.9</b> Statistike tester<span></span></a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="index.html"><a href="index.html#korrelation"><i class="fa fa-check"></i><b>1.9.1</b> Korrelation<span></span></a></li>
+<li class="chapter" data-level="1.9.2" data-path="index.html"><a href="index.html#test-for-uafhængighed-chi-sq-test"><i class="fa fa-check"></i><b>1.9.2</b> Test for uafhængighed (chi-sq test)<span></span></a></li>
+<li class="chapter" data-level="1.9.3" data-path="index.html"><a href="index.html#sample-t-test"><i class="fa fa-check"></i><b>1.9.3</b> 1 sample t-test<span></span></a></li>
+<li class="chapter" data-level="1.9.4" data-path="index.html"><a href="index.html#sample-t-test-1"><i class="fa fa-check"></i><b>1.9.4</b> 2-sample t-test<span></span></a></li>
+<li class="chapter" data-level="1.9.5" data-path="index.html"><a href="index.html#paired-t-test"><i class="fa fa-check"></i><b>1.9.5</b> Paired t-test<span></span></a></li>
+<li class="chapter" data-level="1.9.6" data-path="index.html"><a href="index.html#anova-variansanalyse"><i class="fa fa-check"></i><b>1.9.6</b> ANOVA (variansanalyse)<span></span></a></li>
+<li class="chapter" data-level="1.9.7" data-path="index.html"><a href="index.html#lineær-regression"><i class="fa fa-check"></i><b>1.9.7</b> Lineær regression<span></span></a></li>
+<li class="chapter" data-level="1.9.8" data-path="index.html"><a href="index.html#r-squared-coefficient-of-determination"><i class="fa fa-check"></i><b>1.9.8</b> R-squared coefficient of determination<span></span></a></li>
+<li class="chapter" data-level="1.9.9" data-path="index.html"><a href="index.html#antagelser---lineær-regression"><i class="fa fa-check"></i><b>1.9.9</b> Antagelser - lineær regression<span></span></a></li>
+<li class="chapter" data-level="1.9.10" data-path="index.html"><a href="index.html#multiple-lineær-regression"><i class="fa fa-check"></i><b>1.9.10</b> Multiple lineær regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#problemstillinger"><i class="fa fa-check"></i><b>1.10</b> Problemstillinger<span></span></a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="index.html"><a href="index.html#quiz---basics"><i class="fa fa-check"></i><b>1.10.1</b> Quiz - Basics<span></span></a></li>
+<li class="chapter" data-level="1.10.2" data-path="index.html"><a href="index.html#grundlæggende-r"><i class="fa fa-check"></i><b>1.10.2</b> Grundlæggende R<span></span></a></li>
+<li class="chapter" data-level="1.10.3" data-path="index.html"><a href="index.html#kort-analyse-med-reaktionstider"><i class="fa fa-check"></i><b>1.10.3</b> Kort analyse med reaktionstider<span></span></a></li>
+<li class="chapter" data-level="1.10.4" data-path="index.html"><a href="index.html#ekstra-øvelser-med-statistik-tests"><i class="fa fa-check"></i><b>1.10.4</b> Ekstra øvelser med statistik tests<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="rmarkdown.html"><a href="rmarkdown.html"><i class="fa fa-check"></i><b>2</b> Introduktion til R Markdown<span></span></a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="rmarkdown.html"><a href="rmarkdown.html#hvad-er-r-markdown"><i class="fa fa-check"></i><b>2.1</b> Hvad er R Markdown?<span></span></a></li>
+<li class="chapter" data-level="2.2" data-path="rmarkdown.html"><a href="rmarkdown.html#installere-r-markdown"><i class="fa fa-check"></i><b>2.2</b> Installere R Markdown<span></span></a></li>
+<li class="chapter" data-level="2.3" data-path="rmarkdown.html"><a href="rmarkdown.html#videodemonstrationer"><i class="fa fa-check"></i><b>2.3</b> Videodemonstrationer<span></span></a></li>
+<li class="chapter" data-level="2.4" data-path="rmarkdown.html"><a href="rmarkdown.html#oprette-et-nyt-dokument-i-r-markdown"><i class="fa fa-check"></i><b>2.4</b> Oprette et nyt dokument i R Markdown<span></span></a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="rmarkdown.html"><a href="rmarkdown.html#yaml"><i class="fa fa-check"></i><b>2.4.1</b> YAML<span></span></a></li>
+<li class="chapter" data-level="2.4.2" data-path="rmarkdown.html"><a href="rmarkdown.html#globale-options"><i class="fa fa-check"></i><b>2.4.2</b> Globale options<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="rmarkdown.html"><a href="rmarkdown.html#skrive-baseret-tekst"><i class="fa fa-check"></i><b>2.5</b> Skrive baseret tekst<span></span></a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="rmarkdown.html"><a href="rmarkdown.html#headers"><i class="fa fa-check"></i><b>2.5.1</b> Headers<span></span></a></li>
+<li class="chapter" data-level="2.5.2" data-path="rmarkdown.html"><a href="rmarkdown.html#liste"><i class="fa fa-check"></i><b>2.5.2</b> liste<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="rmarkdown.html"><a href="rmarkdown.html#knitte-kode"><i class="fa fa-check"></i><b>2.6</b> Knitte kode<span></span></a></li>
+<li class="chapter" data-level="2.7" data-path="rmarkdown.html"><a href="rmarkdown.html#kode-chunks"><i class="fa fa-check"></i><b>2.7</b> Kode chunks<span></span></a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="rmarkdown.html"><a href="rmarkdown.html#et-godt-råd-når-man-arbejder-med-chunks"><i class="fa fa-check"></i><b>2.7.1</b> Et godt råd når man arbejder med chunks<span></span></a></li>
+<li class="chapter" data-level="2.7.2" data-path="rmarkdown.html"><a href="rmarkdown.html#chunk-indstillinger"><i class="fa fa-check"></i><b>2.7.2</b> Chunk indstillinger<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="rmarkdown.html"><a href="rmarkdown.html#r-beregninger-indenfor-teksten-i-dokument-inline-code"><i class="fa fa-check"></i><b>2.8</b> R beregninger indenfor teksten i dokument (‘inline code’)<span></span></a></li>
+<li class="chapter" data-level="2.9" data-path="rmarkdown.html"><a href="rmarkdown.html#working-directory-1"><i class="fa fa-check"></i><b>2.9</b> Working directory<span></span></a></li>
+<li class="chapter" data-level="2.10" data-path="rmarkdown.html"><a href="rmarkdown.html#matematik"><i class="fa fa-check"></i><b>2.10</b> Matematik<span></span></a></li>
+<li class="chapter" data-level="2.11" data-path="rmarkdown.html"><a href="rmarkdown.html#problemstillinger-1"><i class="fa fa-check"></i><b>2.11</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="2.12" data-path="rmarkdown.html"><a href="rmarkdown.html#færdig-for-i-dag-og-næste-gang"><i class="fa fa-check"></i><b>2.12</b> Færdig for i dag og næste gang<span></span></a></li>
+<li class="chapter" data-level="2.13" data-path="rmarkdown.html"><a href="rmarkdown.html#ekstra-links"><i class="fa fa-check"></i><b>2.13</b> Ekstra links<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="visual1.html"><a href="visual1.html"><i class="fa fa-check"></i><b>3</b> Visualisering - ggplot2 dag 1<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="visual1.html"><a href="visual1.html#inledning-og-videoer"><i class="fa fa-check"></i><b>3.1</b> Inledning og videoer<span></span></a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="visual1.html"><a href="visual1.html#læringsmålene-for-dag-1"><i class="fa fa-check"></i><b>3.1.1</b> Læringsmålene for dag 1<span></span></a></li>
+<li class="chapter" data-level="3.1.2" data-path="visual1.html"><a href="visual1.html#hvad-er-ggplot2"><i class="fa fa-check"></i><b>3.1.2</b> Hvad er <strong>ggplot2</strong>?<span></span></a></li>
+<li class="chapter" data-level="3.1.3" data-path="visual1.html"><a href="visual1.html#brugen-af-materialerne"><i class="fa fa-check"></i><b>3.1.3</b> Brugen af materialerne<span></span></a></li>
+<li class="chapter" data-level="3.1.4" data-path="visual1.html"><a href="visual1.html#video-ressourcer"><i class="fa fa-check"></i><b>3.1.4</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="visual1.html"><a href="visual1.html#transition-fra-base-r-til-ggplot2"><i class="fa fa-check"></i><b>3.2</b> Transition fra base R til ggplot2<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="visual1.html"><a href="visual1.html#vores-første-ggplot"><i class="fa fa-check"></i><b>3.3</b> Vores første ggplot<span></span></a></li>
+<li class="chapter" data-level="3.4" data-path="visual1.html"><a href="visual1.html#lidt-om-ggplot2"><i class="fa fa-check"></i><b>3.4</b> Lidt om ggplot2<span></span></a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="visual1.html"><a href="visual1.html#syntax"><i class="fa fa-check"></i><b>3.4.1</b> Syntax<span></span></a></li>
+<li class="chapter" data-level="3.4.2" data-path="visual1.html"><a href="visual1.html#hvad-betyder-egentlig-grammar-of-graphics"><i class="fa fa-check"></i><b>3.4.2</b> Hvad betyder egentlig grammar of graphics?<span></span></a></li>
+<li class="chapter" data-level="3.4.3" data-path="visual1.html"><a href="visual1.html#globale-versus-lokale-æstetik"><i class="fa fa-check"></i><b>3.4.3</b> Globale versus lokale æstetik<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="visual1.html"><a href="visual1.html#specificere-etiketter-og-titel"><i class="fa fa-check"></i><b>3.5</b> Specificere etiketter og titel<span></span></a></li>
+<li class="chapter" data-level="3.6" data-path="visual1.html"><a href="visual1.html#ændre-farver"><i class="fa fa-check"></i><b>3.6</b> Ændre farver<span></span></a></li>
+<li class="chapter" data-level="3.7" data-path="visual1.html"><a href="visual1.html#ændre-tema"><i class="fa fa-check"></i><b>3.7</b> Ændre tema<span></span></a></li>
+<li class="chapter" data-level="3.8" data-path="visual1.html"><a href="visual1.html#forskellige-geoms"><i class="fa fa-check"></i><b>3.8</b> Forskellige geoms<span></span></a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="visual1.html"><a href="visual1.html#boxplot-geom_box"><i class="fa fa-check"></i><b>3.8.1</b> Boxplot (<code>geom_box</code>)<span></span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="visual1.html"><a href="visual1.html#barplot-geom_bar"><i class="fa fa-check"></i><b>3.8.2</b> Barplot (<code>geom_bar</code>)<span></span></a></li>
+<li class="chapter" data-level="3.8.3" data-path="visual1.html"><a href="visual1.html#histogram-geom_histogram"><i class="fa fa-check"></i><b>3.8.3</b> Histogram (<code>geom_histogram</code>)<span></span></a></li>
+<li class="chapter" data-level="3.8.4" data-path="visual1.html"><a href="visual1.html#density-geom_density"><i class="fa fa-check"></i><b>3.8.4</b> Density (<code>geom_density</code>)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="visual1.html"><a href="visual1.html#troubleshooting"><i class="fa fa-check"></i><b>3.9</b> Troubleshooting<span></span></a></li>
+<li class="chapter" data-level="3.10" data-path="visual1.html"><a href="visual1.html#problemstillinger-2"><i class="fa fa-check"></i><b>3.10</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="3.11" data-path="visual1.html"><a href="visual1.html#næste-gang"><i class="fa fa-check"></i><b>3.11</b> Næste gang<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visual2.html"><a href="visual2.html"><i class="fa fa-check"></i><b>4</b> Visualisering - ggplot2 dag 2<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="visual2.html"><a href="visual2.html#indledning-og-videoer"><i class="fa fa-check"></i><b>4.1</b> Indledning og videoer<span></span></a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="visual2.html"><a href="visual2.html#læringsmålene"><i class="fa fa-check"></i><b>4.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="4.1.2" data-path="visual2.html"><a href="visual2.html#video-ressourcer-1"><i class="fa fa-check"></i><b>4.1.2</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="visual2.html"><a href="visual2.html#koordinat-systemer"><i class="fa fa-check"></i><b>4.2</b> Koordinat systemer<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="visual2.html"><a href="visual2.html#zoom-coord_cartesian-expand_limits"><i class="fa fa-check"></i><b>4.2.1</b> Zoom (<code>coord_cartesian()</code>, <code>expand_limits()</code>)<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="visual2.html"><a href="visual2.html#transformering-af-akserne---log-sqrt-osv-scale_x_continuous."><i class="fa fa-check"></i><b>4.2.2</b> Transformering af akserne - log, sqrt osv (<code>scale_x_continuous</code>).<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="visual2.html"><a href="visual2.html#flip-coordinates-coord_flip"><i class="fa fa-check"></i><b>4.2.3</b> Flip coordinates (<code>coord_flip</code>)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="visual2.html"><a href="visual2.html#mere-om-farver-og-punkt-former"><i class="fa fa-check"></i><b>4.3</b> Mere om farver og punkt former<span></span></a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="visual2.html"><a href="visual2.html#automatisk-farver"><i class="fa fa-check"></i><b>4.3.1</b> Automatisk farver<span></span></a></li>
+<li class="chapter" data-level="4.3.2" data-path="visual2.html"><a href="visual2.html#manuelle-farver"><i class="fa fa-check"></i><b>4.3.2</b> Manuelle farver<span></span></a></li>
+<li class="chapter" data-level="4.3.3" data-path="visual2.html"><a href="visual2.html#punkt-former"><i class="fa fa-check"></i><b>4.3.3</b> Punkt former<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visual2.html"><a href="visual2.html#annotations-geom_text"><i class="fa fa-check"></i><b>4.4</b> Annotations (<code>geom_text</code>)<span></span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="visual2.html"><a href="visual2.html#tilføje-labeller-direkte-på-plottet."><i class="fa fa-check"></i><b>4.4.1</b> Tilføje labeller direkte på plottet.<span></span></a></li>
+<li class="chapter" data-level="4.4.2" data-path="visual2.html"><a href="visual2.html#pakken-ggrepel-for-at-tilføje-tekst-labeller"><i class="fa fa-check"></i><b>4.4.2</b> Pakken <code>ggrepel</code> for at tilføje tekst labeller<span></span></a></li>
+<li class="chapter" data-level="4.4.3" data-path="visual2.html"><a href="visual2.html#tilføje-rektangler-i-regioner-af-interesse-annotate"><i class="fa fa-check"></i><b>4.4.3</b> Tilføje rektangler i regioner af interesse (<code>annotate</code>)<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="visual2.html"><a href="visual2.html#adskille-plots-med-facets-facet_gridfacet_wrap"><i class="fa fa-check"></i><b>4.5</b> Adskille plots med facets (<code>facet_grid</code>/<code>facet_wrap</code>)<span></span></a></li>
+<li class="chapter" data-level="4.6" data-path="visual2.html"><a href="visual2.html#gemme-dit-plot"><i class="fa fa-check"></i><b>4.6</b> Gemme dit plot<span></span></a></li>
+<li class="chapter" data-level="4.7" data-path="visual2.html"><a href="visual2.html#problemstillinger-3"><i class="fa fa-check"></i><b>4.7</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="4.8" data-path="visual2.html"><a href="visual2.html#ekstra-links-1"><i class="fa fa-check"></i><b>4.8</b> Ekstra links<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>5</b> Bearbejdning dag 1<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="data.html"><a href="data.html#hvad-er-tidyverse"><i class="fa fa-check"></i><b>5.1</b> Hvad er Tidyverse?<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="data.html"><a href="data.html#video-ressourcer-2"><i class="fa fa-check"></i><b>5.2</b> Video ressourcer<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="data.html"><a href="data.html#oversigt-over-pakker"><i class="fa fa-check"></i><b>5.3</b> Oversigt over pakker<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="data.html"><a href="data.html#principper-med-tidy-data"><i class="fa fa-check"></i><b>5.4</b> Principper med ‘tidy data’<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="data.html"><a href="data.html#lidt-om-tibbles"><i class="fa fa-check"></i><b>5.5</b> Lidt om <code>tibbles</code><span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="data.html"><a href="data.html#transition-fra-base-til-tidyverse"><i class="fa fa-check"></i><b>5.6</b> Transition fra base til tidyverse<span></span></a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="data.html"><a href="data.html#om-titanic-datasæt"><i class="fa fa-check"></i><b>5.6.1</b> Om <strong>Titanic</strong> datasæt<span></span></a></li>
+<li class="chapter" data-level="5.6.2" data-path="data.html"><a href="data.html#titanic-oprydning"><i class="fa fa-check"></i><b>5.6.2</b> Titanic: oprydning<span></span></a></li>
+<li class="chapter" data-level="5.6.3" data-path="data.html"><a href="data.html#pipe"><i class="fa fa-check"></i><b>5.6.3</b> Pipe<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="data.html"><a href="data.html#bearbejdning-af-data-dplyr"><i class="fa fa-check"></i><b>5.7</b> Bearbejdning af data: <code>dplyr</code><span></span></a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="data.html"><a href="data.html#dplyr-verbs-select"><i class="fa fa-check"></i><b>5.7.1</b> dplyr verbs: <code>select()</code><span></span></a></li>
+<li class="chapter" data-level="5.7.2" data-path="data.html"><a href="data.html#dplyr-verbs-filter"><i class="fa fa-check"></i><b>5.7.2</b> dplyr verbs: <code>filter()</code><span></span></a></li>
+<li class="chapter" data-level="5.7.3" data-path="data.html"><a href="data.html#comparitiver-reference"><i class="fa fa-check"></i><b>5.7.3</b> Comparitiver reference<span></span></a></li>
+<li class="chapter" data-level="5.7.4" data-path="data.html"><a href="data.html#kombinere-filter-og-select"><i class="fa fa-check"></i><b>5.7.4</b> Kombinere <code>filter()</code> og <code>select()</code><span></span></a></li>
+<li class="chapter" data-level="5.7.5" data-path="data.html"><a href="data.html#dplyr-verbs-mutate"><i class="fa fa-check"></i><b>5.7.5</b> dplyr verbs: <code>mutate()</code><span></span></a></li>
+<li class="chapter" data-level="5.7.6" data-path="data.html"><a href="data.html#rename"><i class="fa fa-check"></i><b>5.7.6</b> <code>rename()</code><span></span></a></li>
+<li class="chapter" data-level="5.7.7" data-path="data.html"><a href="data.html#dplyr-verbs-recode"><i class="fa fa-check"></i><b>5.7.7</b> dplyr verbs: <code>recode()</code><span></span></a></li>
+<li class="chapter" data-level="5.7.8" data-path="data.html"><a href="data.html#dplyr-verbs-arrange"><i class="fa fa-check"></i><b>5.7.8</b> dplyr verbs: <code>arrange()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="data.html"><a href="data.html#visualisering-bruge-som-input-i-ggplot2"><i class="fa fa-check"></i><b>5.8</b> Visualisering: bruge som input i ggplot2<span></span></a></li>
+<li class="chapter" data-level="5.9" data-path="data.html"><a href="data.html#misc-funktioner-som-er-nyttige-at-vide"><i class="fa fa-check"></i><b>5.9</b> Misc funktioner som er nyttige at vide<span></span></a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="data.html"><a href="data.html#pull"><i class="fa fa-check"></i><b>5.9.1</b> Pull<span></span></a></li>
+<li class="chapter" data-level="5.9.2" data-path="data.html"><a href="data.html#slice"><i class="fa fa-check"></i><b>5.9.2</b> Slice<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.10" data-path="data.html"><a href="data.html#problemstillinger-4"><i class="fa fa-check"></i><b>5.10</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="5.11" data-path="data.html"><a href="data.html#kommentarer"><i class="fa fa-check"></i><b>5.11</b> Kommentarer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html"><i class="fa fa-check"></i><b>6</b> Bearbejdning dag 2<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#indledning-og-læringsmålene"><i class="fa fa-check"></i><b>6.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#læringsmålene-1"><i class="fa fa-check"></i><b>6.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="6.1.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#videoer"><i class="fa fa-check"></i><b>6.1.2</b> Videoer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#group_by-med-summarise-i-dplyr-pakken"><i class="fa fa-check"></i><b>6.2</b> <code>group_by()</code> med <code>summarise()</code> i dplyr-pakken<span></span></a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#reference-af-summarise-funktioner"><i class="fa fa-check"></i><b>6.2.1</b> Reference af <code>summarise()</code> funktioner<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#flere-summary-statistic-på-én-gang"><i class="fa fa-check"></i><b>6.2.2</b> Flere summary statistic på én gang<span></span></a></li>
+<li class="chapter" data-level="6.2.3" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#mere-kompliceret-group_by"><i class="fa fa-check"></i><b>6.2.3</b> Mere kompliceret <code>group_by()</code><span></span></a></li>
+<li class="chapter" data-level="6.2.4" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#funktionen-ungroup"><i class="fa fa-check"></i><b>6.2.4</b> Funktionen <code>ungroup</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#pivot_longerpivot_wider-med-tidyr-pakken"><i class="fa fa-check"></i><b>6.3</b> <code>pivot_longer()</code>/<code>pivot_wider()</code> med Tidyr-pakken<span></span></a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#tidyr-pakke---oversigt"><i class="fa fa-check"></i><b>6.3.1</b> Tidyr pakke - oversigt<span></span></a></li>
+<li class="chapter" data-level="6.3.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#wide---long-med-pivot_longer"><i class="fa fa-check"></i><b>6.3.2</b> Wide -&gt; Long med <code>pivot_longer()</code><span></span></a></li>
+<li class="chapter" data-level="6.3.3" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#separate"><i class="fa fa-check"></i><b>6.3.3</b> <code>separate()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#eksempel-titanic-summary-statistics"><i class="fa fa-check"></i><b>6.4</b> Eksempel: Titanic summary statistics<span></span></a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#demonstration-af-pivot_wider"><i class="fa fa-check"></i><b>6.4.1</b> Demonstration af <code>pivot_wider()</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#left_join-forbinde-dataframes"><i class="fa fa-check"></i><b>6.5</b> <code>left_join()</code>: forbinde dataframes<span></span></a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#funktionen-left_join-fra-dplyr-pakken"><i class="fa fa-check"></i><b>6.5.1</b> Funktionen <code>left_join()</code> fra dplyr-pakken<span></span></a></li>
+<li class="chapter" data-level="6.5.2" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#anvende-left_join-for-vores-dataset."><i class="fa fa-check"></i><b>6.5.2</b> Anvende <code>left_join()</code> for vores dataset.<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#problemstillinger-5"><i class="fa fa-check"></i><b>6.6</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="6.7" data-path="bearbejdning-dag-2.html"><a href="bearbejdning-dag-2.html#ekstra-links-2"><i class="fa fa-check"></i><b>6.7</b> Ekstra links<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html"><i class="fa fa-check"></i><b>7</b> Functional programming med purrr-pakken<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#inledning-og-læringsmålene"><i class="fa fa-check"></i><b>7.1</b> Inledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#læringsmålene-2"><i class="fa fa-check"></i><b>7.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#video-ressourcer-3"><i class="fa fa-check"></i><b>7.1.2</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#iterativ-processer-med-map-fuktioner"><i class="fa fa-check"></i><b>7.2</b> Iterativ processer med <code>map()</code> fuktioner<span></span></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#introduktion-til-map-funktioner"><i class="fa fa-check"></i><b>7.2.1</b> Introduktion til <code>map()</code> funktioner<span></span></a></li>
+<li class="chapter" data-level="7.2.2" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#reference-for-the-different-map-functions"><i class="fa fa-check"></i><b>7.2.2</b> Reference for the different map functions<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#custom-fuktioner"><i class="fa fa-check"></i><b>7.3</b> Custom fuktioner<span></span></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#simple-functions"><i class="fa fa-check"></i><b>7.3.1</b> Simple functions<span></span></a></li>
+<li class="chapter" data-level="7.3.2" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#custom-functions-with-mapping"><i class="fa fa-check"></i><b>7.3.2</b> Custom functions with mapping<span></span></a></li>
+<li class="chapter" data-level="7.3.3" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#effekten-af-map-på-andre-data-typer"><i class="fa fa-check"></i><b>7.3.3</b> Effekten af <code>map</code> på andre data typer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#nesting-nest"><i class="fa fa-check"></i><b>7.4</b> Nesting <code>nest()</code><span></span></a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#anvende-map-med-nested-data"><i class="fa fa-check"></i><b>7.4.1</b> Anvende map() med nested data<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#andre-brugbar-purrr"><i class="fa fa-check"></i><b>7.5</b> Andre brugbar purrr<span></span></a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#map2-function-for-flere-inputs"><i class="fa fa-check"></i><b>7.5.1</b> <code>map2()</code> function for flere inputs<span></span></a></li>
+<li class="chapter" data-level="7.5.2" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#transformer-numeriske-variabler"><i class="fa fa-check"></i><b>7.5.2</b> Transformer numeriske variabler<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#problemstillinger-6"><i class="fa fa-check"></i><b>7.6</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="7.7" data-path="functional-programming-med-purrr-pakken.html"><a href="functional-programming-med-purrr-pakken.html#ekstra-notater-og-næste-gang"><i class="fa fa-check"></i><b>7.7</b> Ekstra notater og næste gang<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html"><i class="fa fa-check"></i><b>8</b> Visualisering af trends<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#indledning-og-læringsmålene-1"><i class="fa fa-check"></i><b>8.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#læringsmålene-3"><i class="fa fa-check"></i><b>8.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="8.1.2" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#introduktion-til-chapter"><i class="fa fa-check"></i><b>8.1.2</b> Introduktion til chapter<span></span></a></li>
+<li class="chapter" data-level="8.1.3" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#video-ressourcer-4"><i class="fa fa-check"></i><b>8.1.3</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#nest-og-map-eksempel-med-korrelation"><i class="fa fa-check"></i><b>8.2</b> <code>nest()</code> og <code>map()</code>: eksempel med korrelation<span></span></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#korrelation-over-flere-datasæt-på-en-gang"><i class="fa fa-check"></i><b>8.2.1</b> Korrelation over flere datasæt på en gang<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#lineær-regression---visualisering"><i class="fa fa-check"></i><b>8.3</b> Lineær regression - visualisering<span></span></a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#lineær-trends"><i class="fa fa-check"></i><b>8.3.1</b> Lineær trends<span></span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#geom_smooth-lm-trendlinjer"><i class="fa fa-check"></i><b>8.3.2</b> <code>geom_smooth()</code>: <code>lm</code> trendlinjer<span></span></a></li>
+<li class="chapter" data-level="8.3.3" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#geom_smooth-flere-lm-trendlinjer-på-samme-plot"><i class="fa fa-check"></i><b>8.3.3</b> <code>geom_smooth()</code>: flere <code>lm</code> trendlinjer på samme plot<span></span></a></li>
+<li class="chapter" data-level="8.3.4" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#trendlinjer-med-methodloess"><i class="fa fa-check"></i><b>8.3.4</b> Trendlinjer med <code>method=="loess"</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#plot-linear-regresion-estimates"><i class="fa fa-check"></i><b>8.4</b> Plot linear regresion estimates<span></span></a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#anvende-lm-over-nested-datasæt"><i class="fa fa-check"></i><b>8.4.1</b> Anvende <code>lm()</code> over nested datasæt<span></span></a></li>
+<li class="chapter" data-level="8.4.2" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#funktion-glue-for-at-tilføje-labels"><i class="fa fa-check"></i><b>8.4.2</b> Funktion <code>glue()</code> for at tilføje labels<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#multiple-regression-and-model-comparison"><i class="fa fa-check"></i><b>8.5</b> Multiple regression and model comparison<span></span></a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#anova-for-at-sammenligne-de-forskellige-modeller"><i class="fa fa-check"></i><b>8.5.1</b> <code>anova</code> for at sammenligne de forskellige modeller<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#problemstillinger-7"><i class="fa fa-check"></i><b>8.6</b> Problemstillinger<span></span></a></li>
+<li class="chapter" data-level="8.7" data-path="visualisering-af-trends.html"><a href="visualisering-af-trends.html#ekstra"><i class="fa fa-check"></i><b>8.7</b> Ekstra<span></span></a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Analyse og visualisering af biologiske datasæt - 2022</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="visualisering-af-trends" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Visualisering af trends<a href="visualisering-af-trends.html#visualisering-af-trends" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><img src="plots/hex-tidyverse.png" width="15%" /><img src="plots/purrr.png" width="15%" /></p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="visualisering-af-trends.html#cb434-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load following packages</span></span>
+<span id="cb434-2"><a href="visualisering-af-trends.html#cb434-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb434-3"><a href="visualisering-af-trends.html#cb434-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb434-4"><a href="visualisering-af-trends.html#cb434-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb434-5"><a href="visualisering-af-trends.html#cb434-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb434-6"><a href="visualisering-af-trends.html#cb434-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsignif)</span></code></pre></div>
+<div id="indledning-og-læringsmålene-1" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Indledning og læringsmålene<a href="visualisering-af-trends.html#indledning-og-læringsmålene-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="læringsmålene-3" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Læringsmålene<a href="visualisering-af-trends.html#læringsmålene-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>I skal være i stand til at</p>
+<ul>
+<li>Anvende <code>nest()</code> og <code>map()</code> strukturen til at gentage en korrelation analyse over flere forskellige datasæt.</li>
+<li>Bruge <code>ggplot</code> funktion <code>geom_smooth()</code> til at visualisere lineær regression eller loess-kurver.</li>
+<li>Kombinere <code>map()</code>/<code>nest()</code> og <code>lm()</code> til at beregne regression statistikker for flere lineær regression modeller på samme tid.</li>
+</ul>
+</div>
+<div id="introduktion-til-chapter" class="section level3 hasAnchor" number="8.1.2">
+<h3><span class="header-section-number">8.1.2</span> Introduktion til chapter<a href="visualisering-af-trends.html#introduktion-til-chapter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>I dette kapitel viser jeg flere eksempler på processen, hvor man anvender <code>group_by()</code> og <code>nest()</code> og dernæst <code>map()</code>-funktioner for at lave reproducebar statistiske analyser. Vi fokuserer på eksempler med korrelationanalyse og lineær regression modeller, men den overordnede ramme kan anvendes i mange forskellige kontekster.</p>
+</div>
+<div id="video-ressourcer-4" class="section level3 hasAnchor" number="8.1.3">
+<h3><span class="header-section-number">8.1.3</span> Video ressourcer<a href="visualisering-af-trends.html#video-ressourcer-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><em>OBS: Jeg sagde “antal gener” flere gange i videoerne men variablen <code>log10_size_mb</code> er faktisk genomstørrelse i megabases.</em></p>
+<ul>
+<li>Video 1: Korrelation koefficient med <code>nest()</code> og <code>map()</code>
+<ul>
+<li>Jeg gennemgår processen langsomt med en korrelationanalyse</li>
+<li>Jeg introducerer <code>glance</code> til at lave outputtet fra statistikse method i tidy-form.</li>
+</ul></li>
+</ul>
+<p>Link her hvis det ikke virker nedenunder: <a href="https://player.vimeo.com/video/709225323" class="uri">https://player.vimeo.com/video/709225323</a></p>
+<div class="vembedr">
+<div>
+<iframe class="vimeo-embed" src="https://player.vimeo.com/video/709225323" width="533" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<ul>
+<li>Video 2: Lineær regression linjer med ggplot2
+<ul>
+<li>Jeg viser hvordan man tilføjer regression linjer på et plot</li>
+<li>Jeg sammenligne linjen med resultatet fra <code>lm()</code></li>
+</ul></li>
+</ul>
+<p>Link her hvis det ikke virker nedenunder: <a href="https://player.vimeo.com/video/709225203" class="uri">https://player.vimeo.com/video/709225203</a></p>
+<div class="vembedr">
+<div>
+<iframe class="vimeo-embed" src="https://player.vimeo.com/video/709225203" width="533" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<ul>
+<li>Video 3: Lineær regression med <code>nest()</code> og <code>map()</code>
+<ul>
+<li>Den proces igen fra Video 1 men anvendte på lineær regression</li>
+</ul></li>
+</ul>
+<p>Link her hvis det ikke virker nedenunder: <a href="https://player.vimeo.com/video/709225158" class="uri">https://player.vimeo.com/video/709225158</a></p>
+<div class="vembedr">
+<div>
+<iframe class="vimeo-embed" src="https://player.vimeo.com/video/709225158" width="533" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<ul>
+<li>Video 4: Multiple linær regression model
+<ul>
+<li>Sammen processen men med flere modeller og multiple uafhængige variabler</li>
+</ul></li>
+</ul>
+<p>Link her hvis det ikke virker nedenunder: <a href="https://player.vimeo.com/video/709225266" class="uri">https://player.vimeo.com/video/709225266</a></p>
+<div class="vembedr">
+<div>
+<iframe class="vimeo-embed" src="https://player.vimeo.com/video/709225266" width="533" height="300" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" data-external="1"></iframe>
+</div>
+</div>
+<ul>
+<li>Video 5: ANOVA
+<ul>
+<li>Et eksempel på <code>map2</code> funktion for at sammenligne signifikans mellem modeller</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="nest-og-map-eksempel-med-korrelation" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> <code>nest()</code> og <code>map()</code>: eksempel med korrelation<a href="visualisering-af-trends.html#nest-og-map-eksempel-med-korrelation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Man kan lave en korrelation analyse i R ved at benytte <code>cor.test()</code>. For eksempel, forestille dig at du gerne vil finde ud af korrelationen mellem GC-indehold (variablen <code>gc</code>, procent G/C bases i genomet) og genomstørrelse (variablen <code>log10_size_mb</code>) for datasættet <code>eukaryotes</code> fra sidste lektion.
+I følgende plotter jeg en density mellem <code>gc</code> og den transformerede variable <code>log10_size_mb</code> som er log10 genomstørrelse.</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="visualisering-af-trends.html#cb435-1" aria-hidden="true" tabindex="-1"></a>eukaryotes <span class="ot">&lt;-</span> eukaryotes <span class="sc">%&gt;%</span> </span>
+<span id="cb435-2"><a href="visualisering-af-trends.html#cb435-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log10_size_mb =</span> <span class="fu">log10</span>(size_mb))</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="visualisering-af-trends.html#cb436-1" aria-hidden="true" tabindex="-1"></a>eukaryotes <span class="sc">%&gt;%</span> </span>
+<span id="cb436-2"><a href="visualisering-af-trends.html#cb436-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log10_size_mb =</span> <span class="fu">log10</span>(size_mb)) <span class="sc">%&gt;%</span></span>
+<span id="cb436-3"><a href="visualisering-af-trends.html#cb436-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(log10_size_mb,gc) <span class="sc">%&gt;%</span> </span>
+<span id="cb436-4"><a href="visualisering-af-trends.html#cb436-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb436-5"><a href="visualisering-af-trends.html#cb436-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>value,<span class="at">fill=</span>name)) <span class="sc">+</span> </span>
+<span id="cb436-6"><a href="visualisering-af-trends.html#cb436-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb436-7"><a href="visualisering-af-trends.html#cb436-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb436-8"><a href="visualisering-af-trends.html#cb436-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<pre><code>## Warning: Removed 388 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-425-1.png" width="672" /></p>
+<p>Plottet ser ud til at have flere topper og jeg mistænker, at der kan være nogle sub-struturer indenfor de data - ekempelvis pga. de forskellige organismer grupper i variablen <code>Group</code>. I følgende benytter jeg alligevel <code>cor.test()</code> til at teste for korrelation mellem <code>gc</code> og <code>log10_size_mb</code> over hele datasæt:</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="visualisering-af-trends.html#cb438-1" aria-hidden="true" tabindex="-1"></a>my_cor_test <span class="ot">&lt;-</span> <span class="fu">cor.test</span>(eukaryotes <span class="sc">%&gt;%</span> <span class="fu">pull</span>(gc),</span>
+<span id="cb438-2"><a href="visualisering-af-trends.html#cb438-2" aria-hidden="true" tabindex="-1"></a>                        eukaryotes <span class="sc">%&gt;%</span> <span class="fu">pull</span>(log10_size_mb))</span>
+<span id="cb438-3"><a href="visualisering-af-trends.html#cb438-3" aria-hidden="true" tabindex="-1"></a>my_cor_test</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  eukaryotes %&gt;% pull(gc) and eukaryotes %&gt;% pull(log10_size_mb)
+## t = -15.678, df = 11118, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.1652066 -0.1288369
+## sample estimates:
+##        cor 
+## -0.1470715</code></pre>
+<p>Outputtet fra <code>cor.test</code> (og mange andre metoder i R) er ikke særlig egnet til at bruge indenfor en dataframe, så jeg introducerer en funktion der hedder <code>glance()</code> som findes i R-pakken <code>broom</code>. Funktionen <code>glance()</code> anvendes til at tage den output fra en statistiske test (fk. <code>cor.test()</code>) og lave det om til et <strong>tidy</strong> dataramme. Det gøre det nemmere for eksempel til at lave et plot, eller samler op statistikker fra forskellige tests.</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="visualisering-af-trends.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb440-2"><a href="visualisering-af-trends.html#cb440-2" aria-hidden="true" tabindex="-1"></a>my_cor_test <span class="sc">%&gt;%</span> <span class="fu">glance</span>()</span></code></pre></div>
+<pre><code>FALSE # A tibble: 1 × 8
+FALSE   estimate statistic  p.value parameter conf.low conf.high method    alternative
+FALSE      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;      
+FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson&#39;… two.sided</code></pre>
+<p>Vi kan se at over hele datasættet, er der en signifikant negativ korrelation (estimate -0.147 og p-værdi 8.25054^{-55}) mellem de to variabler, men vi er dog stadig mistænksom overfor eventuelle forskelligheder blandt de fem grupper fra variablen <code>group</code>.</p>
+<p>Vi vil gerne gentage den samme analyse for de fem grupper fra variablen <code>group</code> hver for sig. En god tilgang til at undersøge det er at bruge den ramme med <code>group_by()</code> og <code>nest()</code> som vi lært sidste gange.</p>
+<div id="korrelation-over-flere-datasæt-på-en-gang" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Korrelation over flere datasæt på en gang<a href="visualisering-af-trends.html#korrelation-over-flere-datasæt-på-en-gang" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Jeg tjekker først fordelingen af de to variabler opdelt efter variablen <code>group</code>:</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="visualisering-af-trends.html#cb442-1" aria-hidden="true" tabindex="-1"></a>eukaryotes <span class="sc">%&gt;%</span></span>
+<span id="cb442-2"><a href="visualisering-af-trends.html#cb442-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(log10_size_mb,gc,group) <span class="sc">%&gt;%</span> </span>
+<span id="cb442-3"><a href="visualisering-af-trends.html#cb442-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>group) <span class="sc">%&gt;%</span></span>
+<span id="cb442-4"><a href="visualisering-af-trends.html#cb442-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>value,<span class="at">fill=</span>group)) <span class="sc">+</span> </span>
+<span id="cb442-5"><a href="visualisering-af-trends.html#cb442-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>,<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb442-6"><a href="visualisering-af-trends.html#cb442-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_histogram(bins=40,alpha=0.5,colour=&quot;black&quot;) +</span></span>
+<span id="cb442-7"><a href="visualisering-af-trends.html#cb442-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb442-8"><a href="visualisering-af-trends.html#cb442-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb442-9"><a href="visualisering-af-trends.html#cb442-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<pre><code>## Warning: Removed 388 rows containing non-finite values (stat_density).</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-428-1.png" width="672" /></p>
+<p>Vi kan se, at der er forskelligheder blandt de fem grupper og der sagtens kan forekommer forskellige sammenhænge mellem de to variabler. Vi benytter i følgende den <code>group_by()</code> + <code>nest()</code> ramme som blev introducerede sidste lektion.</p>
+<p><strong>Step 1: Benytte <code>group_by()</code> + <code>nest()</code></strong></p>
+<p>Jeg anvender <code>group_by</code> på variablen <code>group</code> og så funktionen <code>nest()</code> for at adskille <code>eukaryotes</code> i fem forskellige datasæt (lagrede i samme dataframe i en kolonne der hedder <code>data</code>):</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="visualisering-af-trends.html#cb444-1" aria-hidden="true" tabindex="-1"></a>eukaryotes_nest <span class="ot">&lt;-</span> eukaryotes <span class="sc">%&gt;%</span> </span>
+<span id="cb444-2"><a href="visualisering-af-trends.html#cb444-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span> </span>
+<span id="cb444-3"><a href="visualisering-af-trends.html#cb444-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>()</span>
+<span id="cb444-4"><a href="visualisering-af-trends.html#cb444-4" aria-hidden="true" tabindex="-1"></a>eukaryotes_nest</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 2
+## # Groups:   group [5]
+##   group    data                 
+##   &lt;chr&gt;    &lt;list&gt;               
+## 1 Other    &lt;tibble [51 × 19]&gt;   
+## 2 Protists &lt;tibble [888 × 19]&gt;  
+## 3 Plants   &lt;tibble [1,304 × 19]&gt;
+## 4 Fungi    &lt;tibble [6,064 × 19]&gt;
+## 5 Animals  &lt;tibble [3,201 × 19]&gt;</code></pre>
+<p><strong>Step 2: Definere korrelation funktion</strong></p>
+<p>Lad os definere den korrelation test mellem <code>gc</code> og <code>log10_size_mb</code> i en funktion.</p>
+<ul>
+<li>Brug <code>~</code> lige i starten for at fortælle R, at vi arbejde med en funktion.</li>
+<li>Specificer et bestemt datasæt (som er en delemængde af <code>eukaryotes</code>) indenfor <code>cor.test()</code> med <code>.x</code></li>
+<li>For det bestemt datasæt benytter jeg <code>.x %&gt;% pull(gc)</code> og <code>.x %&gt;% pull(size_mb)</code> til at udtrække de relevante værdier for at udføre testen <code>cor.test</code>.</li>
+</ul>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="visualisering-af-trends.html#cb446-1" aria-hidden="true" tabindex="-1"></a>cor_test <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">cor.test</span>(.x <span class="sc">%&gt;%</span> <span class="fu">pull</span>(gc),</span>
+<span id="cb446-2"><a href="visualisering-af-trends.html#cb446-2" aria-hidden="true" tabindex="-1"></a>                      .x <span class="sc">%&gt;%</span> <span class="fu">pull</span>(log10_size_mb))</span></code></pre></div>
+<p>Vi vil gerne få statistikker fra <code>cor.test()</code> i en pæn form så vi tilføjer <code>glance()</code> til ovenstående funktion:</p>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="visualisering-af-trends.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom) </span>
+<span id="cb447-2"><a href="visualisering-af-trends.html#cb447-2" aria-hidden="true" tabindex="-1"></a>my_cor_test <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">cor.test</span>(.x<span class="sc">$</span>gc,<span class="fu">log10</span>(.x<span class="sc">$</span>size_mb)) <span class="sc">%&gt;%</span> <span class="fu">glance</span>()</span></code></pre></div>
+<p><strong>Step 3: Bruge map() på det nested datasæt</strong></p>
+<p>Nu lad os køre vores funktion på den nested dataframe. Vi bruger <code>map()</code> til at lave funktionen <code>my_cor_test</code> for hver af de fem datasæt. Det gøres ved at bruge funktionen <code>map()</code> indenfor funktionen <code>mutate()</code> til at oprette en ny kolonne, der hedder <code>test_stats</code>, hvor resultaterne for hver af de fem tests lagres.</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="visualisering-af-trends.html#cb448-1" aria-hidden="true" tabindex="-1"></a>eukaryotes_cor <span class="ot">&lt;-</span> eukaryotes_nest <span class="sc">%&gt;%</span> </span>
+<span id="cb448-2"><a href="visualisering-af-trends.html#cb448-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">test_stats=</span><span class="fu">map</span>(data,my_cor_test))</span>
+<span id="cb448-3"><a href="visualisering-af-trends.html#cb448-3" aria-hidden="true" tabindex="-1"></a>eukaryotes_cor</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+## # Groups:   group [5]
+##   group    data                  test_stats      
+##   &lt;chr&gt;    &lt;list&gt;                &lt;list&gt;          
+## 1 Other    &lt;tibble [51 × 19]&gt;    &lt;tibble [1 × 8]&gt;
+## 2 Protists &lt;tibble [888 × 19]&gt;   &lt;tibble [1 × 8]&gt;
+## 3 Plants   &lt;tibble [1,304 × 19]&gt; &lt;tibble [1 × 8]&gt;
+## 4 Fungi    &lt;tibble [6,064 × 19]&gt; &lt;tibble [1 × 8]&gt;
+## 5 Animals  &lt;tibble [3,201 × 19]&gt; &lt;tibble [1 × 8]&gt;</code></pre>
+<p><strong>Step 4: Anvende <code>unnest()</code> for at kunne se resultaterne</strong></p>
+<p>For at kunne se statistikkerne bruger jeg funktionen <code>unnest()</code> på den nye variabel <code>test_stats</code>:</p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="visualisering-af-trends.html#cb450-1" aria-hidden="true" tabindex="-1"></a>eukaryotes_cor <span class="ot">&lt;-</span> eukaryotes_cor <span class="sc">%&gt;%</span></span>
+<span id="cb450-2"><a href="visualisering-af-trends.html#cb450-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(test_stats)</span>
+<span id="cb450-3"><a href="visualisering-af-trends.html#cb450-3" aria-hidden="true" tabindex="-1"></a>eukaryotes_cor</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 10
+## # Groups:   group [5]
+##   group    data     estimate statistic   p.value parameter conf.low conf.high
+##   &lt;chr&gt;    &lt;list&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;int&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1 Other    &lt;tibble&gt;   0.489       3.80 4.22e-  4        46  0.238      0.679 
+## 2 Protists &lt;tibble&gt;   0.301       9.26 1.54e- 19       860  0.239      0.361 
+## 3 Plants   &lt;tibble&gt;  -0.203      -7.37 3.10e- 13      1267 -0.255     -0.149 
+## 4 Fungi    &lt;tibble&gt;   0.377      31.2  3.87e-198      5884  0.355      0.399 
+## 5 Animals  &lt;tibble&gt;   0.0437      2.42 1.57e-  2      3053  0.00825    0.0790
+## # … with 2 more variables: method &lt;chr&gt;, alternative &lt;chr&gt;</code></pre>
+<p><strong>Step 5: Lave et plot fra statistikker</strong></p>
+<p>Vi kan bruge den direkte i et plot. Jeg fokuserer på den korrelaton koefficient i variablen <code>estimate</code> og omsætte den til et plot som i følgende:</p>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="visualisering-af-trends.html#cb452-1" aria-hidden="true" tabindex="-1"></a>cor_plot <span class="ot">&lt;-</span> eukaryotes_cor <span class="sc">%&gt;%</span></span>
+<span id="cb452-2"><a href="visualisering-af-trends.html#cb452-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>group,<span class="at">y=</span>estimate,<span class="at">fill=</span>group)) <span class="sc">+</span> </span>
+<span id="cb452-3"><a href="visualisering-af-trends.html#cb452-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">colour=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb452-4"><a href="visualisering-af-trends.html#cb452-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set3&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb452-5"><a href="visualisering-af-trends.html#cb452-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Corrlation estimate&quot;</span>) <span class="sc">+</span></span>
+<span id="cb452-6"><a href="visualisering-af-trends.html#cb452-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() </span>
+<span id="cb452-7"><a href="visualisering-af-trends.html#cb452-7" aria-hidden="true" tabindex="-1"></a>cor_plot</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-434-1.png" width="384" /></p>
+<p>Bemærk at den overordnede process her med <code>cor.test</code> ligner processen hvis man anvender andre metoder såsom <code>t.test</code>, <code>lm</code> osv. Jeg gennemgår lidt om lineær regression og visualisering, og dernæst anvende processen på et eksempel med funktionen <code>lm()</code> og datasættet <code>penguins</code>.</p>
+</div>
+</div>
+<div id="lineær-regression---visualisering" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Lineær regression - visualisering<a href="visualisering-af-trends.html#lineær-regression---visualisering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="lineær-trends" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Lineær trends<a href="visualisering-af-trends.html#lineær-trends" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Man kan se i følgende scatter plot mellem <code>bill_length_mm</code> og <code>body_mass_g</code> i datasættet <code>penguins</code>, at der er plottet en bedste rette linje igennem punkterne, som viser, at der er en positiv sammenhæng mellem de to variabler.</p>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-435-1.png" width="384" /></p>
+<p>Husk at den bedste rette linje har en formel <span class="math inline">\(y = a + bx\)</span>, hvor <span class="math inline">\(a\)</span> er den “intercept” (skæringspunktet) og <span class="math inline">\(b\)</span> er den “slope” (hældningen) af linjen, og idéen med simpel lineær regression er, at man gerne vil finde de bedste mulige værdier for <span class="math inline">\(a\)</span> og <span class="math inline">\(b\)</span> for at plotte ovenstående linje således, at afstanden mellem linjen og punkterne bliver minimeret. Uden at gå i detaljer om hvordan det beregnes, husk at man bruger funktionen <code>lm()</code> som i følgende:</p>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="visualisering-af-trends.html#cb454-1" aria-hidden="true" tabindex="-1"></a>mylm <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g<span class="sc">~</span>bill_length_mm,<span class="at">data=</span>penguins)</span>
+<span id="cb454-2"><a href="visualisering-af-trends.html#cb454-2" aria-hidden="true" tabindex="-1"></a>mylm</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = body_mass_g ~ bill_length_mm, data = penguins)
+## 
+## Coefficients:
+##    (Intercept)  bill_length_mm  
+##         388.85           86.79</code></pre>
+<p>Intercept er således 388.85 og slope er 86.79 - det betyder, at hvis variablen <code>bill_length_mm</code> stiger ved 1, så ville den forventede <code>body_mass_g</code> stiger ved 86.79. Man kan således bruge linjen til at lave forudsigelser. For eksempel, hvis jeg målet en ny pingvin og fandt ud af, at den havde en <code>bill_length_mm</code> af 50 mm, kunne jeg bruge min linje som den bedste gætte på dens <code>body_mass_g</code>:</p>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="visualisering-af-trends.html#cb456-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mylm<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="sc">+</span> mylm<span class="sc">$</span>coefficients[<span class="dv">2</span>]  <span class="sc">*</span> <span class="dv">50</span></span>
+<span id="cb456-2"><a href="visualisering-af-trends.html#cb456-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<pre><code>## (Intercept) 
+##    4728.433</code></pre>
+<p>Jeg forventer derfor en pingvin med en bill længde af 50 mm til at have vægten omkring 4728.4331411 g:</p>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-438-1.png" width="384" /></p>
+</div>
+<div id="geom_smooth-lm-trendlinjer" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> <code>geom_smooth()</code>: <code>lm</code> trendlinjer<a href="visualisering-af-trends.html#geom_smooth-lm-trendlinjer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Indbygget i <code>ggplot2</code> er en funktion der hedder <code>geom_smooth()</code> som kan bruges til at tilføje den bedste rette linje til plottet. Man benytter den ved at specificere <code>+ geom_smooth(method="lm")</code> indenfor plot-kommandoen:</p>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="visualisering-af-trends.html#cb459-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins,<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,<span class="at">y=</span>body_mass_g)) <span class="sc">+</span> </span>
+<span id="cb459-2"><a href="visualisering-af-trends.html#cb459-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb459-3"><a href="visualisering-af-trends.html#cb459-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb459-4"><a href="visualisering-af-trends.html#cb459-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-439-1.png" width="384" /></p>
+<p>Det er nemt at bruge og at man kan få en konfidensinterval med, hvis man gerne vil have den: i ovenstående plot specificeret jeg <code>se=FALSE</code> men hvis jeg angiv <code>se=TRUE</code> (default), får jeg følgende plot:</p>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="visualisering-af-trends.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins,<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,<span class="at">y=</span>body_mass_g)) <span class="sc">+</span> </span>
+<span id="cb461-2"><a href="visualisering-af-trends.html#cb461-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb461-3"><a href="visualisering-af-trends.html#cb461-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb461-4"><a href="visualisering-af-trends.html#cb461-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,<span class="at">se=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-440-1.png" width="384" /></p>
+</div>
+<div id="geom_smooth-flere-lm-trendlinjer-på-samme-plot" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">8.3.3</span> <code>geom_smooth()</code>: flere <code>lm</code> trendlinjer på samme plot<a href="visualisering-af-trends.html#geom_smooth-flere-lm-trendlinjer-på-samme-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For at tilføje en bedste rette linje til de tre <code>species</code> hver for sig i stedet for samtlige data, er det meget nemt i <code>ggplot</code>: man angiver bare <code>colour=species</code> indenfor aesthetics:</p>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="visualisering-af-trends.html#cb463-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins,<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,<span class="at">y=</span>body_mass_g,<span class="at">colour=</span>species)) <span class="sc">+</span> </span>
+<span id="cb463-2"><a href="visualisering-af-trends.html#cb463-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb463-3"><a href="visualisering-af-trends.html#cb463-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb463-4"><a href="visualisering-af-trends.html#cb463-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-441-1.png" width="480" /></p>
+<p>Så kan vi se, at der faktisk er tre forskellige trends her, så det giver god mening at bruge de tre forskellige linjer i stedet for kun en.</p>
+</div>
+<div id="trendlinjer-med-methodloess" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">8.3.4</span> Trendlinjer med <code>method=="loess"</code><a href="visualisering-af-trends.html#trendlinjer-med-methodloess" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>I <code>ggplot</code> er vi ikke begrænset til <code>method="lm"</code> indenfor <code>geom_smooth()</code>. Lad os afpøve i stedet <code>method="loess"</code>:</p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="visualisering-af-trends.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb465-2"><a href="visualisering-af-trends.html#cb465-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(penguins)</span>
+<span id="cb465-3"><a href="visualisering-af-trends.html#cb465-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins,<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,<span class="at">y=</span>body_mass_g,<span class="at">colour=</span>species)) <span class="sc">+</span> </span>
+<span id="cb465-4"><a href="visualisering-af-trends.html#cb465-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb465-5"><a href="visualisering-af-trends.html#cb465-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb465-6"><a href="visualisering-af-trends.html#cb465-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;loess&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-442-1.png" width="480" /></p>
+<p>Så kan man fange trends som ikke nødvendigvis er lineær. Men det er mere ligefrem at beskrive en lineær trend og bruge den til at beregne de nødvendige statistik til at støtte vores observationer.</p>
+</div>
+</div>
+<div id="plot-linear-regresion-estimates" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Plot linear regresion estimates<a href="visualisering-af-trends.html#plot-linear-regresion-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For at finde vores estimates og tjekke signifikansen af de lineær trend, arbejder man direkte med den lineær model funktion <code>lm</code> som i ovenstående:</p>
+<div class="sourceCode" id="cb467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb467-1"><a href="visualisering-af-trends.html#cb467-1" aria-hidden="true" tabindex="-1"></a>my_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g<span class="sc">~</span>bill_length_mm,<span class="at">data=</span>penguins)</span>
+<span id="cb467-2"><a href="visualisering-af-trends.html#cb467-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_lm)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = body_mass_g ~ bill_length_mm, data = penguins)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1759.38  -468.82    27.79   464.20  1641.00 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     388.845    289.817   1.342    0.181    
+## bill_length_mm   86.792      6.538  13.276   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 651.4 on 331 degrees of freedom
+## Multiple R-squared:  0.3475, Adjusted R-squared:  0.3455 
+## F-statistic: 176.2 on 1 and 331 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Husk de tal, som er vigtige her (se også emne 1 og 2):</p>
+<ul>
+<li>Den <strong>p-værdi</strong>: <code>&lt;2e-16</code> - uafhængige variablen <code>bill_length_mm</code> har en signifikant effekt.</li>
+<li>Den <strong>R-squared værdi</strong>: - det viser den proportion af variancen i <code>body_mass_g</code> som <code>bill_length_mm</code> forklarer:
+<ul>
+<li>hvis R-squared er tæt på 1, så er der tæt på en perfekt korrespondens mellem <code>bill_length_mm</code> og <code>body_mass_g</code>.</li>
+<li>hvis R-squared er tæt på 0, så er der nærmeste ingen korrespondens.</li>
+</ul></li>
+</ul>
+<div id="anvende-lm-over-nested-datasæt" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> Anvende <code>lm()</code> over nested datasæt<a href="visualisering-af-trends.html#anvende-lm-over-nested-datasæt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vi kan benytte den samme proces som ovenpå i korrelation analysen. Vi bruge <code>group_by</code> til at opdele efter de tre <code>species</code> og så nest de tre datarammer:</p>
+<div class="sourceCode" id="cb469"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb469-1"><a href="visualisering-af-trends.html#cb469-1" aria-hidden="true" tabindex="-1"></a>penguins_nest <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb469-2"><a href="visualisering-af-trends.html#cb469-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb469-3"><a href="visualisering-af-trends.html#cb469-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>()</span>
+<span id="cb469-4"><a href="visualisering-af-trends.html#cb469-4" aria-hidden="true" tabindex="-1"></a>penguins_nest</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+## # Groups:   species [3]
+##   species   data              
+##   &lt;fct&gt;     &lt;list&gt;            
+## 1 Adelie    &lt;tibble [146 × 7]&gt;
+## 2 Gentoo    &lt;tibble [119 × 7]&gt;
+## 3 Chinstrap &lt;tibble [68 × 7]&gt;</code></pre>
+<p>Vi vil gerne lave en model med <code>lm</code> som ovenpå, og vi tilføje <code>glance()</code> til at få de model statistikker i en pæn form.</p>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="visualisering-af-trends.html#cb471-1" aria-hidden="true" tabindex="-1"></a><span class="co">#husk ~ og skriv .x for data og IKKE penguins</span></span>
+<span id="cb471-2"><a href="visualisering-af-trends.html#cb471-2" aria-hidden="true" tabindex="-1"></a>lm_model_func <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">lm</span>(body_mass_g<span class="sc">~</span>bill_length_mm,<span class="at">data=</span>.x) <span class="sc">%&gt;%</span> <span class="fu">glance</span>()</span></code></pre></div>
+<p>Vi kører en lineær model på hver af de tre datasæt med <code>map</code> og ved at specifice funktion som vi defineret ovenpå. Vi bruger <code>mutate</code> ligesom før til at tilføje resulterende statistikker som en ny kolon der hedder <code>lm_stats</code>:</p>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="visualisering-af-trends.html#cb472-1" aria-hidden="true" tabindex="-1"></a>penguins_lm <span class="ot">&lt;-</span> penguins_nest <span class="sc">%&gt;%</span></span>
+<span id="cb472-2"><a href="visualisering-af-trends.html#cb472-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lm_stats=</span><span class="fu">map</span>(data,lm_model_func))</span>
+<span id="cb472-3"><a href="visualisering-af-trends.html#cb472-3" aria-hidden="true" tabindex="-1"></a>penguins_lm</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 3
+## # Groups:   species [3]
+##   species   data               lm_stats         
+##   &lt;fct&gt;     &lt;list&gt;             &lt;list&gt;           
+## 1 Adelie    &lt;tibble [146 × 7]&gt; &lt;tibble [1 × 12]&gt;
+## 2 Gentoo    &lt;tibble [119 × 7]&gt; &lt;tibble [1 × 12]&gt;
+## 3 Chinstrap &lt;tibble [68 × 7]&gt;  &lt;tibble [1 × 12]&gt;</code></pre>
+<p>Til sidste bruger vi funktionen <code>unnest()</code> på vores statistikker:</p>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="visualisering-af-trends.html#cb474-1" aria-hidden="true" tabindex="-1"></a>penguins_lm <span class="ot">&lt;-</span> penguins_lm <span class="sc">%&gt;%</span></span>
+<span id="cb474-2"><a href="visualisering-af-trends.html#cb474-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols=</span>lm_stats)</span>
+<span id="cb474-3"><a href="visualisering-af-trends.html#cb474-3" aria-hidden="true" tabindex="-1"></a>penguins_lm</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 14
+## # Groups:   species [3]
+##   species data     r.squared adj.r.squared sigma statistic  p.value    df logLik
+##   &lt;fct&gt;   &lt;list&gt;       &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Adelie  &lt;tibble&gt;     0.296         0.291  386.      60.6 1.24e-12     1 -1076.
+## 2 Gentoo  &lt;tibble&gt;     0.445         0.440  375.      93.6 1.26e-16     1  -873.
+## 3 Chinst… &lt;tibble&gt;     0.264         0.253  332.      23.7 7.48e- 6     1  -490.
+## # … with 5 more variables: AIC &lt;dbl&gt;, BIC &lt;dbl&gt;, deviance &lt;dbl&gt;,
+## #   df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+<p>Så kan vi se, at vi har fået en dataramme med vores lineær model statistikker. Jeg tager <code>r.squared</code> og <code>p.value</code> og omsætter dem til et plot for at sammenligne dem over de tre <code>species</code> af pingviner.</p>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="visualisering-af-trends.html#cb476-1" aria-hidden="true" tabindex="-1"></a>penguins_lm <span class="sc">%&gt;%</span> </span>
+<span id="cb476-2"><a href="visualisering-af-trends.html#cb476-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species,r.squared,p.value) <span class="sc">%&gt;%</span></span>
+<span id="cb476-3"><a href="visualisering-af-trends.html#cb476-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;-log10pval&quot;</span> <span class="ot">=</span> <span class="sc">-</span><span class="fu">log10</span>(p.value)) <span class="sc">%&gt;%</span></span>
+<span id="cb476-4"><a href="visualisering-af-trends.html#cb476-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>p.value) <span class="sc">%&gt;%</span></span>
+<span id="cb476-5"><a href="visualisering-af-trends.html#cb476-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span></span>
+<span id="cb476-6"><a href="visualisering-af-trends.html#cb476-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>species,<span class="at">y=</span>value,<span class="at">fill=</span>species)) <span class="sc">+</span> </span>
+<span id="cb476-7"><a href="visualisering-af-trends.html#cb476-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb476-8"><a href="visualisering-af-trends.html#cb476-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>) <span class="sc">+</span></span>
+<span id="cb476-9"><a href="visualisering-af-trends.html#cb476-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name,<span class="at">scale=</span><span class="st">&quot;free&quot;</span>,<span class="at">ncol=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb476-10"><a href="visualisering-af-trends.html#cb476-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb476-11"><a href="visualisering-af-trends.html#cb476-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-448-1.png" width="768" /></p>
+</div>
+<div id="funktion-glue-for-at-tilføje-labels" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> Funktion <code>glue()</code> for at tilføje labels<a href="visualisering-af-trends.html#funktion-glue-for-at-tilføje-labels" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Det kan være nyttig at tilføje nogle etiketter til vores plots med statistikkerne, vi lige har beregnet. Til at gøre det kan man bruge følgende kode. Vi tage vores datasæt <code>penguins_lm</code> med vores beregnet statistikker og bruge den til at lave en datasæt som kan bruges i <code>geom_text()</code> i vores trend plot. Funktionen <code>glue()</code> (fra pakken <code>glue</code>) er bare en nyttig måde at tilføj de <code>r.squared</code> og <code>p.value</code> værdier sammen i en “string,” som beskriver vores forskellige trends (lidt som <code>paste</code> fra base-R)</p>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="visualisering-af-trends.html#cb477-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)  <span class="co"># for putting the values together in a label</span></span>
+<span id="cb477-2"><a href="visualisering-af-trends.html#cb477-2" aria-hidden="true" tabindex="-1"></a>label_data <span class="ot">&lt;-</span> penguins_lm <span class="sc">%&gt;%</span></span>
+<span id="cb477-3"><a href="visualisering-af-trends.html#cb477-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb477-4"><a href="visualisering-af-trends.html#cb477-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">rsqr =</span> <span class="fu">signif</span>(r.squared, <span class="dv">2</span>),  <span class="co"># round to 2 significant digits</span></span>
+<span id="cb477-5"><a href="visualisering-af-trends.html#cb477-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">pval =</span> <span class="fu">signif</span>(p.value, <span class="dv">2</span>),</span>
+<span id="cb477-6"><a href="visualisering-af-trends.html#cb477-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">glue</span>(<span class="st">&quot;r^2 = {rsqr}, p-value = {pval}&quot;</span>)</span>
+<span id="cb477-7"><a href="visualisering-af-trends.html#cb477-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb477-8"><a href="visualisering-af-trends.html#cb477-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, label)</span>
+<span id="cb477-9"><a href="visualisering-af-trends.html#cb477-9" aria-hidden="true" tabindex="-1"></a>label_data</span></code></pre></div>
+<pre><code>FALSE # A tibble: 3 × 2
+FALSE # Groups:   species [3]
+FALSE   species   label                        
+FALSE   &lt;fct&gt;     &lt;glue&gt;                       
+FALSE 1 Adelie    r^2 = 0.3, p-value = 1.2e-12 
+FALSE 2 Gentoo    r^2 = 0.44, p-value = 1.3e-16
+FALSE 3 Chinstrap r^2 = 0.26, p-value = 7.5e-06</code></pre>
+<p>Vi kan tilføje vores label data indenfor <code>geom_text()</code>. <code>x</code> og <code>y</code> specificere hvor i plottet teksten skal være, og husk at specificere <code>data=label_data</code> og <code>label=label</code> skal stå indenfor <code>aes()</code> når det handler om en variable i <code>label_data</code>.</p>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="visualisering-af-trends.html#cb479-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins, <span class="fu">aes</span>(body_mass_g, flipper_length_mm, <span class="at">colour=</span>species)) <span class="sc">+</span> </span>
+<span id="cb479-2"><a href="visualisering-af-trends.html#cb479-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb479-3"><a href="visualisering-af-trends.html#cb479-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb479-4"><a href="visualisering-af-trends.html#cb479-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb479-5"><a href="visualisering-af-trends.html#cb479-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="dv">5500</span>, </span>
+<span id="cb479-6"><a href="visualisering-af-trends.html#cb479-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">175</span>,<span class="dv">180</span>,<span class="dv">185</span>),</span>
+<span id="cb479-7"><a href="visualisering-af-trends.html#cb479-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> label_data, <span class="fu">aes</span>(<span class="at">label =</span> label), <span class="co">#specify label data from above</span></span>
+<span id="cb479-8"><a href="visualisering-af-trends.html#cb479-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb479-9"><a href="visualisering-af-trends.html#cb479-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb479-10"><a href="visualisering-af-trends.html#cb479-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>) <span class="sc">+</span></span>
+<span id="cb479-11"><a href="visualisering-af-trends.html#cb479-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() </span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-450-1.png" width="576" /></p>
+</div>
+</div>
+<div id="multiple-regression-and-model-comparison" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Multiple regression and model comparison<a href="visualisering-af-trends.html#multiple-regression-and-model-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Man kan også bruge den samme ramme i ovenstående til at sammenligne forskellige modeller - her definer jeg <code>lm_model_func</code> der har kun <code>sex</code> som uafhængige variabel og så bygger jeg op på den model ved at definere <code>lm_model_func2</code> og <code>lm_model_func3</code>, hvor jeg tilføjer ekstra uafhængige variabler <code>bill_length_mm</code> og <code>flipper_length_mm</code>. Jeg er interesset i, hvor meget af variansen i <code>body_mass_g</code> de tre variabler forklarer tilsammen, og om der er forskelligeheder efter de tre arter i <code>species</code>.</p>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="visualisering-af-trends.html#cb481-1" aria-hidden="true" tabindex="-1"></a>lm_model_func <span class="ot">&lt;-</span>  <span class="er">~</span><span class="fu">lm</span>(body_mass_g <span class="sc">~</span> sex                                      ,<span class="at">data=</span>.x)</span>
+<span id="cb481-2"><a href="visualisering-af-trends.html#cb481-2" aria-hidden="true" tabindex="-1"></a>lm_model_func2 <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">lm</span>(body_mass_g <span class="sc">~</span> sex <span class="sc">+</span> bill_length_mm                     ,<span class="at">data=</span>.x)</span>
+<span id="cb481-3"><a href="visualisering-af-trends.html#cb481-3" aria-hidden="true" tabindex="-1"></a>lm_model_func3 <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">lm</span>(body_mass_g <span class="sc">~</span> sex <span class="sc">+</span> bill_length_mm <span class="sc">+</span> flipper_length_mm ,<span class="at">data=</span>.x)</span></code></pre></div>
+<p>Bemærk at jeg endnu ikke har tilføjet <code>glance()</code> her men jeg har tænkt mig at gøre det lidt senere i processen for at undgå, at jeg får alt for mange statistikker i min dataframe med mine resultater. Jeg anvender først <code>group_by()</code> efter <code>species</code> og <code>nest()</code>:</p>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="visualisering-af-trends.html#cb482-1" aria-hidden="true" tabindex="-1"></a>penguins_nest <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb482-2"><a href="visualisering-af-trends.html#cb482-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb482-3"><a href="visualisering-af-trends.html#cb482-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>()</span>
+<span id="cb482-4"><a href="visualisering-af-trends.html#cb482-4" aria-hidden="true" tabindex="-1"></a>penguins_nest</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+## # Groups:   species [3]
+##   species   data              
+##   &lt;fct&gt;     &lt;list&gt;            
+## 1 Adelie    &lt;tibble [146 × 7]&gt;
+## 2 Gentoo    &lt;tibble [119 × 7]&gt;
+## 3 Chinstrap &lt;tibble [68 × 7]&gt;</code></pre>
+<p>Her bruger jeg map tre gange indenfor sammen <code>mutate</code>, for at bygge de tre modeller for hver art (ni modeller i alt).</p>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="visualisering-af-trends.html#cb484-1" aria-hidden="true" tabindex="-1"></a>penguins_nest_lm <span class="ot">&lt;-</span> penguins_nest <span class="sc">%&gt;%</span> </span>
+<span id="cb484-2"><a href="visualisering-af-trends.html#cb484-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb484-3"><a href="visualisering-af-trends.html#cb484-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_sex =</span>              <span class="fu">map</span>(data,lm_model_func),</span>
+<span id="cb484-4"><a href="visualisering-af-trends.html#cb484-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_sex_bill =</span>         <span class="fu">map</span>(data,lm_model_func2),</span>
+<span id="cb484-5"><a href="visualisering-af-trends.html#cb484-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">model_sex_bill_flipper =</span> <span class="fu">map</span>(data,lm_model_func3))</span>
+<span id="cb484-6"><a href="visualisering-af-trends.html#cb484-6" aria-hidden="true" tabindex="-1"></a>penguins_nest_lm</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 5
+## # Groups:   species [3]
+##   species   data               model_sex model_sex_bill model_sex_bill_flipper
+##   &lt;fct&gt;     &lt;list&gt;             &lt;list&gt;    &lt;list&gt;         &lt;list&gt;                
+## 1 Adelie    &lt;tibble [146 × 7]&gt; &lt;lm&gt;      &lt;lm&gt;           &lt;lm&gt;                  
+## 2 Gentoo    &lt;tibble [119 × 7]&gt; &lt;lm&gt;      &lt;lm&gt;           &lt;lm&gt;                  
+## 3 Chinstrap &lt;tibble [68 × 7]&gt;  &lt;lm&gt;      &lt;lm&gt;           &lt;lm&gt;</code></pre>
+<p>Nu vil jeg gerne udtrækker nogle statistikkker fra modellerne så jeg kan sammenligne dem. Jeg vil gerne lave samme process på alle ni modeller - hvor jeg benytter functionen <code>glance</code> til at få outputtet i tidy-form, og så udtrækker <code>r.squared</code> bagefter til at undgå, at der kommer alt for mange statistikker i min nye dataframe.</p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="visualisering-af-trends.html#cb486-1" aria-hidden="true" tabindex="-1"></a>get_r2_func <span class="ot">&lt;-</span> <span class="er">~</span>.x <span class="sc">%&gt;%</span> <span class="fu">glance</span>() <span class="sc">%&gt;%</span> <span class="fu">pull</span>(r.squared)</span></code></pre></div>
+<p>Nu gælder det om at køre ovenstående funktion på alle mine modeller, som er lagret i tre kolonner, <code>model_sex</code>,<code>model_sex_bill</code> og <code>model_sex_bill_flipper</code>. Jeg gøre det indenfor <code>map</code> så det bliver også kørte til hver af de tre arter.</p>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="visualisering-af-trends.html#cb487-1" aria-hidden="true" tabindex="-1"></a>penguins_nest_lm <span class="ot">&lt;-</span>  penguins_nest_lm <span class="sc">%&gt;%</span></span>
+<span id="cb487-2"><a href="visualisering-af-trends.html#cb487-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model_sex_r2 =</span>              <span class="fu">map_dbl</span>(model_sex,              get_r2_func),</span>
+<span id="cb487-3"><a href="visualisering-af-trends.html#cb487-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">model_sex_bill_r2 =</span>         <span class="fu">map_dbl</span>(model_sex_bill,         get_r2_func),</span>
+<span id="cb487-4"><a href="visualisering-af-trends.html#cb487-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">model_sex_bill_flipper_r2 =</span> <span class="fu">map_dbl</span>(model_sex_bill_flipper, get_r2_func))</span>
+<span id="cb487-5"><a href="visualisering-af-trends.html#cb487-5" aria-hidden="true" tabindex="-1"></a>penguins_nest_lm <span class="sc">%&gt;%</span> <span class="fu">select</span>(species,model_sex_r2,model_sex_bill_r2,model_sex_bill_flipper_r2)</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 4
+## # Groups:   species [3]
+##   species   model_sex_r2 model_sex_bill_r2 model_sex_bill_flipper_r2
+##   &lt;fct&gt;            &lt;dbl&gt;             &lt;dbl&gt;                     &lt;dbl&gt;
+## 1 Adelie           0.545             0.563                     0.602
+## 2 Gentoo           0.649             0.691                     0.716
+## 3 Chinstrap        0.291             0.331                     0.476</code></pre>
+<p>Omsætte til et plot:</p>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="visualisering-af-trends.html#cb489-1" aria-hidden="true" tabindex="-1"></a>penguins_nest_lm <span class="sc">%&gt;%</span> </span>
+<span id="cb489-2"><a href="visualisering-af-trends.html#cb489-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(<span class="st">&quot;model_sex_r2&quot;</span>,<span class="st">&quot;model_sex_bill_r2&quot;</span>,<span class="st">&quot;model_sex_bill_flipper_r2&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb489-3"><a href="visualisering-af-trends.html#cb489-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>species,<span class="at">y=</span>value,<span class="at">fill=</span>name)) <span class="sc">+</span></span>
+<span id="cb489-4"><a href="visualisering-af-trends.html#cb489-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb489-5"><a href="visualisering-af-trends.html#cb489-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-456-1.png" width="480" /></p>
+<p>Man kan se i plottet, at <code>body_mass_g</code> i species “Gentoo” er bedste forklaret af de tre varibler, og den lavest <code>r.squared</code> er tilfælde hvor variablen <code>sex</code> er dene eneste uafhængig variable og <code>species</code> er “Chinstrap.”</p>
+<div id="anova-for-at-sammenligne-de-forskellige-modeller" class="section level3 hasAnchor" number="8.5.1">
+<h3><span class="header-section-number">8.5.1</span> <code>anova</code> for at sammenligne de forskellige modeller<a href="visualisering-af-trends.html#anova-for-at-sammenligne-de-forskellige-modeller" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Grunden til, at jeg valgt at bruge <code>glance()</code> i en ny funktion for at udtrække <code>r.squared</code> værdier, var fordi jeg gerne ville bevare mine modeller i rå form, så de kan bruges indenfor <code>anova()</code>. Med <code>anova()</code> kan jeg sammenligne to modeller direkte og får således en p-værdi hvor man teste hypotesen, hvor den ekstra variabler i den ene model forklarer den afhængig variabel signifikant (når man tager højde for de variabler, der er fælles til både modeller).</p>
+<p>I følgende skriver jeg en funktion hvor jeg kan sammenligne to modeller med <code>anova</code> og udtrækker p-værdien:</p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="visualisering-af-trends.html#cb490-1" aria-hidden="true" tabindex="-1"></a>aov_func <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">anova</span>(.x,.y) <span class="sc">%&gt;%</span> <span class="fu">tidy</span>() <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">&quot;p.value&quot;</span>,<span class="dv">2</span>)</span></code></pre></div>
+<ul>
+<li>~ fordi det er en funktion (som jeg benytter for hver art og model sammenligning - 9 gange i alt!)</li>
+<li><code>anova</code> for at sammenligne modellerne som er betegnet ved <code>.x</code> og <code>.y</code> (vi anvender <code>map2</code> som tager to input i stedet for én som i <code>map</code>)</li>
+<li><code>tidy()</code> er ligesom glance men angiver sumamry statistikker og flere linjer - herunder p-værdien</li>
+<li><code>pluck</code> - jeg vil have kun én statistik (“p.value”) - og det er lagret i anden plads.</li>
+</ul>
+<p>Se følgende kode for når man anvende <code>anova</code> og <code>tidy</code> på modellerne <code>model_sex</code> og <code>model_sex_bill</code> i species “Adelie” (da jeg benyttet <code>pluck</code> med “1” som betyder den først plads i listen):</p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="visualisering-af-trends.html#cb491-1" aria-hidden="true" tabindex="-1"></a>myaov <span class="ot">&lt;-</span> <span class="fu">anova</span>(penguins_nest_lm <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">&quot;model_sex&quot;</span>,<span class="dv">1</span>),</span>
+<span id="cb491-2"><a href="visualisering-af-trends.html#cb491-2" aria-hidden="true" tabindex="-1"></a>               penguins_nest_lm <span class="sc">%&gt;%</span> <span class="fu">pluck</span>(<span class="st">&quot;model_sex_bill&quot;</span>,<span class="dv">1</span>))</span>
+<span id="cb491-3"><a href="visualisering-af-trends.html#cb491-3" aria-hidden="true" tabindex="-1"></a>myaov <span class="sc">%&gt;%</span> tidy <span class="co">#p.value for comparing the two models is in the second position</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 × 6
+##   res.df       rss    df   sumsq statistic p.value
+##    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1    144 13884760.    NA     NA      NA    NA     
+## 2    143 13332955.     1 551805.      5.92  0.0162</code></pre>
+<p>Man kan se, at p-værdien er 0.016 som er signifikant og betyder at den mere ‘indviklet’ model der også inddrager <code>bill_length_mm</code> er den model, vi accepteror (effekten af variablen <code>bill_length_mm</code> på <code>body_mass_g</code> er signifikant).</p>
+<p>Man kan lave en lignende sammenligne mellem samtlige par modeller over de tre arter:</p>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="visualisering-af-trends.html#cb493-1" aria-hidden="true" tabindex="-1"></a>penguins_nest_lm <span class="ot">&lt;-</span>  penguins_nest_lm <span class="sc">%&gt;%</span></span>
+<span id="cb493-2"><a href="visualisering-af-trends.html#cb493-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">model_sex_vs_model_sex_bill =</span>              <span class="fu">map2_dbl</span>(model_sex,model_sex_bill,aov_func),</span>
+<span id="cb493-3"><a href="visualisering-af-trends.html#cb493-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">model_sex_vs_model_sex_bill_flipper =</span>      <span class="fu">map2_dbl</span>(model_sex,model_sex_bill_flipper,aov_func),</span>
+<span id="cb493-4"><a href="visualisering-af-trends.html#cb493-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">model_sex_bill_vs_model_sex_bill_flipper =</span> <span class="fu">map2_dbl</span>(model_sex_bill,model_sex_bill_flipper,aov_func))</span>
+<span id="cb493-5"><a href="visualisering-af-trends.html#cb493-5" aria-hidden="true" tabindex="-1"></a>penguins_nest_lm <span class="sc">%&gt;%</span> <span class="fu">select</span>(species,model_sex_vs_model_sex_bill,model_sex_vs_model_sex_bill_flipper,model_sex_bill_vs_model_sex_bill_flipper)</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 4
+## # Groups:   species [3]
+##   species   model_sex_vs_model_sex_bill model_sex_vs_model_sex… model_sex_bill_…
+##   &lt;fct&gt;                           &lt;dbl&gt;                   &lt;dbl&gt;            &lt;dbl&gt;
+## 1 Adelie                       0.0162                0.0000730         0.000273 
+## 2 Gentoo                       0.000142              0.00000592        0.00193  
+## 3 Chinstrap                    0.0540                0.0000621         0.0000795</code></pre>
+<p>Det kunne være nyttigt at inddrage p-værdier i ovenstående plot med <code>r.squared</code> værdierne, til at se om, der er en signifikant effekt når man tilføjer flere variabler til modellen samtidig at <code>r.squared</code> stiger. I følgende omsætter jeg <code>r.squared</code> statistikker til kun “Chunstrap” i et plot:</p>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="visualisering-af-trends.html#cb495-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggsignif) </span>
+<span id="cb495-2"><a href="visualisering-af-trends.html#cb495-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb495-3"><a href="visualisering-af-trends.html#cb495-3" aria-hidden="true" tabindex="-1"></a>stats_plot <span class="ot">&lt;-</span> penguins_nest_lm <span class="sc">%&gt;%</span> </span>
+<span id="cb495-4"><a href="visualisering-af-trends.html#cb495-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">==</span><span class="st">&quot;Chinstrap&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb495-5"><a href="visualisering-af-trends.html#cb495-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">c</span>(<span class="st">&quot;model_sex_r2&quot;</span>,<span class="st">&quot;model_sex_bill_r2&quot;</span>,<span class="st">&quot;model_sex_bill_flipper_r2&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb495-6"><a href="visualisering-af-trends.html#cb495-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>name,<span class="at">y=</span>value,<span class="at">fill=</span>name)) <span class="sc">+</span></span>
+<span id="cb495-7"><a href="visualisering-af-trends.html#cb495-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">position=</span><span class="st">&quot;dodge&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb495-8"><a href="visualisering-af-trends.html#cb495-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb495-9"><a href="visualisering-af-trends.html#cb495-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span>
+<span id="cb495-10"><a href="visualisering-af-trends.html#cb495-10" aria-hidden="true" tabindex="-1"></a>stats_plot</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-460-1.png" width="768" /></p>
+<p>I følgende tilføjer jeg funktionen <code>geom_signif</code> til plottet - det tillader, at jeg kan tilføje signifikans linjer/annotations til plottet - dvs. viser hvilke to modeller jeg sammenligner, og angiver stjerne efter beregnede p-værdierne. Du er velkommen til at kopier mine kode og tilpasse til egen behov.</p>
+<ul>
+<li>Når jeg sammenligne modellerne “model_sex” og “model_sex_bill” i “Chinstrap,” er p-værdien over 0.05, så tilføjelsen af <code>bill_length_mm</code> i modellen var ikke signifikant - jeg giver ingen stjerner men skriver “.” til at matcher outputtet i <code>lm</code>.</li>
+<li>Når jeg sammenligne modellerne “model_sex” og “model_sex_bill_flipper” kan jeg se at p-værdien er under 0.05, så der er en signifikant effekt - <code>bill_length_mm</code> og <code>flipper_length_mm</code> forklarer den afhængige variabel <code>body_mass_g</code>, ud over variablen <code>sex</code>. Jeg angiver "***" fordi p-værdien er under 0.001 (Se signif. codes i <code>lm</code> summary).</li>
+<li>Indstillingen <code>y_position</code> fortæller hvor jeg vil placerer linjerne.</li>
+</ul>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="visualisering-af-trends.html#cb496-1" aria-hidden="true" tabindex="-1"></a>stats_plot <span class="sc">+</span></span>
+<span id="cb496-2"><a href="visualisering-af-trends.html#cb496-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_signif</span>(<span class="at">comparisons =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;model_sex_r2&quot;</span>, <span class="st">&quot;model_sex_bill_r2&quot;</span>)), </span>
+<span id="cb496-3"><a href="visualisering-af-trends.html#cb496-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">annotations=</span><span class="st">&quot;.&quot;</span>, <span class="at">y_position =</span> <span class="fl">0.35</span>, <span class="at">tip_length =</span> <span class="fl">0.03</span>) <span class="sc">+</span></span>
+<span id="cb496-4"><a href="visualisering-af-trends.html#cb496-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_signif</span>(<span class="at">comparisons =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;model_sex_bill_r2&quot;</span>, <span class="st">&quot;model_sex_bill_flipper_r2&quot;</span>)), </span>
+<span id="cb496-5"><a href="visualisering-af-trends.html#cb496-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">annotations=</span><span class="st">&quot;***&quot;</span>, <span class="at">y_position =</span> <span class="fl">0.5</span>, <span class="at">tip_length =</span> <span class="fl">0.03</span>) <span class="sc">+</span></span>
+<span id="cb496-6"><a href="visualisering-af-trends.html#cb496-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_signif</span>(<span class="at">comparisons =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">&quot;model_sex_r2&quot;</span>, <span class="st">&quot;model_sex_bill_flipper_r2&quot;</span>)), </span>
+<span id="cb496-7"><a href="visualisering-af-trends.html#cb496-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">annotations=</span><span class="st">&quot;***&quot;</span>, <span class="at">y_position =</span> <span class="fl">0.55</span>, <span class="at">tip_length =</span> <span class="fl">0.03</span>)</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-461-1.png" width="768" /></p>
+</div>
+</div>
+<div id="problemstillinger-7" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Problemstillinger<a href="visualisering-af-trends.html#problemstillinger-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>0</strong>) Quizzen på Absalon.</p>
+<p>Husk at have indlæste følgende:</p>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="visualisering-af-trends.html#cb497-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb497-2"><a href="visualisering-af-trends.html#cb497-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb497-3"><a href="visualisering-af-trends.html#cb497-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb497-4"><a href="visualisering-af-trends.html#cb497-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code></pre></div>
+<p><strong>1</strong>) <em>Korrelation øvelse</em></p>
+<ul>
+<li><p>Brug <code>data(mtcars)</code> og <code>cor.test()</code> til at lave et test af korrelationen mellem variablerne <code>qsec</code> og <code>drat</code>.</p></li>
+<li><p>Tip: hvis du foretrækker at undgå <code>$</code> i analysen til at speciefice en kolon indenfor <code>cor.test()</code> kan du bruge <code>mtcars %&gt;% pull(qsec)</code> i stedet for <code>mtcars$qsec</code>.</p></li>
+<li><p>Tilføj funktionen <code>glance()</code> til din resultat fra <code>cor.test()</code> til at se de statistikker i <strong>tidy</strong> form. Kan du genkende de statistikker fra <code>cor.test()</code> i den resulterende dataramme?</p></li>
+</ul>
+<p><strong>2</strong>) <em>Nesting øvelse</em></p>
+<p>For datasættet <code>msleep</code> anvende <code>group_by()</code> og <code>nest()</code> til at få en nested datasæt opdelt efter variablen <code>vore</code>.</p>
+<ul>
+<li>Tilføj en ny kolon med <code>mutate</code> der hedder <code>n_rows</code> som beregner antallet af række i hver af de fire datasæt - husk følgende struktur (først angiv kolonnen som indeholder vores list af datasæt, og så angive funktionen som beregner antallet af række).</li>
+</ul>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="visualisering-af-trends.html#cb498-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
+<span id="cb498-2"><a href="visualisering-af-trends.html#cb498-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cyl) <span class="sc">%&gt;%</span> </span>
+<span id="cb498-3"><a href="visualisering-af-trends.html#cb498-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb498-4"><a href="visualisering-af-trends.html#cb498-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;n_rows&quot;</span> <span class="ot">=</span> <span class="fu">map</span>(???,???)) <span class="co">#erstatte ??? her</span></span></code></pre></div>
+<ul>
+<li>I dette tilfælde kan man ændre <code>map</code> til <code>map_dbl</code>.</li>
+</ul>
+<p><strong>4</strong>) <em>Multiple korrelation</em></p>
+<p>Vi vil gerne beregne den korrelation mellem variablerne <code>sleep_total</code> og <code>sleep_rm</code> til hver af de tre datasæt.</p>
+<ul>
+<li>Tilpasse følgende funktion så at vi teste korrelation mellem de to variabler.</li>
+<li>Tilføje <code>glance()</code> så at vi få vores data i <strong>tidy</strong> form.</li>
+</ul>
+<div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="visualisering-af-trends.html#cb499-1" aria-hidden="true" tabindex="-1"></a>cor_test <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">cor.test</span>(????,???) <span class="co">#erstatte ??? og tilføj glance funktion</span></span></code></pre></div>
+<ul>
+<li>Brug map i nedenstående med din funktion til at beregne de korrelation til hver af de fire datasæt.</li>
+<li>Unnest din nye kolonne bagefter</li>
+</ul>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="visualisering-af-trends.html#cb500-1" aria-hidden="true" tabindex="-1"></a>msleep <span class="sc">%&gt;%</span> </span>
+<span id="cb500-2"><a href="visualisering-af-trends.html#cb500-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(vore) <span class="sc">%&gt;%</span> </span>
+<span id="cb500-3"><a href="visualisering-af-trends.html#cb500-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb500-4"><a href="visualisering-af-trends.html#cb500-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cor_stats =</span> ???) <span class="co">#erstatte ??? her og husk unnest</span></span></code></pre></div>
+<ul>
+<li>Lave barplots af <code>estimate</code> og <code>-log10(p.value)</code> med den resulterende dataramme</li>
+</ul>
+<p><strong>6</strong>) <em>Linear regression øvelse</em></p>
+<p>Brug <code>data(iris)</code> og anvende <code>lm()</code> til at finde den forventet <code>Petal.Length</code> med hensyn til <code>Petal.Width</code>.</p>
+<ul>
+<li>Hvad er den intercept og slope af den beregnet linje?</li>
+<li>Tilføj funktionen <code>glance()</code> og angive værdier <code>r.squared</code> og <code>p.value</code>.</li>
+</ul>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="visualisering-af-trends.html#cb501-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(??? <span class="sc">~</span> ???,<span class="at">data=</span>???) <span class="co">#erstatte ???</span></span></code></pre></div>
+<p><strong>7</strong>) Lave et scatter plot af Petal.Width på x-aksen og Petal.Length på y-aksen.</p>
+<ul>
+<li>Tilføje linjen <code>geom_smooth(method="smooth")</code></li>
+<li>Ændre linjen til <code>geom_smooth(method="lm")</code></li>
+<li>Ændre linjen til <code>geom_smooth(method="lm",se=FALSE)</code></li>
+<li>Nu specificer en forskellige farve efter Species. Er der forskellige trends?</li>
+</ul>
+<p>Vi vil gerne lave samme analyse for hver af de tre Species.</p>
+<p><strong>8</strong>) <em>Lineær regression øvelse over multiple datasæt</em></p>
+<p>Vi vil gerne udføre lineær regression med Petal.Length og Petal.Width som i <strong>6</strong>), men opdelt efter de tre Species.
+* Lave en funktion ved at tilpasse følgende kode. Passe på hvad <code>data</code> skal være lig med her (når vi skriver en funktion).
+* Tilføj <code>glance()</code>.</p>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="visualisering-af-trends.html#cb502-1" aria-hidden="true" tabindex="-1"></a>lm_model_func <span class="ot">&lt;-</span> ???<span class="fu">lm</span>(??? <span class="sc">~</span> ???,<span class="at">data=</span>???) <span class="co">#erstat ??? </span></span></code></pre></div>
+<ul>
+<li>Anvende <code>group_by()</code> og <code>nest()</code></li>
+<li>Anvende <code>map()</code> med din funktion indenfor <code>mutate()</code> til at tilføje en ny kolon som hedder <code>lm_stats</code> til din dataramme.</li>
+<li>Husk at <code>unnest</code> kolonnen <code>lm_stats</code>til at kunne se statistikker.</li>
+</ul>
+<!-- __Problem 10)__ Tilbage til `LungCapData`! -->
+<!-- Åbn `LungCapData` (herunder `Age.Groups`) -->
+<!-- ```{r} -->
+<!-- LungCapData <- read.csv("https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1") -->
+<!-- head(LungCapData) #se variabler navne -->
+<!-- LungCapData$Age.Group <- cut(LungCapData$Age,breaks=c(1,13,15,17,19),right=FALSE,include.lowest = TRUE) -->
+<!-- levels(LungCapData$Age.Group) <- c("<13","13-14","15-16","17+") -->
+<!-- ``` -->
+<!-- __a__)  `group_by` +  `summarise` løsning -->
+<!-- Anvende `group_by` på både `Age.Group` og `Smoke` og bruge `summarise` for at beregn den gennemsnitlige `LungCap` til kombinationerne af `Age.Group` og `Smoke`. -->
+<!-- ```{r} -->
+<!-- LungCapData %>%  -->
+<!--   group_by(Age.Group,Smoke) %>% -->
+<!--   summarise("meanLC" = mean(LungCap)) -->
+<!-- ``` -->
+<!-- __b__)  `group_by` +  `nest` løsning -->
+<!-- * Første group_by og nest() -->
+<!-- ```{r} -->
+<!-- LungCapData_nest <- LungCapData %>%  -->
+<!--   group_by(Age.Group) %>%  -->
+<!--   nest() -->
+<!-- LungCapData_nest -->
+<!-- ``` -->
+<!-- For hver dataframe hver for sig, vil vi gerne beregn `LungCap` opdelte efter variablen `Smoke` -->
+<!-- * Lav funktionen færdig - `group_by` Smoke og `summarise` for at beregn mean LungCap -->
+<!-- ```{r} -->
+<!-- myfunc <- ~.x %>%  -->
+<!--   group_by(Smoke) %>%  -->
+<!--   summarise("meanLC" = mean(LungCap)) -->
+<!-- ``` -->
+<!-- * Nu anvend den funktion med `map` (opret ny kolonne der hedder "result") -->
+<!-- ```{r} -->
+<!-- LungCapData_nest <- LungCapData_nest %>%  -->
+<!--   mutate("result" = map(data,myfunc))  -->
+<!-- LungCapData_nest -->
+<!-- ``` -->
+<!-- * Anvend  -->
+<!-- ```{r} -->
+<!-- LungCapData_nest %>% unnest(result) -->
+<!-- ``` -->
+<!-- Nu lad os kig på noget vi ikke bare kun bruge `group_by` og `summarise` -->
+<!-- * Erstatte `myfunc` med følgende funktion -->
+<!-- ```{r} -->
+<!-- myfunc <- ~t.test(.x %>% filter(Smoke=="no") %>% pull(LungCap), -->
+<!--                   .x %>% filter(Smoke=="yes") %>% pull(LungCap)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- LungCapData_nest <- LungCapData_nest %>%  -->
+<!--   mutate("test" = map(data,myfunc)) -->
+<!-- LungCapData_nest %>% pluck("test",1) -->
+<!-- ``` -->
+<!-- * map2 løsning -->
+<!-- ```{r} -->
+<!-- myfunc1 <- ~.x %>% filter(Smoke=="no") %>% pull(LungCap) -->
+<!-- myfunc2 <- ~.x %>% filter(Smoke=="yes") %>% pull(LungCap) -->
+<!-- LungCapData_nest <- LungCapData_nest %>%  -->
+<!--   mutate("smokeyes" = map(data,myfunc1), -->
+<!--          "smokeno" = map(data,myfunc2)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- myfunc <- ~t.test(.x,.y) -->
+<!-- LungCapData_nest <- LungCapData_nest %>%  -->
+<!--   mutate("test" = map2(smokeyes,smokeno,myfunc)) -->
+<!-- ``` -->
+<!-- * Bemærk at man ikke kan bare brug en almindelig mutate funktion (du kan prøve!): -->
+<!-- ```{r,eval=F} -->
+<!-- LungCapData_nest %>%  -->
+<!--   mutate("test" = t.test(smokeyes,smokeno)) -->
+<!-- ``` -->
+<!-- * Tage statistik -->
+<!-- ```{r} -->
+<!-- get_pval <- ~.x$p.value -->
+<!-- LungCapData_nest %>% mutate("p-val" = map_dbl(test,get_pval)) -->
+<!-- ``` -->
+<!-- * Try glance -->
+<!-- ```{r} -->
+<!-- library(broom) -->
+<!-- get_pval <- ~.x %>% glance() -->
+<!-- LungCapData_nest <- LungCapData_nest %>% mutate("test_glance" = map(test,get_pval))  -->
+<!-- LungCapData_nest %>% unnest(test_glance) -->
+<!-- ``` -->
+<!-- * Bygge op på en model -->
+<!-- ```{r} -->
+<!-- LungCapData_nest <- LungCapData %>%  -->
+<!--   group_by(Smoke) %>%  -->
+<!--   nest() -->
+<!-- my_lm_func <- ~lm(LungCap ~ Age,data=.x) %>%  -->
+<!--   glance() %>%  -->
+<!--   pull(r.squared) -->
+<!-- LungCapData_nest <- LungCapData_nest %>% -->
+<!--   mutate("rsq"=map_dbl(data,my_lm_func))  -->
+<!-- LungCapData_nest -->
+<!-- ``` -->
+<!-- __Problem 12__ -->
+<!-- ```{r} -->
+<!-- my_lm_func <-  ~lm(LungCap ~ Age                  ,data=.x)  -->
+<!-- my_lm_func2 <- ~lm(LungCap ~ Age + Gender         ,data=.x)  -->
+<!-- my_lm_func3 <- ~lm(LungCap ~ Age + Gender + Height,data=.x) -->
+<!-- LungCapData_nest <- LungCapData_nest %>% -->
+<!--   mutate("Age_only" = map(data,my_lm_func), -->
+<!--          "Age_Gender"=map(data,my_lm_func2), -->
+<!--          "Age_Gender_Height"=map(data,my_lm_func3)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- my_r2_func <- ~.x %>% glance() %>% pluck("r.squared",1) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- LungCapData_nest <- LungCapData_nest %>% -->
+<!--   mutate("Age_only_R2" = map_dbl(Age_only,my_r2_func), -->
+<!--          "Age_Gender_R2"=map_dbl(Age_Gender,my_r2_func), -->
+<!--          "Age_Gender_Height_R2"=map_dbl(Age_Gender_Height,my_r2_func)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- lord <- c("Age_only_R2","Age_Gender_R2","Age_Gender_Height_R2") -->
+<!-- LungCapData_nest %>%  -->
+<!--   pivot_longer(cols=c("Age_only_R2","Age_Gender_R2","Age_Gender_Height_R2")) %>% -->
+<!--   ggplot(aes(x=Smoke,y=value,fill=factor(name,lord))) +  -->
+<!--   geom_bar(stat="identity",position="dodge",colour="black") +  -->
+<!--   theme_minimal() +  -->
+<!--   ggtitle("Age, Gender and Height explain Lung Capacity \n better in non-smokers than in smokers") -->
+<!-- ``` -->
+<!-- __Problem 13__ -->
+<!-- ```{r} -->
+<!-- my_aov_func <- ~anova(.x,.y) %>% tidy() %>% pluck("p.value",2) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- LungCapData_nest <- LungCapData_nest %>%  -->
+<!--   mutate(Age_only_vs_Age_Gender = map2_dbl(Age_only,Age_Gender,my_aov_func)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- LungCapData_nest %>% -->
+<!--   ggplot(aes(x=Smoke,y=-log10(Age_only_vs_Age_Gender))) +  -->
+<!--   geom_bar(stat="identity") +  -->
+<!--   geom_hline(yintercept=-log10(0.05)) + coord_flip() + theme_bw() -->
+<!-- ``` -->
+</div>
+<div id="ekstra" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Ekstra<a href="visualisering-af-trends.html#ekstra" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><a href="https://www.tidymodels.org/learn/statistics/tidy-analysis/" class="uri">https://www.tidymodels.org/learn/statistics/tidy-analysis/</a></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="functional-programming-med-purrr-pakken.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["visualisering_22.pdf", "visualisering_22.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

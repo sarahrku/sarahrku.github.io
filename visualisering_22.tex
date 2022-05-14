@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-08}
+\date{Last updated: 2022-05-14}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.265972531 -0.331498322  0.940048362  0.825606719 -0.298060821
-##  [6]  1.477987148  0.739834277 -1.142197869 -0.862502040 -0.270543385
-## [11] -1.166426383  0.488526059 -2.068365786 -0.559946692  0.146608556
-## [16] -0.034220778 -0.384662006  0.006655856  0.913806759 -0.250762540
-## [21]  0.551690717 -0.402548685 -0.598887172 -1.021604469  0.650150378
+##  [1] -0.924426488  0.073510503  1.114479769  0.008979678 -0.247115622
+##  [6] -0.207441639 -0.535396502 -1.146572183  0.924120019 -0.781595439
+## [11] -0.236799154 -0.291483916  0.765920309  0.200878390 -0.176209802
+## [16]  1.044110153  1.523515297 -0.741189270 -0.880689861 -0.988952599
+## [21] -1.319001605  2.979136211  1.349703144  0.723721764  1.047398302
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,14 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.2659725 {-}0.3314983  0.9400484  0.8256067 {-}0.2980608  1.4779871}
+\DocumentationTok{\#\# [1] {-}0.924426488  0.073510503  1.114479769  0.008979678 {-}0.247115622}
+\DocumentationTok{\#\# [6] {-}0.207441639}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.2507625  0.5516907 {-}0.4025487 {-}0.5988872 {-}1.0216045  0.6501504}
+\DocumentationTok{\#\# [1] {-}0.9889526 {-}1.3190016  2.9791362  1.3497031  0.7237218  1.0473983}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.2659725}
+\DocumentationTok{\#\# [1] {-}0.9244265}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.6501504}
+\DocumentationTok{\#\# [1] 1.047398}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +666,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.1166914 -0.2659725  1.4779871 -2.0683658  0.6624508  0.8139108
+## [1]  0.1311440 -0.1762098  2.9791362 -1.3190016  1.0588868  1.0290223
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -678,7 +679,7 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -2.0684 -0.5599 -0.2660 -0.1167  0.5517  1.4780
+## -1.3190 -0.7412 -0.1762  0.1311  0.9241  2.9791
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -5874,8 +5875,17 @@ Vi laver vores summary statistics som i ovenstående.
             \AttributeTok{meanSurvived =} \FunctionTok{mean}\NormalTok{(Survived),}
             \AttributeTok{meanAge =} \FunctionTok{mean}\NormalTok{(Age),}
             \AttributeTok{propFirst =} \FunctionTok{sum}\NormalTok{(Pclass}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{())}
+\NormalTok{titanic\_clean\_summary\_by\_sex}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 5
+##   Sex    count meanSurvived meanAge propFirst
+##   <chr>  <int>        <dbl>   <dbl>     <dbl>
+## 1 female   261        0.755    27.9     0.326
+## 2 male     453        0.205    30.7     0.223
+\end{verbatim}
 
 \begin{itemize}
 \tightlist
@@ -5883,7 +5893,7 @@ Vi laver vores summary statistics som i ovenstående.
   \texttt{pivot\_longer()}
 \end{itemize}
 
-Vi transformerer eller \textbf{reshape} datarammen fra wide data til long data. Vi vil få kun de numeriske summary statistics samlede i en enkel kolon, så variablen \texttt{Sex} skal ikke med.
+Vi transformerer eller \textbf{reshape} datarammen fra wide data til long data. Vi vil få kun de numeriske summary statistics samlede i en enkel kolonne, så variablen \texttt{Sex} skal indgå i den enkel kolonne.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6189,7 +6199,7 @@ Nu at vi har fået forbundet de to datarammer, kan man inddrage de ekstra oplysn
 \begin{itemize}
 \tightlist
 \item
-  I samme kommando beregne også den maksimum alder og minimum alder, samt proportionen af passagerer, der er under 18. Datarammen skal ser sådan ud:
+  I samme kommando beregne også den maksimum alder og minimum alder, samt proportionen af passagerer, der er under 18 (for den sidste se mit eksempel med \texttt{Pclass} oven på). Dataframen skal ser sådan ud:
 \end{itemize}
 
 \begin{verbatim}
@@ -6224,17 +6234,17 @@ Nu at vi har fået forbundet de to datarammer, kan man inddrage de ekstra oplysn
 \item
   OBS: Man får en advarsel ``\texttt{summarise()} has grouped output by `Pclass' \ldots{}'' fordi din dataframe er stadig betragtet som opdelte efter \texttt{Pclass}, som du skal tage i betragtning hvis du laver flere beregninger på den.
 \item
-  Brug til sidste \texttt{ungroup()} på din nye dataframe fir at være sikker på, at den ikke længere er opdelt efter en variabel.
+  Brug til sidste \texttt{ungroup()} på din nye dataframe for at være sikker på, at den ikke længere er opdelt efter en variabel.
 \end{itemize}
 
-\textbf{b)} Brug \texttt{pivot\_longer} til at få datasættet i long form (tænk over hvilke variabler skal være i indstillingen \texttt{cols}), hvor nøglekolonnen hedder \texttt{stat} og kolonnen med værdierne hedder \texttt{values}.
+\textbf{b)} Brug \texttt{pivot\_longer} til at få datasættet i long form (tænk over hvilke variabler skal være i indstillingen \texttt{cols} - det kan hjælp at skrive dem i en vector med notationen \texttt{c()}). Nøglekolonnen skal hed \texttt{stat} og kolonnen med værdierne skal hed \texttt{values}.
 
 \begin{verbatim}
 ## `summarise()` has grouped output by 'Pclass'. You can override using the
 ## `.groups` argument.
 \end{verbatim}
 
-\textbf{c)} Lav et plot af din summary statistikker, som er i long form og ser ud som følgende plot.
+\textbf{c)} Lav et plot af samtlige summary statistikker, som er i long form og ser ud som følgende plot.
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-333-1.pdf}
 
@@ -6247,7 +6257,7 @@ Nu at vi har fået forbundet de to datarammer, kan man inddrage de ekstra oplysn
 \item
   Anvend \texttt{ungroup()} når du er færdig med summarise
 \item
-  Lave et plot for at visualisere datasættet. Idé: som mulighed kan man tilføje variabler til \texttt{facet\_grid()} - for eksempel \texttt{facet\_grid(\textasciitilde{}Var1\ +\ Var2)}.
+  Lave et plot for at visualisere \texttt{meanFare}. Idé: som mulighed kan man tilføje variabler til \texttt{facet\_grid()} - for eksempel \texttt{facet\_grid(\textasciitilde{}Var1\ +\ Var2)}.
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -6395,15 +6405,2328 @@ Køre nedenstående kode, hvor der er to dataframes - \texttt{iris2} og \texttt{
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Problem 11)} Valgfri ekstra hvis man er færdig: lav en ny dataramme med alle passagerer, der hedder ``Alice'' eller ``Elizabeth'' (brug Google her).
+\textbf{Problem 11)} Valgfri ekstra: lav en ny dataramme med alle passagerer, der hedder ``Alice'' eller ``Elizabeth'' (brug Google her).
 
-\hypertarget{analyse-og-visualisering-af-biologiske-datasuxe6t-konkurrence}{%
-\section{Analyse og visualisering af biologiske datasæt konkurrence!}\label{analyse-og-visualisering-af-biologiske-datasuxe6t-konkurrence}}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 12)} Analyse og visualisering af biologiske datasæt konkurrence!
+
+\begin{itemize}
+\tightlist
+\item
+  Når du færdig med ovenstående husk at få lavet dit plot til konkurrencen!!
+\item
+  Se siden på Absalon for yderligere detaljer
+\end{itemize}
 
 \hypertarget{ekstra-links-2}{%
 \section{Ekstra links}\label{ekstra-links-2}}
 
 Cheatsheet: \url{https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf}
+
+\hypertarget{functional-programming-med-purrr-pakken}{%
+\chapter{Functional programming med purrr-pakken}\label{functional-programming-med-purrr-pakken}}
+
+\includegraphics[width=0.15\linewidth]{plots/hex-tidyverse}
+\includegraphics[width=0.15\linewidth]{plots/purrr}
+
+\hypertarget{inledning-og-luxe6ringsmuxe5lene}{%
+\section{Inledning og læringsmålene}\label{inledning-og-luxe6ringsmuxe5lene}}
+
+Emnet handler om hvordan man kan inddrage funktioner for at øge reproducebarhed og gennemskuelighed i dine analyser. Det er ofte tilfældet i biologi, at man har flere datasæts eller variabler, der referer fk. til forskellige samples, replikator eller batches, og man gerne vil lave præcis samme proces på dem alle sammen samtidig.
+
+I dette emne beskæftiger du dig med især pakken \texttt{Purrr} og \texttt{map()} funktioner, som kan benyttes til at lave gentagne baserende analyser i \texttt{R}.
+
+\hypertarget{luxe6ringsmuxe5lene-2}{%
+\subsection{Læringsmålene}\label{luxe6ringsmuxe5lene-2}}
+
+I skal være i stand til at:
+
+\begin{itemize}
+\tightlist
+\item
+  Anvende \texttt{map()} - funktioner til at udføre beregninger iterativt over flere kolonner
+\item
+  \texttt{group\_by()} og \texttt{nest()} til at lave reproducerbar analyser over forskellige dele af datasættet.
+\item
+  Kombinere \texttt{map()} og \texttt{map2()} med custom funktioner for at øge fleksibilitet i analyserne.
+\end{itemize}
+
+\hypertarget{video-ressourcer-3}{%
+\subsection{Video ressourcer}\label{video-ressourcer-3}}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 1: Introduction to map functions for iterating over columns
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/549630848}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 2: Introduction to custom functions and combining them with map
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/549630825}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 3: Introduction to nest functions for breaking data into sections
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/549630798}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 4: Introduction to map2 functions
+\end{itemize}
+
+\hypertarget{iterativ-processer-med-map-fuktioner}{%
+\section{\texorpdfstring{Iterativ processer med \texttt{map()} fuktioner}{Iterativ processer med map() fuktioner}}\label{iterativ-processer-med-map-fuktioner}}
+
+Når man lave en interativ proces, vil man gerne lave samme ting gentagne gange. Det kan være for eksempel, at vi har ti variabler og vi gerne vil beregne middelværdien for hver variable. Vi arbejder med datasættet \texttt{eukaryotes}, som indeholder oplysninger om forskellige organismer som hører til eukaryotes - for eksempel deres navne, gruppe, sub-gruppe, antal proteins/genes, genom størrelse og så videre. Man kan få de data indlæste med følgende kommando og se en list over for de forskellige kolon navne nedenfor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes }\OtherTok{\textless{}{-}} \FunctionTok{read\_tsv}\NormalTok{(}\StringTok{"https://www.dropbox.com/s/3u4nuj039itzg8l/eukaryotes.tsv?dl=1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 11508 Columns: 19
+## -- Column specification --------------------------------------------------------
+## Delimiter: "\t"
+## chr  (10): organism_name, bioproject_accession, group, subgroup, assembly_ac...
+## dbl   (7): taxid, bioproject_id, size_mb, gc, scaffolds, genes, proteins
+## date  (2): release_date, modify_date
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+Vi tager udgangspunkt i kun fire variabler, så for at gøre tingene mere overskuelige, har jeg brugt \texttt{select()} til at kun får de fire variabler \texttt{organism\_name},\texttt{center},\texttt{group} og \texttt{subgroup} i en dataframe
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#eukaryotes\_full \textless{}{-} eukaryotes}
+\NormalTok{eukaryotes\_subset }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(organism\_name, center, group, subgroup)}
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 11,508
+## Columns: 4
+## $ organism_name <chr> "Pyropia yezoensis", "Emiliania huxleyi CCMP1516", "Arab~
+## $ center        <chr> "Ocean University", "JGI", "The Arabidopsis Information ~
+## $ group         <chr> "Other", "Protists", "Plants", "Plants", "Plants", "Plan~
+## $ subgroup      <chr> "Other", "Other Protists", "Land Plants", "Land Plants",~
+\end{verbatim}
+
+Lad os forestille os, at vi gerne vil beregne antallet af unikke organismer (variablen \texttt{organism\_name}). Der er en funktion der hedder \texttt{n\_distinct} som beregner antallet af unikke værdier i en vector/variable. Her vælger vi \texttt{organism\_name} og så tilføjer \texttt{n\_distinct()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(organism\_name) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{n\_distinct}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6111
+\end{verbatim}
+
+Lad os forestille os, at vi også er interesseret i antallet af unikke værdier i variablerne \texttt{center}, \texttt{group} og \texttt{subgroup} - som er de tre andre kolonner i datasættet. Vi har forskellige muligheder:
+
+\begin{itemize}
+\tightlist
+\item
+  Skrive dem ud - men hvad nu hvis vi havde 100 variabler at håndtere?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(organism\_name) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{n\_distinct}\NormalTok{()}
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(center) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{n\_distinct}\NormalTok{()}
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{n\_distinct}\NormalTok{()}
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(subgroup) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{n\_distinct}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6111
+## [1] 2137
+## [1] 5
+## [1] 19
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Vi kræver en mere automatiske løsning på det. Vi bruger ikke tid på det her, men der er den traditionele programmering løsning: for loop, som fungerer også i R:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{col\_names }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(eukaryotes\_subset)}
+
+\ControlFlowTok{for}\NormalTok{(column\_name }\ControlFlowTok{in}\NormalTok{ col\_names)}
+\NormalTok{\{}
+  \FunctionTok{print}\NormalTok{(eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} 
+          \FunctionTok{select}\NormalTok{(column\_name) }\SpecialCharTok{\%\textgreater{}\%} 
+          \FunctionTok{n\_distinct}\NormalTok{())}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Note: Using an external vector in selections is ambiguous.
+## i Use `all_of(column_name)` instead of `column_name` to silence this message.
+## i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+## This message is displayed once per session.
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 6111
+## [1] 2137
+## [1] 5
+## [1] 19
+\end{verbatim}
+
+Man i teorien kan holde sig til for loops men jeg vil gerne præsentere den \texttt{tidyverse} løsning, som bliver mere intuitiv og nemmere for ændre at læse koden når man er vant til det (det integrerer også bedre med de andre \texttt{tidyverse} pakker).
+
+\hypertarget{introduktion-til-map-funktioner}{%
+\subsection{\texorpdfstring{Introduktion til \texttt{map()} funktioner}{Introduktion til map() funktioner}}\label{introduktion-til-map-funktioner}}
+
+Den \texttt{tidyverse} løsning er såkaldte de \texttt{map()} funktioner, som er en del af pakken \texttt{purrr}. Jeg introducerer dem her frem for de base-R løsninger ikke bare fordi de er \texttt{tidyverse}, men fordi de er en meget fleksibelt og nemt at forstå tilgang, når man vænner sig til dem.
+
+Jeg viser hvordan de fungere igennem \texttt{eukaryotes} og bagefter introducerer dem i konteksten af custom funktioner og \texttt{nest()} som kan bruges til at opdele datasættet indtil forskellige dele (ovenpå hvori man kan gentage samme process).
+
+Man anvender \texttt{map()} ved at angiv funktionen navn \texttt{n\_distinct} indenfor \texttt{map()}, og \texttt{map()} beregner \texttt{n\_distinct()} for hver kolon i datasættet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map}\NormalTok{(n\_distinct) }\CommentTok{\#do \textquotesingle{}n\_distinct\textquotesingle{} for every single column}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $organism_name
+## [1] 6111
+## 
+## $center
+## [1] 2137
+## 
+## $group
+## [1] 5
+## 
+## $subgroup
+## [1] 19
+\end{verbatim}
+
+Så kan man se, at vi har fået en \texttt{list} tilbage, med en tal som viser antallet af unikke værdier til hver af de fire kolonner. Det fungerer lidt som den base-R funktion \texttt{apply}, men med \texttt{apply} skal man bruge \texttt{2} i anden plads til at fortælle, at vi gerne vil iterate over kolonnerne.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{apply}\NormalTok{(eukaryotes\_subset,}\DecValTok{2}\NormalTok{,n\_distinct)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## organism_name        center         group      subgroup 
+##          6111          2137             5            19
+\end{verbatim}
+
+Bemærk at vi har fået her en vector af tal tilbage, men vi fået en \texttt{list} med \texttt{map}. Der er faktisk andre varianter af \texttt{map} som kan benyttes til at give resultatet som andre data typer. For eksempel, kan man bruge \texttt{map\_dbl()} til at få en double \texttt{dbl} tilbage - en vector af tal ligesom vi fået med \texttt{apply} i ovenstående.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Apply n\_distinct to all variables, returning a double}
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_dbl}\NormalTok{(n\_distinct)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## organism_name        center         group      subgroup 
+##          6111          2137             5            19
+\end{verbatim}
+
+Man kan også bruge \texttt{map\_df()} for at få en dataramme (\texttt{tibble}) tilbage - det er særligt nyttigt for os, fordi vi tager altid udgangspunkt i en dataramme når vi skal få lavet et plot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Apply n\_distinct to all variables, returning a dataframe}
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(n\_distinct)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 4
+##   organism_name center group subgroup
+##           <int>  <int> <int>    <int>
+## 1          6111   2137     5       19
+\end{verbatim}
+
+For eksempel, kan man tilføje de tal fra \texttt{map\_df} direkte ind i et ggplot.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{map\_df}\NormalTok{(n\_distinct) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{(), }\AttributeTok{names\_to =} \StringTok{"variable"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"count"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ variable, }\AttributeTok{y =}\NormalTok{ count,}\AttributeTok{fill =}\NormalTok{ variable)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-360-1.pdf}
+
+\hypertarget{reference-for-the-different-map-functions}{%
+\subsection{Reference for the different map functions}\label{reference-for-the-different-map-functions}}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Funktion & Beskrivelse \\
+\midrule
+\endhead
+\texttt{map\_lgl()} & returns a logical \\
+\texttt{map\_int()} & returns an integer vector \\
+\texttt{map\_dbl()} & returns a double vector \\
+\texttt{map\_chr()} & returns a character vector \\
+\texttt{map\_df()} & returns a data frame \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{custom-fuktioner}{%
+\section{Custom fuktioner}\label{custom-fuktioner}}
+
+Vi kan lave vores egne funktioner og betnytter dem indenfor map til at yderligere øge fleksibiliteten i R. For eksempel, kan det være at vi har en bestemt idé overfor, hvordan vi gerne vil normalisere vores data, og der eksisterer ikke en relevant funktion indenfor R i forvejen.
+
+\hypertarget{simple-functions}{%
+\subsection{Simple functions}\label{simple-functions}}
+
+Vi starter med en simpel funktion fra base-R og så forklare den i den table bagefter. Vi bruger mest en anden form af funktioner i \textbf{tidyverse} som vi kigger på næste, men koncepten er den samme.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_function }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(.x)}
+\NormalTok{\{}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{sum}\NormalTok{(.x)}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(.x))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule
+Kode & Beskrivelse \\
+\midrule
+\endhead
+\texttt{my\_function\_name} & funktion navn \\
+\texttt{\textless{}-\ function(.x)} & fortæl R, at vi lave en funktion med nogle data \texttt{.x} \\
+\texttt{sum(.x)/length(.x)} & brug data \texttt{.x} til at beregne middelværdi \\
+\texttt{return()} & hvad funktionen skal output - her middelværdi \\
+\bottomrule
+\end{longtable}
+
+Lad også afprøve vores nye funccion ved at beregne den gennemsnitlige værdi for \texttt{Sepal.Length} i \texttt{iris}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{my\_function}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length)}
+\FunctionTok{mean}\NormalTok{(iris}\SpecialCharTok{$}\NormalTok{Sepal.Length)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.843333
+## [1] 5.843333
+\end{verbatim}
+
+\hypertarget{custom-functions-with-mapping}{%
+\subsection{Custom functions with mapping}\label{custom-functions-with-mapping}}
+
+Indenfor den \texttt{tidyverse} bruger man en lidt anden måde at skrive samme funktion på.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_function }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}} \FunctionTok{sum}\NormalTok{(.x)}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(.x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\textasciitilde{}} betyder at vi definere en funktion
+\item
+  \texttt{.x} betyder de data, der vi angiver funktionen (for eksempel variablen \texttt{Sepal.Length} fra \texttt{iris}). Man bruger den symbol \texttt{.x} hver gang og R ved automatiske hvad det betyder.
+\end{itemize}
+
+Vi kan bruge \texttt{my\_function} indenfor \texttt{map()} for at beregne den gennemsnitlige værdi for alle variabler (uden Species), og vi kan se at vi få tilsvarende resultat til funktionen \texttt{mean()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{map\_df}\NormalTok{(my\_function)}
+
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{map\_df}\NormalTok{(mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 4
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width
+##          <dbl>       <dbl>        <dbl>       <dbl>
+## 1         5.84        3.06         3.76        1.20
+## # A tibble: 1 x 4
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width
+##          <dbl>       <dbl>        <dbl>       <dbl>
+## 1         5.84        3.06         3.76        1.20
+\end{verbatim}
+
+Man kan også placere funktionen direkte indenfor \texttt{map\_df} i stedet for at kalde den for nogle (fk. \texttt{my\_funktion}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{sum}\NormalTok{(.x)}\SpecialCharTok{/}\FunctionTok{length}\NormalTok{(.x)) }\CommentTok{\#for each data column, compute the sum and divide by the length}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 4
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width
+##          <dbl>       <dbl>        <dbl>       <dbl>
+## 1         5.84        3.06         3.76        1.20
+\end{verbatim}
+
+Vi kan godt specificere andre funktioner.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{nth}\NormalTok{(.x,}\DecValTok{10}\NormalTok{)) }\CommentTok{\#tag hver kolon, kalde det for .x og finde 10. værdi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 5
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##          <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+## 1          4.9         3.1          1.5         0.1 setosa
+\end{verbatim}
+
+eller når \texttt{nth} is a \textbf{tidyverse} funktion kan vi bruge \texttt{\%\textgreater{}\%}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{nth}\NormalTok{(}\DecValTok{10}\NormalTok{)) }\CommentTok{\#tag hver kolon, kalde det for .x og finde 10. værdi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 5
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##          <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+## 1          4.9         3.1          1.5         0.1 setosa
+\end{verbatim}
+
+Antallet af distinkt værdier som ikke er \texttt{NA}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#tag hver kolon, kalde det for .x og beregne n\_distinct}
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{n\_distinct}\NormalTok{(}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\CommentTok{\#n\_dinstict er fra tidyverse}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 5
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##          <int>       <int>        <int>       <int>   <int>
+## 1           35          23           43          22       3
+\end{verbatim}
+
+Bemærk at hvis det er en indbygget funktion og vi benytter default parametre (altså na.rm = FALSE i ovenstående) kan man bare skrive:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map\_df}\NormalTok{(n\_distinct)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 5
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##          <int>       <int>        <int>       <int>   <int>
+## 1           35          23           43          22       3
+\end{verbatim}
+
+Et andet eksempel: tilføje 3 og square:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{(.x }\SpecialCharTok{+} \DecValTok{3}\NormalTok{)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width
+##          <dbl>       <dbl>        <dbl>       <dbl>
+## 1         65.6        42.2         19.4        10.2
+## 2         62.4        36           19.4        10.2
+## 3         59.3        38.4         18.5        10.2
+## 4         57.8        37.2         20.2        10.2
+## 5         64          43.6         19.4        10.2
+## 6         70.6        47.6         22.1        11.6
+\end{verbatim}
+
+Jo mere funktionen bliver indviklet, jo mere mening det giver at specificere den udenfor den \texttt{map()} funktion:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_function }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\NormalTok{(.x }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(.x))}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+} \FloatTok{0.5}\SpecialCharTok{*}\NormalTok{(.x }\SpecialCharTok{{-}} \FunctionTok{sd}\NormalTok{(.x))}\SpecialCharTok{\^{}}\DecValTok{2} \CommentTok{\#a long pointless function}
+
+\NormalTok{iris }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{map\_df}\NormalTok{(my\_function) }\CommentTok{\#beregne my\_function for hver kolon og output en dataramme }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 150 x 4
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width
+##           <dbl>       <dbl>        <dbl>       <dbl>
+##  1         9.68        4.89         5.63       1.16 
+##  2         9.18        3.29         5.63       1.16 
+##  3         8.80        3.84         6.15       1.16 
+##  4         8.66        3.55         5.13       1.16 
+##  5         9.41        5.30         5.63       1.16 
+##  6        10.6         6.71         4.24       0.705
+##  7         8.66        4.51         5.63       0.916
+##  8         9.41        4.51         5.13       1.16 
+##  9         8.46        3.06         5.63       1.16 
+## 10         9.18        3.55         5.13       1.43 
+## # ... with 140 more rows
+\end{verbatim}
+
+\hypertarget{effekten-af-map-puxe5-andre-data-typer}{%
+\subsection{\texorpdfstring{Effekten af \texttt{map} på andre data typer}{Effekten af map på andre data typer}}\label{effekten-af-map-puxe5-andre-data-typer}}
+
+I ovenstående fokuser jeg på \texttt{map} i forhold til dataframes. I \texttt{group\_by} + \texttt{nest} i nedenstående anvender man \texttt{map()} på en list af dataframes, der hedder \texttt{data}, der tillader os at arbejde med datasæt hvert for sig. Det er derfor værd at tage lidt tid på at se hvordan \texttt{map()} behandler forskellige data typer.
+
+\textbf{input: vector}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{.x} referes til en værdi i vectoren. Hvis man tager integer \texttt{1:10} og anvender map, så tager man hvert tal hver for sig og beregner en funktion med det - i følgende simulere man et tal fra den normale fordeling med indstillingen \texttt{mean=.x}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_dbl}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{1}\NormalTok{,}\AttributeTok{mean=}\NormalTok{.x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1.982341  1.460212  5.566752  4.225571  6.115275  5.748129  9.289555
+##  [8]  7.149355  7.900811 11.354384
+\end{verbatim}
+
+\textbf{input: dataframe}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{.x} refereres til en variable fra dataframe. I ovenståene er første variable \texttt{int1} og i map tager man den første element med funktionen \texttt{pluck(1)}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tibble}\NormalTok{(}\StringTok{"int1"}\OtherTok{=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}\StringTok{"int2"}\OtherTok{=}\DecValTok{21}\SpecialCharTok{:}\DecValTok{30}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pluck}\NormalTok{(}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $int1
+## [1] 1
+## 
+## $int2
+## [1] 21
+\end{verbatim}
+
+Med nest kigger vi på den mulighed vore man laver map over en list, som bliver lavet med funktionen \texttt{nest()}.
+
+\textbf{input: list}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{.x} referes til et list element - i nedenstående er den første element \texttt{c(1,2)} så hvis man anvender funktionen \texttt{max} så tager man maksimum værdi (\texttt{2} i dette tilfælde).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{max}\NormalTok{(.x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [[1]]
+## [1] 2
+## 
+## [[2]]
+## [1] 3
+## 
+## [[3]]
+## [1] 4
+\end{verbatim}
+
+Bemærk at der der kommer kun et tal som resultat, kan man \texttt{map\_dbl} i stedet for \texttt{map} - så får man en vector som outputtet, selvom inputtet er en list.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{),}\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_dbl}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{max}\NormalTok{(.x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2 3 4
+\end{verbatim}
+
+\textbf{list af dataframe}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{.x} referes til et datasæt - så kan man referer til de forskellige variabler i \texttt{.x} som man plejer i tidyverse.
+\end{itemize}
+
+Følgende er ligesom i tilfælde med koncepten ``nesting'' i næste sektion. Man tager en list af tibbles og vælger det første tal fra variablen \texttt{int}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{list}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}\StringTok{"int"}\OtherTok{=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{),}\FunctionTok{tibble}\NormalTok{(}\StringTok{"int"}\OtherTok{=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{),}\FunctionTok{tibble}\NormalTok{(}\StringTok{"int"}\OtherTok{=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{map\_int}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pluck}\NormalTok{(}\StringTok{"int"}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 1
+\end{verbatim}
+
+\hypertarget{nesting-nest}{%
+\section{\texorpdfstring{Nesting \texttt{nest()}}{Nesting nest()}}\label{nesting-nest}}
+
+Vi kommer til at se i næste lektion, at det er meget nyttige at bruge funktionen \texttt{nest()} for at få svar på adskillige statistiske spørgsmål. Det kan være for eksempel:
+
+\begin{itemize}
+\tightlist
+\item
+  Vi har lavet 10 eksperimental under lidt forskellige konditioner, og gerne vil lave præcis samme analyse på alle 10.
+\item
+  Vi har 5 forskellige type bakterier med 3 replikater til hver, og gerne vil transformere de data på samme måde efter bakterien og replikat.
+\end{itemize}
+
+Funktionen \texttt{nest()} kan virke lidt abstract i starten men koncepten er faktisk ret simpelt. Vi kan opelde vores datasæt (som indeholder vores forskellige konditioner/replikats etc.) med \texttt{group\_by()} og så bruge \texttt{nest()} til at gemme de opdelt ``sub'' datasæt i en list. De bliver gemt indenfor en kolon i en \texttt{tibble}, og det gøre det bekvemt at arbejde med de forskellige datasæt på samme tid (med hjælp af \texttt{map()}).
+
+\includegraphics[width=1\linewidth]{plots/tidyr-nest}
+
+Lad os opdele \texttt{eurkaryotes\_subset} efter variablen `group' og anvende \texttt{nest()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_subset\_nested }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes\_subset }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{nest}\NormalTok{()}
+
+\NormalTok{eukaryotes\_subset\_nested}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+## # Groups:   group [5]
+##   group    data                
+##   <chr>    <list>              
+## 1 Other    <tibble [51 x 3]>   
+## 2 Protists <tibble [888 x 3]>  
+## 3 Plants   <tibble [1,304 x 3]>
+## 4 Fungi    <tibble [6,064 x 3]>
+## 5 Animals  <tibble [3,201 x 3]>
+\end{verbatim}
+
+Vi kan se at vi har to variabler - \texttt{group} og \texttt{data}. Variablen \texttt{data} er indeholde faktisk fem dataramme (tibble), for eksempel den første datasæt har kun observationerne hvor \texttt{group} er lig med ``Other'', den anden dataset har kun observationerne hvor \texttt{group} er lig med ``Protists'' osv.
+
+Vi kan tjekke ved at kig på den første datasæt: her er to måder at gøre det på:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{first\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes\_subset\_nested}\SpecialCharTok{$}\NormalTok{data[[}\DecValTok{1}\NormalTok{]] }
+\NormalTok{first\_dataset }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes\_subset\_nested }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pluck}\NormalTok{(}\StringTok{"data"}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{first\_dataset }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   organism_name                         center                          subgroup
+##   <chr>                                 <chr>                           <chr>   
+## 1 Pyropia yezoensis                     Ocean University                Other   
+## 2 Thalassiosira pseudonana CCMP1335     Diatom Consortium               Other   
+## 3 Guillardia theta CCMP2712             JGI                             Other   
+## 4 Cyanidioschyzon merolae strain 10D    National Institute of Genetics~ Other   
+## 5 Galdieria sulphuraria                 Galdieria sulphuraria Genome P~ Other   
+## 6 Phaeodactylum tricornutum CCAP 1055/1 Diatom Consortium               Other
+\end{verbatim}
+
+Hvis vi gerne vil tilbage til vores oprindeligt datasæt, kan vi brug \texttt{unnest()} og specificer kolonnen \texttt{data}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_subset\_nested }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(data) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+## # Groups:   group [1]
+##   group organism_name                         center                    subgroup
+##   <chr> <chr>                                 <chr>                     <chr>   
+## 1 Other Pyropia yezoensis                     Ocean University          Other   
+## 2 Other Thalassiosira pseudonana CCMP1335     Diatom Consortium         Other   
+## 3 Other Guillardia theta CCMP2712             JGI                       Other   
+## 4 Other Cyanidioschyzon merolae strain 10D    National Institute of Ge~ Other   
+## 5 Other Galdieria sulphuraria                 Galdieria sulphuraria Ge~ Other   
+## 6 Other Phaeodactylum tricornutum CCAP 1055/1 Diatom Consortium         Other
+\end{verbatim}
+
+Spørgsmålet er: hvordan kan vi inddrage ``nested'' data indenfor vores analyser?
+
+\hypertarget{anvende-map-med-nested-data}{%
+\subsection{Anvende map() med nested data}\label{anvende-map-med-nested-data}}
+
+De fleste gange vi arbejder med nested data, er fordi vi gerne vil lave samme ting på hver af de ``sub'' datasæt. Derfor hænger det sammen med funktionen \texttt{map()}. Den typiske process er:
+
+\begin{itemize}
+\tightlist
+\item
+  Tag nested datasæt
+\item
+  Tilføj en ny kolon med \texttt{mutate()}, hvor vi:
+\item
+  Tag hver datasæt fra kolonnen \texttt{data} og brug \texttt{map()}, i nedenstående tilfælde til at finde antallet af rækkerne.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_subset\_nested }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{n\_row =} \FunctionTok{map\_dbl}\NormalTok{(data,nrow))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+## # Groups:   group [5]
+##   group    data                 n_row
+##   <chr>    <list>               <dbl>
+## 1 Other    <tibble [51 x 3]>       51
+## 2 Protists <tibble [888 x 3]>     888
+## 3 Plants   <tibble [1,304 x 3]>  1304
+## 4 Fungi    <tibble [6,064 x 3]>  6064
+## 5 Animals  <tibble [3,201 x 3]>  3201
+\end{verbatim}
+
+Vi kan også bruge en custom funktion. I nedenstående beregne man antallet af unikke organisme fra variablen \texttt{orangism\_name} i datasættet. Husk:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\textasciitilde{}} betyder at vi lave en funktion, som kommer til at fungere for alle de fem datasæt.
+\item
+  Tag et datasæt og kalde det for \texttt{.x} - det referer til en bestemt datasæt fra en af de fem datasæt som hører under kolonnen \texttt{data} i den \texttt{nest()} data.
+\item
+  Vælg variablen \texttt{organism\_name} fra \texttt{.x}
+\item
+  Beregn \texttt{n\_dinstinct}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n\_distinct\_organisms }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\NormalTok{ .x }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\#take data}
+  \FunctionTok{select}\NormalTok{(organism\_name) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\#select organism name}
+\NormalTok{  n\_distinct }\CommentTok{\#give back distinct}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#repeat function for each of the five datasets:}
+\NormalTok{eukaryotes\_subset\_nested }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{n\_organisms =} \FunctionTok{map\_dbl}\NormalTok{(data, n\_distinct\_organisms))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+## # Groups:   group [5]
+##   group    data                 n_organisms
+##   <chr>    <list>                     <dbl>
+## 1 Other    <tibble [51 x 3]>             35
+## 2 Protists <tibble [888 x 3]>           490
+## 3 Plants   <tibble [1,304 x 3]>         673
+## 4 Fungi    <tibble [6,064 x 3]>        2926
+## 5 Animals  <tibble [3,201 x 3]>        1987
+\end{verbatim}
+
+Her er en anden eksempel. Her handler det om de \texttt{eukaryotes} data (ikke den subset), som har oplysninger om fk. GC-content med variablen \texttt{gc}. Her bruger vi \texttt{pull} i stedet for \texttt{select} - det er næsten den samme men med \texttt{pull()} få vi en vector som fungerer med \texttt{median} som er en base-R funktion.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# func\_gc \textless{}{-} \textasciitilde{} .x \%\textgreater{}\% }
+\CommentTok{\#   pull(gc) \%\textgreater{}\%       \# ligesom select men vi har bruge for en vector for at beregne median}
+\CommentTok{\#   median(.x,na.rm=T) \# \textasciigrave{}na.rm\textasciigrave{} fjerne \textasciigrave{}NA\textasciigrave{} værdier)}
+
+\NormalTok{func\_gc }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{median}\NormalTok{(.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(gc),}\AttributeTok{na.rm=}\NormalTok{T) }
+
+\NormalTok{ekaryotes\_gc\_by\_group }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{"median\_gc"}\OtherTok{=}\FunctionTok{map\_dbl}\NormalTok{(data, func\_gc))}
+\NormalTok{ekaryotes\_gc\_by\_group}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+## # Groups:   group [5]
+##   group    data                  median_gc
+##   <chr>    <list>                    <dbl>
+## 1 Other    <tibble [51 x 18]>         46.7
+## 2 Protists <tibble [888 x 18]>        49.4
+## 3 Plants   <tibble [1,304 x 18]>      37.9
+## 4 Fungi    <tibble [6,064 x 18]>      47.5
+## 5 Animals  <tibble [3,201 x 18]>      40.6
+\end{verbatim}
+
+Og jeg kan bruge resultatet ind i et plot ligesom vi plejer:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ekaryotes\_gc\_by\_group }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{group,}\AttributeTok{y=}\NormalTok{median\_gc,}\AttributeTok{fill=}\NormalTok{group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-385-1.pdf}
+
+\textbf{flere statistik på en gang}
+
+Lave funktionerne:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{func\_genes }\OtherTok{\textless{}{-}}       \ErrorTok{\textasciitilde{}}\FunctionTok{median}\NormalTok{(.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(genes),   }\AttributeTok{na.rm=}\NormalTok{T) }
+\NormalTok{func\_proteins }\OtherTok{\textless{}{-}}    \ErrorTok{\textasciitilde{}}\FunctionTok{median}\NormalTok{(.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(proteins),}\AttributeTok{na.rm=}\NormalTok{T) }
+\NormalTok{func\_size }\OtherTok{\textless{}{-}}        \ErrorTok{\textasciitilde{}}\FunctionTok{median}\NormalTok{(.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(size\_mb), }\AttributeTok{na.rm=}\NormalTok{T) }
+\end{Highlighting}
+\end{Shaded}
+
+Anvende \texttt{nest()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_nested }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{nest}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+Tilføje resultatet over de fem datasæt med \texttt{mutate()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_stats }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes\_nested }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mean\_genes =} \FunctionTok{map\_dbl}\NormalTok{(data,func\_genes),}
+         \AttributeTok{proteins =} \FunctionTok{map\_dbl}\NormalTok{(data,func\_proteins),}
+         \AttributeTok{mean\_size\_mb =} \FunctionTok{map\_dbl}\NormalTok{(data,func\_size))}
+\end{Highlighting}
+\end{Shaded}
+
+Husk at fjerne kolonnen \texttt{data} før man anvende \texttt{pivot\_longer()} (ellers får man en advarsel):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_stats }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{data) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{group) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{group,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name,}\AttributeTok{scales=}\StringTok{"free"}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{4}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-389-1.pdf}
+
+\hypertarget{andre-brugbar-purrr}{%
+\section{Andre brugbar purrr}\label{andre-brugbar-purrr}}
+
+\hypertarget{map2-function-for-flere-inputs}{%
+\subsection{\texorpdfstring{\texttt{map2()} function for flere inputs}{map2() function for flere inputs}}\label{map2-function-for-flere-inputs}}
+
+Funktionen \texttt{map2()} kan bruges ligesom \texttt{map()} men tager 2 ``input'' i stedet for kun én. I følgende eksempel angiver jeg to kolonner fra datasættet \texttt{eukaryotes\_stats}, \texttt{mean\_genes} og \texttt{proteins} og beregner \texttt{sum}, som bliver lagret takket være funktionen \texttt{mutate} som colstat.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_stats }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{colstat =} \FunctionTok{map2\_dbl}\NormalTok{(mean\_genes,proteins,sum))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 6
+## # Groups:   group [5]
+##   group    data                  mean_genes proteins mean_size_mb colstat
+##   <chr>    <list>                     <dbl>    <dbl>        <dbl>   <dbl>
+## 1 Other    <tibble [51 x 18]>        11354.   11240.         49.7  22594 
+## 2 Protists <tibble [888 x 18]>        8813     8628.         33.5  17442.
+## 3 Plants   <tibble [1,304 x 18]>     33146.   37660         358.   70806.
+## 4 Fungi    <tibble [6,064 x 18]>     10069    10034          32.2  20103 
+## 5 Animals  <tibble [3,201 x 18]>     20733    25161         692.   45894
+\end{verbatim}
+
+Bemærk at præcis samme resultat kan fås ved at bare lægger de to kolonner sammen:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_stats }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{colstat2 =}\NormalTok{ mean\_genes }\SpecialCharTok{+}\NormalTok{ proteins)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 6
+## # Groups:   group [5]
+##   group    data                  mean_genes proteins mean_size_mb colstat2
+##   <chr>    <list>                     <dbl>    <dbl>        <dbl>    <dbl>
+## 1 Other    <tibble [51 x 18]>        11354.   11240.         49.7   22594 
+## 2 Protists <tibble [888 x 18]>        8813     8628.         33.5   17442.
+## 3 Plants   <tibble [1,304 x 18]>     33146.   37660         358.    70806.
+## 4 Fungi    <tibble [6,064 x 18]>     10069    10034          32.2   20103 
+## 5 Animals  <tibble [3,201 x 18]>     20733    25161         692.    45894
+\end{verbatim}
+
+Der er dog mange mere indviklet situationer hvor man ikke kan gå udenom \texttt{map2}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_stats\_with\_plots }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes\_stats }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log10\_genes =} \FunctionTok{map}\NormalTok{(data,}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log10}\NormalTok{(.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(genes)))) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{myplots =} \FunctionTok{map2}\NormalTok{(group,log10\_genes,}
+                        \SpecialCharTok{\textasciitilde{}} \FunctionTok{tibble}\NormalTok{(}\StringTok{"log10\_genes"}\OtherTok{=}\NormalTok{.y) }\SpecialCharTok{\%\textgreater{}\%} 
+                          \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{log10\_genes)) }\SpecialCharTok{+}
+                          \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{colour=}\StringTok{"red"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.3}\NormalTok{) }\SpecialCharTok{+} 
+                          \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"Density plot of log10(genes) in"}\NormalTok{,.x))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_stats\_with\_plots }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pluck}\NormalTok{(}\StringTok{"myplots"}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 613 rows containing non-finite values (stat_density).
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-393-1.pdf}
+
+Der er flere \texttt{map} funktion der tager flere \texttt{input} fk. \texttt{pmap} - jeg har ikke tid til at dække dem men du kan godt læse om dem hvis du har bruge for dem: \url{https://purrr.tidyverse.org/reference/map2.html}
+
+\hypertarget{transformer-numeriske-variabler}{%
+\subsection{Transformer numeriske variabler}\label{transformer-numeriske-variabler}}
+
+Som sidste bemærk, her er en brugbar variant af \texttt{map} - her kan man lave noget på kun bestemte variabler - for eksempel i følgende anvender jeg funktionen \texttt{log2()} på alle numeriske variabler. Bemærk at man er nødt til at anvende \texttt{as\_tibble()} igen bagefter (som kun fungerere hvis alle variabler har stadig samme længde efter \texttt{map\_if()}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_if}\NormalTok{(is.numeric,}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log2}\NormalTok{(.x)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 11,508 x 19
+##    organism_name     taxid bioproject_acce~ bioproject_id group subgroup size_mb
+##    <chr>             <dbl> <chr>                    <dbl> <chr> <chr>      <dbl>
+##  1 Pyropia yezoensis  11.4 PRJNA589917              19.2  Other Other       6.75
+##  2 Emiliania huxley~  18.1 PRJNA77753               16.2  Prot~ Other P~    7.39
+##  3 Arabidopsis thal~  11.9 PRJNA10719               13.4  Plan~ Land Pl~    6.90
+##  4 Glycine max        11.9 PRJNA19861               14.3  Plan~ Land Pl~    9.94
+##  5 Medicago truncat~  11.9 PRJNA10791               13.4  Plan~ Land Pl~    8.69
+##  6 Solanum lycopers~  12.0 PRJNA119                  6.89 Plan~ Land Pl~    9.69
+##  7 Hordeum vulgare ~  16.8 PRJEB34217               19.1  Plan~ Land Pl~   12.1 
+##  8 Oryza sativa Jap~  15.3 PRJNA12269               13.6  Plan~ Land Pl~    8.55
+##  9 Triticum aestivum  12.2 PRJNA392179              18.6  Plan~ Land Pl~   13.9 
+## 10 Zea mays           12.2 PRJNA10769               13.4  Plan~ Land Pl~   11.1 
+## # ... with 11,498 more rows, and 12 more variables: gc <dbl>,
+## #   assembly_accession <chr>, replicons <chr>, wgs <chr>, scaffolds <dbl>,
+## #   genes <dbl>, proteins <dbl>, release_date <date>, modify_date <date>,
+## #   status <chr>, center <chr>, biosample_accession <chr>
+\end{verbatim}
+
+\hypertarget{problemstillinger-6}{%
+\section{Problemstillinger}\label{problemstillinger-6}}
+
+\textbf{Problem 1)} Lave Quiz på Absalon ``Quiz - functional programming''
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 2)} \emph{\texttt{map()} øvelse}
+
+Eksempel:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(cut,color,depth) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(n\_distinct)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 3
+##     cut color depth
+##   <int> <int> <int>
+## 1     5     7   184
+\end{verbatim}
+
+Husk også referencen med de forskellige varianter af \texttt{map()} som kan bruges for at få en anden output type.
+
+Indlæse \texttt{diamonds} med \texttt{data(diamonds)}. Brug \texttt{map()} funktioner til at beregne følgende:
+
+\textbf{a)} Select variabler \texttt{cut}, \texttt{color} og \texttt{clarity} og beregne antallet af distinkt værdier til hver (anvende funktionen \texttt{n\_distinct}). Resultatet skulle være en list (anvende deault \texttt{map()} funktion).
+
+\textbf{b)} Select variabler som er numeriske og beregne den median værdi til hver. Resultatet skal være en double.
+
+\textbf{c)} Brug alle variabler og return de datatyper (funktion en \texttt{typeof}). Resultatet skal være en dataramme.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 3}) \emph{\texttt{map()} øvelse med custom funktioner}
+
+Indlæse \texttt{diamonds} med \texttt{data(diamonds)}.
+
+Husk at når man inddrager nogle data \texttt{.x}, for eksempel når man vil bruge en custom funktion eller specificer non-default indstillinger såsom \texttt{na.rm=TRUE} (for at fjerne \texttt{NA} værdier i beregningen) i funktionen, skal man angiv \texttt{\textasciitilde{}} i starten:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(n\_distinct) }\CommentTok{\#specificere funktion unden instillinger}
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{n\_distinct}\NormalTok{(.x,}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\CommentTok{\#non{-}default funktion}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{a}) Afprøve følgende kode linjer og beskrive hvad der sker.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(carat, depth, price) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{mean}\NormalTok{(.x,}\AttributeTok{na.rm=}\NormalTok{T))}
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(cut}\SpecialCharTok{==}\StringTok{"Ideal"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\StringTok{"color"}\NormalTok{,}\StringTok{"clarity"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{nth}\NormalTok{(.x,}\DecValTok{100}\NormalTok{))}
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(carat, depth, price) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{ifelse}\NormalTok{(.x}\SpecialCharTok{\textgreater{}}\FunctionTok{mean}\NormalTok{(.x),}\StringTok{"big\_value"}\NormalTok{,}\StringTok{"small\_value"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Brug funktioner indenfor \texttt{map()} til at beregne følgende:
+
+\begin{itemize}
+\tightlist
+\item
+  Select alle variabler og output den 100th observation. Resultatet skal være en list.
+\item
+  Select variabler \texttt{carat}, \texttt{depth}, \texttt{table} og \texttt{price} og for hver kolon tilføj tre og så tag square (\texttt{\^{}2}). Resultatet skal være en dataramme.
+\item
+  Select variabler \texttt{carat}, \texttt{depth}, \texttt{table} og \texttt{price} og angiv \texttt{TRUE} hvis den første værdi er større en den median værdi, ellers \texttt{FALSE}. Resultatet skal være en logical.
+\item
+  Select variabler \texttt{carat}, \texttt{depth}, \texttt{table} og \texttt{price} og beregne den \texttt{log2} transformering til være. Resultatet skal være en dataramme. Brug resulterende dataramme til at lave et scatter plot af \(\log2\)(\texttt{caret}) på x-aksen og \(\log2\)(\texttt{price}) på y-aksen.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 4)} \emph{map på forskellige datatyper}
+
+Vi har set, at når vi kører \texttt{map} på en dataframe, laver man en funktion over hver kolonne. Lad os se hvad der forgår hvis man har andre datatyper:
+
+\textbf{a}) (\emph{En vector af tal})
+
+\begin{itemize}
+\tightlist
+\item
+  Kør følgende - hvad sker der?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_dbl}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{rnorm}\NormalTok{(}\DecValTok{1}\NormalTok{,}\AttributeTok{mean=}\NormalTok{.x,}\AttributeTok{sd=}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Tag udangspunkt i \texttt{c(1:10)} og anvend \texttt{map\_dbl} til at beregne den \texttt{log()} af hvert tal i vektoren (angiv indstillingen \texttt{base=5}):
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ ???}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{b}) (\emph{En list af tibbles})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_list\_of\_tibbles }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{( }\FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"a"}\NormalTok{,}\StringTok{"a"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)),}
+                            \FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"b"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{)),}
+                            \FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"a"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{3}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Kør følgende kode og kig på resultatet
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_list\_of\_tibbles }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pluck}\NormalTok{(}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(letter}\SpecialCharTok{==}\StringTok{"a"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mn =} \FunctionTok{mean}\NormalTok{(number))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Nu at jeg kan se, at min kode virker til den første \texttt{tibble}, kan jeg ændre den til en funktion og anvende den med \texttt{map()} - prøve at køre følgende.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_list\_of\_tibbles }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(letter}\SpecialCharTok{==}\StringTok{"a"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{mn =} \FunctionTok{mean}\NormalTok{(number)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Tag udgangspunkt i \texttt{my\_list\_of\_tibbles} og for hver tibble select alle tilfælde hvor variaben \texttt{number} er 3 og dernæst optæl hvor mange \texttt{a} er tilbage i variablen \texttt{letter} (man kan afprøve på den første \texttt{tibble} hvis det hjælper).
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 5}) \emph{group\_by/nest øvelse}
+
+For datasættet \texttt{iris}, anvend \texttt{group\_by(Species)} og tilføj dernæst \texttt{nest()}, og kigger på resultatet.
+
+\begin{itemize}
+\tightlist
+\item
+  tilføj \texttt{pull(data)} og se på resultatet
+\item
+  fjern \texttt{pull(data)} og tilføj \texttt{pluck("data",1)} i stedet for, for at se den første dataramme.
+\item
+  tilføj \texttt{unnest(data)} i stedet for og se på resultatet
+\item
+  tilføj følgende i stedet for og prøve at forstå hvad der sker:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{mutate(new\_column\_nrow\ =\ map\_dbl(data,nrow))}
+  \item
+    \texttt{mutate(new\_column\_ratio\ =\ map(data,\textasciitilde{}(.x\$Sepal.Width/.x\$Sepal.Length)))}
+  \end{itemize}
+\item
+  Afprøv også følgende funktion med \texttt{map()} funktioner på kolonnen \texttt{data} (angiv hensigtsmæssigt kolonnenavne i \texttt{mutate()}).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{cor}\NormalTok{(.x}\SpecialCharTok{$}\NormalTok{Sepal.Width,.x}\SpecialCharTok{$}\NormalTok{Sepal.Length)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Brug \texttt{map} til at tilføje en ny kolonne \texttt{mean\_ratio}, der viser middelværdierne af den ratio af \texttt{Sepal.Length} vs \texttt{Sepal.Width} (dvs. anvend \texttt{map} med kolonnen \texttt{new\_column\_ratio}).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{mean}\NormalTok{(.x,}\AttributeTok{na.rm=}\NormalTok{T)}
+\NormalTok{iris\_nested\_stats }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\StringTok{"mean\_ratio"} \OtherTok{=} \FunctionTok{map\_dbl}\NormalTok{(new\_column\_ratio,my\_func))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 5
+## # Groups:   Species [3]
+##   Species    data              new_column_nrow new_column_ratio mean_ratio
+##   <fct>      <list>                      <dbl> <list>                <dbl>
+## 1 setosa     <tibble [50 x 4]>              50 <dbl [50]>            0.684
+## 2 versicolor <tibble [50 x 4]>              50 <dbl [50]>            0.468
+## 3 virginica  <tibble [50 x 4]>              50 <dbl [50]>            0.453
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 6}) \emph{group\_by/nest + map} på datasættet \texttt{mtcars}
+
+\textbf{a)} Åbn \texttt{mtcars} med \texttt{data(mtcars)} og anvende \texttt{group\_by()}/\texttt{nest()} for at opdele datasættet i tre efter variablen \texttt{cyl}.
+
+\textbf{b}) Lave nye kolonner med \texttt{map} og inddrage hensigtsmæssige funktioner, som beskriver dine tre datasæt, der er lagret i kolonne \texttt{data} (outputtet skal være \texttt{dbl}):
+
+\begin{itemize}
+\tightlist
+\item
+  Antal observationer
+\item
+  Korrelationskoefficient mellem \texttt{wt} og \texttt{drat} (funktionen \texttt{cor})
+\item
+  Antal unikke værdier fra variablen \texttt{gear}
+\end{itemize}
+
+\textbf{c}) Omsætte dine statistikke til et plot for at sammenligne de tre datasæt.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 7}) \emph{Forberedelse til næste lektion}
+
+For at bedre kunne se værdien af at bruge \texttt{group\_by()}/\texttt{nest()} + \texttt{map()} kan vi gennemgå en simpel eksampel som indledning til vores næste lektion.
+
+Tag funktionen:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}} \FunctionTok{t.test}\NormalTok{(.x}\SpecialCharTok{$}\NormalTok{Petal.Width,.x}\SpecialCharTok{$}\NormalTok{Sepal.Length)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  anvend \texttt{group\_by(Species)} og dernæst \texttt{nest()} på datasættet \texttt{iris}.
+\item
+  tilføj \texttt{mutate()} til at lave en ny kolon som hedder \texttt{t\_test} og bruge funktionen indenfor \texttt{map()} på kolonnen \texttt{data}.
+\item
+  tilføj \texttt{pull(t\_test)} til din kommando - man får de tre t-tests frem, som man lige har beregnet.
+\item
+  prøv \texttt{unnest(t\_test)} i stedet for \texttt{pull(t\_test)} - man får en advarsel fordi de t-test resultater ikke er i en god form til at vise indenfor en dataramme. Vi vil gerne ændre deres output til tidy-form først.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Nu installer R-pakken \texttt{broom} (\texttt{install.packages("broom")})
+\item
+  Lav samme som ovenstående men bruge følgende funktion i stedet for (\texttt{glance()} få statistikkerne fra \texttt{t.test()} ind i en pæn form (\textbf{tidy}))
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(broom)}
+\NormalTok{my\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}} \FunctionTok{t.test}\NormalTok{(.x}\SpecialCharTok{$}\NormalTok{Petal.Width,.x}\SpecialCharTok{$}\NormalTok{Sepal.Length) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glance}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\item
+  Tilføj \texttt{pull} eller \texttt{unnest} til din kommando som før og se på resultatet.
+\item
+  Man får en pæn dataramme frem med alle de forskellige statistikker fra \texttt{t.test()}.
+\item
+  Vælge en statistik og omsætte den til et plot.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ekstra-notater-og-nuxe6ste-gang}{%
+\section{Ekstra notater og næste gang}\label{ekstra-notater-og-nuxe6ste-gang}}
+
+\url{https://r4ds.had.co.nz/iteration.html}
+\url{https://sanderwuyts.com/en/blog/purrr-tutorial/}
+
+\hypertarget{visualisering-af-trends}{%
+\chapter{Visualisering af trends}\label{visualisering-af-trends}}
+
+\includegraphics[width=0.15\linewidth]{plots/hex-tidyverse}
+\includegraphics[width=0.15\linewidth]{plots/purrr}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#load following packages}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(broom)}
+\FunctionTok{library}\NormalTok{(glue)}
+\FunctionTok{library}\NormalTok{(ggsignif)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{indledning-og-luxe6ringsmuxe5lene-1}{%
+\section{Indledning og læringsmålene}\label{indledning-og-luxe6ringsmuxe5lene-1}}
+
+\hypertarget{luxe6ringsmuxe5lene-3}{%
+\subsection{Læringsmålene}\label{luxe6ringsmuxe5lene-3}}
+
+I skal være i stand til at
+
+\begin{itemize}
+\tightlist
+\item
+  Anvende \texttt{nest()} og \texttt{map()} strukturen til at gentage en korrelation analyse over flere forskellige datasæt.
+\item
+  Bruge \texttt{ggplot} funktion \texttt{geom\_smooth()} til at visualisere lineær regression eller loess-kurver.
+\item
+  Kombinere \texttt{map()}/\texttt{nest()} og \texttt{lm()} til at beregne regression statistikker for flere lineær regression modeller på samme tid.
+\end{itemize}
+
+\hypertarget{introduktion-til-chapter}{%
+\subsection{Introduktion til chapter}\label{introduktion-til-chapter}}
+
+I dette kapitel viser jeg flere eksempler på processen, hvor man anvender \texttt{group\_by()} og \texttt{nest()} og dernæst \texttt{map()}-funktioner for at lave reproducebar statistiske analyser. Vi fokuserer på eksempler med korrelationanalyse og lineær regression modeller, men den overordnede ramme kan anvendes i mange forskellige kontekster.
+
+\hypertarget{video-ressourcer-4}{%
+\subsection{Video ressourcer}\label{video-ressourcer-4}}
+
+\emph{OBS: Jeg sagde ``antal gener'' flere gange i videoerne men variablen \texttt{log10\_size\_mb} er faktisk genomstørrelse i megabases.}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 1: Korrelation koefficient med \texttt{nest()} og \texttt{map()}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Jeg gennemgår processen langsomt med en korrelationanalyse
+  \item
+    Jeg introducerer \texttt{glance} til at lave outputtet fra statistikse method i tidy-form.
+  \end{itemize}
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/709225323}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 2: Lineær regression linjer med ggplot2
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Jeg viser hvordan man tilføjer regression linjer på et plot
+  \item
+    Jeg sammenligne linjen med resultatet fra \texttt{lm()}
+  \end{itemize}
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/709225203}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 3: Lineær regression med \texttt{nest()} og \texttt{map()}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Den proces igen fra Video 1 men anvendte på lineær regression
+  \end{itemize}
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/709225158}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 4: Multiple linær regression model
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Sammen processen men med flere modeller og multiple uafhængige variabler
+  \end{itemize}
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/709225266}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 5: ANOVA
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Et eksempel på \texttt{map2} funktion for at sammenligne signifikans mellem modeller
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{nest-og-map-eksempel-med-korrelation}{%
+\section{\texorpdfstring{\texttt{nest()} og \texttt{map()}: eksempel med korrelation}{nest() og map(): eksempel med korrelation}}\label{nest-og-map-eksempel-med-korrelation}}
+
+Man kan lave en korrelation analyse i R ved at benytte \texttt{cor.test()}. For eksempel, forestille dig at du gerne vil finde ud af korrelationen mellem GC-indehold (variablen \texttt{gc}, procent G/C bases i genomet) og genomstørrelse (variablen \texttt{log10\_size\_mb}) for datasættet \texttt{eukaryotes} fra sidste lektion.
+I følgende plotter jeg en density mellem \texttt{gc} og den transformerede variable \texttt{log10\_size\_mb} som er log10 genomstørrelse.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log10\_size\_mb =} \FunctionTok{log10}\NormalTok{(size\_mb))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{log10\_size\_mb =} \FunctionTok{log10}\NormalTok{(size\_mb)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(log10\_size\_mb,gc) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{name)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{colour=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name,}\AttributeTok{scales=}\StringTok{"free"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 388 rows containing non-finite values (stat_density).
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-425-1.pdf}
+
+Plottet ser ud til at have flere topper og jeg mistænker, at der kan være nogle sub-struturer indenfor de data - ekempelvis pga. de forskellige organismer grupper i variablen \texttt{Group}. I følgende benytter jeg alligevel \texttt{cor.test()} til at teste for korrelation mellem \texttt{gc} og \texttt{log10\_size\_mb} over hele datasæt:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_cor\_test }\OtherTok{\textless{}{-}} \FunctionTok{cor.test}\NormalTok{(eukaryotes }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(gc),}
+\NormalTok{                        eukaryotes }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(log10\_size\_mb))}
+\NormalTok{my\_cor\_test}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Pearson's product-moment correlation
+## 
+## data:  eukaryotes %>% pull(gc) and eukaryotes %>% pull(log10_size_mb)
+## t = -15.678, df = 11118, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.1652066 -0.1288369
+## sample estimates:
+##        cor 
+## -0.1470715
+\end{verbatim}
+
+Outputtet fra \texttt{cor.test} (og mange andre metoder i R) er ikke særlig egnet til at bruge indenfor en dataframe, så jeg introducerer en funktion der hedder \texttt{glance()} som findes i R-pakken \texttt{broom}. Funktionen \texttt{glance()} anvendes til at tage den output fra en statistiske test (fk. \texttt{cor.test()}) og lave det om til et \textbf{tidy} dataramme. Det gøre det nemmere for eksempel til at lave et plot, eller samler op statistikker fra forskellige tests.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(broom)}
+\NormalTok{my\_cor\_test }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glance}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+FALSE # A tibble: 1 x 8
+FALSE   estimate statistic  p.value parameter conf.low conf.high method    alternative
+FALSE      <dbl>     <dbl>    <dbl>     <int>    <dbl>     <dbl> <chr>     <chr>      
+FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson'~ two.sided
+\end{verbatim}
+
+Vi kan se at over hele datasættet, er der en signifikant negativ korrelation (estimate -0.147 og p-værdi \ensuremath{8.25054\times 10^{-55}}) mellem de to variabler, men vi er dog stadig mistænksom overfor eventuelle forskelligheder blandt de fem grupper fra variablen \texttt{group}.
+
+Vi vil gerne gentage den samme analyse for de fem grupper fra variablen \texttt{group} hver for sig. En god tilgang til at undersøge det er at bruge den ramme med \texttt{group\_by()} og \texttt{nest()} som vi lært sidste gange.
+
+\hypertarget{korrelation-over-flere-datasuxe6t-puxe5-en-gang}{%
+\subsection{Korrelation over flere datasæt på en gang}\label{korrelation-over-flere-datasuxe6t-puxe5-en-gang}}
+
+Jeg tjekker først fordelingen af de to variabler opdelt efter variablen \texttt{group}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(log10\_size\_mb,gc,group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{group) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{colour=}\StringTok{"black"}\NormalTok{,}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\#geom\_histogram(bins=40,alpha=0.5,colour="black") +}
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name,}\AttributeTok{scales=}\StringTok{"free"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 388 rows containing non-finite values (stat_density).
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-428-1.pdf}
+
+Vi kan se, at der er forskelligheder blandt de fem grupper og der sagtens kan forekommer forskellige sammenhænge mellem de to variabler. Vi benytter i følgende den \texttt{group\_by()} + \texttt{nest()} ramme som blev introducerede sidste lektion.
+
+\textbf{Step 1: Benytte \texttt{group\_by()} + \texttt{nest()}}
+
+Jeg anvender \texttt{group\_by} på variablen \texttt{group} og så funktionen \texttt{nest()} for at adskille \texttt{eukaryotes} i fem forskellige datasæt (lagrede i samme dataframe i en kolonne der hedder \texttt{data}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_nest }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(group) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{nest}\NormalTok{()}
+\NormalTok{eukaryotes\_nest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+## # Groups:   group [5]
+##   group    data                 
+##   <chr>    <list>               
+## 1 Other    <tibble [51 x 19]>   
+## 2 Protists <tibble [888 x 19]>  
+## 3 Plants   <tibble [1,304 x 19]>
+## 4 Fungi    <tibble [6,064 x 19]>
+## 5 Animals  <tibble [3,201 x 19]>
+\end{verbatim}
+
+\textbf{Step 2: Definere korrelation funktion}
+
+Lad os definere den korrelation test mellem \texttt{gc} og \texttt{log10\_size\_mb} i en funktion.
+
+\begin{itemize}
+\tightlist
+\item
+  Brug \texttt{\textasciitilde{}} lige i starten for at fortælle R, at vi arbejde med en funktion.
+\item
+  Specificer et bestemt datasæt (som er en delemængde af \texttt{eukaryotes}) indenfor \texttt{cor.test()} med \texttt{.x}
+\item
+  For det bestemt datasæt benytter jeg \texttt{.x\ \%\textgreater{}\%\ pull(gc)} og \texttt{.x\ \%\textgreater{}\%\ pull(size\_mb)} til at udtrække de relevante værdier for at udføre testen \texttt{cor.test}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor\_test }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{cor.test}\NormalTok{(.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(gc),}
+\NormalTok{                      .x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(log10\_size\_mb))}
+\end{Highlighting}
+\end{Shaded}
+
+Vi vil gerne få statistikker fra \texttt{cor.test()} i en pæn form så vi tilføjer \texttt{glance()} til ovenstående funktion:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(broom) }
+\NormalTok{my\_cor\_test }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{cor.test}\NormalTok{(.x}\SpecialCharTok{$}\NormalTok{gc,}\FunctionTok{log10}\NormalTok{(.x}\SpecialCharTok{$}\NormalTok{size\_mb)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glance}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Step 3: Bruge map() på det nested datasæt}
+
+Nu lad os køre vores funktion på den nested dataframe. Vi bruger \texttt{map()} til at lave funktionen \texttt{my\_cor\_test} for hver af de fem datasæt. Det gøres ved at bruge funktionen \texttt{map()} indenfor funktionen \texttt{mutate()} til at oprette en ny kolonne, der hedder \texttt{test\_stats}, hvor resultaterne for hver af de fem tests lagres.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_cor }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes\_nest }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{test\_stats=}\FunctionTok{map}\NormalTok{(data,my\_cor\_test))}
+\NormalTok{eukaryotes\_cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 3
+## # Groups:   group [5]
+##   group    data                  test_stats      
+##   <chr>    <list>                <list>          
+## 1 Other    <tibble [51 x 19]>    <tibble [1 x 8]>
+## 2 Protists <tibble [888 x 19]>   <tibble [1 x 8]>
+## 3 Plants   <tibble [1,304 x 19]> <tibble [1 x 8]>
+## 4 Fungi    <tibble [6,064 x 19]> <tibble [1 x 8]>
+## 5 Animals  <tibble [3,201 x 19]> <tibble [1 x 8]>
+\end{verbatim}
+
+\textbf{Step 4: Anvende \texttt{unnest()} for at kunne se resultaterne}
+
+For at kunne se statistikkerne bruger jeg funktionen \texttt{unnest()} på den nye variabel \texttt{test\_stats}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eukaryotes\_cor }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes\_cor }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unnest}\NormalTok{(test\_stats)}
+\NormalTok{eukaryotes\_cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 10
+## # Groups:   group [5]
+##   group    data     estimate statistic   p.value parameter conf.low conf.high
+##   <chr>    <list>      <dbl>     <dbl>     <dbl>     <int>    <dbl>     <dbl>
+## 1 Other    <tibble>   0.489       3.80 4.22e-  4        46  0.238      0.679 
+## 2 Protists <tibble>   0.301       9.26 1.54e- 19       860  0.239      0.361 
+## 3 Plants   <tibble>  -0.203      -7.37 3.10e- 13      1267 -0.255     -0.149 
+## 4 Fungi    <tibble>   0.377      31.2  3.87e-198      5884  0.355      0.399 
+## 5 Animals  <tibble>   0.0437      2.42 1.57e-  2      3053  0.00825    0.0790
+## # ... with 2 more variables: method <chr>, alternative <chr>
+\end{verbatim}
+
+\textbf{Step 5: Lave et plot fra statistikker}
+
+Vi kan bruge den direkte i et plot. Jeg fokuserer på den korrelaton koefficient i variablen \texttt{estimate} og omsætte den til et plot som i følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor\_plot }\OtherTok{\textless{}{-}}\NormalTok{ eukaryotes\_cor }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{group,}\AttributeTok{y=}\NormalTok{estimate,}\AttributeTok{fill=}\NormalTok{group)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{colour=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set3"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Corrlation estimate"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{() }
+\NormalTok{cor\_plot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-434-1.pdf}
+
+Bemærk at den overordnede process her med \texttt{cor.test} ligner processen hvis man anvender andre metoder såsom \texttt{t.test}, \texttt{lm} osv. Jeg gennemgår lidt om lineær regression og visualisering, og dernæst anvende processen på et eksempel med funktionen \texttt{lm()} og datasættet \texttt{penguins}.
+
+\hypertarget{lineuxe6r-regression---visualisering}{%
+\section{Lineær regression - visualisering}\label{lineuxe6r-regression---visualisering}}
+
+\hypertarget{lineuxe6r-trends}{%
+\subsection{Lineær trends}\label{lineuxe6r-trends}}
+
+Man kan se i følgende scatter plot mellem \texttt{bill\_length\_mm} og \texttt{body\_mass\_g} i datasættet \texttt{penguins}, at der er plottet en bedste rette linje igennem punkterne, som viser, at der er en positiv sammenhæng mellem de to variabler.
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-435-1.pdf}
+
+Husk at den bedste rette linje har en formel \(y = a + bx\), hvor \(a\) er den ``intercept'' (skæringspunktet) og \(b\) er den ``slope'' (hældningen) af linjen, og idéen med simpel lineær regression er, at man gerne vil finde de bedste mulige værdier for \(a\) og \(b\) for at plotte ovenstående linje således, at afstanden mellem linjen og punkterne bliver minimeret. Uden at gå i detaljer om hvordan det beregnes, husk at man bruger funktionen \texttt{lm()} som i følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(body\_mass\_g}\SpecialCharTok{\textasciitilde{}}\NormalTok{bill\_length\_mm,}\AttributeTok{data=}\NormalTok{penguins)}
+\NormalTok{mylm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_mass_g ~ bill_length_mm, data = penguins)
+## 
+## Coefficients:
+##    (Intercept)  bill_length_mm  
+##         388.85           86.79
+\end{verbatim}
+
+Intercept er således 388.85 og slope er 86.79 - det betyder, at hvis variablen \texttt{bill\_length\_mm} stiger ved 1, så ville den forventede \texttt{body\_mass\_g} stiger ved 86.79. Man kan således bruge linjen til at lave forudsigelser. For eksempel, hvis jeg målet en ny pingvin og fandt ud af, at den havde en \texttt{bill\_length\_mm} af 50 mm, kunne jeg bruge min linje som den bedste gætte på dens \texttt{body\_mass\_g}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ mylm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ mylm}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]  }\SpecialCharTok{*} \DecValTok{50}
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept) 
+##    4728.433
+\end{verbatim}
+
+Jeg forventer derfor en pingvin med en bill længde af 50 mm til at have vægten omkring 4728.4331411 g:
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-438-1.pdf}
+
+\hypertarget{geom_smooth-lm-trendlinjer}{%
+\subsection{\texorpdfstring{\texttt{geom\_smooth()}: \texttt{lm} trendlinjer}{geom\_smooth(): lm trendlinjer}}\label{geom_smooth-lm-trendlinjer}}
+
+Indbygget i \texttt{ggplot2} er en funktion der hedder \texttt{geom\_smooth()} som kan bruges til at tilføje den bedste rette linje til plottet. Man benytter den ved at specificere \texttt{+\ geom\_smooth(method="lm")} indenfor plot-kommandoen:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(penguins,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{bill\_length\_mm,}\AttributeTok{y=}\NormalTok{body\_mass\_g)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{,}\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-439-1.pdf}
+
+Det er nemt at bruge og at man kan få en konfidensinterval med, hvis man gerne vil have den: i ovenstående plot specificeret jeg \texttt{se=FALSE} men hvis jeg angiv \texttt{se=TRUE} (default), får jeg følgende plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(penguins,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{bill\_length\_mm,}\AttributeTok{y=}\NormalTok{body\_mass\_g)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{,}\AttributeTok{se=}\ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-440-1.pdf}
+
+\hypertarget{geom_smooth-flere-lm-trendlinjer-puxe5-samme-plot}{%
+\subsection{\texorpdfstring{\texttt{geom\_smooth()}: flere \texttt{lm} trendlinjer på samme plot}{geom\_smooth(): flere lm trendlinjer på samme plot}}\label{geom_smooth-flere-lm-trendlinjer-puxe5-samme-plot}}
+
+For at tilføje en bedste rette linje til de tre \texttt{species} hver for sig i stedet for samtlige data, er det meget nemt i \texttt{ggplot}: man angiver bare \texttt{colour=species} indenfor aesthetics:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(penguins,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{bill\_length\_mm,}\AttributeTok{y=}\NormalTok{body\_mass\_g,}\AttributeTok{colour=}\NormalTok{species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{,}\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-441-1.pdf}
+
+Så kan vi se, at der faktisk er tre forskellige trends her, så det giver god mening at bruge de tre forskellige linjer i stedet for kun en.
+
+\hypertarget{trendlinjer-med-methodloess}{%
+\subsection{\texorpdfstring{Trendlinjer med \texttt{method=="loess"}}{Trendlinjer med method=="loess"}}\label{trendlinjer-med-methodloess}}
+
+I \texttt{ggplot} er vi ikke begrænset til \texttt{method="lm"} indenfor \texttt{geom\_smooth()}. Lad os afpøve i stedet \texttt{method="loess"}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(palmerpenguins)}
+\NormalTok{penguins }\OtherTok{\textless{}{-}} \FunctionTok{drop\_na}\NormalTok{(penguins)}
+\FunctionTok{ggplot}\NormalTok{(penguins,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{bill\_length\_mm,}\AttributeTok{y=}\NormalTok{body\_mass\_g,}\AttributeTok{colour=}\NormalTok{species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"loess"}\NormalTok{,}\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-442-1.pdf}
+
+Så kan man fange trends som ikke nødvendigvis er lineær. Men det er mere ligefrem at beskrive en lineær trend og bruge den til at beregne de nødvendige statistik til at støtte vores observationer.
+
+\hypertarget{plot-linear-regresion-estimates}{%
+\section{Plot linear regresion estimates}\label{plot-linear-regresion-estimates}}
+
+For at finde vores estimates og tjekke signifikansen af de lineær trend, arbejder man direkte med den lineær model funktion \texttt{lm} som i ovenstående:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_lm }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(body\_mass\_g}\SpecialCharTok{\textasciitilde{}}\NormalTok{bill\_length\_mm,}\AttributeTok{data=}\NormalTok{penguins)}
+\FunctionTok{summary}\NormalTok{(my\_lm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = body_mass_g ~ bill_length_mm, data = penguins)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1759.38  -468.82    27.79   464.20  1641.00 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)     388.845    289.817   1.342    0.181    
+## bill_length_mm   86.792      6.538  13.276   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 651.4 on 331 degrees of freedom
+## Multiple R-squared:  0.3475, Adjusted R-squared:  0.3455 
+## F-statistic: 176.2 on 1 and 331 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Husk de tal, som er vigtige her (se også emne 1 og 2):
+
+\begin{itemize}
+\tightlist
+\item
+  Den \textbf{p-værdi}: \texttt{\textless{}2e-16} - uafhængige variablen \texttt{bill\_length\_mm} har en signifikant effekt.
+\item
+  Den \textbf{R-squared værdi}: - det viser den proportion af variancen i \texttt{body\_mass\_g} som \texttt{bill\_length\_mm} forklarer:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    hvis R-squared er tæt på 1, så er der tæt på en perfekt korrespondens mellem \texttt{bill\_length\_mm} og \texttt{body\_mass\_g}.
+  \item
+    hvis R-squared er tæt på 0, så er der nærmeste ingen korrespondens.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{anvende-lm-over-nested-datasuxe6t}{%
+\subsection{\texorpdfstring{Anvende \texttt{lm()} over nested datasæt}{Anvende lm() over nested datasæt}}\label{anvende-lm-over-nested-datasuxe6t}}
+
+Vi kan benytte den samme proces som ovenpå i korrelation analysen. Vi bruge \texttt{group\_by} til at opdele efter de tre \texttt{species} og så nest de tre datarammer:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_nest }\OtherTok{\textless{}{-}}\NormalTok{ penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{nest}\NormalTok{()}
+\NormalTok{penguins\_nest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+## # Groups:   species [3]
+##   species   data              
+##   <fct>     <list>            
+## 1 Adelie    <tibble [146 x 7]>
+## 2 Gentoo    <tibble [119 x 7]>
+## 3 Chinstrap <tibble [68 x 7]>
+\end{verbatim}
+
+Vi vil gerne lave en model med \texttt{lm} som ovenpå, og vi tilføje \texttt{glance()} til at få de model statistikker i en pæn form.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#husk \textasciitilde{} og skriv .x for data og IKKE penguins}
+\NormalTok{lm\_model\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(body\_mass\_g}\SpecialCharTok{\textasciitilde{}}\NormalTok{bill\_length\_mm,}\AttributeTok{data=}\NormalTok{.x) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glance}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Vi kører en lineær model på hver af de tre datasæt med \texttt{map} og ved at specifice funktion som vi defineret ovenpå. Vi bruger \texttt{mutate} ligesom før til at tilføje resulterende statistikker som en ny kolon der hedder \texttt{lm\_stats}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_lm }\OtherTok{\textless{}{-}}\NormalTok{ penguins\_nest }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{lm\_stats=}\FunctionTok{map}\NormalTok{(data,lm\_model\_func))}
+\NormalTok{penguins\_lm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+## # Groups:   species [3]
+##   species   data               lm_stats         
+##   <fct>     <list>             <list>           
+## 1 Adelie    <tibble [146 x 7]> <tibble [1 x 12]>
+## 2 Gentoo    <tibble [119 x 7]> <tibble [1 x 12]>
+## 3 Chinstrap <tibble [68 x 7]>  <tibble [1 x 12]>
+\end{verbatim}
+
+Til sidste bruger vi funktionen \texttt{unnest()} på vores statistikker:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_lm }\OtherTok{\textless{}{-}}\NormalTok{ penguins\_lm }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unnest}\NormalTok{(}\AttributeTok{cols=}\NormalTok{lm\_stats)}
+\NormalTok{penguins\_lm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 14
+## # Groups:   species [3]
+##   species data     r.squared adj.r.squared sigma statistic  p.value    df logLik
+##   <fct>   <list>       <dbl>         <dbl> <dbl>     <dbl>    <dbl> <dbl>  <dbl>
+## 1 Adelie  <tibble>     0.296         0.291  386.      60.6 1.24e-12     1 -1076.
+## 2 Gentoo  <tibble>     0.445         0.440  375.      93.6 1.26e-16     1  -873.
+## 3 Chinst~ <tibble>     0.264         0.253  332.      23.7 7.48e- 6     1  -490.
+## # ... with 5 more variables: AIC <dbl>, BIC <dbl>, deviance <dbl>,
+## #   df.residual <int>, nobs <int>
+\end{verbatim}
+
+Så kan vi se, at vi har fået en dataramme med vores lineær model statistikker. Jeg tager \texttt{r.squared} og \texttt{p.value} og omsætter dem til et plot for at sammenligne dem over de tre \texttt{species} af pingviner.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_lm }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(species,r.squared,p.value) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{"{-}log10pval"} \OtherTok{=} \SpecialCharTok{{-}}\FunctionTok{log10}\NormalTok{(p.value)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{p.value) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{species,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{name,}\AttributeTok{scale=}\StringTok{"free"}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{4}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-448-1.pdf}
+
+\hypertarget{funktion-glue-for-at-tilfuxf8je-labels}{%
+\subsection{\texorpdfstring{Funktion \texttt{glue()} for at tilføje labels}{Funktion glue() for at tilføje labels}}\label{funktion-glue-for-at-tilfuxf8je-labels}}
+
+Det kan være nyttig at tilføje nogle etiketter til vores plots med statistikkerne, vi lige har beregnet. Til at gøre det kan man bruge følgende kode. Vi tage vores datasæt \texttt{penguins\_lm} med vores beregnet statistikker og bruge den til at lave en datasæt som kan bruges i \texttt{geom\_text()} i vores trend plot. Funktionen \texttt{glue()} (fra pakken \texttt{glue}) er bare en nyttig måde at tilføj de \texttt{r.squared} og \texttt{p.value} værdier sammen i en ``string'', som beskriver vores forskellige trends (lidt som \texttt{paste} fra base-R)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(glue)  }\CommentTok{\# for putting the values together in a label}
+\NormalTok{label\_data }\OtherTok{\textless{}{-}}\NormalTok{ penguins\_lm }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{rsqr =} \FunctionTok{signif}\NormalTok{(r.squared, }\DecValTok{2}\NormalTok{),  }\CommentTok{\# round to 2 significant digits}
+    \AttributeTok{pval =} \FunctionTok{signif}\NormalTok{(p.value, }\DecValTok{2}\NormalTok{),}
+    \AttributeTok{label =} \FunctionTok{glue}\NormalTok{(}\StringTok{"r\^{}2 = \{rsqr\}, p{-}value = \{pval\}"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(species, label)}
+\NormalTok{label\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+FALSE # A tibble: 3 x 2
+FALSE # Groups:   species [3]
+FALSE   species   label                        
+FALSE   <fct>     <glue>                       
+FALSE 1 Adelie    r^2 = 0.3, p-value = 1.2e-12 
+FALSE 2 Gentoo    r^2 = 0.44, p-value = 1.3e-16
+FALSE 3 Chinstrap r^2 = 0.26, p-value = 7.5e-06
+\end{verbatim}
+
+Vi kan tilføje vores label data indenfor \texttt{geom\_text()}. \texttt{x} og \texttt{y} specificere hvor i plottet teksten skal være, og husk at specificere \texttt{data=label\_data} og \texttt{label=label} skal stå indenfor \texttt{aes()} når det handler om en variable i \texttt{label\_data}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(penguins, }\FunctionTok{aes}\NormalTok{(body\_mass\_g, flipper\_length\_mm, }\AttributeTok{colour=}\NormalTok{species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_text}\NormalTok{(}
+    \AttributeTok{x =} \DecValTok{5500}\NormalTok{, }
+    \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\DecValTok{175}\NormalTok{,}\DecValTok{180}\NormalTok{,}\DecValTok{185}\NormalTok{),}
+    \AttributeTok{data =}\NormalTok{ label\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =}\NormalTok{ label), }\CommentTok{\#specify label data from above}
+    \AttributeTok{size =} \DecValTok{4}
+\NormalTok{  ) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-450-1.pdf}
+
+\hypertarget{multiple-regression-and-model-comparison}{%
+\section{Multiple regression and model comparison}\label{multiple-regression-and-model-comparison}}
+
+Man kan også bruge den samme ramme i ovenstående til at sammenligne forskellige modeller - her definer jeg \texttt{lm\_model\_func} der har kun \texttt{sex} som uafhængige variabel og så bygger jeg op på den model ved at definere \texttt{lm\_model\_func2} og \texttt{lm\_model\_func3}, hvor jeg tilføjer ekstra uafhængige variabler \texttt{bill\_length\_mm} og \texttt{flipper\_length\_mm}. Jeg er interesset i, hvor meget af variansen i \texttt{body\_mass\_g} de tre variabler forklarer tilsammen, og om der er forskelligeheder efter de tre arter i \texttt{species}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_model\_func }\OtherTok{\textless{}{-}}  \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex                                      ,}\AttributeTok{data=}\NormalTok{.x)}
+\NormalTok{lm\_model\_func2 }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ bill\_length\_mm                     ,}\AttributeTok{data=}\NormalTok{.x)}
+\NormalTok{lm\_model\_func3 }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ bill\_length\_mm }\SpecialCharTok{+}\NormalTok{ flipper\_length\_mm ,}\AttributeTok{data=}\NormalTok{.x)}
+\end{Highlighting}
+\end{Shaded}
+
+Bemærk at jeg endnu ikke har tilføjet \texttt{glance()} her men jeg har tænkt mig at gøre det lidt senere i processen for at undgå, at jeg får alt for mange statistikker i min dataframe med mine resultater. Jeg anvender først \texttt{group\_by()} efter \texttt{species} og \texttt{nest()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_nest }\OtherTok{\textless{}{-}}\NormalTok{ penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(species) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{nest}\NormalTok{()}
+\NormalTok{penguins\_nest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+## # Groups:   species [3]
+##   species   data              
+##   <fct>     <list>            
+## 1 Adelie    <tibble [146 x 7]>
+## 2 Gentoo    <tibble [119 x 7]>
+## 3 Chinstrap <tibble [68 x 7]>
+\end{verbatim}
+
+Her bruger jeg map tre gange indenfor sammen \texttt{mutate}, for at bygge de tre modeller for hver art (ni modeller i alt).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_nest\_lm }\OtherTok{\textless{}{-}}\NormalTok{ penguins\_nest }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{model\_sex =}              \FunctionTok{map}\NormalTok{(data,lm\_model\_func),}
+    \AttributeTok{model\_sex\_bill =}         \FunctionTok{map}\NormalTok{(data,lm\_model\_func2),}
+    \AttributeTok{model\_sex\_bill\_flipper =} \FunctionTok{map}\NormalTok{(data,lm\_model\_func3))}
+\NormalTok{penguins\_nest\_lm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 5
+## # Groups:   species [3]
+##   species   data               model_sex model_sex_bill model_sex_bill_flipper
+##   <fct>     <list>             <list>    <list>         <list>                
+## 1 Adelie    <tibble [146 x 7]> <lm>      <lm>           <lm>                  
+## 2 Gentoo    <tibble [119 x 7]> <lm>      <lm>           <lm>                  
+## 3 Chinstrap <tibble [68 x 7]>  <lm>      <lm>           <lm>
+\end{verbatim}
+
+Nu vil jeg gerne udtrækker nogle statistikkker fra modellerne så jeg kan sammenligne dem. Jeg vil gerne lave samme process på alle ni modeller - hvor jeg benytter functionen \texttt{glance} til at få outputtet i tidy-form, og så udtrækker \texttt{r.squared} bagefter til at undgå, at der kommer alt for mange statistikker i min nye dataframe.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{get\_r2\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glance}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(r.squared)}
+\end{Highlighting}
+\end{Shaded}
+
+Nu gælder det om at køre ovenstående funktion på alle mine modeller, som er lagret i tre kolonner, \texttt{model\_sex},\texttt{model\_sex\_bill} og \texttt{model\_sex\_bill\_flipper}. Jeg gøre det indenfor \texttt{map} så det bliver også kørte til hver af de tre arter.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_nest\_lm }\OtherTok{\textless{}{-}}\NormalTok{  penguins\_nest\_lm }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model\_sex\_r2 =}              \FunctionTok{map\_dbl}\NormalTok{(model\_sex,              get\_r2\_func),}
+         \AttributeTok{model\_sex\_bill\_r2 =}         \FunctionTok{map\_dbl}\NormalTok{(model\_sex\_bill,         get\_r2\_func),}
+         \AttributeTok{model\_sex\_bill\_flipper\_r2 =} \FunctionTok{map\_dbl}\NormalTok{(model\_sex\_bill\_flipper, get\_r2\_func))}
+\NormalTok{penguins\_nest\_lm }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(species,model\_sex\_r2,model\_sex\_bill\_r2,model\_sex\_bill\_flipper\_r2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 4
+## # Groups:   species [3]
+##   species   model_sex_r2 model_sex_bill_r2 model_sex_bill_flipper_r2
+##   <fct>            <dbl>             <dbl>                     <dbl>
+## 1 Adelie           0.545             0.563                     0.602
+## 2 Gentoo           0.649             0.691                     0.716
+## 3 Chinstrap        0.291             0.331                     0.476
+\end{verbatim}
+
+Omsætte til et plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_nest\_lm }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\FunctionTok{c}\NormalTok{(}\StringTok{"model\_sex\_r2"}\NormalTok{,}\StringTok{"model\_sex\_bill\_r2"}\NormalTok{,}\StringTok{"model\_sex\_bill\_flipper\_r2"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{species,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{name)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-456-1.pdf}
+
+Man kan se i plottet, at \texttt{body\_mass\_g} i species ``Gentoo'' er bedste forklaret af de tre varibler, og den lavest \texttt{r.squared} er tilfælde hvor variablen \texttt{sex} er dene eneste uafhængig variable og \texttt{species} er ``Chinstrap''.
+
+\hypertarget{anova-for-at-sammenligne-de-forskellige-modeller}{%
+\subsection{\texorpdfstring{\texttt{anova} for at sammenligne de forskellige modeller}{anova for at sammenligne de forskellige modeller}}\label{anova-for-at-sammenligne-de-forskellige-modeller}}
+
+Grunden til, at jeg valgt at bruge \texttt{glance()} i en ny funktion for at udtrække \texttt{r.squared} værdier, var fordi jeg gerne ville bevare mine modeller i rå form, så de kan bruges indenfor \texttt{anova()}. Med \texttt{anova()} kan jeg sammenligne to modeller direkte og får således en p-værdi hvor man teste hypotesen, hvor den ekstra variabler i den ene model forklarer den afhængig variabel signifikant (når man tager højde for de variabler, der er fælles til både modeller).
+
+I følgende skriver jeg en funktion hvor jeg kan sammenligne to modeller med \texttt{anova} og udtrækker p-værdien:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{aov\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{anova}\NormalTok{(.x,.y) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{tidy}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pluck}\NormalTok{(}\StringTok{"p.value"}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \textasciitilde{} fordi det er en funktion (som jeg benytter for hver art og model sammenligning - 9 gange i alt!)
+\item
+  \texttt{anova} for at sammenligne modellerne som er betegnet ved \texttt{.x} og \texttt{.y} (vi anvender \texttt{map2} som tager to input i stedet for én som i \texttt{map})
+\item
+  \texttt{tidy()} er ligesom glance men angiver sumamry statistikker og flere linjer - herunder p-værdien
+\item
+  \texttt{pluck} - jeg vil have kun én statistik (``p.value'') - og det er lagret i anden plads.
+\end{itemize}
+
+Se følgende kode for når man anvende \texttt{anova} og \texttt{tidy} på modellerne \texttt{model\_sex} og \texttt{model\_sex\_bill} i species ``Adelie'' (da jeg benyttet \texttt{pluck} med ``1'' som betyder den først plads i listen):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myaov }\OtherTok{\textless{}{-}} \FunctionTok{anova}\NormalTok{(penguins\_nest\_lm }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pluck}\NormalTok{(}\StringTok{"model\_sex"}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+\NormalTok{               penguins\_nest\_lm }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pluck}\NormalTok{(}\StringTok{"model\_sex\_bill"}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\NormalTok{myaov }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ tidy }\CommentTok{\#p.value for comparing the two models is in the second position}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 6
+##   res.df       rss    df   sumsq statistic p.value
+##    <dbl>     <dbl> <dbl>   <dbl>     <dbl>   <dbl>
+## 1    144 13884760.    NA     NA      NA    NA     
+## 2    143 13332955.     1 551805.      5.92  0.0162
+\end{verbatim}
+
+Man kan se, at p-værdien er 0.016 som er signifikant og betyder at den mere `indviklet' model der også inddrager \texttt{bill\_length\_mm} er den model, vi accepteror (effekten af variablen \texttt{bill\_length\_mm} på \texttt{body\_mass\_g} er signifikant).
+
+Man kan lave en lignende sammenligne mellem samtlige par modeller over de tre arter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_nest\_lm }\OtherTok{\textless{}{-}}\NormalTok{  penguins\_nest\_lm }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model\_sex\_vs\_model\_sex\_bill =}              \FunctionTok{map2\_dbl}\NormalTok{(model\_sex,model\_sex\_bill,aov\_func),}
+         \AttributeTok{model\_sex\_vs\_model\_sex\_bill\_flipper =}      \FunctionTok{map2\_dbl}\NormalTok{(model\_sex,model\_sex\_bill\_flipper,aov\_func),}
+         \AttributeTok{model\_sex\_bill\_vs\_model\_sex\_bill\_flipper =} \FunctionTok{map2\_dbl}\NormalTok{(model\_sex\_bill,model\_sex\_bill\_flipper,aov\_func))}
+\NormalTok{penguins\_nest\_lm }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(species,model\_sex\_vs\_model\_sex\_bill,model\_sex\_vs\_model\_sex\_bill\_flipper,model\_sex\_bill\_vs\_model\_sex\_bill\_flipper)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 4
+## # Groups:   species [3]
+##   species   model_sex_vs_model_sex_bill model_sex_vs_model_sex~ model_sex_bill_~
+##   <fct>                           <dbl>                   <dbl>            <dbl>
+## 1 Adelie                       0.0162                0.0000730         0.000273 
+## 2 Gentoo                       0.000142              0.00000592        0.00193  
+## 3 Chinstrap                    0.0540                0.0000621         0.0000795
+\end{verbatim}
+
+Det kunne være nyttigt at inddrage p-værdier i ovenstående plot med \texttt{r.squared} værdierne, til at se om, der er en signifikant effekt når man tilføjer flere variabler til modellen samtidig at \texttt{r.squared} stiger. I følgende omsætter jeg \texttt{r.squared} statistikker til kun ``Chunstrap'' i et plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggsignif) }
+
+\NormalTok{stats\_plot }\OtherTok{\textless{}{-}}\NormalTok{ penguins\_nest\_lm }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(species}\SpecialCharTok{==}\StringTok{"Chinstrap"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\FunctionTok{c}\NormalTok{(}\StringTok{"model\_sex\_r2"}\NormalTok{,}\StringTok{"model\_sex\_bill\_r2"}\NormalTok{,}\StringTok{"model\_sex\_bill\_flipper\_r2"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{name,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{name)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{position=}\StringTok{"dodge"}\NormalTok{)  }\SpecialCharTok{+}
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\NormalTok{stats\_plot}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-460-1.pdf}
+
+I følgende tilføjer jeg funktionen \texttt{geom\_signif} til plottet - det tillader, at jeg kan tilføje signifikans linjer/annotations til plottet - dvs. viser hvilke to modeller jeg sammenligner, og angiver stjerne efter beregnede p-værdierne. Du er velkommen til at kopier mine kode og tilpasse til egen behov.
+
+\begin{itemize}
+\tightlist
+\item
+  Når jeg sammenligne modellerne ``model\_sex'' og ``model\_sex\_bill'' i ``Chinstrap'', er p-værdien over 0.05, så tilføjelsen af \texttt{bill\_length\_mm} i modellen var ikke signifikant - jeg giver ingen stjerner men skriver ``.'' til at matcher outputtet i \texttt{lm}.
+\item
+  Når jeg sammenligne modellerne ``model\_sex'' og ``model\_sex\_bill\_flipper'' kan jeg se at p-værdien er under 0.05, så der er en signifikant effekt - \texttt{bill\_length\_mm} og \texttt{flipper\_length\_mm} forklarer den afhængige variabel \texttt{body\_mass\_g}, ud over variablen \texttt{sex}. Jeg angiver "***" fordi p-værdien er under 0.001 (Se signif. codes i \texttt{lm} summary).
+\item
+  Indstillingen \texttt{y\_position} fortæller hvor jeg vil placerer linjerne.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stats\_plot }\SpecialCharTok{+}
+  \FunctionTok{geom\_signif}\NormalTok{(}\AttributeTok{comparisons =} \FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"model\_sex\_r2"}\NormalTok{, }\StringTok{"model\_sex\_bill\_r2"}\NormalTok{)), }
+              \AttributeTok{annotations=}\StringTok{"."}\NormalTok{, }\AttributeTok{y\_position =} \FloatTok{0.35}\NormalTok{, }\AttributeTok{tip\_length =} \FloatTok{0.03}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_signif}\NormalTok{(}\AttributeTok{comparisons =} \FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"model\_sex\_bill\_r2"}\NormalTok{, }\StringTok{"model\_sex\_bill\_flipper\_r2"}\NormalTok{)), }
+              \AttributeTok{annotations=}\StringTok{"***"}\NormalTok{, }\AttributeTok{y\_position =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{tip\_length =} \FloatTok{0.03}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_signif}\NormalTok{(}\AttributeTok{comparisons =} \FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"model\_sex\_r2"}\NormalTok{, }\StringTok{"model\_sex\_bill\_flipper\_r2"}\NormalTok{)), }
+              \AttributeTok{annotations=}\StringTok{"***"}\NormalTok{, }\AttributeTok{y\_position =} \FloatTok{0.55}\NormalTok{, }\AttributeTok{tip\_length =} \FloatTok{0.03}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-461-1.pdf}
+
+\hypertarget{problemstillinger-7}{%
+\section{Problemstillinger}\label{problemstillinger-7}}
+
+\textbf{0}) Quizzen på Absalon.
+
+Husk at have indlæste følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(broom)}
+\FunctionTok{data}\NormalTok{(mtcars)}
+\FunctionTok{data}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{1}) \emph{Korrelation øvelse}
+
+\begin{itemize}
+\item
+  Brug \texttt{data(mtcars)} og \texttt{cor.test()} til at lave et test af korrelationen mellem variablerne \texttt{qsec} og \texttt{drat}.
+\item
+  Tip: hvis du foretrækker at undgå \texttt{\$} i analysen til at speciefice en kolon indenfor \texttt{cor.test()} kan du bruge \texttt{mtcars\ \%\textgreater{}\%\ pull(qsec)} i stedet for \texttt{mtcars\$qsec}.
+\item
+  Tilføj funktionen \texttt{glance()} til din resultat fra \texttt{cor.test()} til at se de statistikker i \textbf{tidy} form. Kan du genkende de statistikker fra \texttt{cor.test()} i den resulterende dataramme?
+\end{itemize}
+
+\textbf{2}) \emph{Nesting øvelse}
+
+For datasættet \texttt{msleep} anvende \texttt{group\_by()} og \texttt{nest()} til at få en nested datasæt opdelt efter variablen \texttt{vore}.
+
+\begin{itemize}
+\tightlist
+\item
+  Tilføj en ny kolon med \texttt{mutate} der hedder \texttt{n\_rows} som beregner antallet af række i hver af de fire datasæt - husk følgende struktur (først angiv kolonnen som indeholder vores list af datasæt, og så angive funktionen som beregner antallet af række).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mtcars }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(cyl) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{"n\_rows"} \OtherTok{=} \FunctionTok{map}\NormalTok{(???,???)) }\CommentTok{\#erstatte ??? her}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  I dette tilfælde kan man ændre \texttt{map} til \texttt{map\_dbl}.
+\end{itemize}
+
+\textbf{4}) \emph{Multiple korrelation}
+
+Vi vil gerne beregne den korrelation mellem variablerne \texttt{sleep\_total} og \texttt{sleep\_rm} til hver af de tre datasæt.
+
+\begin{itemize}
+\tightlist
+\item
+  Tilpasse følgende funktion så at vi teste korrelation mellem de to variabler.
+\item
+  Tilføje \texttt{glance()} så at vi få vores data i \textbf{tidy} form.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor\_test }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{cor.test}\NormalTok{(????,???) }\CommentTok{\#erstatte ??? og tilføj glance funktion}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Brug map i nedenstående med din funktion til at beregne de korrelation til hver af de fire datasæt.
+\item
+  Unnest din nye kolonne bagefter
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(vore) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{cor\_stats =}\NormalTok{ ???) }\CommentTok{\#erstatte ??? her og husk unnest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Lave barplots af \texttt{estimate} og \texttt{-log10(p.value)} med den resulterende dataramme
+\end{itemize}
+
+\textbf{6}) \emph{Linear regression øvelse}
+
+Brug \texttt{data(iris)} og anvende \texttt{lm()} til at finde den forventet \texttt{Petal.Length} med hensyn til \texttt{Petal.Width}.
+
+\begin{itemize}
+\tightlist
+\item
+  Hvad er den intercept og slope af den beregnet linje?
+\item
+  Tilføj funktionen \texttt{glance()} og angive værdier \texttt{r.squared} og \texttt{p.value}.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{lm}\NormalTok{(??? }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ???,}\AttributeTok{data=}\NormalTok{???) }\CommentTok{\#erstatte ???}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{7}) Lave et scatter plot af Petal.Width på x-aksen og Petal.Length på y-aksen.
+
+\begin{itemize}
+\tightlist
+\item
+  Tilføje linjen \texttt{geom\_smooth(method="smooth")}
+\item
+  Ændre linjen til \texttt{geom\_smooth(method="lm")}
+\item
+  Ændre linjen til \texttt{geom\_smooth(method="lm",se=FALSE)}
+\item
+  Nu specificer en forskellige farve efter Species. Er der forskellige trends?
+\end{itemize}
+
+Vi vil gerne lave samme analyse for hver af de tre Species.
+
+\textbf{8}) \emph{Lineær regression øvelse over multiple datasæt}
+
+Vi vil gerne udføre lineær regression med Petal.Length og Petal.Width som i \textbf{6}), men opdelt efter de tre Species.
+* Lave en funktion ved at tilpasse følgende kode. Passe på hvad \texttt{data} skal være lig med her (når vi skriver en funktion).
+* Tilføj \texttt{glance()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm\_model\_func }\OtherTok{\textless{}{-}}\NormalTok{ ???}\FunctionTok{lm}\NormalTok{(??? }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ???,}\AttributeTok{data=}\NormalTok{???) }\CommentTok{\#erstat ??? }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Anvende \texttt{group\_by()} og \texttt{nest()}
+\item
+  Anvende \texttt{map()} med din funktion indenfor \texttt{mutate()} til at tilføje en ny kolon som hedder \texttt{lm\_stats} til din dataramme.
+\item
+  Husk at \texttt{unnest} kolonnen \texttt{lm\_stats}til at kunne se statistikker.
+\end{itemize}
+
+\hypertarget{ekstra}{%
+\section{Ekstra}\label{ekstra}}
+
+\url{https://www.tidymodels.org/learn/statistics/tidy-analysis/}
 
   \bibliography{book.bib,packages.bib}
 
