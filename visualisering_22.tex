@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-14}
+\date{Last updated: 2022-05-15}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.16113839  0.61983404 -0.89539852 -0.59826445  0.81307631  0.48695536
-##  [7] -0.26138001 -0.63480789 -0.06877512  1.80140971 -0.00868779  1.53065566
-## [13]  0.45604041  0.13806549  1.10601203 -0.02854804 -1.19955880  0.63396742
-## [19] -1.02564787 -0.10643780 -0.35683066  0.71869615 -0.25390956 -1.29426256
-## [25]  0.02690959
+##  [1]  1.36787931 -0.83265012 -0.93967848  0.21207637  0.10043514 -0.59214330
+##  [7]  0.03467596 -0.23162105  0.99687867  1.47809379  0.31358143  1.35923102
+## [13] -1.38197133  2.38041607  0.27895120 -1.23463596 -0.92068940  0.97877442
+## [19] -0.20934352 -0.99629614 -0.52945767  1.51639679 -0.44609378  1.08974441
+## [25] -0.96308566
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.1611384  0.6198340 {-}0.8953985 {-}0.5982644  0.8130763  0.4869554}
+\DocumentationTok{\#\# [1]  1.3678793 {-}0.8326501 {-}0.9396785  0.2120764  0.1004351 {-}0.5921433}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.10643780 {-}0.35683066  0.71869615 {-}0.25390956 {-}1.29426256  0.02690959}
+\DocumentationTok{\#\# [1] {-}0.9962961 {-}0.5294577  1.5163968 {-}0.4460938  1.0897444 {-}0.9630857}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.1611384}
+\DocumentationTok{\#\# [1] 1.367879}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.02690959}
+\DocumentationTok{\#\# [1] {-}0.9630857}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.07041006 -0.00868779  1.80140971 -1.29426256  0.63115003  0.79444951
+## [1]  0.11317873  0.03467596  2.38041607 -1.38197133  1.06776684  1.03332804
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## -1.294263 -0.356831 -0.008688  0.070410  0.619834  1.801410
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.38197 -0.83265  0.03468  0.11318  0.99688  2.38042
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -7440,7 +7440,7 @@ Husk at når man inddrager nogle data \texttt{.x}, for eksempel når man vil bru
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(n\_distinct) }\CommentTok{\#specificere funktion unden instillinger}
-\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{n\_distinct}\NormalTok{(.x,}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\CommentTok{\#non{-}default funktion}
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{map\_df}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\FunctionTok{n\_distinct}\NormalTok{(.x,}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\CommentTok{\#custom funktion}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7454,18 +7454,14 @@ Husk at når man inddrager nogle data \texttt{.x}, for eksempel når man vil bru
 \end{Highlighting}
 \end{Shaded}
 
-Brug funktioner indenfor \texttt{map()} til at beregne følgende:
+Brug custom funktioner indenfor \texttt{map()} til at beregne følgende:
 
 \begin{itemize}
 \tightlist
 \item
-  Select alle variabler og output den 100th observation. Resultatet skal være en list.
+  Udvælg variabler \texttt{carat}, \texttt{depth}, \texttt{table} og \texttt{price} og for hver kolonne tilføj tre og så dernæst tag square (\texttt{\^{}2}). Resultatet skal være en dataramme.
 \item
-  Select variabler \texttt{carat}, \texttt{depth}, \texttt{table} og \texttt{price} og for hver kolon tilføj tre og så tag square (\texttt{\^{}2}). Resultatet skal være en dataramme.
-\item
-  Select variabler \texttt{carat}, \texttt{depth}, \texttt{table} og \texttt{price} og angiv \texttt{TRUE} hvis den første værdi er større en den median værdi, ellers \texttt{FALSE}. Resultatet skal være en logical.
-\item
-  Select variabler \texttt{carat}, \texttt{depth}, \texttt{table} og \texttt{price} og beregne den \texttt{log2} transformering til være. Resultatet skal være en dataramme. Brug resulterende dataramme til at lave et scatter plot af \(\log2\)(\texttt{caret}) på x-aksen og \(\log2\)(\texttt{price}) på y-aksen.
+  Udvælg numeriske variabler og angiv \texttt{TRUE} hvis den først værdi i kolonnen (betegnet med \texttt{nth(.x,1)}) er større en den median værdi i kolonnen, ellers \texttt{FALSE}. Resultatet skal være en logical.
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
@@ -7513,7 +7509,7 @@ Vi har set, at når vi kører \texttt{map} på en dataframe, laver man en funkti
 \begin{itemize}
 \tightlist
 \item
-  Kør følgende kode og kig på resultatet
+  Kør følgende kode, der tager den første \texttt{tibble} udvælger observationer hvor \texttt{letter} = ``a'' og dernæst beregner den middelværdi af ``number''.
 \end{itemize}
 
 \begin{Shaded}
@@ -7525,7 +7521,7 @@ Vi har set, at når vi kører \texttt{map} på en dataframe, laver man en funkti
 \begin{itemize}
 \tightlist
 \item
-  Nu at jeg kan se, at min kode virker til den første \texttt{tibble}, kan jeg ændre den til en funktion og anvende den med \texttt{map()} - prøve at køre følgende.
+  Nu at jeg kan se, at min kode virker til den første \texttt{tibble}, kan jeg ændre den til en funktion og anvende den med \texttt{map()} til at lave samme process på alle dataframes - prøve at køre følgende.
 \end{itemize}
 
 \begin{Shaded}
@@ -7544,7 +7540,9 @@ Vi har set, at når vi kører \texttt{map} på en dataframe, laver man en funkti
 
 \textbf{Problem 5}) \emph{group\_by/nest øvelse}
 
-For datasættet \texttt{iris}, anvend \texttt{group\_by(Species)} og tilføj dernæst \texttt{nest()}, og kigger på resultatet.
+\textbf{a}) For datasættet \texttt{iris}, anvend \texttt{group\_by(Species)} og tilføj dernæst \texttt{nest()}, og kigger på resultatet.
+
+\textbf{b})
 
 \begin{itemize}
 \tightlist
@@ -7564,38 +7562,42 @@ For datasættet \texttt{iris}, anvend \texttt{group\_by(Species)} og tilføj der
   \item
     \texttt{mutate(new\_column\_ratio\ =\ map(data,\textasciitilde{}(.x\$Sepal.Width/.x\$Sepal.Length)))}
   \end{itemize}
+\end{itemize}
+
+\textbf{b}) \emph{Skift mellem long og wide form}
+
+\begin{itemize}
+\tightlist
 \item
-  Afprøv også følgende funktion med \texttt{map()} funktioner på kolonnen \texttt{data} (angiv hensigtsmæssigt kolonnenavne i \texttt{mutate()}).
+  Afprøv også følgende funktion med \texttt{map()}-funktionen på kolonnen \texttt{data} (angiv ny kolonnenavne \texttt{new\_column\_long} i \texttt{mutate()}).
 \end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{cor}\NormalTok{(.x}\SpecialCharTok{$}\NormalTok{Sepal.Width,.x}\SpecialCharTok{$}\NormalTok{Sepal.Length)}
+\CommentTok{\#add an id and put data into long form}
+\NormalTok{my\_func\_longer }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{id=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{50}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pivot\_longer}\NormalTok{(}\AttributeTok{cols=}\SpecialCharTok{{-}}\NormalTok{id)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{itemize}
 \tightlist
 \item
-  Brug \texttt{map} til at tilføje en ny kolonne \texttt{mean\_ratio}, der viser middelværdierne af den ratio af \texttt{Sepal.Length} vs \texttt{Sepal.Width} (dvs. anvend \texttt{map} med kolonnen \texttt{new\_column\_ratio}).
+  Skriv en funktion og anvend den på kolonnen \texttt{new\_column\_long}, der laver hvert datasæt i kolonnen om til wide-form igen (lav ny kolonne ``new\_column\_wide'').
 \end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{mean}\NormalTok{(.x,}\AttributeTok{na.rm=}\NormalTok{T)}
-\NormalTok{iris\_nested\_stats }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\StringTok{"mean\_ratio"} \OtherTok{=} \FunctionTok{map\_dbl}\NormalTok{(new\_column\_ratio,my\_func))}
+\NormalTok{my\_func\_wider }\OtherTok{\textless{}{-}}\NormalTok{ ??? }\CommentTok{\#lave long data om til wide form (husk at angiv names\_from,values\_from,id\_cols)}
+  
+\NormalTok{iris\_nested\_stats }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ ???}\CommentTok{\#anvend din funktion  }
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## # A tibble: 3 x 5
-## # Groups:   Species [3]
-##   Species    data              new_column_nrow new_column_ratio mean_ratio
-##   <fct>      <list>                      <dbl> <list>                <dbl>
-## 1 setosa     <tibble [50 x 4]>              50 <dbl [50]>            0.684
-## 2 versicolor <tibble [50 x 4]>              50 <dbl [50]>            0.468
-## 3 virginica  <tibble [50 x 4]>              50 <dbl [50]>            0.453
-\end{verbatim}
+\begin{itemize}
+\tightlist
+\item
+  Anvend \texttt{pluck} på kolonnerne \texttt{new\_column\_long} og \texttt{new\_column\_wide} til at kigge på den første datasæt for at se, om du har outputtet i long/wide form som forventede.
+\end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -7670,6 +7672,8 @@ Tag funktionen:
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 8}) Hvis du færdig før tid kan du se videorne til næste emne i morgen :)
 
 \hypertarget{ekstra-notater-og-nuxe6ste-gang}{%
 \section{Ekstra notater og næste gang}\label{ekstra-notater-og-nuxe6ste-gang}}
@@ -7793,14 +7797,20 @@ Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/70
 \begin{itemize}
 \tightlist
 \item
-  Video 5: ANOVA
+  Video 5: anova+map (OBS muligvis mest udfordrende del i kurset)
 
   \begin{itemize}
   \tightlist
   \item
-    Et eksempel på \texttt{map2} funktion for at sammenligne signifikans mellem modeller
+    Benytte funktionen \texttt{anova} for at sammenligne to modeller beregnede på datasættet \texttt{penguins} og få outputtet i ``tidy''-form med fuktionen \texttt{tidy()}
+  \item
+    Lave en funktion med \texttt{anova}, der kan anvendes over alle arter med \texttt{map2()}
+  \item
+    Omsætte p-værdier fra sammenligningerne til et plot og tilføj signifikans annotations
   \end{itemize}
 \end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/710108716}
 
 \hypertarget{nest-og-map-eksempel-med-korrelation}{%
 \section{\texorpdfstring{\texttt{nest()} og \texttt{map()}: eksempel med korrelation}{nest() og map(): eksempel med korrelation}}\label{nest-og-map-eksempel-med-korrelation}}
@@ -7833,7 +7843,7 @@ I følgende plotter jeg en density mellem \texttt{gc} og den transformerede vari
 ## Warning: Removed 388 rows containing non-finite values (stat_density).
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-425-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-427-1.pdf}
 
 Plottet ser ud til at have flere ``peaks'' og jeg mistænker, at der kan være nogle sub-struturer indenfor de data - ekempelvis pga. de forskellige organismer grupper i variablen \texttt{Group} (Animals, Plants osv.). I følgende benytter jeg alligevel \texttt{cor.test()} til at teste for korrelation mellem \texttt{gc} og \texttt{log10\_size\_mb} over hele datasæt:
 
@@ -7902,7 +7912,7 @@ Jeg tjekker først fordelingen af de to variabler opdelt efter variablen \texttt
 ## Warning: Removed 388 rows containing non-finite values (stat_density).
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-428-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-430-1.pdf}
 
 Man kan se, at der er forskelligheder blandt de fem grupper og der sagtens kan forekommer forskellige sammenhænge mellem de to variabler. Jeg benytter i følgende den \texttt{group\_by()} + \texttt{nest()} ramme som blev introducerede sidste lektion.
 
@@ -8026,7 +8036,7 @@ Vi kan bruge den direkte i et plot. Jeg fokuserer på den korrelaton koefficient
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-434-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-436-1.pdf}
 
 Bemærk at den overordnede process her med \texttt{cor.test} ligner processen hvis man anvender andre metoder såsom \texttt{t.test}, \texttt{lm} osv. Jeg gennemgår lidt om lineær regression og visualisering, og dernæst anvende processen på et eksempel med funktionen \texttt{lm()} og datasættet \texttt{penguins}.
 
@@ -8042,7 +8052,7 @@ Vi skifter over til datasættet \texttt{penguins} som findes i pakken \texttt{pa
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-435-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-437-1.pdf}
 
 Husk at den bedste rette linje har en formel \(y = a + bx\), hvor \(a\) er den ``intercept'' (skæringspunktet) og \(b\) er den ``slope'' (hældningen) af linjen, og idéen med simpel lineær regression er, at man gerne vil finde de bedste mulige værdier for \(a\) og \(b\) for at plotte ovenstående linje således, at afstanden mellem linjen og punkterne bliver minimeret. Uden at gå i detaljer om hvordan det beregnes, husk at man bruger funktionen \texttt{lm()} som i følgende:
 
@@ -8083,7 +8093,7 @@ Jeg forventer derfor en pingvin med en bill længde af 50 mm til at have vægten
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-438-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-440-1.pdf}
 
 \hypertarget{geom_smooth-lm-trendlinjer}{%
 \subsection{\texorpdfstring{\texttt{geom\_smooth()}: \texttt{lm} trendlinjer}{geom\_smooth(): lm trendlinjer}}\label{geom_smooth-lm-trendlinjer}}
@@ -8103,7 +8113,7 @@ Indbygget i \texttt{ggplot2} er en funktion der hedder \texttt{geom\_smooth()} s
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-439-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-441-1.pdf}
 
 Det er nemt at bruge og at man kan få en konfidensinterval med, hvis man gerne vil have den: i ovenstående plot specificeret jeg \texttt{se=FALSE} men hvis jeg angiv \texttt{se=TRUE} (default), får jeg følgende plot:
 
@@ -8120,7 +8130,7 @@ Det er nemt at bruge og at man kan få en konfidensinterval med, hvis man gerne 
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-440-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-442-1.pdf}
 
 \hypertarget{geom_smooth-flere-lm-trendlinjer-puxe5-samme-plot}{%
 \subsection{\texorpdfstring{\texttt{geom\_smooth()}: flere \texttt{lm} trendlinjer på samme plot}{geom\_smooth(): flere lm trendlinjer på samme plot}}\label{geom_smooth-flere-lm-trendlinjer-puxe5-samme-plot}}
@@ -8140,7 +8150,7 @@ For at tilføje en bedste rette linje til de tre \texttt{species} hver for sig i
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-441-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-443-1.pdf}
 
 Så kan vi se, at der faktisk er tre forskellige trends her, så det giver god mening at bruge de tre forskellige linjer i stedet for kun en.
 
@@ -8164,7 +8174,7 @@ I \texttt{ggplot} er vi ikke begrænset til \texttt{method="lm"} indenfor \textt
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-442-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-444-1.pdf}
 
 Så kan man fange trends som ikke nødvendigvis er lineær. Men det er mere ligefrem at beskrive en lineær trend og bruge den til at beregne de nødvendige statistik til at støtte vores observationer.
 
@@ -8312,7 +8322,7 @@ Så kan vi se, at vi har fået en dataramme med vores lineær model statistikker
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-448-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-450-1.pdf}
 
 \hypertarget{funktion-glue-for-at-tilfuxf8je-labels}{%
 \subsection{\texorpdfstring{Funktion \texttt{glue()} for at tilføje labels}{Funktion glue() for at tilføje labels}}\label{funktion-glue-for-at-tilfuxf8je-labels}}
@@ -8365,7 +8375,7 @@ Vi kan tilføje vores label data indenfor \texttt{geom\_text()}. \texttt{x} og \
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-450-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-452-1.pdf}
 
 \hypertarget{multiple-regression-and-model-comparison}{%
 \section{Multiple regression and model comparison}\label{multiple-regression-and-model-comparison}}
@@ -8466,7 +8476,7 @@ Omsætte til et plot:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-456-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-458-1.pdf}
 
 Man kan se i plottet, at \texttt{body\_mass\_g} i species ``Gentoo'' er bedste forklaret af de tre varibler, og den lavest \texttt{r.squared} er tilfælde hvor variablen \texttt{sex} er dene eneste uafhængig variable og \texttt{species} er ``Chinstrap''.
 
@@ -8554,7 +8564,7 @@ Det kunne være nyttigt at inddrage p-værdier i ovenstående plot med \texttt{r
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-460-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-462-1.pdf}
 
 I følgende tilføjer jeg funktionen \texttt{geom\_signif} til plottet - det tillader, at jeg kan tilføje signifikans linjer/annotations til plottet - dvs. viser hvilke to modeller jeg sammenligner, og angiver stjerne efter beregnede p-værdierne. Du er velkommen til at kopier mine kode og tilpasse til egen behov.
 
@@ -8580,7 +8590,7 @@ I følgende tilføjer jeg funktionen \texttt{geom\_signif} til plottet - det til
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-461-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-463-1.pdf}
 
 \hypertarget{problemstillinger-7}{%
 \section{Problemstillinger}\label{problemstillinger-7}}
@@ -8745,7 +8755,7 @@ Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter var
 
 \textbf{d}) Fortolkning - er variablen \texttt{lungCap} bedre forklaret er variablen \texttt{Age} i rygere eller ikke-rygere?
 
-\textbf{Problem 10)}
+\textbf{Problem 7)}
 
 \textbf{a}) I nedenstående er tre modeller, alle med \texttt{LungCap} som afhængig variabel alle som tager højde for \texttt{Age}:
 
@@ -8782,7 +8792,7 @@ Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter var
 
 \textbf{c)} Omsæt dine r.squared værdier til et plot
 
-\textbf{Problem 11}
+\textbf{Problem 8}
 
 \textbf{a}) Skriv en funktion (eller kopier funktionen fra kursusnotaterne) hvor man anvende \texttt{anova()} til at sammenligne to modeller, \texttt{.x} og \texttt{.y} og udtrækker p-værdien.
 
