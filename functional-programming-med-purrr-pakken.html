@@ -772,8 +772,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>.x</code> referes til en værdi i vectoren. Hvis man tager integer <code>1:10</code> og anvender map, så tager man hvert tal hver for sig og beregner en funktion med det - i følgende simulere man et tal fra den normale fordeling med indstillingen <code>mean=.x</code>:</li>
 </ul>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="functional-programming-med-purrr-pakken.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">map_dbl</span>(<span class="sc">~</span><span class="fu">rnorm</span>(<span class="dv">1</span>,<span class="at">mean=</span>.x))</span></code></pre></div>
-<pre><code>##  [1]  0.9939406  2.5857141  3.4690501  4.1809509  4.8728868  7.2673623
-##  [7]  6.2250684  8.2692521  9.1272058 11.5534611</code></pre>
+<pre><code>##  [1] 1.408724 2.176259 2.089446 4.555092 5.072873 7.910645 8.987060 8.551880
+##  [9] 8.511099 9.491248</code></pre>
 <p><strong>input: dataframe</strong></p>
 <ul>
 <li><code>.x</code> refereres til en variable fra dataframe. I ovenståene er første variable <code>int1</code> og i map tager man den første element med funktionen <code>pluck(1)</code>.</li>
@@ -1146,6 +1146,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Vælge en statistik og omsætte den til et plot.</p></li>
 </ul>
 <hr />
+<p><strong>Problem 8</strong>) Hvis du færdig før tid kan du se videorne til næste emne i morgen :)</p>
 <!-- __Problem 11__ -->
 <!-- #nestby and map VS groupby and summarise -->
 <!-- ```{r} -->
