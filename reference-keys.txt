@@ -187,3 +187,6 @@ multiple-regression-and-model-comparison
 anova-for-at-sammenligne-de-forskellige-modeller
 problemstillinger-7
 ekstra
+fig:unnamed-chunk-20
+fig:unnamed-chunk-23
+fig:unnamed-chunk-39

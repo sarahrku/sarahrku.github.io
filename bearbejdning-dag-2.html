@@ -486,45 +486,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">6.2</span> <code>group_by()</code> med <code>summarise()</code> i dplyr-pakken<a href="bearbejdning-dag-2.html#group_by-med-summarise-i-dplyr-pakken" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Med kombination af <code>group_by()</code> med <code>summarise()</code> kan man finde numeriske svar på spørgsmålet: havde mænd eller kvinde en højre sandsynlighed for at overleve tragedien?</p>
 <p>Lad os starte med løsningen med <code>tapply</code> til at udregne proportionen af mænd og kvinde der overlevede: følgende kode svarer til, at man opdeler variablen <code>Survived</code> efter den katagoriske variable <code>Sex</code> og tager middelværdien. Det giver dermed proportionen der overlevede efter køn (da <code>Survived</code> er kodet sådan at 1 betyder at man overlevede og <code>0</code> betyder at man ikke overlevede).</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="bearbejdning-dag-2.html#cb275-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span> </span>
-<span id="cb275-2"><a href="bearbejdning-dag-2.html#cb275-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>Cabin) <span class="sc">%&gt;%</span></span>
-<span id="cb275-3"><a href="bearbejdning-dag-2.html#cb275-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span>
-<span id="cb275-4"><a href="bearbejdning-dag-2.html#cb275-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb275-5"><a href="bearbejdning-dag-2.html#cb275-5" aria-hidden="true" tabindex="-1"></a><span class="co">#tapply løsning </span></span>
-<span id="cb275-6"><a href="bearbejdning-dag-2.html#cb275-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(titanic_clean<span class="sc">$</span>Survived,titanic_clean<span class="sc">$</span>Sex,mean)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="bearbejdning-dag-2.html#cb1-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="bearbejdning-dag-2.html#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>Cabin) <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="bearbejdning-dag-2.html#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span>
+<span id="cb1-4"><a href="bearbejdning-dag-2.html#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="bearbejdning-dag-2.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#tapply løsning </span></span>
+<span id="cb1-6"><a href="bearbejdning-dag-2.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tapply</span>(titanic_clean<span class="sc">$</span>Survived,titanic_clean<span class="sc">$</span>Sex,mean)</span></code></pre></div>
 <pre><code>##    female      male 
 ## 0.7547893 0.2052980</code></pre>
 <p>Lad os skifter over til den <code>tidyverse</code> løsning. Lad os tage udgangspunkt i <code>summarise()</code>: som et eksempel af hvordan man bruger funktionen, vil vi beregner en variable der hedder “medianFare” som er lig med <code>median(fare)</code>.</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="bearbejdning-dag-2.html#cb277-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span></span>
-<span id="cb277-2"><a href="bearbejdning-dag-2.html#cb277-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;medianFare&quot;</span><span class="ot">=</span><span class="fu">median</span>(Fare))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="bearbejdning-dag-2.html#cb3-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="bearbejdning-dag-2.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;medianFare&quot;</span><span class="ot">=</span><span class="fu">median</span>(Fare))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   medianFare
 ##        &lt;dbl&gt;
 ## 1       15.7</code></pre>
 <p>Vi får faktisk en ny dataramme her, med kun variablen som vi lige har specificeret. Vi er interesseret i proportionen, der overlevede, så vi tager middelværdien af variablen <code>Survived</code>. Lad os gøre det med <code>summarise()</code>:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="bearbejdning-dag-2.html#cb279-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span>  </span>
-<span id="cb279-2"><a href="bearbejdning-dag-2.html#cb279-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="bearbejdning-dag-2.html#cb5-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span>  </span>
+<span id="cb5-2"><a href="bearbejdning-dag-2.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   meanSurvived
 ##          &lt;dbl&gt;
 ## 1        0.406</code></pre>
 <p>Få at svare på spørgsmålet er vi også nødt til at opdele efter kolonnen <code>Sex</code>. Vi kan bruge den kombinering af <code>group_by()</code> og <code>summarise()</code> - vi opdele efter <code>Sex</code> ved at anvende funktionen <code>group_by()</code> og derefter bruger <code>summarise()</code> til at oprette en kolon der hedder <code>meanSurvived</code>, der viser proportionen der overlevede for female and male.</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="bearbejdning-dag-2.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidyverse løsning</span></span>
-<span id="cb281-2"><a href="bearbejdning-dag-2.html#cb281-2" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span></span>
-<span id="cb281-3"><a href="bearbejdning-dag-2.html#cb281-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb281-4"><a href="bearbejdning-dag-2.html#cb281-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="bearbejdning-dag-2.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tidyverse løsning</span></span>
+<span id="cb7-2"><a href="bearbejdning-dag-2.html#cb7-2" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="bearbejdning-dag-2.html#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="bearbejdning-dag-2.html#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 2
 ##   Sex    meanSurvived
 ##   &lt;chr&gt;         &lt;dbl&gt;
 ## 1 female        0.755
 ## 2 male          0.205</code></pre>
 <p>Lad os tage resultatet fra ovenpå og visualiserer det i et barplot, som i nedenstående:</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="bearbejdning-dag-2.html#cb283-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span>  </span>
-<span id="cb283-2"><a href="bearbejdning-dag-2.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb283-3"><a href="bearbejdning-dag-2.html#cb283-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived)) <span class="sc">%&gt;%</span></span>
-<span id="cb283-4"><a href="bearbejdning-dag-2.html#cb283-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>meanSurvived,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
-<span id="cb283-5"><a href="bearbejdning-dag-2.html#cb283-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-292-1.png" width="288" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="bearbejdning-dag-2.html#cb9-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span>  </span>
+<span id="cb9-2"><a href="bearbejdning-dag-2.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="bearbejdning-dag-2.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="bearbejdning-dag-2.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>meanSurvived,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
+<span id="cb9-5"><a href="bearbejdning-dag-2.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-11-1.png" width="288" /></p>
 <div id="reference-af-summarise-funktioner" class="section level3 hasAnchor" number="6.2.1">
 <h3><span class="header-section-number">6.2.1</span> Reference af <code>summarise()</code> funktioner<a href="bearbejdning-dag-2.html#reference-af-summarise-funktioner" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Nogle fuktioner man ofte bruge med <code>summarise()</code> (der er mange andre muligheder).</p>
@@ -566,38 +566,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="flere-summary-statistic-på-én-gang" class="section level3 hasAnchor" number="6.2.2">
 <h3><span class="header-section-number">6.2.2</span> Flere summary statistic på én gang<a href="bearbejdning-dag-2.html#flere-summary-statistic-på-én-gang" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Vi kan også lave flere summary statistics på én gang. For eksempel, lad os anvende funktionen <code>group_by</code> med Sex igen, men beregner flere forskellige summary statistics:</p>
-<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="bearbejdning-dag-2.html#cb284-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  </span>
-<span id="cb284-2"><a href="bearbejdning-dag-2.html#cb284-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb284-3"><a href="bearbejdning-dag-2.html#cb284-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(),                    <span class="co">#count</span></span>
-<span id="cb284-4"><a href="bearbejdning-dag-2.html#cb284-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived),  <span class="co">#middelværdi survived</span></span>
-<span id="cb284-5"><a href="bearbejdning-dag-2.html#cb284-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">meanAge =</span> <span class="fu">mean</span>(Age),            <span class="co">#middelværdi age</span></span>
-<span id="cb284-6"><a href="bearbejdning-dag-2.html#cb284-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">propFirst =</span> <span class="fu">sum</span>(Pclass<span class="sc">==</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">n</span>()) <span class="co">#proportionen i første klass</span></span>
-<span id="cb284-7"><a href="bearbejdning-dag-2.html#cb284-7" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="bearbejdning-dag-2.html#cb10-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  </span>
+<span id="cb10-2"><a href="bearbejdning-dag-2.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="bearbejdning-dag-2.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(),                    <span class="co">#count</span></span>
+<span id="cb10-4"><a href="bearbejdning-dag-2.html#cb10-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived),  <span class="co">#middelværdi survived</span></span>
+<span id="cb10-5"><a href="bearbejdning-dag-2.html#cb10-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">meanAge =</span> <span class="fu">mean</span>(Age),            <span class="co">#middelværdi age</span></span>
+<span id="cb10-6"><a href="bearbejdning-dag-2.html#cb10-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">propFirst =</span> <span class="fu">sum</span>(Pclass<span class="sc">==</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">n</span>()) <span class="co">#proportionen i første klass</span></span>
+<span id="cb10-7"><a href="bearbejdning-dag-2.html#cb10-7" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 5
 ##   Sex    count meanSurvived meanAge propFirst
 ##   &lt;chr&gt;  &lt;int&gt;        &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 female   261        0.755    27.9     0.326
 ## 2 male     453        0.205    30.7     0.223</code></pre>
 <p>Igen kan denne summary table bruges som et datasæt til at lave et plot med <code>ggplot2</code>. Bemærk at her bruger vi <code>stat="identity"</code>, fordi vi skal ikke tælle observationerne op, men bare plot præcis de tal som er i datarammen på y-aksen. I nedenstående laver vi barplots for <code>meanAge</code> og <code>propFirst</code> - de er plottet ved at bruge to forskellige <code>ggplot</code> kommandoer og bemærk, at det er plottet ved siden af hinanden med en funktion der hedder <code>grid.arrange()</code> fra R-pakken <code>gridExtra</code>.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="bearbejdning-dag-2.html#cb286-1" aria-hidden="true" tabindex="-1"></a>plotA <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>titanic_clean_summary_by_sex,<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>meanAge,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
-<span id="cb286-2"><a href="bearbejdning-dag-2.html#cb286-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb286-3"><a href="bearbejdning-dag-2.html#cb286-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb286-4"><a href="bearbejdning-dag-2.html#cb286-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb286-5"><a href="bearbejdning-dag-2.html#cb286-5" aria-hidden="true" tabindex="-1"></a>plotB <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>titanic_clean_summary_by_sex,<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>propFirst,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
-<span id="cb286-6"><a href="bearbejdning-dag-2.html#cb286-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb286-7"><a href="bearbejdning-dag-2.html#cb286-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb286-8"><a href="bearbejdning-dag-2.html#cb286-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb286-9"><a href="bearbejdning-dag-2.html#cb286-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb286-10"><a href="bearbejdning-dag-2.html#cb286-10" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(plotA,plotB,<span class="at">ncol=</span><span class="dv">2</span>) <span class="co">#plot both together</span></span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-294-1.png" width="480" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="bearbejdning-dag-2.html#cb12-1" aria-hidden="true" tabindex="-1"></a>plotA <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>titanic_clean_summary_by_sex,<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>meanAge,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="bearbejdning-dag-2.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="bearbejdning-dag-2.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb12-4"><a href="bearbejdning-dag-2.html#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="bearbejdning-dag-2.html#cb12-5" aria-hidden="true" tabindex="-1"></a>plotB <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span>titanic_clean_summary_by_sex,<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>propFirst,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
+<span id="cb12-6"><a href="bearbejdning-dag-2.html#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb12-7"><a href="bearbejdning-dag-2.html#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb12-8"><a href="bearbejdning-dag-2.html#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="bearbejdning-dag-2.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb12-10"><a href="bearbejdning-dag-2.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(plotA,plotB,<span class="at">ncol=</span><span class="dv">2</span>) <span class="co">#plot both together</span></span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-13-1.png" width="480" /></p>
 <p>Vi kan se, at females var i gennemsnit lidt yngere end males, og havde en højere sandsynlighed for at være i første klass. Et interessant spørgsmål er, hvordan man kan lave ovenstående plots uden at bruge to forskellige <code>ggplot</code> kommandoer - altså, en automatiske løsning hvor vi kan plotte flere summary statistiks med kun én <code>ggplot</code> kommando. Vi kommer til at se hvordan man gøre det med at første lave datasættet om til long form.</p>
 </div>
 <div id="mere-kompliceret-group_by" class="section level3 hasAnchor" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> Mere kompliceret <code>group_by()</code><a href="bearbejdning-dag-2.html#mere-kompliceret-group_by" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Lad os også beregne hvor mange passagerer der var efter både deres klass, og hvor de gik ombord skibet:</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="bearbejdning-dag-2.html#cb287-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span></span>
-<span id="cb287-2"><a href="bearbejdning-dag-2.html#cb287-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(Embarked, Pclass) <span class="sc">%&gt;%</span> <span class="co"># group by multiple variables... </span></span>
-<span id="cb287-3"><a href="bearbejdning-dag-2.html#cb287-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="bearbejdning-dag-2.html#cb13-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="bearbejdning-dag-2.html#cb13-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(Embarked, Pclass) <span class="sc">%&gt;%</span> <span class="co"># group by multiple variables... </span></span>
+<span id="cb13-3"><a href="bearbejdning-dag-2.html#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;Embarked&#39;. You can override using the
 ## `.groups` argument.</code></pre>
 <pre><code>## # A tibble: 10 × 3
@@ -615,13 +615,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  9 &quot;S&quot;           2   156
 ## 10 &quot;S&quot;           3   290</code></pre>
 <p>Man kan se at de flest gik om bord i Southampton (S), men der var også forholdsvis mange første klass passagerer der gik om bord i Cherbourg (C). Lad os gå videre med vores <code>Survived</code> eksempel og beregne proportionen der overlevede efter de tre variabler <code>Adult</code>, <code>Sex</code> og <code>Pclass</code>.</p>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="bearbejdning-dag-2.html#cb290-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_survived <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  </span>
-<span id="cb290-2"><a href="bearbejdning-dag-2.html#cb290-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Adult =</span> <span class="fu">ifelse</span>(Age<span class="sc">&gt;=</span><span class="dv">18</span>,<span class="st">&quot;Adult&quot;</span>,<span class="st">&quot;Child&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb290-3"><a href="bearbejdning-dag-2.html#cb290-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Adult,Sex,Pclass) <span class="sc">%&gt;%</span> </span>
-<span id="cb290-4"><a href="bearbejdning-dag-2.html#cb290-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="bearbejdning-dag-2.html#cb16-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_survived <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  </span>
+<span id="cb16-2"><a href="bearbejdning-dag-2.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Adult =</span> <span class="fu">ifelse</span>(Age<span class="sc">&gt;=</span><span class="dv">18</span>,<span class="st">&quot;Adult&quot;</span>,<span class="st">&quot;Child&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="bearbejdning-dag-2.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Adult,Sex,Pclass) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="bearbejdning-dag-2.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived))</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;Adult&#39;, &#39;Sex&#39;. You can override using the
 ## `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="bearbejdning-dag-2.html#cb292-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_survived</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="bearbejdning-dag-2.html#cb18-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_survived</span></code></pre></div>
 <pre><code>## # A tibble: 12 × 4
 ## # Groups:   Adult, Sex [4]
 ##    Adult Sex    Pclass meanSurvived
@@ -639,23 +639,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 11 Child male        2       0.818 
 ## 12 Child male        3       0.233</code></pre>
 <p>Og så kan vi også bruge resultatet ind i en <code>ggplot</code>, hvor vi kombinerer de tre variabler og adskiller efter <code>Pclass</code>:</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="bearbejdning-dag-2.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(titanic_clean_summary_survived,<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>meanSurvived,<span class="at">fill=</span>Adult)) <span class="sc">+</span></span>
-<span id="cb294-2"><a href="bearbejdning-dag-2.html#cb294-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb294-3"><a href="bearbejdning-dag-2.html#cb294-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>Pclass) <span class="sc">+</span> </span>
-<span id="cb294-4"><a href="bearbejdning-dag-2.html#cb294-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Proportion survived&quot;</span>) <span class="sc">+</span></span>
-<span id="cb294-5"><a href="bearbejdning-dag-2.html#cb294-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-297-1.png" width="480" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="bearbejdning-dag-2.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(titanic_clean_summary_survived,<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>meanSurvived,<span class="at">fill=</span>Adult)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="bearbejdning-dag-2.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="bearbejdning-dag-2.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>Pclass) <span class="sc">+</span> </span>
+<span id="cb20-4"><a href="bearbejdning-dag-2.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Proportion survived&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="bearbejdning-dag-2.html#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-16-1.png" width="480" /></p>
 </div>
 <div id="funktionen-ungroup" class="section level3 hasAnchor" number="6.2.4">
 <h3><span class="header-section-number">6.2.4</span> Funktionen <code>ungroup</code><a href="bearbejdning-dag-2.html#funktionen-ungroup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Nogle gange når man er færdig med en proces, men gerne vil arbejde videre på et dataframe, er det nyttigt at anvende <code>ungroup()</code> på datasættet igen. Det er meste relevant i længere projektor men som eksempel kig på følgende kode og bemærk at der står “Groups: Adult [2]” på toppen af den nye dataframe med summary statistics:</p>
-<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="bearbejdning-dag-2.html#cb295-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  </span>
-<span id="cb295-2"><a href="bearbejdning-dag-2.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Adult =</span> <span class="fu">ifelse</span>(Age<span class="sc">&gt;=</span><span class="dv">18</span>,<span class="st">&quot;Adult&quot;</span>,<span class="st">&quot;Child&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb295-3"><a href="bearbejdning-dag-2.html#cb295-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Adult,Sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb295-4"><a href="bearbejdning-dag-2.html#cb295-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="bearbejdning-dag-2.html#cb21-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  </span>
+<span id="cb21-2"><a href="bearbejdning-dag-2.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Adult =</span> <span class="fu">ifelse</span>(Age<span class="sc">&gt;=</span><span class="dv">18</span>,<span class="st">&quot;Adult&quot;</span>,<span class="st">&quot;Child&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="bearbejdning-dag-2.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Adult,Sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="bearbejdning-dag-2.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived))</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;Adult&#39;. You can override using the
 ## `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="bearbejdning-dag-2.html#cb297-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="bearbejdning-dag-2.html#cb23-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ## # Groups:   Adult [2]
 ##   Adult Sex    meanSurvived
@@ -665,17 +665,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3 Child female        0.691
 ## 4 Child male          0.397</code></pre>
 <p>Bemærk at vi først anvendte <code>group_by</code> på både <code>Adult</code> og <code>Sex</code>, men hver gange man lave en beregning bliver én opdeling fjernet - i dette tilfælde opdeler man ikke længere efter <code>Sex</code> men man stadig opdeler efter <code>Adult</code>. Det er ikke et problem hvis vi ikke vil arbejde videre med dataframen. Men forstil at vi gerne vil vide, hvad den maksimum chance for survival er ud fra de fire tal beregnede. Der vi ikke vil adskille efter en kategorisk variabel dropper vi <code>group_by()</code>:</p>
-<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="bearbejdning-dag-2.html#cb299-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary <span class="sc">%&gt;%</span> </span>
-<span id="cb299-2"><a href="bearbejdning-dag-2.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;maxChance&quot;</span> <span class="ot">=</span> <span class="fu">max</span>(meanSurvived))</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="bearbejdning-dag-2.html#cb25-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="bearbejdning-dag-2.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;maxChance&quot;</span> <span class="ot">=</span> <span class="fu">max</span>(meanSurvived))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 2
 ##   Adult maxChance
 ##   &lt;chr&gt;     &lt;dbl&gt;
 ## 1 Adult     0.772
 ## 2 Child     0.691</code></pre>
 <p>Man kan dog se, at outtputtet er blevet adskilt efter variablen <code>Adult</code>. For at undgå disse bør man første anvende <code>ungroup</code> for at få fjernet effekten af <code>group_by()</code>.</p>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="bearbejdning-dag-2.html#cb301-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary <span class="sc">%&gt;%</span> </span>
-<span id="cb301-2"><a href="bearbejdning-dag-2.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb301-3"><a href="bearbejdning-dag-2.html#cb301-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;maxChance&quot;</span> <span class="ot">=</span> <span class="fu">max</span>(meanSurvived))</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="bearbejdning-dag-2.html#cb27-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="bearbejdning-dag-2.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="bearbejdning-dag-2.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">&quot;maxChance&quot;</span> <span class="ot">=</span> <span class="fu">max</span>(meanSurvived))</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 1
 ##   maxChance
 ##       &lt;dbl&gt;
@@ -686,7 +686,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">6.3</span> <code>pivot_longer()</code>/<code>pivot_wider()</code> med Tidyr-pakken<a href="bearbejdning-dag-2.html#pivot_longerpivot_wider-med-tidyr-pakken" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Tidy data</strong> findes i to former: wide data og long data. Det kan være nyttigt at transformere dataframen fra den ene form til den anden, for fk. at lave et bemstemt plot med <code>ggplot2</code>-pakken. Indenfor pakken <code>tidyr</code> er der funktioner som kan bruges til at lave disse transformeringer.</p>
 <p>Inden vi begynde at kigge lidt nærmere på <code>tidyr</code> skal vi beskrive, hvad betyder long data og wide data.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-301"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-20"></span>
 <img src="plots/original-dfs-tidy.png" alt="source: https://www.garrickadenbuie.com/project/tidyexplain/" width="75%" />
 <p class="caption">
 Figure 6.1: source: <a href="https://www.garrickadenbuie.com/project/tidyexplain/" class="uri">https://www.garrickadenbuie.com/project/tidyexplain/</a>
@@ -728,7 +728,7 @@ Figure 6.1: source: <a href="https://www.garrickadenbuie.com/project/tidyexplain
 <div id="wide---long-med-pivot_longer" class="section level3 hasAnchor" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> Wide -&gt; Long med <code>pivot_longer()</code><a href="bearbejdning-dag-2.html#wide---long-med-pivot_longer" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Lad os arbejde med datasættet <code>Iris</code>. Man få Iris i long form med følgende kommando. Her vil man gerne tage alle numeriske kolonner og placerer deres værdier i en enkel kolon <code>value</code> (med en nøgle kolon <code>name</code> til at skelne imellem de forskellige variabler).</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="bearbejdning-dag-2.html#cb303-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">where</span>(is.numeric))</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="bearbejdning-dag-2.html#cb29-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">where</span>(is.numeric))</span></code></pre></div>
 <pre><code>## # A tibble: 600 × 3
 ##    Species name         value
 ##    &lt;fct&gt;   &lt;chr&gt;        &lt;dbl&gt;
@@ -744,8 +744,8 @@ Figure 6.1: source: <a href="https://www.garrickadenbuie.com/project/tidyexplain
 ## 10 setosa  Sepal.Width    3.2
 ## # … with 590 more rows</code></pre>
 <p>At beholde numeriske kolonner svarer i dette tilfælde til at man ikke vil have variablen <code>Species</code> med i den enkel kolon:</p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="bearbejdning-dag-2.html#cb305-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
-<span id="cb305-2"><a href="bearbejdning-dag-2.html#cb305-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="bearbejdning-dag-2.html#cb31-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="bearbejdning-dag-2.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species)</span></code></pre></div>
 <pre><code>## # A tibble: 600 × 3
 ##    Species name         value
 ##    &lt;fct&gt;   &lt;chr&gt;        &lt;dbl&gt;
@@ -761,7 +761,7 @@ Figure 6.1: source: <a href="https://www.garrickadenbuie.com/project/tidyexplain
 ## 10 setosa  Sepal.Width    3.2
 ## # … with 590 more rows</code></pre>
 <p>Her er et billede der illustrerer wide og long form med datasættet <code>iris</code>:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-304"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-23"></span>
 <img src="plots/wide_to_long.png" alt="wide til long med Iris" width="100%" />
 <p class="caption">
 Figure 6.2: wide til long med Iris
@@ -770,24 +770,24 @@ Figure 6.2: wide til long med Iris
 <p>Til venstre har vi målingerne i datasættet over fire forskellige kolonner som hedder <code>Sepal.Length</code>, <code>Sepal.Width</code>, <code>Petal.Length</code> og <code>Petal.Width</code>, og en ekstra kolon der skelne imellem de tre <code>Species</code>. Til højre har vi fået alle målingerne ind i en enkel kolon der hedder <code>values</code>, og så bruger man en anden ‘nøgle’ kolon der hedder <code>name</code> til at fortælle os om det er en måling for <code>Sepal.Length</code> eller <code>Sepal.Width</code> osv.</p>
 <!-- Man specificer `cols=-Species`, fordi det kun er kolonnerne med målinger som vi gerne vil have samlet i en enkel kolon, og det inkluderer så ikke Species. -->
 <p>Jeg kan kalde de kolonner navne for målingerne og nøglen til nogle andre en default: for eksempel i nedenstående skal målingerne hedde <code>measurements</code> og nøglen hedde <code>trait</code>.</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="bearbejdning-dag-2.html#cb307-1" aria-hidden="true" tabindex="-1"></a>iris.long <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species,</span>
-<span id="cb307-2"><a href="bearbejdning-dag-2.html#cb307-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">names_to =</span> <span class="st">&quot;trait&quot;</span>,</span>
-<span id="cb307-3"><a href="bearbejdning-dag-2.html#cb307-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">values_to =</span> <span class="st">&quot;measurement&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="bearbejdning-dag-2.html#cb33-1" aria-hidden="true" tabindex="-1"></a>iris.long <span class="ot">&lt;-</span> iris <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species,</span>
+<span id="cb33-2"><a href="bearbejdning-dag-2.html#cb33-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">names_to =</span> <span class="st">&quot;trait&quot;</span>,</span>
+<span id="cb33-3"><a href="bearbejdning-dag-2.html#cb33-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">values_to =</span> <span class="st">&quot;measurement&quot;</span>)</span></code></pre></div>
 <p><img src="plots/wide_to_long_names.png" width="100%" /></p>
 <p>Man kan for eksempel bruge den long form den til at visualisere samtlige mulige boxplots opdelt efter Species og trait på samme plot:</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="bearbejdning-dag-2.html#cb308-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris.long,<span class="fu">aes</span>(<span class="at">y=</span>measurement,<span class="at">x=</span>Species,<span class="at">fill=</span>Species)) <span class="sc">+</span> </span>
-<span id="cb308-2"><a href="bearbejdning-dag-2.html#cb308-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb308-3"><a href="bearbejdning-dag-2.html#cb308-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>trait) <span class="sc">+</span></span>
-<span id="cb308-4"><a href="bearbejdning-dag-2.html#cb308-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-307-1.png" width="576" /></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="bearbejdning-dag-2.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris.long,<span class="fu">aes</span>(<span class="at">y=</span>measurement,<span class="at">x=</span>Species,<span class="at">fill=</span>Species)) <span class="sc">+</span> </span>
+<span id="cb34-2"><a href="bearbejdning-dag-2.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb34-3"><a href="bearbejdning-dag-2.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>trait) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="bearbejdning-dag-2.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-26-1.png" width="576" /></p>
 </div>
 <div id="separate" class="section level3 hasAnchor" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span> <code>separate()</code><a href="bearbejdning-dag-2.html#separate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Funktionen <code>separate()</code> fra pakken <code>tidyr</code> kan bruges til at opdele to forskellige dele som eksisterer i samme kolon. For eksempel, i <code>iris</code> har vi variabler med navne <code>Sepal.Width</code>, <code>Sepal.Length</code> osv. - man kan forestille sig, at opdele disse navne over to kolonner i stedet for en - fk. “Sepal” og “Width” i tilfældet af <code>Sepal.Width</code>. I nedenstående kan man se, hvordan man anvende <code>separate()</code>.</p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="bearbejdning-dag-2.html#cb309-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb309-2"><a href="bearbejdning-dag-2.html#cb309-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species, <span class="at">names_to =</span> <span class="st">&quot;trait&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;measurement&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb309-3"><a href="bearbejdning-dag-2.html#cb309-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> trait, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;part&quot;</span>, <span class="st">&quot;measure&quot;</span>),<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb309-4"><a href="bearbejdning-dag-2.html#cb309-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="bearbejdning-dag-2.html#cb35-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="bearbejdning-dag-2.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species, <span class="at">names_to =</span> <span class="st">&quot;trait&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;measurement&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="bearbejdning-dag-2.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> trait, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;part&quot;</span>, <span class="st">&quot;measure&quot;</span>),<span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb35-4"><a href="bearbejdning-dag-2.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ##   Species part  measure measurement
 ##   &lt;fct&gt;   &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt;
@@ -799,10 +799,10 @@ Figure 6.2: wide til long med Iris
 ## 6 setosa  Sepal Width           3</code></pre>
 <p>Man specificerer variablen <code>trait</code>, og at det skal opdeles til to variabler <code>part</code> og <code>measure</code>. Vi angiver <code>sep = "\\."</code> som betyder, at vi gerne vil have <code>part</code> som delen af <code>trait</code> foran ‘.’ og <code>measure</code> som delen af <code>trait</code> efter <code>.</code>. Vi bruger “\.” til at fortælle, at vi er interesseret i punktum og ikke en “anonym character,” som punktum plejer at betyde i “string”-sprog. Man behøver faktisk ikke at specifice <code>sep = "\\."</code> i dette tilfælde - som standard kigger funktionen efter ‘non-character’ tegne og bruger dem til at lave opdelingen.</p>
 <p>Samme resultat:</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="bearbejdning-dag-2.html#cb311-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb311-2"><a href="bearbejdning-dag-2.html#cb311-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species, <span class="at">names_to =</span> <span class="st">&quot;trait&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;measurement&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb311-3"><a href="bearbejdning-dag-2.html#cb311-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> trait, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;part&quot;</span>, <span class="st">&quot;measure&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb311-4"><a href="bearbejdning-dag-2.html#cb311-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="bearbejdning-dag-2.html#cb37-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="bearbejdning-dag-2.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species, <span class="at">names_to =</span> <span class="st">&quot;trait&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;measurement&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="bearbejdning-dag-2.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> trait, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;part&quot;</span>, <span class="st">&quot;measure&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb37-4"><a href="bearbejdning-dag-2.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 4
 ##   Species part  measure measurement
 ##   &lt;fct&gt;   &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt;
@@ -813,14 +813,14 @@ Figure 6.2: wide til long med Iris
 ## 5 setosa  Sepal Length          4.9
 ## 6 setosa  Sepal Width           3</code></pre>
 <p>Bruger resultatet i et plot:</p>
-<div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="bearbejdning-dag-2.html#cb313-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
-<span id="cb313-2"><a href="bearbejdning-dag-2.html#cb313-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species, <span class="at">names_to =</span> <span class="st">&quot;trait&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;measurement&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb313-3"><a href="bearbejdning-dag-2.html#cb313-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> trait, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;part&quot;</span>, <span class="st">&quot;measure&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb313-4"><a href="bearbejdning-dag-2.html#cb313-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>measurement,<span class="at">x=</span>part,<span class="at">fill=</span>part)) <span class="sc">+</span> </span>
-<span id="cb313-5"><a href="bearbejdning-dag-2.html#cb313-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb313-6"><a href="bearbejdning-dag-2.html#cb313-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>measure) <span class="sc">+</span></span>
-<span id="cb313-7"><a href="bearbejdning-dag-2.html#cb313-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-310-1.png" width="480" /></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="bearbejdning-dag-2.html#cb39-1" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="bearbejdning-dag-2.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Species, <span class="at">names_to =</span> <span class="st">&quot;trait&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;measurement&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="bearbejdning-dag-2.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> trait, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;part&quot;</span>, <span class="st">&quot;measure&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="bearbejdning-dag-2.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>measurement,<span class="at">x=</span>part,<span class="at">fill=</span>part)) <span class="sc">+</span> </span>
+<span id="cb39-5"><a href="bearbejdning-dag-2.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb39-6"><a href="bearbejdning-dag-2.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>measure) <span class="sc">+</span></span>
+<span id="cb39-7"><a href="bearbejdning-dag-2.html#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <p>Se også <code>unite()</code> som gøre det modsatte til <code>separate()</code>.</p>
 </div>
 </div>
@@ -831,13 +831,13 @@ Figure 6.2: wide til long med Iris
 <li><code>group_by()</code> og <code>summarise()</code></li>
 </ul>
 <p>Vi laver vores summary statistics som i ovenstående.</p>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="bearbejdning-dag-2.html#cb314-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  </span>
-<span id="cb314-2"><a href="bearbejdning-dag-2.html#cb314-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
-<span id="cb314-3"><a href="bearbejdning-dag-2.html#cb314-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(),</span>
-<span id="cb314-4"><a href="bearbejdning-dag-2.html#cb314-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived),</span>
-<span id="cb314-5"><a href="bearbejdning-dag-2.html#cb314-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">meanAge =</span> <span class="fu">mean</span>(Age),</span>
-<span id="cb314-6"><a href="bearbejdning-dag-2.html#cb314-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">propFirst =</span> <span class="fu">sum</span>(Pclass<span class="sc">==</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">n</span>())</span>
-<span id="cb314-7"><a href="bearbejdning-dag-2.html#cb314-7" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="bearbejdning-dag-2.html#cb40-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="ot">&lt;-</span> titanic_clean <span class="sc">%&gt;%</span>  </span>
+<span id="cb40-2"><a href="bearbejdning-dag-2.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href="bearbejdning-dag-2.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(),</span>
+<span id="cb40-4"><a href="bearbejdning-dag-2.html#cb40-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">meanSurvived =</span> <span class="fu">mean</span>(Survived),</span>
+<span id="cb40-5"><a href="bearbejdning-dag-2.html#cb40-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">meanAge =</span> <span class="fu">mean</span>(Age),</span>
+<span id="cb40-6"><a href="bearbejdning-dag-2.html#cb40-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">propFirst =</span> <span class="fu">sum</span>(Pclass<span class="sc">==</span><span class="dv">1</span>)<span class="sc">/</span><span class="fu">n</span>())</span>
+<span id="cb40-7"><a href="bearbejdning-dag-2.html#cb40-7" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 5
 ##   Sex    count meanSurvived meanAge propFirst
 ##   &lt;chr&gt;  &lt;int&gt;        &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
@@ -847,7 +847,7 @@ Figure 6.2: wide til long med Iris
 <li><code>pivot_longer()</code></li>
 </ul>
 <p>Vi transformerer eller <strong>reshape</strong> datarammen fra wide data til long data. Vi vil få kun de numeriske summary statistics samlede i en enkel kolonne, så variablen <code>Sex</code> skal indgå i den enkel kolonne.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="bearbejdning-dag-2.html#cb316-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">-</span>Sex)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="bearbejdning-dag-2.html#cb42-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">-</span>Sex)</span></code></pre></div>
 <pre><code>## # A tibble: 8 × 3
 ##   Sex    name           value
 ##   &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;
@@ -863,37 +863,37 @@ Figure 6.2: wide til long med Iris
 <li><code>ggplot()</code> med <code>facet_grid()</code></li>
 </ul>
 <p>Vi kombinerer <code>pivot_longer()</code> med et plot af vores summary statistics og benytte <code>facet_grid()</code> til at separere ved de forskellige statistiker.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="bearbejdning-dag-2.html#cb318-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="sc">%&gt;%</span> </span>
-<span id="cb318-2"><a href="bearbejdning-dag-2.html#cb318-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">-</span>Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb318-3"><a href="bearbejdning-dag-2.html#cb318-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>value,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
-<span id="cb318-4"><a href="bearbejdning-dag-2.html#cb318-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb318-5"><a href="bearbejdning-dag-2.html#cb318-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>name) <span class="sc">+</span></span>
-<span id="cb318-6"><a href="bearbejdning-dag-2.html#cb318-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-313-1.png" width="480" /></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="bearbejdning-dag-2.html#cb44-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href="bearbejdning-dag-2.html#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">-</span>Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb44-3"><a href="bearbejdning-dag-2.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>value,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
+<span id="cb44-4"><a href="bearbejdning-dag-2.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb44-5"><a href="bearbejdning-dag-2.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>name) <span class="sc">+</span></span>
+<span id="cb44-6"><a href="bearbejdning-dag-2.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <ul>
 <li><code>facet_wrap()</code></li>
 </ul>
 <p>Vi laver den sammen som ovenstående men specificerer <code>facet_wrap()</code> i stedet for <code>facet_grid()</code> - indenfor <code>facet_wrap()</code> kan man bruge indstillingen <code>scales="free"</code> som gøre, at de fire plots få hver deres egne akse limits.</p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="bearbejdning-dag-2.html#cb319-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="sc">%&gt;%</span> </span>
-<span id="cb319-2"><a href="bearbejdning-dag-2.html#cb319-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">-</span>Sex) <span class="sc">%&gt;%</span></span>
-<span id="cb319-3"><a href="bearbejdning-dag-2.html#cb319-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>value,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
-<span id="cb319-4"><a href="bearbejdning-dag-2.html#cb319-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb319-5"><a href="bearbejdning-dag-2.html#cb319-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>,<span class="at">ncol=</span><span class="dv">4</span>) <span class="sc">+</span>  </span>
-<span id="cb319-6"><a href="bearbejdning-dag-2.html#cb319-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-314-1.png" width="480" /></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="bearbejdning-dag-2.html#cb45-1" aria-hidden="true" tabindex="-1"></a>titanic_clean_summary_by_sex <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href="bearbejdning-dag-2.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">-</span>Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb45-3"><a href="bearbejdning-dag-2.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Sex,<span class="at">y=</span>value,<span class="at">fill=</span>Sex)) <span class="sc">+</span> </span>
+<span id="cb45-4"><a href="bearbejdning-dag-2.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb45-5"><a href="bearbejdning-dag-2.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>name,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>,<span class="at">ncol=</span><span class="dv">4</span>) <span class="sc">+</span>  </span>
+<span id="cb45-6"><a href="bearbejdning-dag-2.html#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <div id="demonstration-af-pivot_wider" class="section level3 hasAnchor" number="6.4.1">
 <h3><span class="header-section-number">6.4.1</span> Demonstration af <code>pivot_wider()</code><a href="bearbejdning-dag-2.html#demonstration-af-pivot_wider" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Det er også brugbart at kende måden at man skifter fra long form til wide form.</p>
 <ul>
 <li>Wide -&gt; Long</li>
 </ul>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="bearbejdning-dag-2.html#cb320-1" aria-hidden="true" tabindex="-1"></a>titanic_summary_long <span class="ot">&lt;-</span> titanic_clean_summary_by_sex <span class="sc">%&gt;%</span> </span>
-<span id="cb320-2"><a href="bearbejdning-dag-2.html#cb320-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">-</span>Sex)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="bearbejdning-dag-2.html#cb46-1" aria-hidden="true" tabindex="-1"></a>titanic_summary_long <span class="ot">&lt;-</span> titanic_clean_summary_by_sex <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href="bearbejdning-dag-2.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="sc">-</span>Sex)</span></code></pre></div>
 <ul>
 <li>Long -&gt; Wide</li>
 </ul>
-<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="bearbejdning-dag-2.html#cb321-1" aria-hidden="true" tabindex="-1"></a>titanic_summary_long <span class="sc">%&gt;%</span></span>
-<span id="cb321-2"><a href="bearbejdning-dag-2.html#cb321-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;name&quot;</span>,<span class="at">values_from =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="bearbejdning-dag-2.html#cb47-1" aria-hidden="true" tabindex="-1"></a>titanic_summary_long <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="bearbejdning-dag-2.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;name&quot;</span>,<span class="at">values_from =</span> <span class="st">&quot;value&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 5
 ##   Sex    count meanSurvived meanAge propFirst
 ##   &lt;chr&gt;  &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;
@@ -909,10 +909,10 @@ Figure 6.2: wide til long med Iris
 <div id="left_join-forbinde-dataframes" class="section level2 hasAnchor" number="6.5">
 <h2><span class="header-section-number">6.5</span> <code>left_join()</code>: forbinde dataframes<a href="bearbejdning-dag-2.html#left_join-forbinde-dataframes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Vi tager udgangspunkt i følgende to dataframes:</p>
-<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="bearbejdning-dag-2.html#cb323-1" aria-hidden="true" tabindex="-1"></a>gene_table <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/6ll8ezrskly8joi/mouse_2gene_expr.txt?dl=1&quot;</span>,<span class="at">header=</span>T))</span>
-<span id="cb323-2"><a href="bearbejdning-dag-2.html#cb323-2" aria-hidden="true" tabindex="-1"></a>coldata <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/jlrszakmqlnmu2m/bottomly_phenodata.txt?dl=1&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="bearbejdning-dag-2.html#cb49-1" aria-hidden="true" tabindex="-1"></a>gene_table <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/6ll8ezrskly8joi/mouse_2gene_expr.txt?dl=1&quot;</span>,<span class="at">header=</span>T))</span>
+<span id="cb49-2"><a href="bearbejdning-dag-2.html#cb49-2" aria-hidden="true" tabindex="-1"></a>coldata <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/jlrszakmqlnmu2m/bottomly_phenodata.txt?dl=1&quot;</span>))</span></code></pre></div>
 <p>Lad os kigge først på datasættet <code>gene_table</code>, som viser genekspression målinger over forskellige samples i mus.</p>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="bearbejdning-dag-2.html#cb324-1" aria-hidden="true" tabindex="-1"></a>gene_table</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="bearbejdning-dag-2.html#cb50-1" aria-hidden="true" tabindex="-1"></a>gene_table</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 22
 ##   gene     SRX033480 SRX033488 SRX033481 SRX033489 SRX033482 SRX033490 SRX033483
 ##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -924,7 +924,7 @@ Figure 6.2: wide til long med Iris
 ## #   SRX033491 &lt;dbl&gt;, SRX033484 &lt;dbl&gt;, SRX033492 &lt;dbl&gt;, SRX033485 &lt;dbl&gt;,
 ## #   SRX033493 &lt;dbl&gt;, SRX033486 &lt;dbl&gt;, SRX033494 &lt;dbl&gt;</code></pre>
 <p>Man kan se, at der er 22 kolonner i datasættet - én der refererer til et gen navn og 21 der er forskellige samples fra eksperimentet. Men det ikke er klart, hvad den enkel sample egentlig er. Lad os derfor kigge på de sample oplysninger, som kan være nyttige at inddrage i vores analyse/plotter for at undersøge eventualle batch effekter osv.</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="bearbejdning-dag-2.html#cb326-1" aria-hidden="true" tabindex="-1"></a>coldata</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="bearbejdning-dag-2.html#cb52-1" aria-hidden="true" tabindex="-1"></a>coldata</span></code></pre></div>
 <pre><code>## # A tibble: 21 × 5
 ##    sample    num.tech.reps strain   batch lane.number
 ##    &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;    &lt;int&gt;       &lt;int&gt;
@@ -970,7 +970,7 @@ Figure 6.2: wide til long med Iris
 </tbody>
 </table>
 <p>Vi fokuserer her på funktionen <code>left_join()</code> fordi den er den meste brugbart i biologiske data analyser, men vi kigger også på de øvrige funktioner gennem problemstillingerne nedenunder. Her er en grafiske demonstration af <code>left_join()</code>:</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-320"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-39"></span>
 <img src="plots/left_join.png" alt="left_join graphical demonstration (source https://mgimond.github.io/ES218/Week03c.html)" width="60%" />
 <p class="caption">
 Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.github.io/ES218/Week03c.html" class="uri">https://mgimond.github.io/ES218/Week03c.html</a>)
@@ -981,11 +981,11 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 <div id="anvende-left_join-for-vores-dataset." class="section level3 hasAnchor" number="6.5.2">
 <h3><span class="header-section-number">6.5.2</span> Anvende <code>left_join()</code> for vores dataset.<a href="bearbejdning-dag-2.html#anvende-left_join-for-vores-dataset." class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Ligesom man matcher kolonnen <code>y</code> i <code>df</code> og <code>dj</code> i ovenstående eksempel, skal vi også have en kolon vi kan matcher. Vi vil gerne bruge kolonnen <code>sample</code> fra <code>sample_info</code> til at sammenligne med de forskellige sample navne i <code>gene_table</code>, men første er vi nødt til at lave <code>gene_table</code> om til long-form, således at sample navne fremgår i en enkel kolon, <code>sample</code> (der kan bruges i <code>left_join</code>).</p>
-<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="bearbejdning-dag-2.html#cb328-1" aria-hidden="true" tabindex="-1"></a>gene_table_long <span class="ot">&lt;-</span> gene_table <span class="sc">%&gt;%</span> </span>
-<span id="cb328-2"><a href="bearbejdning-dag-2.html#cb328-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>gene,</span>
-<span id="cb328-3"><a href="bearbejdning-dag-2.html#cb328-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;sample&quot;</span>,</span>
-<span id="cb328-4"><a href="bearbejdning-dag-2.html#cb328-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;expression&quot;</span>) </span>
-<span id="cb328-5"><a href="bearbejdning-dag-2.html#cb328-5" aria-hidden="true" tabindex="-1"></a>gene_table_long</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="bearbejdning-dag-2.html#cb54-1" aria-hidden="true" tabindex="-1"></a>gene_table_long <span class="ot">&lt;-</span> gene_table <span class="sc">%&gt;%</span> </span>
+<span id="cb54-2"><a href="bearbejdning-dag-2.html#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>gene,</span>
+<span id="cb54-3"><a href="bearbejdning-dag-2.html#cb54-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;sample&quot;</span>,</span>
+<span id="cb54-4"><a href="bearbejdning-dag-2.html#cb54-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;expression&quot;</span>) </span>
+<span id="cb54-5"><a href="bearbejdning-dag-2.html#cb54-5" aria-hidden="true" tabindex="-1"></a>gene_table_long</span></code></pre></div>
 <pre><code>## # A tibble: 63 × 3
 ##    gene               sample    expression
 ##    &lt;chr&gt;              &lt;chr&gt;          &lt;dbl&gt;
@@ -1001,27 +1001,27 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 ## 10 ENSMUSG00000006517 SRX033479       328.
 ## # … with 53 more rows</code></pre>
 <p>Dernæst kan vi tilføje oplysninger data fra <code>sample_info</code>. Her angiver vi <code>by = "sample"</code> fordi det er navnet til kolonnen som vi geerne vil bruge til at forbinde de to datarammer - altså, det er med i begge to datarammer, så <code>left_join()</code> kan bruge den som en slags nøgle til at vide, hvor alle de forskellige oplysninger skal tilføjes.</p>
-<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="bearbejdning-dag-2.html#cb330-1" aria-hidden="true" tabindex="-1"></a>data_join <span class="ot">&lt;-</span> gene_table_long  <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(coldata,<span class="at">by=</span><span class="st">&quot;sample&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="bearbejdning-dag-2.html#cb56-1" aria-hidden="true" tabindex="-1"></a>data_join <span class="ot">&lt;-</span> gene_table_long  <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(coldata,<span class="at">by=</span><span class="st">&quot;sample&quot;</span>)</span></code></pre></div>
 <p>Nu at vi har fået forbundet de to datarammer, kan man inddrage de ekstra oplysninger vi har fået i et plot. Her laver vi et plot med en farve til hver strain og et plot med en farve til hver batch.</p>
-<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="bearbejdning-dag-2.html#cb331-1" aria-hidden="true" tabindex="-1"></a>gg2 <span class="ot">&lt;-</span> data_join <span class="sc">%&gt;%</span> </span>
-<span id="cb331-2"><a href="bearbejdning-dag-2.html#cb331-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>expression,<span class="at">x=</span><span class="fu">as.factor</span>(strain),<span class="at">fill=</span>gene)) <span class="sc">+</span> </span>
-<span id="cb331-3"><a href="bearbejdning-dag-2.html#cb331-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb331-4"><a href="bearbejdning-dag-2.html#cb331-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>gene,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb331-5"><a href="bearbejdning-dag-2.html#cb331-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb331-6"><a href="bearbejdning-dag-2.html#cb331-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb331-7"><a href="bearbejdning-dag-2.html#cb331-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Expression split according to strain&quot;</span>)</span>
-<span id="cb331-8"><a href="bearbejdning-dag-2.html#cb331-8" aria-hidden="true" tabindex="-1"></a>gg2</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-323-1.png" width="576" /></p>
-<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="bearbejdning-dag-2.html#cb332-1" aria-hidden="true" tabindex="-1"></a>gg1 <span class="ot">&lt;-</span> data_join <span class="sc">%&gt;%</span> </span>
-<span id="cb332-2"><a href="bearbejdning-dag-2.html#cb332-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>expression,<span class="at">x=</span><span class="fu">as.factor</span>(batch),<span class="at">fill=</span>gene)) <span class="sc">+</span> </span>
-<span id="cb332-3"><a href="bearbejdning-dag-2.html#cb332-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb332-4"><a href="bearbejdning-dag-2.html#cb332-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>gene,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb332-5"><a href="bearbejdning-dag-2.html#cb332-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb332-6"><a href="bearbejdning-dag-2.html#cb332-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
-<span id="cb332-7"><a href="bearbejdning-dag-2.html#cb332-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Expression split according to batch&quot;</span>)</span>
-<span id="cb332-8"><a href="bearbejdning-dag-2.html#cb332-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb332-9"><a href="bearbejdning-dag-2.html#cb332-9" aria-hidden="true" tabindex="-1"></a>gg1</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-324-1.png" width="576" /></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="bearbejdning-dag-2.html#cb57-1" aria-hidden="true" tabindex="-1"></a>gg2 <span class="ot">&lt;-</span> data_join <span class="sc">%&gt;%</span> </span>
+<span id="cb57-2"><a href="bearbejdning-dag-2.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>expression,<span class="at">x=</span><span class="fu">as.factor</span>(strain),<span class="at">fill=</span>gene)) <span class="sc">+</span> </span>
+<span id="cb57-3"><a href="bearbejdning-dag-2.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb57-4"><a href="bearbejdning-dag-2.html#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>gene,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb57-5"><a href="bearbejdning-dag-2.html#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb57-6"><a href="bearbejdning-dag-2.html#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb57-7"><a href="bearbejdning-dag-2.html#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Expression split according to strain&quot;</span>)</span>
+<span id="cb57-8"><a href="bearbejdning-dag-2.html#cb57-8" aria-hidden="true" tabindex="-1"></a>gg2</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-42-1.png" width="576" /></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="bearbejdning-dag-2.html#cb58-1" aria-hidden="true" tabindex="-1"></a>gg1 <span class="ot">&lt;-</span> data_join <span class="sc">%&gt;%</span> </span>
+<span id="cb58-2"><a href="bearbejdning-dag-2.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>expression,<span class="at">x=</span><span class="fu">as.factor</span>(batch),<span class="at">fill=</span>gene)) <span class="sc">+</span> </span>
+<span id="cb58-3"><a href="bearbejdning-dag-2.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb58-4"><a href="bearbejdning-dag-2.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>gene,<span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb58-5"><a href="bearbejdning-dag-2.html#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb58-6"><a href="bearbejdning-dag-2.html#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) <span class="sc">+</span></span>
+<span id="cb58-7"><a href="bearbejdning-dag-2.html#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Expression split according to batch&quot;</span>)</span>
+<span id="cb58-8"><a href="bearbejdning-dag-2.html#cb58-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-9"><a href="bearbejdning-dag-2.html#cb58-9" aria-hidden="true" tabindex="-1"></a>gg1</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-43-1.png" width="576" /></p>
 </div>
 </div>
 <div id="problemstillinger-5" class="section level2 hasAnchor" number="6.6">
@@ -1029,17 +1029,17 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 <p><strong>Problem 1</strong>) Lav quizzen - “Quiz - tidyverse - part 2.”</p>
 <hr />
 <p><em>Vi øver os med titanic. Inlæs de data og lave oprydningen med følgende kode:</em></p>
-<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="bearbejdning-dag-2.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb333-2"><a href="bearbejdning-dag-2.html#cb333-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
-<span id="cb333-3"><a href="bearbejdning-dag-2.html#cb333-3" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(titanic_train)</span>
-<span id="cb333-4"><a href="bearbejdning-dag-2.html#cb333-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb333-5"><a href="bearbejdning-dag-2.html#cb333-5" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span> </span>
-<span id="cb333-6"><a href="bearbejdning-dag-2.html#cb333-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>Cabin) <span class="sc">%&gt;%</span> </span>
-<span id="cb333-7"><a href="bearbejdning-dag-2.html#cb333-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="bearbejdning-dag-2.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb59-2"><a href="bearbejdning-dag-2.html#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(titanic)</span>
+<span id="cb59-3"><a href="bearbejdning-dag-2.html#cb59-3" aria-hidden="true" tabindex="-1"></a>titanic <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(titanic_train)</span>
+<span id="cb59-4"><a href="bearbejdning-dag-2.html#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="bearbejdning-dag-2.html#cb59-5" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="ot">&lt;-</span> titanic <span class="sc">%&gt;%</span> </span>
+<span id="cb59-6"><a href="bearbejdning-dag-2.html#cb59-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>Cabin) <span class="sc">%&gt;%</span> </span>
+<span id="cb59-7"><a href="bearbejdning-dag-2.html#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>()</span></code></pre></div>
 <hr />
 <p><strong>Problem 2)</strong> Fra <code>titanic_clean</code> beregn den gennemsnitlige alder af alle passagerer ombord skibet.</p>
-<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="bearbejdning-dag-2.html#cb334-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span></span>
-<span id="cb334-2"><a href="bearbejdning-dag-2.html#cb334-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(....) <span class="co">#rediger her</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="bearbejdning-dag-2.html#cb60-1" aria-hidden="true" tabindex="-1"></a>titanic_clean <span class="sc">%&gt;%</span></span>
+<span id="cb60-2"><a href="bearbejdning-dag-2.html#cb60-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(....) <span class="co">#rediger her</span></span></code></pre></div>
 <ul>
 <li>I samme kommando beregne også den maksimum alder og minimum alder, samt proportionen af passagerer, der er under 18 (for den sidste se mit eksempel med <code>Pclass</code> oven på). Dataframen skal ser sådan ud:</li>
 </ul>
@@ -1053,7 +1053,7 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 <p><strong>b)</strong> Brug din nye summary statistikker dataframe til at lave et barplot med <code>stat="identity"</code> som viser den gennemsnitlige alder på y-aksen opdelt efter <code>Pclass</code> på x-aksen (tænke lidt over data typen på <code>Pclass</code>)</p>
 <p><strong>c)</strong> Anvend <code>pivot_longer()</code> på din summary statistikker dataframe (brug indstilling <code>cols = -Pclass</code>)</p>
 <p><strong>d)</strong> Brug din long-form dataframe af summary statistikker til at lave plots af samtlige summary statistikker med én <code>ggplot</code> kommando (adskil dem ved at benytte facet og opdele efter <code>Pclass</code> indenfor hvert plot, ligesom i følgende).</p>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-330-1.png" width="480" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-49-1.png" width="480" /></p>
 <hr />
 <p><strong>Problem 4)</strong></p>
 <p><strong>a)</strong> Beregne samme summary statistics som i <strong>2</strong>) men anvende <code>group_by()</code> til at først opdele efter både variablerne <code>Pclass</code> og <code>Sex</code>.</p>
@@ -1065,7 +1065,7 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 <pre><code>## `summarise()` has grouped output by &#39;Pclass&#39;. You can override using the
 ## `.groups` argument.</code></pre>
 <p><strong>c)</strong> Lav et plot af samtlige summary statistikker, som er i long form og ser ud som følgende plot.</p>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-333-1.png" width="480" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 <hr />
 <!-- __Problem 2)__ *Ekstra øvelse med `group_by()` og `summarise()`*. Med `titanic_clean` som udgangspunkt angiv både Pclass og Embarked i `group_by()` og brug `summarise()` til at beregne de gennemsnitlige `Fare` til passagerene.  -->
 <!-- ```{r,echo=FALSE,eval=FALSE} -->
@@ -1095,7 +1095,7 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 <li>Lave om til long form (tænk over hvilke variabler skal være i en enkel kolon)</li>
 <li>Brug din long form dataframe til at lave plottet</li>
 </ul>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-335-1.png" width="480" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <!-- * Lave en ny dataramme fra `titanic_clean` der viser tre summary statistics opdelt efter Survived: den gennemsnitlige alder, den gennemsnitlige `Fare` og proportionen som er "male". -->
 <!-- ```{r,echo=FALSE,eval=FALSE} -->
 <!-- titanic_stats <- titanic_clean %>% -->
@@ -1134,36 +1134,36 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 <!-- ``` -->
 <hr />
 <p><strong>Problem 7)</strong> <em><code>Pivot_wider()</code></em> Vi har en <code>tribble</code> som jeg har kopiret fra <a href="https://r4ds.had.co.nz/index.html" class="uri">https://r4ds.had.co.nz/index.html</a>.</p>
-<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="bearbejdning-dag-2.html#cb337-1" aria-hidden="true" tabindex="-1"></a>people <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb337-2"><a href="bearbejdning-dag-2.html#cb337-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>name,             <span class="sc">~</span>names,  <span class="sc">~</span>values,</span>
-<span id="cb337-3"><a href="bearbejdning-dag-2.html#cb337-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#-----------------|--------|------</span></span>
-<span id="cb337-4"><a href="bearbejdning-dag-2.html#cb337-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Phillip Woods&quot;</span>,   <span class="st">&quot;age&quot;</span>,       <span class="dv">45</span>,</span>
-<span id="cb337-5"><a href="bearbejdning-dag-2.html#cb337-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Phillip Woods&quot;</span>,   <span class="st">&quot;height&quot;</span>,   <span class="dv">186</span>,</span>
-<span id="cb337-6"><a href="bearbejdning-dag-2.html#cb337-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Jessica Cordero&quot;</span>, <span class="st">&quot;age&quot;</span>,       <span class="dv">37</span>,</span>
-<span id="cb337-7"><a href="bearbejdning-dag-2.html#cb337-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Jessica Cordero&quot;</span>, <span class="st">&quot;height&quot;</span>,   <span class="dv">156</span>,</span>
-<span id="cb337-8"><a href="bearbejdning-dag-2.html#cb337-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Brady Smith&quot;</span>,     <span class="st">&quot;age&quot;</span>,       <span class="dv">23</span>,</span>
-<span id="cb337-9"><a href="bearbejdning-dag-2.html#cb337-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Brady Smith&quot;</span>,     <span class="st">&quot;height&quot;</span>,   <span class="dv">177</span></span>
-<span id="cb337-10"><a href="bearbejdning-dag-2.html#cb337-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="bearbejdning-dag-2.html#cb63-1" aria-hidden="true" tabindex="-1"></a>people <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb63-2"><a href="bearbejdning-dag-2.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>name,             <span class="sc">~</span>names,  <span class="sc">~</span>values,</span>
+<span id="cb63-3"><a href="bearbejdning-dag-2.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#-----------------|--------|------</span></span>
+<span id="cb63-4"><a href="bearbejdning-dag-2.html#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Phillip Woods&quot;</span>,   <span class="st">&quot;age&quot;</span>,       <span class="dv">45</span>,</span>
+<span id="cb63-5"><a href="bearbejdning-dag-2.html#cb63-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Phillip Woods&quot;</span>,   <span class="st">&quot;height&quot;</span>,   <span class="dv">186</span>,</span>
+<span id="cb63-6"><a href="bearbejdning-dag-2.html#cb63-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Jessica Cordero&quot;</span>, <span class="st">&quot;age&quot;</span>,       <span class="dv">37</span>,</span>
+<span id="cb63-7"><a href="bearbejdning-dag-2.html#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Jessica Cordero&quot;</span>, <span class="st">&quot;height&quot;</span>,   <span class="dv">156</span>,</span>
+<span id="cb63-8"><a href="bearbejdning-dag-2.html#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Brady Smith&quot;</span>,     <span class="st">&quot;age&quot;</span>,       <span class="dv">23</span>,</span>
+<span id="cb63-9"><a href="bearbejdning-dag-2.html#cb63-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Brady Smith&quot;</span>,     <span class="st">&quot;height&quot;</span>,   <span class="dv">177</span></span>
+<span id="cb63-10"><a href="bearbejdning-dag-2.html#cb63-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Brug <code>pivot_wider()</code> på <code>people</code>. Vi er nødt til at specificer som minimum <code>names_from</code> og <code>values_from</code> indenfor <code>pivot_wider()</code> - prøv at angiv de relevante variabler</p>
 <hr />
 <p><strong>Problem 8)</strong> <em><code>left_join()</code> øvelse</em>. Kør følgende kode med to tribbles:</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="bearbejdning-dag-2.html#cb338-1" aria-hidden="true" tabindex="-1"></a>superheroes <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb338-2"><a href="bearbejdning-dag-2.html#cb338-2" aria-hidden="true" tabindex="-1"></a>       <span class="sc">~</span>name, <span class="sc">~</span>alignment,  <span class="sc">~</span>gender,          <span class="sc">~</span>publisher,</span>
-<span id="cb338-3"><a href="bearbejdning-dag-2.html#cb338-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;Magneto&quot;</span>,      <span class="st">&quot;bad&quot;</span>,   <span class="st">&quot;male&quot;</span>,            <span class="st">&quot;Marvel&quot;</span>,</span>
-<span id="cb338-4"><a href="bearbejdning-dag-2.html#cb338-4" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Storm&quot;</span>,     <span class="st">&quot;good&quot;</span>, <span class="st">&quot;female&quot;</span>,            <span class="st">&quot;Marvel&quot;</span>,</span>
-<span id="cb338-5"><a href="bearbejdning-dag-2.html#cb338-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Mystique&quot;</span>,      <span class="st">&quot;bad&quot;</span>, <span class="st">&quot;female&quot;</span>,            <span class="st">&quot;Marvel&quot;</span>,</span>
-<span id="cb338-6"><a href="bearbejdning-dag-2.html#cb338-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Batman&quot;</span>,     <span class="st">&quot;good&quot;</span>,   <span class="st">&quot;male&quot;</span>,                <span class="st">&quot;DC&quot;</span>,</span>
-<span id="cb338-7"><a href="bearbejdning-dag-2.html#cb338-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Joker&quot;</span>,      <span class="st">&quot;bad&quot;</span>,   <span class="st">&quot;male&quot;</span>,                <span class="st">&quot;DC&quot;</span>,</span>
-<span id="cb338-8"><a href="bearbejdning-dag-2.html#cb338-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Catwoman&quot;</span>,      <span class="st">&quot;bad&quot;</span>, <span class="st">&quot;female&quot;</span>,                <span class="st">&quot;DC&quot;</span>,</span>
-<span id="cb338-9"><a href="bearbejdning-dag-2.html#cb338-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;Hellboy&quot;</span>,     <span class="st">&quot;good&quot;</span>,   <span class="st">&quot;male&quot;</span>, <span class="st">&quot;Dark Horse Comics&quot;</span></span>
-<span id="cb338-10"><a href="bearbejdning-dag-2.html#cb338-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb338-11"><a href="bearbejdning-dag-2.html#cb338-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb338-12"><a href="bearbejdning-dag-2.html#cb338-12" aria-hidden="true" tabindex="-1"></a>publishers <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb338-13"><a href="bearbejdning-dag-2.html#cb338-13" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>publisher, <span class="sc">~</span>yr_founded,</span>
-<span id="cb338-14"><a href="bearbejdning-dag-2.html#cb338-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;DC&quot;</span>,       1934L,</span>
-<span id="cb338-15"><a href="bearbejdning-dag-2.html#cb338-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Marvel&quot;</span>,       1939L,</span>
-<span id="cb338-16"><a href="bearbejdning-dag-2.html#cb338-16" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Image&quot;</span>,       1992L</span>
-<span id="cb338-17"><a href="bearbejdning-dag-2.html#cb338-17" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="bearbejdning-dag-2.html#cb64-1" aria-hidden="true" tabindex="-1"></a>superheroes <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb64-2"><a href="bearbejdning-dag-2.html#cb64-2" aria-hidden="true" tabindex="-1"></a>       <span class="sc">~</span>name, <span class="sc">~</span>alignment,  <span class="sc">~</span>gender,          <span class="sc">~</span>publisher,</span>
+<span id="cb64-3"><a href="bearbejdning-dag-2.html#cb64-3" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;Magneto&quot;</span>,      <span class="st">&quot;bad&quot;</span>,   <span class="st">&quot;male&quot;</span>,            <span class="st">&quot;Marvel&quot;</span>,</span>
+<span id="cb64-4"><a href="bearbejdning-dag-2.html#cb64-4" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Storm&quot;</span>,     <span class="st">&quot;good&quot;</span>, <span class="st">&quot;female&quot;</span>,            <span class="st">&quot;Marvel&quot;</span>,</span>
+<span id="cb64-5"><a href="bearbejdning-dag-2.html#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Mystique&quot;</span>,      <span class="st">&quot;bad&quot;</span>, <span class="st">&quot;female&quot;</span>,            <span class="st">&quot;Marvel&quot;</span>,</span>
+<span id="cb64-6"><a href="bearbejdning-dag-2.html#cb64-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Batman&quot;</span>,     <span class="st">&quot;good&quot;</span>,   <span class="st">&quot;male&quot;</span>,                <span class="st">&quot;DC&quot;</span>,</span>
+<span id="cb64-7"><a href="bearbejdning-dag-2.html#cb64-7" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Joker&quot;</span>,      <span class="st">&quot;bad&quot;</span>,   <span class="st">&quot;male&quot;</span>,                <span class="st">&quot;DC&quot;</span>,</span>
+<span id="cb64-8"><a href="bearbejdning-dag-2.html#cb64-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Catwoman&quot;</span>,      <span class="st">&quot;bad&quot;</span>, <span class="st">&quot;female&quot;</span>,                <span class="st">&quot;DC&quot;</span>,</span>
+<span id="cb64-9"><a href="bearbejdning-dag-2.html#cb64-9" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;Hellboy&quot;</span>,     <span class="st">&quot;good&quot;</span>,   <span class="st">&quot;male&quot;</span>, <span class="st">&quot;Dark Horse Comics&quot;</span></span>
+<span id="cb64-10"><a href="bearbejdning-dag-2.html#cb64-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb64-11"><a href="bearbejdning-dag-2.html#cb64-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-12"><a href="bearbejdning-dag-2.html#cb64-12" aria-hidden="true" tabindex="-1"></a>publishers <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb64-13"><a href="bearbejdning-dag-2.html#cb64-13" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>publisher, <span class="sc">~</span>yr_founded,</span>
+<span id="cb64-14"><a href="bearbejdning-dag-2.html#cb64-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;DC&quot;</span>,       1934L,</span>
+<span id="cb64-15"><a href="bearbejdning-dag-2.html#cb64-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Marvel&quot;</span>,       1939L,</span>
+<span id="cb64-16"><a href="bearbejdning-dag-2.html#cb64-16" aria-hidden="true" tabindex="-1"></a>     <span class="st">&quot;Image&quot;</span>,       1992L</span>
+<span id="cb64-17"><a href="bearbejdning-dag-2.html#cb64-17" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p>Vi har to dataframes - <code>superheroes</code> og <code>publishers</code>. Hvilken kolon kan man bruge til at forbinde de to dataframes? Brug <code>left_join()</code> til at tilføje oplysninger <strong>fra</strong> <code>publishers</code> <strong>til</strong> datarammen <code>superheroes</code>.</p>
 <ul>
 <li>Få man alle observationerne fra dataframen <code>superheroes</code> med i din nye dataframe?</li>
@@ -1173,21 +1173,21 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 <hr />
 <p><strong>Problem 9)</strong> <em><code>left_join()</code> øvelse</em>.</p>
 <p>Køre nedenstående kode, hvor der er to dataframes - <code>iris2</code> og <code>sample_table</code>. Dataframen <code>iris2</code> er ikke særlig informativ med hensyn til hvad de forskellige samples egentlige er, men oplysningerne om dem står i <code>sample_table</code>. Brug <code>left_join()</code> til at tilføje <code>sample_table</code> til <code>iris2</code> for at få en dataramme som indeholder både de data og de samples oplysninger.</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="bearbejdning-dag-2.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
-<span id="cb339-2"><a href="bearbejdning-dag-2.html#cb339-2" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(iris)</span>
-<span id="cb339-3"><a href="bearbejdning-dag-2.html#cb339-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sample1&quot;</span>,<span class="st">&quot;sample2&quot;</span>,<span class="st">&quot;sample3&quot;</span>,<span class="st">&quot;sample4&quot;</span>,<span class="st">&quot;Species&quot;</span>)</span>
-<span id="cb339-4"><a href="bearbejdning-dag-2.html#cb339-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb339-5"><a href="bearbejdning-dag-2.html#cb339-5" aria-hidden="true" tabindex="-1"></a>samp_table <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb339-6"><a href="bearbejdning-dag-2.html#cb339-6" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span>sample, <span class="sc">~</span>part, <span class="sc">~</span>measure,</span>
-<span id="cb339-7"><a href="bearbejdning-dag-2.html#cb339-7" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#------|-------|--------#</span></span>
-<span id="cb339-8"><a href="bearbejdning-dag-2.html#cb339-8" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;sample1&quot;</span>, <span class="st">&quot;Sepal&quot;</span>, <span class="st">&quot;Length&quot;</span>,</span>
-<span id="cb339-9"><a href="bearbejdning-dag-2.html#cb339-9" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;sample2&quot;</span>, <span class="st">&quot;Sepal&quot;</span>, <span class="st">&quot;Width&quot;</span>,</span>
-<span id="cb339-10"><a href="bearbejdning-dag-2.html#cb339-10" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;sample3&quot;</span>, <span class="st">&quot;Petal&quot;</span>, <span class="st">&quot;Length&quot;</span>,</span>
-<span id="cb339-11"><a href="bearbejdning-dag-2.html#cb339-11" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;sample4&quot;</span>, <span class="st">&quot;Sepal&quot;</span>, <span class="st">&quot;Width&quot;</span></span>
-<span id="cb339-12"><a href="bearbejdning-dag-2.html#cb339-12" aria-hidden="true" tabindex="-1"></a>                     )</span>
-<span id="cb339-13"><a href="bearbejdning-dag-2.html#cb339-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb339-14"><a href="bearbejdning-dag-2.html#cb339-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb339-15"><a href="bearbejdning-dag-2.html#cb339-15" aria-hidden="true" tabindex="-1"></a>iris2 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="bearbejdning-dag-2.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb65-2"><a href="bearbejdning-dag-2.html#cb65-2" aria-hidden="true" tabindex="-1"></a>iris2 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(iris)</span>
+<span id="cb65-3"><a href="bearbejdning-dag-2.html#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(iris2) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sample1&quot;</span>,<span class="st">&quot;sample2&quot;</span>,<span class="st">&quot;sample3&quot;</span>,<span class="st">&quot;sample4&quot;</span>,<span class="st">&quot;Species&quot;</span>)</span>
+<span id="cb65-4"><a href="bearbejdning-dag-2.html#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="bearbejdning-dag-2.html#cb65-5" aria-hidden="true" tabindex="-1"></a>samp_table <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb65-6"><a href="bearbejdning-dag-2.html#cb65-6" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span>sample, <span class="sc">~</span>part, <span class="sc">~</span>measure,</span>
+<span id="cb65-7"><a href="bearbejdning-dag-2.html#cb65-7" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#------|-------|--------#</span></span>
+<span id="cb65-8"><a href="bearbejdning-dag-2.html#cb65-8" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;sample1&quot;</span>, <span class="st">&quot;Sepal&quot;</span>, <span class="st">&quot;Length&quot;</span>,</span>
+<span id="cb65-9"><a href="bearbejdning-dag-2.html#cb65-9" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;sample2&quot;</span>, <span class="st">&quot;Sepal&quot;</span>, <span class="st">&quot;Width&quot;</span>,</span>
+<span id="cb65-10"><a href="bearbejdning-dag-2.html#cb65-10" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;sample3&quot;</span>, <span class="st">&quot;Petal&quot;</span>, <span class="st">&quot;Length&quot;</span>,</span>
+<span id="cb65-11"><a href="bearbejdning-dag-2.html#cb65-11" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;sample4&quot;</span>, <span class="st">&quot;Sepal&quot;</span>, <span class="st">&quot;Width&quot;</span></span>
+<span id="cb65-12"><a href="bearbejdning-dag-2.html#cb65-12" aria-hidden="true" tabindex="-1"></a>                     )</span>
+<span id="cb65-13"><a href="bearbejdning-dag-2.html#cb65-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-14"><a href="bearbejdning-dag-2.html#cb65-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-15"><a href="bearbejdning-dag-2.html#cb65-15" aria-hidden="true" tabindex="-1"></a>iris2 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 150
 ## Columns: 5
 ## $ sample1 &lt;dbl&gt; 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5.4, 4.8, 4.…
@@ -1195,7 +1195,7 @@ Figure 6.3: left_join graphical demonstration (source <a href="https://mgimond.g
 ## $ sample3 &lt;dbl&gt; 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6, 1.…
 ## $ sample4 &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.…
 ## $ Species &lt;fct&gt; setosa, setosa, setosa, setosa, setosa, setosa, setosa, setosa…</code></pre>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="bearbejdning-dag-2.html#cb341-1" aria-hidden="true" tabindex="-1"></a>samp_table <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="bearbejdning-dag-2.html#cb67-1" aria-hidden="true" tabindex="-1"></a>samp_table <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code></pre></div>
 <pre><code>## Rows: 4
 ## Columns: 3
 ## $ sample  &lt;chr&gt; &quot;sample1&quot;, &quot;sample2&quot;, &quot;sample3&quot;, &quot;sample4&quot;
@@ -1284,20 +1284,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
