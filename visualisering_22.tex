@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-15}
+\date{Last updated: 2022-05-16}
 
 \begin{document}
 \maketitle
@@ -609,11 +609,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1.36787931 -0.83265012 -0.93967848  0.21207637  0.10043514 -0.59214330
-##  [7]  0.03467596 -0.23162105  0.99687867  1.47809379  0.31358143  1.35923102
-## [13] -1.38197133  2.38041607  0.27895120 -1.23463596 -0.92068940  0.97877442
-## [19] -0.20934352 -0.99629614 -0.52945767  1.51639679 -0.44609378  1.08974441
-## [25] -0.96308566
+##  [1] -0.07210290 -0.91950785  1.05135645  0.17820027  0.50015331 -0.74817271
+##  [7]  1.21869688 -0.82025501  1.44714833  0.10469993 -1.20198597 -0.47686073
+## [13]  0.01697558 -0.18702893 -0.84175061  0.28446592 -0.78605319  1.76092401
+## [19] -1.60356694 -0.74912930 -0.64324385 -0.36878917 -2.38535478  2.01647515
+## [25] -1.80241329
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -621,13 +621,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  1.3678793 {-}0.8326501 {-}0.9396785  0.2120764  0.1004351 {-}0.5921433}
+\DocumentationTok{\#\# [1] {-}0.0721029 {-}0.9195078  1.0513565  0.1782003  0.5001533 {-}0.7481727}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.9962961 {-}0.5294577  1.5163968 {-}0.4460938  1.0897444 {-}0.9630857}
+\DocumentationTok{\#\# [1] {-}0.7491293 {-}0.6432439 {-}0.3687892 {-}2.3853548  2.0164751 {-}1.8024133}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 1.367879}
+\DocumentationTok{\#\# [1] {-}0.0721029}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.9630857}
+\DocumentationTok{\#\# [1] {-}1.802413}
 \end{Highlighting}
 \end{Shaded}
 
@@ -665,7 +665,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.11317873  0.03467596  2.38041607 -1.38197133  1.06776684  1.03332804
+## [1] -0.2010848 -0.3687892  2.0164751 -2.3853548  1.2063702  1.0983488
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -677,8 +677,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.38197 -0.83265  0.03468  0.11318  0.99688  2.38042
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -2.3854 -0.8203 -0.3688 -0.2011  0.2845  2.0165
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -6478,12 +6478,6 @@ Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/54
 
 Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/549630798}
 
-\begin{itemize}
-\tightlist
-\item
-  Video 4: Introduction to map2 functions
-\end{itemize}
-
 \hypertarget{iterativ-processer-med-map-fuktioner}{%
 \section{\texorpdfstring{Iterativ processer med \texttt{map()} fuktioner}{Iterativ processer med map() fuktioner}}\label{iterativ-processer-med-map-fuktioner}}
 
@@ -7500,9 +7494,9 @@ Vi har set, at når vi kører \texttt{map} på en dataframe, laver man en funkti
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_list\_of\_tibbles }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{( }\FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"a"}\NormalTok{,}\StringTok{"a"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)),}
-                            \FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"b"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{)),}
-                            \FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"a"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{3}\NormalTok{)))}
+\NormalTok{my\_list\_of\_tibbles }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{( }\FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"a"}\NormalTok{,}\StringTok{"a"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)),}
+                            \FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"b"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{)),}
+                            \FunctionTok{tibble}\NormalTok{(}\StringTok{"letter"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"a"}\NormalTok{,}\StringTok{"b"}\NormalTok{,}\StringTok{"a"}\NormalTok{), }\StringTok{"number"} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{)))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -7724,6 +7718,8 @@ I dette kapitel viser jeg flere eksempler på processen, hvor man anvender \text
 \hypertarget{video-ressourcer-4}{%
 \subsection{Video ressourcer}\label{video-ressourcer-4}}
 
+OBS der er mange videoer til i dag men de gentager samme process fra sidste emner med \texttt{group\_by}/\texttt{nest} og \texttt{map} mange gange (med forskellige statistike metoder).
+
 \begin{itemize}
 \tightlist
 \item
@@ -7732,9 +7728,9 @@ I dette kapitel viser jeg flere eksempler på processen, hvor man anvender \text
   \begin{itemize}
   \tightlist
   \item
-    Jeg gennemgår processen langsomt med en korrelationanalyse
+    Jeg gennemgår processen langsomt med en korrelationsanalyse
   \item
-    Jeg introducerer \texttt{glance} til at lave outputtet fra statistikse method i tidy-form.
+    Jeg introducerer \texttt{glance} til at lave outputtet fra statistikse methoder i tidy-form.
   \end{itemize}
 \end{itemize}
 
@@ -7817,7 +7813,7 @@ Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/71
 
 Man laver en korrelationsanalyse i R ved at benytte \texttt{cor.test()} (\texttt{cor()} virker også hvis du kun vil beregne koefficient og ikke signifikans). Forestille dig at du gerne vil finde ud af korrelationen mellem GC-indehold (variablen \texttt{gc}, procent G/C bases i genomet) og genomstørrelse (variablen \texttt{log10\_size\_mb}) i datasættet \texttt{eukaryotes} fra sidste lektion.
 
-I følgende plotter jeg en density mellem \texttt{gc} og den transformerede variable \texttt{log10\_size\_mb} som er log10 genomstørrelse.
+I følgende plotter jeg en density mellem \texttt{gc} og den transformerede variable \texttt{log10\_size\_mb} som er log10 genomstørrelse (ikke antal gener, som jeg sagde i videoen).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7973,7 +7969,7 @@ Vi vil gerne få statistikker fra \texttt{cor.test()} i en pæn form så vi tilf
 
 \textbf{Step 3: Bruge map() på det nested datasæt}
 
-Nu lad os køre vores funktion på den nested dataframe. Vi bruger \texttt{map()} til at lave funktionen \texttt{my\_cor\_test} for hver af de fem datasæt. Det gøres ved at bruge funktionen \texttt{map()} indenfor funktionen \texttt{mutate()} til at oprette en ny kolonne, der hedder \texttt{test\_stats}, hvor resultaterne for hver af de fem tests lagres.
+Nu lad os køre vores funktion på den nested dataframe. Vi bruger \texttt{map()} til at lave funktionen \texttt{my\_cor\_test} for hvert af de fem datasæt. Det gøres ved at bruge funktionen \texttt{map()} indenfor funktionen \texttt{mutate()} til at oprette en ny kolonne, der hedder \texttt{test\_stats}, hvor resultaterne for hver af de fem tests lagres.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -7997,7 +7993,7 @@ Nu lad os køre vores funktion på den nested dataframe. Vi bruger \texttt{map()
 
 \textbf{Step 4: Anvende \texttt{unnest()} for at kunne se resultaterne}
 
-For at kunne se statistikkerne bruger jeg funktionen \texttt{unnest()} på den nye variabel \texttt{test\_stats}:
+For at kunne se statistikerne bruger jeg funktionen \texttt{unnest()} på den nye variabel \texttt{test\_stats}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8135,7 +8131,7 @@ Det er nemt at bruge og at man kan få en konfidensinterval med, hvis man gerne 
 \hypertarget{geom_smooth-flere-lm-trendlinjer-puxe5-samme-plot}{%
 \subsection{\texorpdfstring{\texttt{geom\_smooth()}: flere \texttt{lm} trendlinjer på samme plot}{geom\_smooth(): flere lm trendlinjer på samme plot}}\label{geom_smooth-flere-lm-trendlinjer-puxe5-samme-plot}}
 
-For at tilføje en bedste rette linje til de tre \texttt{species} hver for sig i stedet for samtlige data, er det meget nemt i \texttt{ggplot}: man angiver bare \texttt{colour=species} indenfor aesthetics:
+For at tilføje en bedste rette linje til de tre \texttt{species} hver for sig i stedet for samtlige data, er det meget nemt i \texttt{ggplot2}: man angiver bare \texttt{colour=species} indenfor aesthetics (`aes):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8157,7 +8153,7 @@ Så kan vi se, at der faktisk er tre forskellige trends her, så det giver god m
 \hypertarget{trendlinjer-med-methodloess}{%
 \subsection{\texorpdfstring{Trendlinjer med \texttt{method=="loess"}}{Trendlinjer med method=="loess"}}\label{trendlinjer-med-methodloess}}
 
-I \texttt{ggplot} er vi ikke begrænset til \texttt{method="lm"} indenfor \texttt{geom\_smooth()}. Lad os afpøve i stedet \texttt{method="loess"}:
+I \texttt{ggplot} er vi ikke begrænset til \texttt{method="lm"} indenfor \texttt{geom\_smooth()}. Lad os afprøve i stedet \texttt{method="loess"}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8176,12 +8172,12 @@ I \texttt{ggplot} er vi ikke begrænset til \texttt{method="lm"} indenfor \textt
 
 \includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-444-1.pdf}
 
-Så kan man fange trends som ikke nødvendigvis er lineær. Men det er mere ligefrem at beskrive en lineær trend og bruge den til at beregne de nødvendige statistik til at støtte vores observationer.
+Så kan man fange trends som ikke nødvendigvis er lineær - men bemærk at det er mere ligetil at beskrive og fortolke en lineær trend (og beregner udsigelser ud fra en lineær trend).
 
 \hypertarget{plot-linear-regresion-estimates}{%
 \section{Plot linear regresion estimates}\label{plot-linear-regresion-estimates}}
 
-For at finde vores estimates og tjekke signifikansen af de lineær trend, arbejder man direkte med den lineær model funktion \texttt{lm()}:
+For at finde vores estimates og tjekke signifikansen af en lineær trend, arbejder man direkte med den lineær model funktion \texttt{lm()}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8216,7 +8212,7 @@ Husk de tal, som er vigtige her (se også emne 1 og 2):
 \begin{itemize}
 \tightlist
 \item
-  Den \textbf{p-værdi}: \texttt{\textless{}2e-16} - uafhængige variablen \texttt{bill\_length\_mm} har en signifikant effekt.
+  Den \textbf{p-værdi}: \texttt{\textless{}2e-16} - uafhængige variablen \texttt{bill\_length\_mm} har en signifikant effekt/betydning for \texttt{body\_mass\_g}.
 \item
   Den \textbf{R-squared værdi}: - det viser den proportion af variancen i \texttt{body\_mass\_g} som \texttt{bill\_length\_mm} forklarer:
 
@@ -8626,7 +8622,7 @@ Husk at have indlæste følgende:
 
 \textbf{Problem 3)} \emph{Nesting øvelse}
 
-For datasættet \texttt{msleep} anvende \texttt{group\_by()} og \texttt{nest()} til at få en nested dataframe hvor datasættet er opdelt efter variablen \texttt{vore} og kalder det for \texttt{msleep\_nest}.
+For datasættet \texttt{msleep}, anvende \texttt{group\_by()} og \texttt{nest()} til at få en nested dataframe hvor datasættet er opdelt efter variablen \texttt{vore}. Kalder det for \texttt{msleep\_nest}.
 
 \begin{itemize}
 \tightlist
@@ -8636,9 +8632,7 @@ For datasættet \texttt{msleep} anvende \texttt{group\_by()} og \texttt{nest()} 
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{msleep }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{group\_by}\NormalTok{(vore) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{msleep\_nest }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{mutate}\NormalTok{(}\StringTok{"n\_rows"} \OtherTok{=} \FunctionTok{map}\NormalTok{(???,???)) }\CommentTok{\#erstatte ??? her}
 \end{Highlighting}
 \end{Shaded}
@@ -8646,8 +8640,10 @@ For datasættet \texttt{msleep} anvende \texttt{group\_by()} og \texttt{nest()} 
 \begin{itemize}
 \tightlist
 \item
-  I dette tilfælde kan man ændre \texttt{map} til \texttt{map\_dbl} - gøre det.
+  I dette tilfælde kan man ændre \texttt{map} til \texttt{map\_dbl} - gør det.
 \end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 4)} \emph{Multiple korrelation}
 
@@ -8656,9 +8652,9 @@ Vi vil gerne beregne den korrelation mellem variablerne \texttt{sleep\_total} og
 \begin{itemize}
 \tightlist
 \item
-  Tilpasse følgende funktion så at vi teste korrelation mellem de to variabler.
+  Tilpas følgende funktion så at vi teste korrelation mellem de to variabler.
 \item
-  Tilføje \texttt{glance()} så at vi få vores data i \textbf{tidy} form.
+  Tilføj \texttt{glance()} så at vi få vores data i \textbf{tidy} form.
 \end{itemize}
 
 \begin{Shaded}
@@ -8673,45 +8669,45 @@ Vi vil gerne beregne den korrelation mellem variablerne \texttt{sleep\_total} og
 \item
   Unnest din nye kolonne bagefter
 \item
-  Lave barplots af \texttt{estimate} og \texttt{-log10(p.value)} med den resulterende dataramme
+  Lav barplots af \texttt{estimate} og \texttt{-log10(p.value)} med den resulterende dataramme
+\item
+  Prøv også at tilføj \texttt{\%\textgreater{}\%\ pluck("estimate",1)} til din \texttt{cor\_test} funktion og kig på resultat
 \end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 5)} \emph{Linear regression øvelse}
 
-Åbn \texttt{LungCapData} (herunder \texttt{Age.Groups})
+Åbn \texttt{LungCapData} (herunder \texttt{Age.Groups}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{LungCapData }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1"}\NormalTok{)}
-\FunctionTok{head}\NormalTok{(LungCapData) }\CommentTok{\#se variabler navne}
+\FunctionTok{glimpse}\NormalTok{(LungCapData) }\CommentTok{\#se variabler navne}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##   LungCap Age Height Smoke Gender Caesarean
-## 1   6.475   6   62.1    no   male        no
-## 2  10.125  18   74.7   yes female        no
-## 3   9.550  16   69.7    no female       yes
-## 4  11.125  14   71.0    no   male        no
-## 5   4.800   5   56.9    no   male        no
-## 6   6.225  11   58.7    no female        no
+## Rows: 725
+## Columns: 6
+## $ LungCap   <dbl> 6.475, 10.125, 9.550, 11.125, 4.800, 6.225, 4.950, 7.325, 8.~
+## $ Age       <int> 6, 18, 16, 14, 5, 11, 8, 11, 15, 11, 19, 17, 12, 10, 10, 13,~
+## $ Height    <dbl> 62.1, 74.7, 69.7, 71.0, 56.9, 58.7, 63.3, 70.4, 70.5, 59.2, ~
+## $ Smoke     <chr> "no", "yes", "no", "no", "no", "no", "no", "no", "no", "no",~
+## $ Gender    <chr> "male", "female", "female", "male", "male", "female", "male"~
+## $ Caesarean <chr> "no", "no", "yes", "no", "no", "no", "yes", "no", "no", "no"~
 \end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{LungCapData}\SpecialCharTok{$}\NormalTok{Age.Group }\OtherTok{\textless{}{-}} \FunctionTok{cut}\NormalTok{(LungCapData}\SpecialCharTok{$}\NormalTok{Age,}\AttributeTok{breaks=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{13}\NormalTok{,}\DecValTok{15}\NormalTok{,}\DecValTok{17}\NormalTok{,}\DecValTok{19}\NormalTok{),}\AttributeTok{right=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{include.lowest =} \ConstantTok{TRUE}\NormalTok{)}
-\FunctionTok{levels}\NormalTok{(LungCapData}\SpecialCharTok{$}\NormalTok{Age.Group) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"\textless{}13"}\NormalTok{,}\StringTok{"13{-}14"}\NormalTok{,}\StringTok{"15{-}16"}\NormalTok{,}\StringTok{"17+"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
 
 \begin{itemize}
 \item
-  Anvende \texttt{lm()} til at finde den forventet \texttt{LungCap} med hensyn til \texttt{Age} som uafhængig variabel.
+  Anvende \texttt{lm()} med \texttt{LungCap} som afhængig variabel og \texttt{Age} som uafhængig variabel.
 \item
-  Hvad er den intercept og slope af den beregnet linje?
+  Hvad er den intercept og slope af den beregnede linje?
 \item
-  Tilføj funktionen \texttt{glance()} og angive værdier \texttt{r.squared} og \texttt{p.value}.
+  Prøv at tilføj funktionen \texttt{glance()} til din \texttt{lm} funktion og angive værdier \texttt{r.squared} og \texttt{p.value}.
 \end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Problem 6}) Lave et scatter plot af Age på x-aksen og LungCap på y-aksen.
 
@@ -8724,56 +8720,42 @@ Vi vil gerne beregne den korrelation mellem variablerne \texttt{sleep\_total} og
 \item
   Ændre linjen til \texttt{geom\_smooth(method="lm",se=FALSE)}
 \item
-  Nu specificer en forskellige farve efter \texttt{Smoke}.
+  Nu specificer en forskellige farve efter \texttt{Gender}. Hvordan er de to linje forskellige?
+\item
+  Nu specificer en forskellige farve efter \texttt{Smoke}. Hvordan er de to linje forskellige?
 \end{itemize}
 
-\textbf{8}) \emph{Lineær regression øvelse over multiple datasæt}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter variablen \texttt{Smoke}. \emph{OBS: Vi følger sammen process som i kursus notaterne men med LungCapData i stedet for Penguins}.
+\textbf{Problem 7}) \emph{Lineær regression øvelse over multiple datasæt}
+
+Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter variablen \texttt{Smoke}. \emph{OBS: Vi følger sammen process som i kursus notaterne men med LungCapData i stedet for Penguins - tjek gerne kursusnotaterne for inspiration}.
 
 \textbf{a}) Anvende \texttt{group\_by()} og \texttt{nest()} for at opdele dit datsasæt efter \texttt{Smoke}
 
-\textbf{b})
+\textbf{b}) Lav en funktion, \texttt{lm\_model\_func}, som beregner en lineær regression med \texttt{LungCap} som afhængig variabel og \texttt{Age} som uafhængig variabel. Tilføj \texttt{glance()} til \texttt{lm\_model\_func}.
 
-\begin{itemize}
-\tightlist
-\item
-  Lave en funktion, \texttt{lm\_model\_func}, hvor du laver en lineær regression med \texttt{LungCap} som afhængig variabel og \texttt{Age} som uafhængig variabel på et datasæt \texttt{.x}.
-\item
-  Tilføj \texttt{glance()} til \texttt{lm\_model\_func}.
-\end{itemize}
-
-\textbf{c})
-
-\begin{itemize}
-\tightlist
-\item
-  Anvende \texttt{map()} med din funktion indenfor \texttt{mutate()} til at tilføje en ny kolon som hedder \texttt{lm\_stats} til din dataramme.
-\item
-  Husk at \texttt{unnest} kolonnen \texttt{lm\_stats}til at kunne se statistikker.
-\end{itemize}
+\textbf{c}) Anvende \texttt{map()} med din funktion indenfor \texttt{mutate()} til at tilføje en ny kolon som hedder \texttt{lm\_stats} til din dataramme. Husk at \texttt{unnest} kolonnen \texttt{lm\_stats} for at kunne se statistikker.
 
 \textbf{d}) Fortolkning - er variablen \texttt{lungCap} bedre forklaret er variablen \texttt{Age} i rygere eller ikke-rygere?
 
-\textbf{Problem 7)}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{a}) I nedenstående er tre modeller, alle med \texttt{LungCap} som afhængig variabel alle som tager højde for \texttt{Age}:
+\textbf{Problem 8)}
+
+I nedenstående er tre modeller, alle med \texttt{LungCap} som afhængig variabel alle som tager højde for \texttt{Age}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_lm\_func }\OtherTok{\textless{}{-}}  \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age                  ,}\AttributeTok{data=}\NormalTok{.x)}
-\NormalTok{my\_lm\_func2 }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ Gender         ,}\AttributeTok{data=}\NormalTok{.x)}
-\NormalTok{my\_lm\_func3 }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ Gender }\SpecialCharTok{+}\NormalTok{ Height,}\AttributeTok{data=}\NormalTok{.x)}
+\NormalTok{my\_lm\_func1 }\OtherTok{\textless{}{-}}  \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age                  ,}\AttributeTok{data=}\NormalTok{.x)}
+\NormalTok{my\_lm\_func2 }\OtherTok{\textless{}{-}}  \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ Gender         ,}\AttributeTok{data=}\NormalTok{.x)}
+\NormalTok{my\_lm\_func3 }\OtherTok{\textless{}{-}}  \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(LungCap }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Age }\SpecialCharTok{+}\NormalTok{ Gender }\SpecialCharTok{+}\NormalTok{ Height,}\AttributeTok{data=}\NormalTok{.x)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{itemize}
-\tightlist
-\item
-  Anvende \texttt{map} til at lave tre nye kolonner i \texttt{LungCapData\_nest}, en til være af de tre modeller, med outputtet fra at lave modellerne på de to datasæt til rygere og ikke-rygere.
-\end{itemize}
+\textbf{a}) Anvend \texttt{map} til at lave tre nye kolonner i \texttt{LungCapData\_nest}, en til hver af de tre modeller (uden \texttt{glance()} her, så vi kan brug vores \texttt{lm} objekts senere).
 
-\textbf{b}) Skrive en funktion \texttt{my\_r2\_func}, der udtrækker ``r.squared'' værdierne fra dine modeller, og lav tre yderligere kolonner i \texttt{LungCapData\_nest}, hvor du køre din funktion på dine modeller med \texttt{map} (outputtet skal være dbl).
+\textbf{b}) Skriv en funktion \texttt{my\_r2\_func}, der udtrækker ``r.squared'' værdierne fra dine modeller (her refererer \texttt{.x} i funktionen ikke til en dataframe men til en beregnet model - hvad er det, der skal tilføjes?). Lav tre yderligere kolonner i \texttt{LungCapData\_nest}, hvor du køre din funktion på dine modeller med \texttt{map} (outputtet skal være dbl).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8790,11 +8772,13 @@ Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter var
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{c)} Omsæt dine r.squared værdier til et plot
+\textbf{c)} Omsæt dine beregnede r.squared værdier til et plot
 
-\textbf{Problem 8}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{a}) Skriv en funktion (eller kopier funktionen fra kursusnotaterne) hvor man anvende \texttt{anova()} til at sammenligne to modeller, \texttt{.x} og \texttt{.y} og udtrækker p-værdien.
+\textbf{Problem 9}
+
+\textbf{a}) Skriv en funktion hvor man anvende \texttt{anova()} til at sammenligne to modeller, \texttt{.x} og \texttt{.y} og dernæst udtrækker p-værdien (det er den samme funktion som i kursusnotaterne).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -8804,7 +8788,7 @@ Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter var
 
 \textbf{b}) Anvend din funktion med \texttt{map2} til at sammenligne de tre modeller fra sidste spørgsmål.
 
-\textbf{c}) Lave et plot med dine resultater.
+\textbf{c}) Lav et plot med dine resultater.
 
 \textbf{d}) Tilføj signifikans annotations på plottet med funktionen \texttt{geom\_signif()} (tilpas gerne kode fra kursusnotaterne).
 

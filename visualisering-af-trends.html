@@ -449,11 +449,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="video-ressourcer-4" class="section level3 hasAnchor" number="8.1.3">
 <h3><span class="header-section-number">8.1.3</span> Video ressourcer<a href="visualisering-af-trends.html#video-ressourcer-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>OBS der er mange videoer til i dag men de gentager samme process fra sidste emner med <code>group_by</code>/<code>nest</code> og <code>map</code> mange gange (med forskellige statistike metoder).</p>
 <ul>
 <li>Video 1: Korrelation koefficient med <code>nest()</code> og <code>map()</code>
 <ul>
-<li>Jeg gennemgår processen langsomt med en korrelationanalyse</li>
-<li>Jeg introducerer <code>glance</code> til at lave outputtet fra statistikse method i tidy-form.</li>
+<li>Jeg gennemgår processen langsomt med en korrelationsanalyse</li>
+<li>Jeg introducerer <code>glance</code> til at lave outputtet fra statistikse methoder i tidy-form.</li>
 </ul></li>
 </ul>
 <p><em>OBS: Jeg sagde “antal gener” flere gange i videoen men variablen <code>log10_size_mb</code> er faktisk genomstørrelse i megabases.</em></p>
@@ -523,7 +524,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="nest-og-map-eksempel-med-korrelation" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> <code>nest()</code> og <code>map()</code>: eksempel med korrelation<a href="visualisering-af-trends.html#nest-og-map-eksempel-med-korrelation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Man laver en korrelationsanalyse i R ved at benytte <code>cor.test()</code> (<code>cor()</code> virker også hvis du kun vil beregne koefficient og ikke signifikans). Forestille dig at du gerne vil finde ud af korrelationen mellem GC-indehold (variablen <code>gc</code>, procent G/C bases i genomet) og genomstørrelse (variablen <code>log10_size_mb</code>) i datasættet <code>eukaryotes</code> fra sidste lektion.</p>
-<p>I følgende plotter jeg en density mellem <code>gc</code> og den transformerede variable <code>log10_size_mb</code> som er log10 genomstørrelse.</p>
+<p>I følgende plotter jeg en density mellem <code>gc</code> og den transformerede variable <code>log10_size_mb</code> som er log10 genomstørrelse (ikke antal gener, som jeg sagde i videoen).</p>
 <div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="visualisering-af-trends.html#cb434-1" aria-hidden="true" tabindex="-1"></a>eukaryotes <span class="ot">&lt;-</span> eukaryotes <span class="sc">%&gt;%</span> </span>
 <span id="cb434-2"><a href="visualisering-af-trends.html#cb434-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log10_size_mb =</span> <span class="fu">log10</span>(size_mb))</span></code></pre></div>
 <div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="visualisering-af-trends.html#cb435-1" aria-hidden="true" tabindex="-1"></a>eukaryotes <span class="sc">%&gt;%</span> </span>
@@ -603,7 +604,7 @@ FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson&#39;…
 <div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="visualisering-af-trends.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom) </span>
 <span id="cb446-2"><a href="visualisering-af-trends.html#cb446-2" aria-hidden="true" tabindex="-1"></a>my_cor_test <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">cor.test</span>(.x<span class="sc">$</span>gc,<span class="fu">log10</span>(.x<span class="sc">$</span>size_mb)) <span class="sc">%&gt;%</span> <span class="fu">glance</span>()</span></code></pre></div>
 <p><strong>Step 3: Bruge map() på det nested datasæt</strong></p>
-<p>Nu lad os køre vores funktion på den nested dataframe. Vi bruger <code>map()</code> til at lave funktionen <code>my_cor_test</code> for hver af de fem datasæt. Det gøres ved at bruge funktionen <code>map()</code> indenfor funktionen <code>mutate()</code> til at oprette en ny kolonne, der hedder <code>test_stats</code>, hvor resultaterne for hver af de fem tests lagres.</p>
+<p>Nu lad os køre vores funktion på den nested dataframe. Vi bruger <code>map()</code> til at lave funktionen <code>my_cor_test</code> for hvert af de fem datasæt. Det gøres ved at bruge funktionen <code>map()</code> indenfor funktionen <code>mutate()</code> til at oprette en ny kolonne, der hedder <code>test_stats</code>, hvor resultaterne for hver af de fem tests lagres.</p>
 <div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="visualisering-af-trends.html#cb447-1" aria-hidden="true" tabindex="-1"></a>eukaryotes_cor <span class="ot">&lt;-</span> eukaryotes_nest <span class="sc">%&gt;%</span> </span>
 <span id="cb447-2"><a href="visualisering-af-trends.html#cb447-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">test_stats=</span><span class="fu">map</span>(data,my_cor_test))</span>
 <span id="cb447-3"><a href="visualisering-af-trends.html#cb447-3" aria-hidden="true" tabindex="-1"></a>eukaryotes_cor</span></code></pre></div>
@@ -617,7 +618,7 @@ FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson&#39;…
 ## 4 Fungi    &lt;tibble [6,064 × 19]&gt; &lt;tibble [1 × 8]&gt;
 ## 5 Animals  &lt;tibble [3,201 × 19]&gt; &lt;tibble [1 × 8]&gt;</code></pre>
 <p><strong>Step 4: Anvende <code>unnest()</code> for at kunne se resultaterne</strong></p>
-<p>For at kunne se statistikkerne bruger jeg funktionen <code>unnest()</code> på den nye variabel <code>test_stats</code>:</p>
+<p>For at kunne se statistikerne bruger jeg funktionen <code>unnest()</code> på den nye variabel <code>test_stats</code>:</p>
 <div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="visualisering-af-trends.html#cb449-1" aria-hidden="true" tabindex="-1"></a>eukaryotes_cor <span class="ot">&lt;-</span> eukaryotes_cor <span class="sc">%&gt;%</span></span>
 <span id="cb449-2"><a href="visualisering-af-trends.html#cb449-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(test_stats)</span>
 <span id="cb449-3"><a href="visualisering-af-trends.html#cb449-3" aria-hidden="true" tabindex="-1"></a>eukaryotes_cor</span></code></pre></div>
@@ -689,7 +690,7 @@ FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson&#39;…
 </div>
 <div id="geom_smooth-flere-lm-trendlinjer-på-samme-plot" class="section level3 hasAnchor" number="8.3.3">
 <h3><span class="header-section-number">8.3.3</span> <code>geom_smooth()</code>: flere <code>lm</code> trendlinjer på samme plot<a href="visualisering-af-trends.html#geom_smooth-flere-lm-trendlinjer-på-samme-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>For at tilføje en bedste rette linje til de tre <code>species</code> hver for sig i stedet for samtlige data, er det meget nemt i <code>ggplot</code>: man angiver bare <code>colour=species</code> indenfor aesthetics:</p>
+<p>For at tilføje en bedste rette linje til de tre <code>species</code> hver for sig i stedet for samtlige data, er det meget nemt i <code>ggplot2</code>: man angiver bare <code>colour=species</code> indenfor aesthetics (`aes):</p>
 <div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="visualisering-af-trends.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins,<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,<span class="at">y=</span>body_mass_g,<span class="at">colour=</span>species)) <span class="sc">+</span> </span>
 <span id="cb462-2"><a href="visualisering-af-trends.html#cb462-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb462-3"><a href="visualisering-af-trends.html#cb462-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
@@ -700,7 +701,7 @@ FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson&#39;…
 </div>
 <div id="trendlinjer-med-methodloess" class="section level3 hasAnchor" number="8.3.4">
 <h3><span class="header-section-number">8.3.4</span> Trendlinjer med <code>method=="loess"</code><a href="visualisering-af-trends.html#trendlinjer-med-methodloess" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>I <code>ggplot</code> er vi ikke begrænset til <code>method="lm"</code> indenfor <code>geom_smooth()</code>. Lad os afpøve i stedet <code>method="loess"</code>:</p>
+<p>I <code>ggplot</code> er vi ikke begrænset til <code>method="lm"</code> indenfor <code>geom_smooth()</code>. Lad os afprøve i stedet <code>method="loess"</code>:</p>
 <div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="visualisering-af-trends.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
 <span id="cb464-2"><a href="visualisering-af-trends.html#cb464-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">drop_na</span>(penguins)</span>
 <span id="cb464-3"><a href="visualisering-af-trends.html#cb464-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins,<span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm,<span class="at">y=</span>body_mass_g,<span class="at">colour=</span>species)) <span class="sc">+</span> </span>
@@ -709,12 +710,12 @@ FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson&#39;…
 <span id="cb464-6"><a href="visualisering-af-trends.html#cb464-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;loess&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="visualisering_22_files/figure-html/unnamed-chunk-444-1.png" width="480" /></p>
-<p>Så kan man fange trends som ikke nødvendigvis er lineær. Men det er mere ligefrem at beskrive en lineær trend og bruge den til at beregne de nødvendige statistik til at støtte vores observationer.</p>
+<p>Så kan man fange trends som ikke nødvendigvis er lineær - men bemærk at det er mere ligetil at beskrive og fortolke en lineær trend (og beregner udsigelser ud fra en lineær trend).</p>
 </div>
 </div>
 <div id="plot-linear-regresion-estimates" class="section level2 hasAnchor" number="8.4">
 <h2><span class="header-section-number">8.4</span> Plot linear regresion estimates<a href="visualisering-af-trends.html#plot-linear-regresion-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>For at finde vores estimates og tjekke signifikansen af de lineær trend, arbejder man direkte med den lineær model funktion <code>lm()</code>:</p>
+<p>For at finde vores estimates og tjekke signifikansen af en lineær trend, arbejder man direkte med den lineær model funktion <code>lm()</code>:</p>
 <div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="visualisering-af-trends.html#cb466-1" aria-hidden="true" tabindex="-1"></a>my_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g<span class="sc">~</span>bill_length_mm,<span class="at">data=</span>penguins)</span>
 <span id="cb466-2"><a href="visualisering-af-trends.html#cb466-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(my_lm)</span></code></pre></div>
 <pre><code>## 
@@ -737,7 +738,7 @@ FALSE 1   -0.147     -15.7 8.25e-55     11118   -0.165    -0.129 Pearson&#39;…
 ## F-statistic: 176.2 on 1 and 331 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Husk de tal, som er vigtige her (se også emne 1 og 2):</p>
 <ul>
-<li>Den <strong>p-værdi</strong>: <code>&lt;2e-16</code> - uafhængige variablen <code>bill_length_mm</code> har en signifikant effekt.</li>
+<li>Den <strong>p-værdi</strong>: <code>&lt;2e-16</code> - uafhængige variablen <code>bill_length_mm</code> har en signifikant effekt/betydning for <code>body_mass_g</code>.</li>
 <li>Den <strong>R-squared værdi</strong>: - det viser den proportion af variancen i <code>body_mass_g</code> som <code>bill_length_mm</code> forklarer:
 <ul>
 <li>hvis R-squared er tæt på 1, så er der tæt på en perfekt korrespondens mellem <code>bill_length_mm</code> og <code>body_mass_g</code>.</li>
@@ -969,88 +970,83 @@ FALSE 3 Chinstrap r^2 = 0.26, p-value = 7.5e-06</code></pre>
 </ul>
 <hr />
 <p><strong>Problem 3)</strong> <em>Nesting øvelse</em></p>
-<p>For datasættet <code>msleep</code> anvende <code>group_by()</code> og <code>nest()</code> til at få en nested dataframe hvor datasættet er opdelt efter variablen <code>vore</code> og kalder det for <code>msleep_nest</code>.</p>
+<p>For datasættet <code>msleep</code>, anvende <code>group_by()</code> og <code>nest()</code> til at få en nested dataframe hvor datasættet er opdelt efter variablen <code>vore</code>. Kalder det for <code>msleep_nest</code>.</p>
 <ul>
 <li>Tilføj en ny kolon til <code>msleep_nest</code> med <code>mutate</code>, der hedder <code>n_rows</code> og viser antallet af rækker i hvert af de fire datasæt - husk følgende struktur:</li>
 </ul>
-<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="visualisering-af-trends.html#cb497-1" aria-hidden="true" tabindex="-1"></a>msleep <span class="sc">%&gt;%</span> </span>
-<span id="cb497-2"><a href="visualisering-af-trends.html#cb497-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(vore) <span class="sc">%&gt;%</span> </span>
-<span id="cb497-3"><a href="visualisering-af-trends.html#cb497-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb497-4"><a href="visualisering-af-trends.html#cb497-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;n_rows&quot;</span> <span class="ot">=</span> <span class="fu">map</span>(???,???)) <span class="co">#erstatte ??? her</span></span></code></pre></div>
+<div class="sourceCode" id="cb497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb497-1"><a href="visualisering-af-trends.html#cb497-1" aria-hidden="true" tabindex="-1"></a>msleep_nest <span class="sc">%&gt;%</span></span>
+<span id="cb497-2"><a href="visualisering-af-trends.html#cb497-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;n_rows&quot;</span> <span class="ot">=</span> <span class="fu">map</span>(???,???)) <span class="co">#erstatte ??? her</span></span></code></pre></div>
 <ul>
-<li>I dette tilfælde kan man ændre <code>map</code> til <code>map_dbl</code> - gøre det.</li>
+<li>I dette tilfælde kan man ændre <code>map</code> til <code>map_dbl</code> - gør det.</li>
 </ul>
+<hr />
 <p><strong>Problem 4)</strong> <em>Multiple korrelation</em></p>
 <p>Vi vil gerne beregne den korrelation mellem variablerne <code>sleep_total</code> og <code>sleep_rm</code> til hver af de fire datasæt lagret i <code>msleep_nest</code></p>
 <ul>
-<li>Tilpasse følgende funktion så at vi teste korrelation mellem de to variabler.</li>
-<li>Tilføje <code>glance()</code> så at vi få vores data i <strong>tidy</strong> form.</li>
+<li>Tilpas følgende funktion så at vi teste korrelation mellem de to variabler.</li>
+<li>Tilføj <code>glance()</code> så at vi få vores data i <strong>tidy</strong> form.</li>
 </ul>
 <div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="visualisering-af-trends.html#cb498-1" aria-hidden="true" tabindex="-1"></a>cor_test <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">cor.test</span>(????,???) <span class="co">#erstatte ??? og tilføj glance funktion</span></span></code></pre></div>
 <ul>
 <li><p>Brug <code>map()</code> indenfor <code>mutate()</code> med din funktion for at beregne de korrelation statistikker til hver af de fire datasæt.</p></li>
 <li><p>Unnest din nye kolonne bagefter</p></li>
-<li><p>Lave barplots af <code>estimate</code> og <code>-log10(p.value)</code> med den resulterende dataramme</p></li>
+<li><p>Lav barplots af <code>estimate</code> og <code>-log10(p.value)</code> med den resulterende dataramme</p></li>
+<li><p>Prøv også at tilføj <code>%&gt;% pluck("estimate",1)</code> til din <code>cor_test</code> funktion og kig på resultat</p></li>
 </ul>
+<hr />
 <p><strong>Problem 5)</strong> <em>Linear regression øvelse</em></p>
-<p>Åbn <code>LungCapData</code> (herunder <code>Age.Groups</code>)</p>
+<p>Åbn <code>LungCapData</code> (herunder <code>Age.Groups</code>):</p>
 <div class="sourceCode" id="cb499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb499-1"><a href="visualisering-af-trends.html#cb499-1" aria-hidden="true" tabindex="-1"></a>LungCapData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1&quot;</span>)</span>
-<span id="cb499-2"><a href="visualisering-af-trends.html#cb499-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(LungCapData) <span class="co">#se variabler navne</span></span></code></pre></div>
-<pre><code>##   LungCap Age Height Smoke Gender Caesarean
-## 1   6.475   6   62.1    no   male        no
-## 2  10.125  18   74.7   yes female        no
-## 3   9.550  16   69.7    no female       yes
-## 4  11.125  14   71.0    no   male        no
-## 5   4.800   5   56.9    no   male        no
-## 6   6.225  11   58.7    no female        no</code></pre>
-<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="visualisering-af-trends.html#cb501-1" aria-hidden="true" tabindex="-1"></a>LungCapData<span class="sc">$</span>Age.Group <span class="ot">&lt;-</span> <span class="fu">cut</span>(LungCapData<span class="sc">$</span>Age,<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">13</span>,<span class="dv">15</span>,<span class="dv">17</span>,<span class="dv">19</span>),<span class="at">right=</span><span class="cn">FALSE</span>,<span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb501-2"><a href="visualisering-af-trends.html#cb501-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(LungCapData<span class="sc">$</span>Age.Group) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt;13&quot;</span>,<span class="st">&quot;13-14&quot;</span>,<span class="st">&quot;15-16&quot;</span>,<span class="st">&quot;17+&quot;</span>)</span></code></pre></div>
+<span id="cb499-2"><a href="visualisering-af-trends.html#cb499-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(LungCapData) <span class="co">#se variabler navne</span></span></code></pre></div>
+<pre><code>## Rows: 725
+## Columns: 6
+## $ LungCap   &lt;dbl&gt; 6.475, 10.125, 9.550, 11.125, 4.800, 6.225, 4.950, 7.325, 8.…
+## $ Age       &lt;int&gt; 6, 18, 16, 14, 5, 11, 8, 11, 15, 11, 19, 17, 12, 10, 10, 13,…
+## $ Height    &lt;dbl&gt; 62.1, 74.7, 69.7, 71.0, 56.9, 58.7, 63.3, 70.4, 70.5, 59.2, …
+## $ Smoke     &lt;chr&gt; &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;,…
+## $ Gender    &lt;chr&gt; &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;…
+## $ Caesarean &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;…</code></pre>
 <ul>
-<li><p>Anvende <code>lm()</code> til at finde den forventet <code>LungCap</code> med hensyn til <code>Age</code> som uafhængig variabel.</p></li>
-<li><p>Hvad er den intercept og slope af den beregnet linje?</p></li>
-<li><p>Tilføj funktionen <code>glance()</code> og angive værdier <code>r.squared</code> og <code>p.value</code>.</p></li>
+<li><p>Anvende <code>lm()</code> med <code>LungCap</code> som afhængig variabel og <code>Age</code> som uafhængig variabel.</p></li>
+<li><p>Hvad er den intercept og slope af den beregnede linje?</p></li>
+<li><p>Prøv at tilføj funktionen <code>glance()</code> til din <code>lm</code> funktion og angive værdier <code>r.squared</code> og <code>p.value</code>.</p></li>
 </ul>
+<hr />
 <p><strong>Problem 6</strong>) Lave et scatter plot af Age på x-aksen og LungCap på y-aksen.</p>
 <ul>
 <li>Tilføje linjen <code>geom_smooth(method="smooth")</code></li>
 <li>Ændre linjen til <code>geom_smooth(method="lm")</code></li>
 <li>Ændre linjen til <code>geom_smooth(method="lm",se=FALSE)</code></li>
-<li>Nu specificer en forskellige farve efter <code>Smoke</code>.</li>
+<li>Nu specificer en forskellige farve efter <code>Gender</code>. Hvordan er de to linje forskellige?</li>
+<li>Nu specificer en forskellige farve efter <code>Smoke</code>. Hvordan er de to linje forskellige?</li>
 </ul>
-<p><strong>8</strong>) <em>Lineær regression øvelse over multiple datasæt</em></p>
-<p>Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter variablen <code>Smoke</code>. <em>OBS: Vi følger sammen process som i kursus notaterne men med LungCapData i stedet for Penguins</em>.</p>
+<hr />
+<p><strong>Problem 7</strong>) <em>Lineær regression øvelse over multiple datasæt</em></p>
+<p>Vi vil gerne udføre lineær regression med LungCap og Age men opdelte efter variablen <code>Smoke</code>. <em>OBS: Vi følger sammen process som i kursus notaterne men med LungCapData i stedet for Penguins - tjek gerne kursusnotaterne for inspiration</em>.</p>
 <p><strong>a</strong>) Anvende <code>group_by()</code> og <code>nest()</code> for at opdele dit datsasæt efter <code>Smoke</code></p>
-<p><strong>b</strong>)</p>
-<ul>
-<li>Lave en funktion, <code>lm_model_func</code>, hvor du laver en lineær regression med <code>LungCap</code> som afhængig variabel og <code>Age</code> som uafhængig variabel på et datasæt <code>.x</code>.</li>
-<li>Tilføj <code>glance()</code> til <code>lm_model_func</code>.</li>
-</ul>
-<p><strong>c</strong>)</p>
-<ul>
-<li>Anvende <code>map()</code> med din funktion indenfor <code>mutate()</code> til at tilføje en ny kolon som hedder <code>lm_stats</code> til din dataramme.</li>
-<li>Husk at <code>unnest</code> kolonnen <code>lm_stats</code>til at kunne se statistikker.</li>
-</ul>
+<p><strong>b</strong>) Lav en funktion, <code>lm_model_func</code>, som beregner en lineær regression med <code>LungCap</code> som afhængig variabel og <code>Age</code> som uafhængig variabel. Tilføj <code>glance()</code> til <code>lm_model_func</code>.</p>
+<p><strong>c</strong>) Anvende <code>map()</code> med din funktion indenfor <code>mutate()</code> til at tilføje en ny kolon som hedder <code>lm_stats</code> til din dataramme. Husk at <code>unnest</code> kolonnen <code>lm_stats</code> for at kunne se statistikker.</p>
 <p><strong>d</strong>) Fortolkning - er variablen <code>lungCap</code> bedre forklaret er variablen <code>Age</code> i rygere eller ikke-rygere?</p>
-<p><strong>Problem 7)</strong></p>
-<p><strong>a</strong>) I nedenstående er tre modeller, alle med <code>LungCap</code> som afhængig variabel alle som tager højde for <code>Age</code>:</p>
-<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="visualisering-af-trends.html#cb502-1" aria-hidden="true" tabindex="-1"></a>my_lm_func <span class="ot">&lt;-</span>  <span class="er">~</span><span class="fu">lm</span>(LungCap <span class="sc">~</span> Age                  ,<span class="at">data=</span>.x)</span>
-<span id="cb502-2"><a href="visualisering-af-trends.html#cb502-2" aria-hidden="true" tabindex="-1"></a>my_lm_func2 <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">lm</span>(LungCap <span class="sc">~</span> Age <span class="sc">+</span> Gender         ,<span class="at">data=</span>.x)</span>
-<span id="cb502-3"><a href="visualisering-af-trends.html#cb502-3" aria-hidden="true" tabindex="-1"></a>my_lm_func3 <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">lm</span>(LungCap <span class="sc">~</span> Age <span class="sc">+</span> Gender <span class="sc">+</span> Height,<span class="at">data=</span>.x)</span></code></pre></div>
-<ul>
-<li>Anvende <code>map</code> til at lave tre nye kolonner i <code>LungCapData_nest</code>, en til være af de tre modeller, med outputtet fra at lave modellerne på de to datasæt til rygere og ikke-rygere.</li>
-</ul>
-<p><strong>b</strong>) Skrive en funktion <code>my_r2_func</code>, der udtrækker “r.squared” værdierne fra dine modeller, og lav tre yderligere kolonner i <code>LungCapData_nest</code>, hvor du køre din funktion på dine modeller med <code>map</code> (outputtet skal være dbl).</p>
-<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="visualisering-af-trends.html#cb503-1" aria-hidden="true" tabindex="-1"></a>my_r2_func <span class="ot">&lt;-</span> ...</span></code></pre></div>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="visualisering-af-trends.html#cb504-1" aria-hidden="true" tabindex="-1"></a>LungCapData_nest <span class="ot">&lt;-</span> LungCapData_nest <span class="sc">%&gt;%</span></span>
-<span id="cb504-2"><a href="visualisering-af-trends.html#cb504-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;Age_only_R2&quot;</span> <span class="ot">=</span> ...,</span>
-<span id="cb504-3"><a href="visualisering-af-trends.html#cb504-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Age_Gender_R2&quot;</span> <span class="ot">=</span> ...,</span>
-<span id="cb504-4"><a href="visualisering-af-trends.html#cb504-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Age_Gender_Height_R2&quot;</span><span class="ot">=</span> ...)</span></code></pre></div>
-<p><strong>c)</strong> Omsæt dine r.squared værdier til et plot</p>
-<p><strong>Problem 8</strong></p>
-<p><strong>a</strong>) Skriv en funktion (eller kopier funktionen fra kursusnotaterne) hvor man anvende <code>anova()</code> til at sammenligne to modeller, <code>.x</code> og <code>.y</code> og udtrækker p-værdien.</p>
-<div class="sourceCode" id="cb505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb505-1"><a href="visualisering-af-trends.html#cb505-1" aria-hidden="true" tabindex="-1"></a>my_aov_func <span class="ot">&lt;-</span> ...</span></code></pre></div>
+<hr />
+<p><strong>Problem 8)</strong></p>
+<p>I nedenstående er tre modeller, alle med <code>LungCap</code> som afhængig variabel alle som tager højde for <code>Age</code>:</p>
+<div class="sourceCode" id="cb501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb501-1"><a href="visualisering-af-trends.html#cb501-1" aria-hidden="true" tabindex="-1"></a>my_lm_func1 <span class="ot">&lt;-</span>  <span class="er">~</span><span class="fu">lm</span>(LungCap <span class="sc">~</span> Age                  ,<span class="at">data=</span>.x)</span>
+<span id="cb501-2"><a href="visualisering-af-trends.html#cb501-2" aria-hidden="true" tabindex="-1"></a>my_lm_func2 <span class="ot">&lt;-</span>  <span class="er">~</span><span class="fu">lm</span>(LungCap <span class="sc">~</span> Age <span class="sc">+</span> Gender         ,<span class="at">data=</span>.x)</span>
+<span id="cb501-3"><a href="visualisering-af-trends.html#cb501-3" aria-hidden="true" tabindex="-1"></a>my_lm_func3 <span class="ot">&lt;-</span>  <span class="er">~</span><span class="fu">lm</span>(LungCap <span class="sc">~</span> Age <span class="sc">+</span> Gender <span class="sc">+</span> Height,<span class="at">data=</span>.x)</span></code></pre></div>
+<p><strong>a</strong>) Anvend <code>map</code> til at lave tre nye kolonner i <code>LungCapData_nest</code>, en til hver af de tre modeller (uden <code>glance()</code> her, så vi kan brug vores <code>lm</code> objekts senere).</p>
+<p><strong>b</strong>) Skriv en funktion <code>my_r2_func</code>, der udtrækker “r.squared” værdierne fra dine modeller (her refererer <code>.x</code> i funktionen ikke til en dataframe men til en beregnet model - hvad er det, der skal tilføjes?). Lav tre yderligere kolonner i <code>LungCapData_nest</code>, hvor du køre din funktion på dine modeller med <code>map</code> (outputtet skal være dbl).</p>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="visualisering-af-trends.html#cb502-1" aria-hidden="true" tabindex="-1"></a>my_r2_func <span class="ot">&lt;-</span> ...</span></code></pre></div>
+<div class="sourceCode" id="cb503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb503-1"><a href="visualisering-af-trends.html#cb503-1" aria-hidden="true" tabindex="-1"></a>LungCapData_nest <span class="ot">&lt;-</span> LungCapData_nest <span class="sc">%&gt;%</span></span>
+<span id="cb503-2"><a href="visualisering-af-trends.html#cb503-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;Age_only_R2&quot;</span> <span class="ot">=</span> ...,</span>
+<span id="cb503-3"><a href="visualisering-af-trends.html#cb503-3" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Age_Gender_R2&quot;</span> <span class="ot">=</span> ...,</span>
+<span id="cb503-4"><a href="visualisering-af-trends.html#cb503-4" aria-hidden="true" tabindex="-1"></a>         <span class="st">&quot;Age_Gender_Height_R2&quot;</span><span class="ot">=</span> ...)</span></code></pre></div>
+<p><strong>c)</strong> Omsæt dine beregnede r.squared værdier til et plot</p>
+<hr />
+<p><strong>Problem 9</strong></p>
+<p><strong>a</strong>) Skriv en funktion hvor man anvende <code>anova()</code> til at sammenligne to modeller, <code>.x</code> og <code>.y</code> og dernæst udtrækker p-værdien (det er den samme funktion som i kursusnotaterne).</p>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="visualisering-af-trends.html#cb504-1" aria-hidden="true" tabindex="-1"></a>my_aov_func <span class="ot">&lt;-</span> ...</span></code></pre></div>
 <p><strong>b</strong>) Anvend din funktion med <code>map2</code> til at sammenligne de tre modeller fra sidste spørgsmål.</p>
-<p><strong>c</strong>) Lave et plot med dine resultater.</p>
+<p><strong>c</strong>) Lav et plot med dine resultater.</p>
 <p><strong>d</strong>) Tilføj signifikans annotations på plottet med funktionen <code>geom_signif()</code> (tilpas gerne kode fra kursusnotaterne).</p>
 </div>
 <div id="ekstra" class="section level2 hasAnchor" number="8.7">
