@@ -611,11 +611,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.07392272  1.03112702  0.58497700 -1.08503304 -0.53257857 -0.48018709
-##  [7]  1.80036788  0.80991347  0.22013935 -0.57667321 -0.38042917 -0.50228331
-## [13] -1.76134830  0.90607049  0.08647712  1.37012244  0.57269936  0.93797477
-## [19]  0.17996833 -1.15350444 -0.26807136 -0.76741063 -1.28362572  0.54939256
-## [25] -1.66493673
+##  [1] -0.2932132051  0.2263219571 -0.2244142172  0.8162939952  2.2935634337
+##  [6]  1.1019684094  0.9088519403  1.1260999085 -0.9258610880  0.0836672488
+## [11]  0.6099331142 -0.8132175457 -0.9508986430 -0.0009443096  1.4736064005
+## [16] -0.4645837376  0.9816256941 -0.3349934519  0.6673714209 -2.3032027129
+## [21]  0.3930398008  0.5301290075  1.6261882469 -0.4323010774 -0.6749245750
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -623,13 +623,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.07392272  1.03112702  0.58497700 {-}1.08503304 {-}0.53257857 {-}0.48018709}
+\DocumentationTok{\#\# [1] {-}0.2932132  0.2263220 {-}0.2244142  0.8162940  2.2935634  1.1019684}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}1.1535044 {-}0.2680714 {-}0.7674106 {-}1.2836257  0.5493926 {-}1.6649367}
+\DocumentationTok{\#\# [1] {-}2.3032027  0.3930398  0.5301290  1.6261882 {-}0.4323011 {-}0.6749246}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.07392272}
+\DocumentationTok{\#\# [1] {-}0.2932132}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}1.664937}
+\DocumentationTok{\#\# [1] {-}0.6749246}
 \end{Highlighting}
 \end{Shaded}
 
@@ -667,7 +667,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.05331716  0.07392272  1.80036788 -1.76134830  0.89448904  0.94577431
+## [1]  0.2168042  0.2263220  2.2935634 -2.3032027  0.9993810  0.9996905
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -679,8 +679,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.76135 -0.57667  0.07392 -0.05332  0.58498  1.80037
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -2.3032 -0.4323  0.2263  0.2168  0.9089  2.2936
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -9487,7 +9487,7 @@ Man kan godt tilpasse ovenstående kode til et andet datasæt - se problemstilli
 \hypertarget{ekstra-valgfri-afpruxf8ve-andre-metoder-puxe5-hierachical-clustering}{%
 \subsection{Ekstra (valgfri): afprøve andre metoder på hierachical clustering}\label{ekstra-valgfri-afpruxf8ve-andre-metoder-puxe5-hierachical-clustering}}
 
-Afprøve de fire metoder - ``average'', ``single'', ``complete'' og ``ward.D''.
+\textbf{Valfri} ekstra hvis du vil afprøve de fire metoder i \texttt{hclust} - ``average'', ``single'', ``complete'' og ``ward.D''.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9532,19 +9532,23 @@ Vi iterate over de fire metoder og lave samme process som ovenpå med map. Deref
 
 \textbf{Problem 2}) \emph{Funktionen kmeans}. I ovenstående anvendt vi \texttt{mtcars} i hierarchical clustering, men lad os se, hvordan det ser ud med \texttt{k-means}. Du er velkommen til at tilpasse min ovenstående kode fa det \texttt{penguins} datasæt:
 
-\textbf{a}) Benyt \texttt{kmeans} til at finde 2 clusters i datasættet \texttt{mtcars}
-+ husk at vælge kun de numeriske kolonner og scale datasættet i forvejen
-+ gem din clustering som \texttt{my\_clusters}.
-+ hvor mange observationer er der i hver af de to clusters?
+\textbf{a}) Benyt \texttt{kmeans} til at finde 2 clusters i datasættet \texttt{mtcars}:
 
-\textbf{b}) Anvend funktionen \texttt{augment} til at forbinde det oprindelige datasæt til dine clusters fra \texttt{my\_clusters} (skriv \texttt{mtcars} indenfor funktionen \texttt{agument}).
+\begin{itemize}
+\tightlist
+\item
+  husk at vælge kun de numeriske kolonner og scale datasættet i forvejen
+\item
+  gem din clustering som \texttt{my\_clusters}.
+\item
+  hvor mange observationer er der i hver af de to clusters?
+\end{itemize}
 
-\textbf{c}) Brug dit ``augmented'' datasæt til at lave et scatter plot mellem to af de numeriske variabler (vælg selv) i datasættet og giv dem farver efter din clusters, som du har beregnet.
-+ da du har forbundet det oprindeligt datasæt (der ikke var scaled) i \texttt{augment}, scale din variabler i plottet.
-+ prøv også to andre numeriske variabler
+\textbf{b}) Anvend funktionen \texttt{augment} til at forbinde det oprindelige datasæt til dine clusters fra \texttt{my\_clusters} (skriv \texttt{mtcars} indenfor funktionen \texttt{augment}).
 
-\textbf{d}) Tilføj \texttt{tidy} til at få fat i de middelværdier/centroids af hver af de 2 clusters
-+ tilpas min kode fra notaterne til at tilføje dem til plottet som `x' (husk at din ``centers''/centroids er allerede baserede på scaled data).
+\textbf{c}) Brug dit ``augmented'' datasæt til at lave et scatter plot mellem to af de numeriske variabler (vælg selv) i datasættet og giv dem farver efter din clusters, som du har beregnet. Da du har forbundet det oprindeligt datasæt (der ikke var scaled) i \texttt{augment}, scale din variabler i plottet.
+
+\textbf{d}) Tilføj \texttt{tidy} til at få fat i de middelværdier/centroids af hver af de 2 clusters og tilpas min kode fra notaterne (sektion 9.2.5) til at tilføje dem til plottet som `x' (husk at din ``centers''/centroids er allerede baserede på scaled data så du behøver ikke at anvende scale på deres værdier).
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -9561,17 +9565,15 @@ Vi laver en analyse af det \texttt{msleep} datasæt. Jeg har lavet oprydningen o
 \end{Highlighting}
 \end{Shaded}
 
-Tilpas min kode fra kursusnotaterne til at lave følgende skridt:
+Tilpas min kode fra kursusnotaterne (sektion 9.4) til at lave følgende:
 
-\textbf{a}) Benyt funktioner \texttt{dist} og så \texttt{hclust} på datasættet \texttt{msleep\_scaled}.
+\textbf{a}) Benyt funktioner \texttt{dist} og dernæst \texttt{hclust} på datasættet \texttt{msleep\_scaled}.
 
-\textbf{b}) Benyt \texttt{cuttree} for at finde 5 clusters i de data, og kalde det for \texttt{clusters}. Husk at anvende \texttt{order\_clusters\_as\_data\ =\ FALSE} så at vi har den korrekt rækkefølge for et plot (man skal indlæse pakken \texttt{dendextend})
+\textbf{b}) Benyt \texttt{cuttree} for at finde 5 clusters fra dine \texttt{hclust}-resultater, og kalde det for \texttt{clusters}. Husk at anvende \texttt{order\_clusters\_as\_data\ =\ FALSE} så at vi har den korrekt rækkefølge for et plot (\emph{OBS man skal installere/indlæse pakken \texttt{dendextend}})
 
-\textbf{c}) Benyt \texttt{dendro\_data} til at udtrække de dendrogram fra resultaterne
-+ Tilføj \texttt{clusters} til \texttt{dend\_data\$labels}
+\textbf{c}) Benyt \texttt{dendro\_data} til at udtrække de dendrogram fra resultaterne og tilføj \texttt{clusters} til \texttt{dend\_data\$labels} (kopier kode fra 9.4.2).
 
-\textbf{d}) Lav et plot af de dendrogram
-+ Tilpas koden for \texttt{mtcars} eksempel for nuværende data
+\textbf{d}) Lav et dengrogram plot: igen tilpas koden (9.4.2) for \texttt{mtcars} eksempel for nuværende data
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -9612,7 +9614,7 @@ Inlæs data
     3 = Other
   \end{itemize}
 \item
-  Anvend \texttt{map\_if} ligesom i sektion 7.5.2 til at transformere samtlige numeriske variabler med \texttt{log} (husk \texttt{\%\textgreater{}\%\ as\_tibble()} bagefter).
+  Anvend \texttt{map\_if} til at transformere samtlige numeriske variabler med log (kode er: \texttt{wholesale\ \textless{}-\ wholesale\ \%\textgreater{}\%\ map\_if(is.numeric,log)\ \%\textgreater{}\%\ as\_tibble()}).
 \end{itemize}
 
 \textbf{b}) Udvælg de numeriske variabler fra dit datasæt og anvende \texttt{scale()} - kalde dit nye datasæt for \texttt{wholescale\_scale}
@@ -9633,11 +9635,9 @@ Inlæs data
   Prøv bagefter at også adskil dit plots yderligere efter \texttt{Channel}.
 \end{itemize}
 
-\textbf{f)} Tag udgangspunkt i dit output fra \texttt{tidy} hvor antal clusters er 4 - lav et barplot for at vise middelværdier/centroids fra din clustering.
+\textbf{f)} Tilpas koden fra 9.3.5 til at lave en analyse for ``hoerca'' og ``retail'' (variablen \texttt{Channel}) hver for sig. Angiv 4 clusters i din analyse.
 
-\textbf{g)} Tilpas koden fra 9.3.5 til at lave en analyse for ``hoerca'' og ``retail'' (variablen \texttt{Channel}) hver for sig. Angiv 4 clusters i din analyse.
-
-\textbf{h)} Lav et plot af din clustering (adskilt efter variablen \texttt{Channel}) og få ``x'' på plotterne til at vise din cluster middelværdier for \texttt{Frozen} og \texttt{Fresh}.
+\textbf{g)} Lav et plot af din clustering (adskilt efter variablen \texttt{Channel}) og få ``x'' på plotterne til at vise din cluster middelværdier for \texttt{Frozen} og \texttt{Fresh}.
 
 \hypertarget{principal-component-analysis-pca}{%
 \chapter{Principal component analysis (PCA)}\label{principal-component-analysis-pca}}
@@ -9760,7 +9760,7 @@ Når man laver et plot for at vise de forskellige clusters, få man et problem -
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-555-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-554-1.pdf}
 
 Problemmet er, at så snart antallet af dimensioner i datasættet bliver større end 4, bliver plottet alt for kompleks og pladskrævende.
 
@@ -9783,7 +9783,7 @@ Man kan prøve at forstå hvordan PCA fungerer ved at kigge på et simpelt eksem
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-556-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-555-1.pdf}
 
 Vi kan se her, at der er en meget store korrelation mellem a og b. Selvom datasættet er plottet i 2 dimensioner kan de næsten forklares af én linje - en såkaldte bedste rette linje der passer bedste gennem punkterne.
 
@@ -9801,7 +9801,7 @@ Vi kan se her, at der er en meget store korrelation mellem a og b. Selvom datas�
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-557-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-556-1.pdf}
 
 Med andre ord kan vi næsten forklare datasættet i blot én dimension - punkternes afstand langt linjen. Når man tager alle punkterne og beskriver dem langt én linje som bedste beskrive variansen i datasættet, kaldes den linje for den første principal component (PC1). Man kan dernæst beskriver en anden linje som er vinkelrettet til PC1 som bedste forklarer variancen i de data som ikke var fanget af PC1 - det kaldes for den anden princal component (PC2).
 
@@ -9825,7 +9825,7 @@ Når vi tager PC1 and PC2 og plotter dem som henholdvis x-aksen og y-aksen, svar
 ## `geom_smooth()` using formula 'y ~ x'
 \end{verbatim}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-559-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-558-1.pdf}
 
 Vi kan se her, at de data flyder de plads på plottet bedre en før (og bemærk at de askse skala er blevet meget mindre i den nye y-aksen, da de data spreder sig meget mindre langt PC2 i forhold til PC1.)
 
@@ -9920,7 +9920,7 @@ Vi kan tage \texttt{pca\_fit\_augment} og lave et plot af de første to principa
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-563-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-562-1.pdf}
 
 Vi kan også integrere de clusters som vi fik fra funktionen \texttt{kmeans()} i vores PCA ved at anvende funktionen \texttt{augment()} på resultaterne fra \texttt{kmeans} og vores data som allerede har resultaterne fra \texttt{pca}. Da både PCA og k-means fanger oplysninger om strukturen af de data baserede på de fire numeriske variabler, kan man forventer en bedre sammenligning mellem de to (i forhold til at sammenligne de clusters med et plot med kun to af variablerne).
 
@@ -9937,7 +9937,7 @@ Vi kan også integrere de clusters som vi fik fra funktionen \texttt{kmeans()} i
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-564-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-563-1.pdf}
 
 \textbf{Output med tidy}
 
@@ -9979,7 +9979,7 @@ Lad os visualisere de tal her i procenttal, med at specificere \texttt{labels\ =
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-566-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-565-1.pdf}
 
 På den ene side hvis der er meget variance som er forklaret af de første components tilsammen, betyder det at der er en del redundans i datasættet, på grund af, at mange af de variabler har en tæt sammenhæng med hinanden. På den anden side hvis der er en meget lille andel af variancen som er forklaret af de første components tilsammen, betyder det at det er svært at beskrive datasættet i mindre dimensioner (fordi der næsten er ingen sammenhæng mellem variablerne) - i dette tilfælde, hvor datasættet er mere kompleks, er PCA mindre effektiv.
 
@@ -10024,7 +10024,7 @@ Vi kan andvende den rotation matrix til at se hvordan de forskellige variabler r
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-568-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-567-1.pdf}
 
 \hypertarget{pakken-factoextra}{%
 \subsection{\texorpdfstring{Pakken \texttt{factoextra}}{Pakken factoextra}}\label{pakken-factoextra}}
@@ -10051,7 +10051,7 @@ R-pakken \texttt{factoextra} kan avendes til at lave et lignende plot fra de rot
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-569-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-568-1.pdf}
 
 \hypertarget{quiz-og-problemstillinger}{%
 \section{Quiz og problemstillinger}\label{quiz-og-problemstillinger}}

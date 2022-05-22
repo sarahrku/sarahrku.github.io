@@ -557,7 +557,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb555-2"><a href="principal-component-analysis-pca.html#cb555-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggscatmat</span>(<span class="at">columns =</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">6</span> ,<span class="at">color =</span> <span class="st">&quot;species&quot;</span>, <span class="at">corMethod =</span> <span class="st">&quot;pearson&quot;</span>) <span class="sc">+</span> </span>
 <span id="cb555-3"><a href="principal-component-analysis-pca.html#cb555-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>) <span class="sc">+</span></span>
 <span id="cb555-4"><a href="principal-component-analysis-pca.html#cb555-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-555-1.png" width="480" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-554-1.png" width="480" /></p>
 <p>Problemmet er, at så snart antallet af dimensioner i datasættet bliver større end 4, bliver plottet alt for kompleks og pladskrævende.</p>
 <p>En løsning til problemmet er at projektere datasættet ned indtil et mindre antal demensioner (fk. kun 2 dimensioner). Disse dimensioner fanger oplysninger fra alle variablerne i datasættet, og derfor når man lave et scatter plot, får man repræsenteret det hele datasæt i stedet for kun to udvalgte variabler. Metoden for at lave disse såkaldte ‘projektion’ kaldes for ‘princial component analysis.’</p>
 <div id="simpel-eksempel-med-to-dimensioner" class="section level3 hasAnchor" number="10.2.1">
@@ -570,7 +570,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb556-5"><a href="principal-component-analysis-pca.html#cb556-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df,<span class="fu">aes</span>(a,b)) <span class="sc">+</span> </span>
 <span id="cb556-6"><a href="principal-component-analysis-pca.html#cb556-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
 <span id="cb556-7"><a href="principal-component-analysis-pca.html#cb556-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-556-1.png" width="384" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-555-1.png" width="384" /></p>
 <p>Vi kan se her, at der er en meget store korrelation mellem a og b. Selvom datasættet er plottet i 2 dimensioner kan de næsten forklares af én linje - en såkaldte bedste rette linje der passer bedste gennem punkterne.</p>
 <div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="principal-component-analysis-pca.html#cb557-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(a,b)</span>
 <span id="cb557-2"><a href="principal-component-analysis-pca.html#cb557-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df,<span class="fu">aes</span>(a,b)) <span class="sc">+</span> </span>
@@ -578,7 +578,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb557-4"><a href="principal-component-analysis-pca.html#cb557-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
 <span id="cb557-5"><a href="principal-component-analysis-pca.html#cb557-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-557-1.png" width="384" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-556-1.png" width="384" /></p>
 <p>Med andre ord kan vi næsten forklare datasættet i blot én dimension - punkternes afstand langt linjen. Når man tager alle punkterne og beskriver dem langt én linje som bedste beskrive variansen i datasættet, kaldes den linje for den første principal component (PC1). Man kan dernæst beskriver en anden linje som er vinkelrettet til PC1 som bedste forklarer variancen i de data som ikke var fanget af PC1 - det kaldes for den anden princal component (PC2).</p>
 <p>Vi kan se her PC1 og PC2 plottet:</p>
 <p><img src="plots/pca_dem.png" width="50%" /></p>
@@ -589,7 +589,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb559-4"><a href="principal-component-analysis-pca.html#cb559-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
 <span id="cb559-5"><a href="principal-component-analysis-pca.html#cb559-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-559-1.png" width="384" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-558-1.png" width="384" /></p>
 <p>Vi kan se her, at de data flyder de plads på plottet bedre en før (og bemærk at de askse skala er blevet meget mindre i den nye y-aksen, da de data spreder sig meget mindre langt PC2 i forhold til PC1.)</p>
 <p>Det her er kun et eksempel hvor vores oprindelige data ligger i to dimensions (to variabler), for at gøre det nemt at visualisere dem i et plot, men de fleste datasæt (fk penguins, iris osv.) har flere end to dimensioner. Vi kan godt lave samme process, hvor vi definerer PC1 som forklarer så meget af variancen i de data som muligt, og dernæst PC2 som forklarer nogle af variancen ikke fanget af PC1, og dernæst PC3 osv., efter hvor mange dimensioner de data har. I mange praktisk situationer vælger man de første to componenter, som er mest vigtige, da de forklarer mest af variancen i de data i forhold til de andre componenter.</p>
 <p>“So to sum up, the idea of PCA is simple — reduce the number of variables of a data set, while preserving as much information as possible.” <a href="https://builtin.com/data-science/step-step-explanation-principal-component-analysis" class="uri">https://builtin.com/data-science/step-step-explanation-principal-component-analysis</a></p>
@@ -648,7 +648,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb566-2"><a href="principal-component-analysis-pca.html#cb566-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>.fittedPC1, <span class="at">y=</span>.fittedPC2, <span class="at">color =</span> species)) <span class="sc">+</span> </span>
 <span id="cb566-3"><a href="principal-component-analysis-pca.html#cb566-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb566-4"><a href="principal-component-analysis-pca.html#cb566-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-563-1.png" width="480" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-562-1.png" width="480" /></p>
 <p>Vi kan også integrere de clusters som vi fik fra funktionen <code>kmeans()</code> i vores PCA ved at anvende funktionen <code>augment()</code> på resultaterne fra <code>kmeans</code> og vores data som allerede har resultaterne fra <code>pca</code>. Da både PCA og k-means fanger oplysninger om strukturen af de data baserede på de fire numeriske variabler, kan man forventer en bedre sammenligning mellem de to (i forhold til at sammenligne de clusters med et plot med kun to af variablerne).</p>
 <div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="principal-component-analysis-pca.html#cb567-1" aria-hidden="true" tabindex="-1"></a>penguins_scaled <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> scale</span>
 <span id="cb567-2"><a href="principal-component-analysis-pca.html#cb567-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -658,7 +658,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb567-6"><a href="principal-component-analysis-pca.html#cb567-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>.fittedPC1, <span class="at">y=</span>.fittedPC2, <span class="at">color =</span> .cluster)) <span class="sc">+</span> </span>
 <span id="cb567-7"><a href="principal-component-analysis-pca.html#cb567-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb567-8"><a href="principal-component-analysis-pca.html#cb567-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-564-1.png" width="480" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-563-1.png" width="480" /></p>
 <p><strong>Output med tidy</strong></p>
 <p>Næste kigger vi på variansen i datasættet som er blevet fanget af hver af de forskellige components. Man kan udtrække oplysningerne ved at benytte funktionen <code>tidy()</code> fra pakken <code>broom</code>, og ved at angiv <code>matrix = "eigenvalues"</code> indenfor <code>tidy</code>.</p>
 <p>Det kaldes for “eigenvalues” fordi, hvis man kigger på matematikken bag principal component analysis, tager man udgangspunkt i en covariance matrix. En covariance matrix beskriver sammenhængen eller korrelationen mellem de forskellige variabler. Man bruger denne covariance matrix til at beregne de såkaldte eigenvalues og deres tilsvarende eigenvectors.</p>
@@ -681,7 +681,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb570-5"><a href="principal-component-analysis-pca.html#cb570-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">percent_format</span>(), <span class="co">#convert labels to percent format</span></span>
 <span id="cb570-6"><a href="principal-component-analysis-pca.html#cb570-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb570-7"><a href="principal-component-analysis-pca.html#cb570-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-566-1.png" width="288" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-565-1.png" width="288" /></p>
 <p>På den ene side hvis der er meget variance som er forklaret af de første components tilsammen, betyder det at der er en del redundans i datasættet, på grund af, at mange af de variabler har en tæt sammenhæng med hinanden. På den anden side hvis der er en meget lille andel af variancen som er forklaret af de første components tilsammen, betyder det at det er svært at beskrive datasættet i mindre dimensioner (fordi der næsten er ingen sammenhæng mellem variablerne) - i dette tilfælde, hvor datasættet er mere kompleks, er PCA mindre effektiv.</p>
 <div id="rotation-matrix-for-at-udtrækker-bidragen-af-de-forskellige-variabler" class="section level3 hasAnchor" number="10.4.1">
 <h3><span class="header-section-number">10.4.1</span> Rotation matrix for at udtrækker bidragen af de forskellige variabler<a href="principal-component-analysis-pca.html#rotation-matrix-for-at-udtrækker-bidragen-af-de-forskellige-variabler" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -706,7 +706,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb573-4"><a href="principal-component-analysis-pca.html#cb573-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span> </span>
 <span id="cb573-5"><a href="principal-component-analysis-pca.html#cb573-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>column)) <span class="sc">+</span> </span>
 <span id="cb573-6"><a href="principal-component-analysis-pca.html#cb573-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-568-1.png" width="480" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-567-1.png" width="480" /></p>
 </div>
 <div id="pakken-factoextra" class="section level3 hasAnchor" number="10.4.2">
 <h3><span class="header-section-number">10.4.2</span> Pakken <code>factoextra</code><a href="principal-component-analysis-pca.html#pakken-factoextra" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -721,7 +721,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="principal-component-analysis-pca.html#cb574-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
 <span id="cb574-2"><a href="principal-component-analysis-pca.html#cb574-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pca_fit, <span class="at">col.var=</span><span class="st">&quot;steelblue&quot;</span>,<span class="at">repel =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
 <span id="cb574-3"><a href="principal-component-analysis-pca.html#cb574-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-569-1.png" width="480" /></p>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-568-1.png" width="480" /></p>
 </div>
 </div>
 <div id="quiz-og-problemstillinger" class="section level2 hasAnchor" number="10.5">

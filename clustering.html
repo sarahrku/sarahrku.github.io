@@ -903,7 +903,7 @@ FALSE 4       4     5</code></pre>
 </div>
 <div id="ekstra-valgfri-afprøve-andre-metoder-på-hierachical-clustering" class="section level3 hasAnchor" number="9.4.3">
 <h3><span class="header-section-number">9.4.3</span> Ekstra (valgfri): afprøve andre metoder på hierachical clustering<a href="clustering.html#ekstra-valgfri-afprøve-andre-metoder-på-hierachical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Afprøve de fire metoder - “average,” “single,” “complete” og “ward.D.”</p>
+<p><strong>Valfri</strong> ekstra hvis du vil afprøve de fire metoder i <code>hclust</code> - “average,” “single,” “complete” og “ward.D.”</p>
 <div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="clustering.html#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="co"># samme ggplot kommando som ovenpå lavet til en funktion </span></span>
 <span id="cb545-2"><a href="clustering.html#cb545-2" aria-hidden="true" tabindex="-1"></a>den_plot <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">ggplot</span>(.x<span class="sc">$</span>segments) <span class="sc">+</span> </span>
 <span id="cb545-3"><a href="clustering.html#cb545-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span></span>
@@ -933,16 +933,15 @@ FALSE 4       4     5</code></pre>
 <p><strong>Problem 1</strong>) Quiz - Clustering</p>
 <hr />
 <p><strong>Problem 2</strong>) <em>Funktionen kmeans</em>. I ovenstående anvendt vi <code>mtcars</code> i hierarchical clustering, men lad os se, hvordan det ser ud med <code>k-means</code>. Du er velkommen til at tilpasse min ovenstående kode fa det <code>penguins</code> datasæt:</p>
-<p><strong>a</strong>) Benyt <code>kmeans</code> til at finde 2 clusters i datasættet <code>mtcars</code>
-+ husk at vælge kun de numeriske kolonner og scale datasættet i forvejen
-+ gem din clustering som <code>my_clusters</code>.
-+ hvor mange observationer er der i hver af de to clusters?</p>
-<p><strong>b</strong>) Anvend funktionen <code>augment</code> til at forbinde det oprindelige datasæt til dine clusters fra <code>my_clusters</code> (skriv <code>mtcars</code> indenfor funktionen <code>agument</code>).</p>
-<p><strong>c</strong>) Brug dit “augmented” datasæt til at lave et scatter plot mellem to af de numeriske variabler (vælg selv) i datasættet og giv dem farver efter din clusters, som du har beregnet.
-+ da du har forbundet det oprindeligt datasæt (der ikke var scaled) i <code>augment</code>, scale din variabler i plottet.
-+ prøv også to andre numeriske variabler</p>
-<p><strong>d</strong>) Tilføj <code>tidy</code> til at få fat i de middelværdier/centroids af hver af de 2 clusters
-+ tilpas min kode fra notaterne til at tilføje dem til plottet som ‘x’ (husk at din “centers”/centroids er allerede baserede på scaled data).</p>
+<p><strong>a</strong>) Benyt <code>kmeans</code> til at finde 2 clusters i datasættet <code>mtcars</code>:</p>
+<ul>
+<li>husk at vælge kun de numeriske kolonner og scale datasættet i forvejen</li>
+<li>gem din clustering som <code>my_clusters</code>.</li>
+<li>hvor mange observationer er der i hver af de to clusters?</li>
+</ul>
+<p><strong>b</strong>) Anvend funktionen <code>augment</code> til at forbinde det oprindelige datasæt til dine clusters fra <code>my_clusters</code> (skriv <code>mtcars</code> indenfor funktionen <code>augment</code>).</p>
+<p><strong>c</strong>) Brug dit “augmented” datasæt til at lave et scatter plot mellem to af de numeriske variabler (vælg selv) i datasættet og giv dem farver efter din clusters, som du har beregnet. Da du har forbundet det oprindeligt datasæt (der ikke var scaled) i <code>augment</code>, scale din variabler i plottet.</p>
+<p><strong>d</strong>) Tilføj <code>tidy</code> til at få fat i de middelværdier/centroids af hver af de 2 clusters og tilpas min kode fra notaterne (sektion 9.2.5) til at tilføje dem til plottet som ‘x’ (husk at din “centers”/centroids er allerede baserede på scaled data så du behøver ikke at anvende scale på deres værdier).</p>
 <hr />
 <p><strong>Problem 3</strong>) <em>Hierarchical clustering øvelse</em></p>
 <p>Vi laver en analyse af det <code>msleep</code> datasæt. Jeg har lavet oprydningen og scaling for jer:</p>
@@ -950,13 +949,11 @@ FALSE 4       4     5</code></pre>
 <span id="cb547-2"><a href="clustering.html#cb547-2" aria-hidden="true" tabindex="-1"></a>msleep_clean <span class="ot">&lt;-</span> msleep <span class="sc">%&gt;%</span> <span class="fu">select</span>(name,<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span>
 <span id="cb547-3"><a href="clustering.html#cb547-3" aria-hidden="true" tabindex="-1"></a>msleep_scaled <span class="ot">&lt;-</span> msleep_clean <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>name) <span class="sc">%&gt;%</span> scale</span>
 <span id="cb547-4"><a href="clustering.html#cb547-4" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(msleep_scaled) <span class="ot">&lt;-</span> msleep_clean<span class="sc">$</span>name</span></code></pre></div>
-<p>Tilpas min kode fra kursusnotaterne til at lave følgende skridt:</p>
-<p><strong>a</strong>) Benyt funktioner <code>dist</code> og så <code>hclust</code> på datasættet <code>msleep_scaled</code>.</p>
-<p><strong>b</strong>) Benyt <code>cuttree</code> for at finde 5 clusters i de data, og kalde det for <code>clusters</code>. Husk at anvende <code>order_clusters_as_data = FALSE</code> så at vi har den korrekt rækkefølge for et plot (man skal indlæse pakken <code>dendextend</code>)</p>
-<p><strong>c</strong>) Benyt <code>dendro_data</code> til at udtrække de dendrogram fra resultaterne
-+ Tilføj <code>clusters</code> til <code>dend_data$labels</code></p>
-<p><strong>d</strong>) Lav et plot af de dendrogram
-+ Tilpas koden for <code>mtcars</code> eksempel for nuværende data</p>
+<p>Tilpas min kode fra kursusnotaterne (sektion 9.4) til at lave følgende:</p>
+<p><strong>a</strong>) Benyt funktioner <code>dist</code> og dernæst <code>hclust</code> på datasættet <code>msleep_scaled</code>.</p>
+<p><strong>b</strong>) Benyt <code>cuttree</code> for at finde 5 clusters fra dine <code>hclust</code>-resultater, og kalde det for <code>clusters</code>. Husk at anvende <code>order_clusters_as_data = FALSE</code> så at vi har den korrekt rækkefølge for et plot (<em>OBS man skal installere/indlæse pakken <code>dendextend</code></em>)</p>
+<p><strong>c</strong>) Benyt <code>dendro_data</code> til at udtrække de dendrogram fra resultaterne og tilføj <code>clusters</code> til <code>dend_data$labels</code> (kopier kode fra 9.4.2).</p>
+<p><strong>d</strong>) Lav et dengrogram plot: igen tilpas koden (9.4.2) for <code>mtcars</code> eksempel for nuværende data</p>
 <hr />
 <p><strong>Problem 4)</strong></p>
 <p>Inlæs data</p>
@@ -974,7 +971,7 @@ FALSE 4       4     5</code></pre>
 <li>2 = Oporto</li>
 <li>3 = Other</li>
 </ul></li>
-<li>Anvend <code>map_if</code> ligesom i sektion 7.5.2 til at transformere samtlige numeriske variabler med <code>log</code> (husk <code>%&gt;% as_tibble()</code> bagefter).</li>
+<li>Anvend <code>map_if</code> til at transformere samtlige numeriske variabler med log (kode er: <code>wholesale &lt;- wholesale %&gt;% map_if(is.numeric,log) %&gt;% as_tibble()</code>).</li>
 </ul>
 <p><strong>b</strong>) Udvælg de numeriske variabler fra dit datasæt og anvende <code>scale()</code> - kalde dit nye datasæt for <code>wholescale_scale</code></p>
 <p><strong>c</strong>) Tilpas min kode fra sektion 9.3.1 til at lave 10 clusterings (k=1:10) på <code>wholesale_scale</code> og gem dem i en dataframe, sammen med din clusterings resultater i “tidy,” “glance” og “augment” form.</p>
@@ -985,9 +982,16 @@ FALSE 4       4     5</code></pre>
 <li>Adskil plots efter <code>k</code></li>
 <li>Prøv bagefter at også adskil dit plots yderligere efter <code>Channel</code>.</li>
 </ul>
-<p><strong>f)</strong> Tag udgangspunkt i dit output fra <code>tidy</code> hvor antal clusters er 4 - lav et barplot for at vise middelværdier/centroids fra din clustering.</p>
-<p><strong>g)</strong> Tilpas koden fra 9.3.5 til at lave en analyse for “hoerca” og “retail” (variablen <code>Channel</code>) hver for sig. Angiv 4 clusters i din analyse.</p>
-<p><strong>h)</strong> Lav et plot af din clustering (adskilt efter variablen <code>Channel</code>) og få “x” på plotterne til at vise din cluster middelværdier for <code>Frozen</code> og <code>Fresh</code>.</p>
+<!-- __f)__ Tag udgangspunkt i dit output fra `tidy` hvor antal clusters er 4 - lav et barplot for at vise middelværdier/centroids fra din clustering. -->
+<!-- ```{r,echo=F,eval=F} -->
+<!-- kmeans_tidy %>%  -->
+<!--   filter(k==4) %>%  -->
+<!--   pivot_longer(cols=colnames(wholesale_scale)) %>% -->
+<!--   ggplot(aes(x=cluster,y=value,fill=name)) +  -->
+<!--   geom_bar(stat="identity",position="dodge",colour="black")  -->
+<!-- ``` -->
+<p><strong>f)</strong> Tilpas koden fra 9.3.5 til at lave en analyse for “hoerca” og “retail” (variablen <code>Channel</code>) hver for sig. Angiv 4 clusters i din analyse.</p>
+<p><strong>g)</strong> Lav et plot af din clustering (adskilt efter variablen <code>Channel</code>) og få “x” på plotterne til at vise din cluster middelværdier for <code>Frozen</code> og <code>Fresh</code>.</p>
 
 </div>
 </div>
