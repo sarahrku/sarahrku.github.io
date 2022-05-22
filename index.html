@@ -435,6 +435,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="clustering.html"><a href="clustering.html#problemstillinger-8"><i class="fa fa-check"></i><b>9.5</b> Problemstillinger<span></span></a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html"><i class="fa fa-check"></i><b>10</b> Principal component analysis (PCA)<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#indledning-og-læringsmålene-3"><i class="fa fa-check"></i><b>10.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#læringsmålene-5"><i class="fa fa-check"></i><b>10.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="10.1.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#introduktion-til-chapter-1"><i class="fa fa-check"></i><b>10.1.2</b> Introduktion til chapter<span></span></a></li>
+<li class="chapter" data-level="10.1.3" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#video-ressourcer-6"><i class="fa fa-check"></i><b>10.1.3</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#hvad-er-principal-component-analysis-pca"><i class="fa fa-check"></i><b>10.2</b> Hvad er principal component analysis (PCA)?<span></span></a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#simpel-eksempel-med-to-dimensioner"><i class="fa fa-check"></i><b>10.2.1</b> Simpel eksempel med to dimensioner<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#fit-pca-to-data-in-r"><i class="fa fa-check"></i><b>10.3</b> Fit PCA to data in R<span></span></a></li>
+<li class="chapter" data-level="10.4" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#integrere-pca-resultater-med-broom-pakke"><i class="fa fa-check"></i><b>10.4</b> Integrere PCA resultater med broom-pakke<span></span></a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#rotation-matrix-for-at-udtrækker-bidragen-af-de-forskellige-variabler"><i class="fa fa-check"></i><b>10.4.1</b> Rotation matrix for at udtrækker bidragen af de forskellige variabler<span></span></a></li>
+<li class="chapter" data-level="10.4.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#pakken-factoextra"><i class="fa fa-check"></i><b>10.4.2</b> Pakken <code>factoextra</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#quiz-og-problemstillinger"><i class="fa fa-check"></i><b>10.5</b> Quiz og problemstillinger<span></span></a></li>
+<li class="chapter" data-level="10.6" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#ekstra-læsning"><i class="fa fa-check"></i><b>10.6</b> Ekstra læsning<span></span></a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -458,7 +479,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Analyse og visualisering af biologiske datasæt - 2022</h1>
 <p class="author"><em>Sarah Rennie</em></p>
-<p class="date"><em>Last updated: 2022-05-21</em></p>
+<p class="date"><em>Last updated: 2022-05-22</em></p>
 </div>
 <div id="baser" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Grundlæggende R<a href="index.html#baser" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -771,20 +792,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Man kan nemt lave sin egne ‘fake’ data ved at simulere det fra en fordeling, der vil typiske være den normale fordeling, idet den normale fordeling opstår mest hyppigt i den virkelige verden (husk den klassiske klokke-form). I R kan man bruge funktionen <code>rnorm</code> til at simulere data - først angiver man, hvor mange observationer man vil have, og dernæst den mean og standard deviation (sd), som er de to nødvendige parametre for at beskrive en normal fordeling</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="index.html#cb42-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>,<span class="at">mean=</span><span class="dv">0</span>,<span class="at">sd=</span><span class="dv">1</span>) <span class="co">#standard normal distribution</span></span>
 <span id="cb42-2"><a href="index.html#cb42-2" aria-hidden="true" tabindex="-1"></a>x <span class="co">#så har vi 25 værdier fra en normal distribution med mean=0 og standard deviation=1.</span></span></code></pre></div>
-<pre><code>##  [1]  0.67063050 -1.13644664  0.54223957 -0.09909622  1.16965409  0.39661023
-##  [7] -1.75260425 -1.39768195  0.89910964 -1.54312223 -0.73321739  0.87088084
-## [13]  0.24117404  1.16810428 -1.20680160  1.00474612  0.10866093 -0.38373550
-## [19]  1.22852151  1.59871912  0.51611065  1.47166293  1.42893111  1.36717889
-## [25]  0.41788364</code></pre>
+<pre><code>##  [1] -0.85788115  1.22735635 -0.42510645 -0.94912285 -0.17469675 -0.86980814
+##  [7]  0.08946171 -0.31790325  0.72036024 -0.06797190 -1.02752259 -0.11231903
+## [13]  0.25995298 -0.70246881  2.23256787 -2.61954572 -1.32355507 -0.80736654
+## [19]  1.38626636 -0.05490490 -0.14985528 -1.31155805  0.60288794  0.36290093
+## [25] -0.91530118</code></pre>
 <p>I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="index.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(x) <span class="co">#første 6</span></span>
-<span id="cb44-2"><a href="index.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1]  0.67063050 -1.13644664  0.54223957 -0.09909622  1.16965409  0.39661023</span></span>
+<span id="cb44-2"><a href="index.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.8578811  1.2273564 -0.4251064 -0.9491229 -0.1746968 -0.8698081</span></span>
 <span id="cb44-3"><a href="index.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(x) <span class="co">#sidste 6</span></span>
-<span id="cb44-4"><a href="index.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.5987191 0.5161107 1.4716629 1.4289311 1.3671789 0.4178836</span></span>
+<span id="cb44-4"><a href="index.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.0549049 -0.1498553 -1.3115581  0.6028879  0.3629009 -0.9153012</span></span>
 <span id="cb44-5"><a href="index.html#cb44-5" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>] <span class="co">#første værdi</span></span>
-<span id="cb44-6"><a href="index.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.6706305</span></span>
+<span id="cb44-6"><a href="index.html#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.8578811</span></span>
 <span id="cb44-7"><a href="index.html#cb44-7" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">length</span>(x)] <span class="co">#sidste data point</span></span>
-<span id="cb44-8"><a href="index.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.4178836</span></span></code></pre></div>
+<span id="cb44-8"><a href="index.html#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -0.9153012</span></span></code></pre></div>
 <p>Bemærk, at til forskellen af Python og mange andre programmering sprog, R bruger 1-baserende indicer - det betyder, at den første værdi er <code>x[1]</code> og <strong>ikke</strong> <code>x[0]</code> som i Python.</p>
 </div>
 <div id="measures-of-central-tendency" class="section level3 hasAnchor" number="1.8.2">
@@ -831,11 +852,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb45-5"><a href="index.html#cb45-5" aria-hidden="true" tabindex="-1"></a>my_var <span class="ot">&lt;-</span> <span class="fu">var</span>(x)</span>
 <span id="cb45-6"><a href="index.html#cb45-6" aria-hidden="true" tabindex="-1"></a>my_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(x)</span>
 <span id="cb45-7"><a href="index.html#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(my_mean,my_median,my_max,my_min,my_var,my_sd) <span class="co">#print results</span></span></code></pre></div>
-<pre><code>## [1]  0.2739245  0.5161107  1.5987191 -1.7526042  1.0764993  1.0375448</code></pre>
+<pre><code>## [1] -0.2322053 -0.1746968  2.2325679 -2.6195457  1.0114763  1.0057218</code></pre>
 <p>Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="index.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -1.7526 -0.3837  0.5161  0.2739  1.1681  1.5987</code></pre>
+## -2.6195 -0.8698 -0.1747 -0.2322  0.2600  2.2326</code></pre>
 </div>
 <div id="tapply" class="section level3 hasAnchor" number="1.8.3">
 <h3><span class="header-section-number">1.8.3</span> <code>tapply()</code><a href="index.html#tapply" class="anchor-section" aria-label="Anchor link to header"></a></h3>

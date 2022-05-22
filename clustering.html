@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="visualisering-af-trends.html"/>
-
+<link rel="next" href="principal-component-analysis-pca.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -435,6 +435,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="clustering.html"><a href="clustering.html#problemstillinger-8"><i class="fa fa-check"></i><b>9.5</b> Problemstillinger<span></span></a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html"><i class="fa fa-check"></i><b>10</b> Principal component analysis (PCA)<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#indledning-og-læringsmålene-3"><i class="fa fa-check"></i><b>10.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#læringsmålene-5"><i class="fa fa-check"></i><b>10.1.1</b> Læringsmålene<span></span></a></li>
+<li class="chapter" data-level="10.1.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#introduktion-til-chapter-1"><i class="fa fa-check"></i><b>10.1.2</b> Introduktion til chapter<span></span></a></li>
+<li class="chapter" data-level="10.1.3" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#video-ressourcer-6"><i class="fa fa-check"></i><b>10.1.3</b> Video ressourcer<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#hvad-er-principal-component-analysis-pca"><i class="fa fa-check"></i><b>10.2</b> Hvad er principal component analysis (PCA)?<span></span></a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#simpel-eksempel-med-to-dimensioner"><i class="fa fa-check"></i><b>10.2.1</b> Simpel eksempel med to dimensioner<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#fit-pca-to-data-in-r"><i class="fa fa-check"></i><b>10.3</b> Fit PCA to data in R<span></span></a></li>
+<li class="chapter" data-level="10.4" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#integrere-pca-resultater-med-broom-pakke"><i class="fa fa-check"></i><b>10.4</b> Integrere PCA resultater med broom-pakke<span></span></a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#rotation-matrix-for-at-udtrækker-bidragen-af-de-forskellige-variabler"><i class="fa fa-check"></i><b>10.4.1</b> Rotation matrix for at udtrækker bidragen af de forskellige variabler<span></span></a></li>
+<li class="chapter" data-level="10.4.2" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#pakken-factoextra"><i class="fa fa-check"></i><b>10.4.2</b> Pakken <code>factoextra</code><span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#quiz-og-problemstillinger"><i class="fa fa-check"></i><b>10.5</b> Quiz og problemstillinger<span></span></a></li>
+<li class="chapter" data-level="10.6" data-path="principal-component-analysis-pca.html"><a href="principal-component-analysis-pca.html#ekstra-læsning"><i class="fa fa-check"></i><b>10.6</b> Ekstra læsning<span></span></a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -835,22 +856,22 @@ Figure 9.1: source: <a href="https://towardsdatascience.com/k-means-a-complete-i
 </div>
 <div id="method-2-hierarchical-clustering" class="section level2 hasAnchor" number="9.4">
 <h2><span class="header-section-number">9.4</span> Method 2: Hierarchical clustering<a href="clustering.html#method-2-hierarchical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>K-means er en meget populær måde at lave clusters i de data på, men der er mange andre metoder til at lave clusters. Jeg nævne kort hierarchical clustering. Vi skifter over til <code>mtcars</code>, og ligesom i <code>kmeans</code> skal vi bruge <code>scale</code> på de numeriske kolonner i de data.</p>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="clustering.html#cb536-1" aria-hidden="true" tabindex="-1"></a>mtcars_scaled <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> scale</span></code></pre></div>
-<p>I modsætning til k-means, for at lave hierarchical clustering skal man første beregne afstanden mellem alle de observationer i de data. De gøre man med funktionen <code>dist</code> (som bruger den Euclidean distance som default):</p>
+<p>K-means er en meget populær metode til at lave clustering, men der er mange andre metoder, fk. hierarchical clustering. Vi skifter over til <code>mtcars</code>, og ligesom i <code>kmeans</code> skal vi første bruge <code>scale</code> på de numeriske kolonner i de data.</p>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="clustering.html#cb536-1" aria-hidden="true" tabindex="-1"></a>mtcars_scaled <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> <span class="fu">scale</span>()</span></code></pre></div>
+<p>I modsætning til k-means, for at lave hierarchical clustering skal man første beregne afstanden mellem alle de observationer i de data. Det gør man med funktionen <code>dist()</code> (som bruger den Euclidean distance som default):</p>
 <div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="clustering.html#cb537-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">dist</span>(mtcars_scaled)</span></code></pre></div>
-<p>For at lave en hierarchical clustering anvender man funktionen <code>hclust</code>. Metoden <code>complete</code> er default men man kan afprøve de andre methoder (der er ikke en fast regel over for, hvilken man skal bruge).</p>
+<p>For at lave en hierarchical clustering anvender man funktionen <code>hclust()</code>. Metoden <code>complete</code> er default men man kan afprøve de andre methoder (der er ikke en fast regel over for, hvilken metode man skal bruge).</p>
 <div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="clustering.html#cb538-1" aria-hidden="true" tabindex="-1"></a>mtcars_hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(d, <span class="at">method =</span> <span class="st">&quot;complete&quot;</span> )</span>
 <span id="cb538-2"><a href="clustering.html#cb538-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Metoder: &quot;average&quot;, &quot;single&quot;, &quot;complete&quot;, &quot;ward.D&quot;</span></span></code></pre></div>
 <p>I følgende arbejder vi lidt med <code>mtcars_hc</code> til at få nogle clusters frem, og til at lave et plot.</p>
 <div id="vælge-ønkset-antal-clusters" class="section level3 hasAnchor" number="9.4.1">
 <h3><span class="header-section-number">9.4.1</span> Vælge ønkset antal clusters<a href="clustering.html#vælge-ønkset-antal-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Funktionen <code>cutree</code> anvendes til at få clusters fra de data. For eksempel, hvis man gerne vil have 4 clusters, bruger man <code>k = 4</code>. Jeg specificerer <code>order_clusters_as_data = FALSE</code> for at få de clusters i de rækkefølger, som passer til plottet (dendrogram) vi lave (man skal have ovenstående pakker installeret for at få den til at fungere).</p>
+<p>Funktionen <code>cutree</code> anvendes til at få clusters fra resultaterne af funktionen <code>hclust</code>. For eksempel hvis man gerne vil have 4 clusters, bruger man <code>k = 4</code>. Jeg specificerer <code>order_clusters_as_data = FALSE</code> for at få clusters i rækkefølgen, som passer til plottet (dendrogram) vi laver (bemærk at man skal have pakken <code>dendextend</code> installeret for at få den til at fungere).</p>
 <div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="clustering.html#cb539-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dendextend)</span>
 <span id="cb539-2"><a href="clustering.html#cb539-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb539-3"><a href="clustering.html#cb539-3" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">cutree</span>(mtcars_hc, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">order_clusters_as_data =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb539-4"><a href="clustering.html#cb539-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb539-5"><a href="clustering.html#cb539-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="st">&quot;cluster&quot;</span><span class="ot">=</span>clusters) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div>
+<span id="cb539-3"><a href="clustering.html#cb539-3" aria-hidden="true" tabindex="-1"></a>clusters <span class="ot">&lt;-</span> <span class="fu">cutree</span>(mtcars_hc, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">order_clusters_as_data =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Her laver jeg et overblik over, hvor mange observationerne fra <code>mtcars</code> er i hver cluster:</p>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="clustering.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="st">&quot;cluster&quot;</span><span class="ot">=</span>clusters) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="fu">n</span>())</span></code></pre></div>
 <pre><code>FALSE # A tibble: 4 × 2
 FALSE   cluster `n()`
 FALSE     &lt;int&gt; &lt;int&gt;
@@ -861,48 +882,50 @@ FALSE 4       4     5</code></pre>
 </div>
 <div id="lav-et-pænt-plot-af-dendrogram-med-ggplot2" class="section level3 hasAnchor" number="9.4.2">
 <h3><span class="header-section-number">9.4.2</span> Lav et pænt plot af dendrogram med ggplot2<a href="clustering.html#lav-et-pænt-plot-af-dendrogram-med-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Første vi anvende <code>dendro_data</code> til at udtrække de dendrogram oplysninger fra de <code>hclust</code> resultater.</p>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="clustering.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
-<span id="cb541-2"><a href="clustering.html#cb541-2" aria-hidden="true" tabindex="-1"></a>dend_data <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(mtcars_hc <span class="sc">%&gt;%</span> as.dendrogram, <span class="at">type =</span> <span class="st">&quot;rectangle&quot;</span>)</span></code></pre></div>
-<p>Vi tilføjer vores clusters som vi beregnede ovenpå (det er derfor vi sikrede rækkefølgen af de clusters):</p>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="clustering.html#cb542-1" aria-hidden="true" tabindex="-1"></a>dend_data<span class="sc">$</span>labels <span class="ot">&lt;-</span> dend_data<span class="sc">$</span>labels <span class="sc">%&gt;%</span> </span>
-<span id="cb542-2"><a href="clustering.html#cb542-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster =</span> clusters)</span></code></pre></div>
+<p>Første anvender jeg funktionen <code>dendro_data()</code> til at udtrække den “dendrogram” fra de <code>hclust()</code> resultater.</p>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="clustering.html#cb542-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggdendro)</span>
+<span id="cb542-2"><a href="clustering.html#cb542-2" aria-hidden="true" tabindex="-1"></a>dend_data <span class="ot">&lt;-</span> <span class="fu">dendro_data</span>(mtcars_hc <span class="sc">%&gt;%</span> as.dendrogram, <span class="at">type =</span> <span class="st">&quot;rectangle&quot;</span>)</span></code></pre></div>
+<p>Vi tilføjer vores clusters som vi beregnede ovenpå (det er derfor vi sikret rækkefølgen af de clusters):</p>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="clustering.html#cb543-1" aria-hidden="true" tabindex="-1"></a>dend_data<span class="sc">$</span>labels <span class="ot">&lt;-</span> dend_data<span class="sc">$</span>labels <span class="sc">%&gt;%</span> </span>
+<span id="cb543-2"><a href="clustering.html#cb543-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cluster =</span> clusters)</span></code></pre></div>
 <p>Vi benytter <code>dend_data$segments</code> og <code>dend_data$labels</code> til at lave et informativ plot af de data i <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="clustering.html#cb543-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dend_data<span class="sc">$</span>segments) <span class="sc">+</span> </span>
-<span id="cb543-2"><a href="clustering.html#cb543-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span></span>
-<span id="cb543-3"><a href="clustering.html#cb543-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb543-4"><a href="clustering.html#cb543-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> dend_data<span class="sc">$</span>labels, </span>
-<span id="cb543-5"><a href="clustering.html#cb543-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(x, y, <span class="at">label =</span> label,<span class="at">col=</span><span class="fu">factor</span>(cluster)),</span>
-<span id="cb543-6"><a href="clustering.html#cb543-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb543-7"><a href="clustering.html#cb543-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb543-8"><a href="clustering.html#cb543-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dendro</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-526-1.png" width="480" /></p>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="clustering.html#cb544-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dend_data<span class="sc">$</span>segments) <span class="sc">+</span> </span>
+<span id="cb544-2"><a href="clustering.html#cb544-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span></span>
+<span id="cb544-3"><a href="clustering.html#cb544-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb544-4"><a href="clustering.html#cb544-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> dend_data<span class="sc">$</span>labels, </span>
+<span id="cb544-5"><a href="clustering.html#cb544-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(x, y, <span class="at">label =</span> label,<span class="at">col=</span><span class="fu">factor</span>(cluster)),</span>
+<span id="cb544-6"><a href="clustering.html#cb544-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb544-7"><a href="clustering.html#cb544-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb544-8"><a href="clustering.html#cb544-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dendro</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-527-1.png" width="480" /></p>
+<p>Så kan man se, der er fire clusters i dengrammet, og biler der er tætest på hinanden ligner hinanden mest - fk. Merc 280C og Merc 280 må være meget éns, og er som forventet lige ved siden af hinanden i plottet.</p>
+<p>Man kan godt tilpasse ovenstående kode til et andet datasæt - se problemstillinger, men man må også gerne udvide plottet med de forskellige viden vi har om ggplot2.</p>
 </div>
 <div id="ekstra-valgfri-afprøve-andre-metoder-på-hierachical-clustering" class="section level3 hasAnchor" number="9.4.3">
 <h3><span class="header-section-number">9.4.3</span> Ekstra (valgfri): afprøve andre metoder på hierachical clustering<a href="clustering.html#ekstra-valgfri-afprøve-andre-metoder-på-hierachical-clustering" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Afprøve de fire metoder - “average,” “single,” “complete” og “ward.D.”</p>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="clustering.html#cb544-1" aria-hidden="true" tabindex="-1"></a><span class="co"># samme ggplot kommando som ovenpå lavet til en funktion </span></span>
-<span id="cb544-2"><a href="clustering.html#cb544-2" aria-hidden="true" tabindex="-1"></a>den_plot <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">ggplot</span>(.x<span class="sc">$</span>segments) <span class="sc">+</span> </span>
-<span id="cb544-3"><a href="clustering.html#cb544-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span></span>
-<span id="cb544-4"><a href="clustering.html#cb544-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb544-5"><a href="clustering.html#cb544-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> .x<span class="sc">$</span>labels, </span>
-<span id="cb544-6"><a href="clustering.html#cb544-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(x, y, <span class="at">label =</span> label),</span>
-<span id="cb544-7"><a href="clustering.html#cb544-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb544-8"><a href="clustering.html#cb544-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">theme_dendro</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="clustering.html#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="co"># samme ggplot kommando som ovenpå lavet til en funktion </span></span>
+<span id="cb545-2"><a href="clustering.html#cb545-2" aria-hidden="true" tabindex="-1"></a>den_plot <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">ggplot</span>(.x<span class="sc">$</span>segments) <span class="sc">+</span> </span>
+<span id="cb545-3"><a href="clustering.html#cb545-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend)) <span class="sc">+</span></span>
+<span id="cb545-4"><a href="clustering.html#cb545-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb545-5"><a href="clustering.html#cb545-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> .x<span class="sc">$</span>labels, </span>
+<span id="cb545-6"><a href="clustering.html#cb545-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(x, y, <span class="at">label =</span> label),</span>
+<span id="cb545-7"><a href="clustering.html#cb545-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust=</span><span class="dv">1</span>,<span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb545-8"><a href="clustering.html#cb545-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">10</span>) <span class="sc">+</span> <span class="fu">theme_dendro</span>()</span></code></pre></div>
 <p>Vi iterate over de fire metoder og lave samme process som ovenpå med map. Derefter kan man lave et plot fk. med grid.arrange:</p>
-<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="clustering.html#cb545-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fire metoder:</span></span>
-<span id="cb545-2"><a href="clustering.html#cb545-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;average&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;complete&quot;</span>, <span class="st">&quot;ward.D&quot;</span>)</span>
-<span id="cb545-3"><a href="clustering.html#cb545-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb545-4"><a href="clustering.html#cb545-4" aria-hidden="true" tabindex="-1"></a>hc_results <span class="ot">&lt;-</span> </span>
-<span id="cb545-5"><a href="clustering.html#cb545-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">method =</span> m) <span class="sc">%&gt;%</span></span>
-<span id="cb545-6"><a href="clustering.html#cb545-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">kclust =</span> <span class="fu">map</span>(method, <span class="sc">~</span><span class="fu">hclust</span>(d, <span class="at">method =</span> .x)), </span>
-<span id="cb545-7"><a href="clustering.html#cb545-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="fu">map</span>(kclust,as.dendrogram),</span>
-<span id="cb545-8"><a href="clustering.html#cb545-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">den_dat =</span> <span class="fu">map</span>(dendrogram,<span class="sc">~</span><span class="fu">dendro_data</span>(.x,<span class="at">type=</span><span class="st">&quot;rectangle&quot;</span>)),</span>
-<span id="cb545-9"><a href="clustering.html#cb545-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot =</span> <span class="fu">map</span>(den_dat,den_plot))</span>
-<span id="cb545-10"><a href="clustering.html#cb545-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb545-11"><a href="clustering.html#cb545-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb545-12"><a href="clustering.html#cb545-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(<span class="at">grobs =</span> hc_results <span class="sc">%&gt;%</span> <span class="fu">pull</span>(plot),<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-528-1.png" width="480" /></p>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="clustering.html#cb546-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fire metoder:</span></span>
+<span id="cb546-2"><a href="clustering.html#cb546-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;average&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;complete&quot;</span>, <span class="st">&quot;ward.D&quot;</span>)</span>
+<span id="cb546-3"><a href="clustering.html#cb546-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb546-4"><a href="clustering.html#cb546-4" aria-hidden="true" tabindex="-1"></a>hc_results <span class="ot">&lt;-</span> </span>
+<span id="cb546-5"><a href="clustering.html#cb546-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">method =</span> m) <span class="sc">%&gt;%</span></span>
+<span id="cb546-6"><a href="clustering.html#cb546-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">kclust =</span> <span class="fu">map</span>(method, <span class="sc">~</span><span class="fu">hclust</span>(d, <span class="at">method =</span> .x)), </span>
+<span id="cb546-7"><a href="clustering.html#cb546-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="fu">map</span>(kclust,as.dendrogram),</span>
+<span id="cb546-8"><a href="clustering.html#cb546-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">den_dat =</span> <span class="fu">map</span>(dendrogram,<span class="sc">~</span><span class="fu">dendro_data</span>(.x,<span class="at">type=</span><span class="st">&quot;rectangle&quot;</span>)),</span>
+<span id="cb546-9"><a href="clustering.html#cb546-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot =</span> <span class="fu">map</span>(den_dat,den_plot))</span>
+<span id="cb546-10"><a href="clustering.html#cb546-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb546-11"><a href="clustering.html#cb546-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb546-12"><a href="clustering.html#cb546-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(<span class="at">grobs =</span> hc_results <span class="sc">%&gt;%</span> <span class="fu">pull</span>(plot),<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-529-1.png" width="480" /></p>
 </div>
 </div>
 <div id="problemstillinger-8" class="section level2 hasAnchor" number="9.5">
@@ -923,10 +946,10 @@ FALSE 4       4     5</code></pre>
 <hr />
 <p><strong>Problem 3</strong>) <em>Hierarchical clustering øvelse</em></p>
 <p>Vi laver en analyse af det <code>msleep</code> datasæt. Jeg har lavet oprydningen og scaling for jer:</p>
-<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="clustering.html#cb546-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(msleep)</span>
-<span id="cb546-2"><a href="clustering.html#cb546-2" aria-hidden="true" tabindex="-1"></a>msleep_clean <span class="ot">&lt;-</span> msleep <span class="sc">%&gt;%</span> <span class="fu">select</span>(name,<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span>
-<span id="cb546-3"><a href="clustering.html#cb546-3" aria-hidden="true" tabindex="-1"></a>msleep_scaled <span class="ot">&lt;-</span> msleep_clean <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>name) <span class="sc">%&gt;%</span> scale</span>
-<span id="cb546-4"><a href="clustering.html#cb546-4" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(msleep_scaled) <span class="ot">&lt;-</span> msleep_clean<span class="sc">$</span>name</span></code></pre></div>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="clustering.html#cb547-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(msleep)</span>
+<span id="cb547-2"><a href="clustering.html#cb547-2" aria-hidden="true" tabindex="-1"></a>msleep_clean <span class="ot">&lt;-</span> msleep <span class="sc">%&gt;%</span> <span class="fu">select</span>(name,<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>()</span>
+<span id="cb547-3"><a href="clustering.html#cb547-3" aria-hidden="true" tabindex="-1"></a>msleep_scaled <span class="ot">&lt;-</span> msleep_clean <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>name) <span class="sc">%&gt;%</span> scale</span>
+<span id="cb547-4"><a href="clustering.html#cb547-4" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(msleep_scaled) <span class="ot">&lt;-</span> msleep_clean<span class="sc">$</span>name</span></code></pre></div>
 <p>Tilpas min kode fra kursusnotaterne til at lave følgende skridt:</p>
 <p><strong>a</strong>) Benyt funktioner <code>dist</code> og så <code>hclust</code> på datasættet <code>msleep_scaled</code>.</p>
 <p><strong>b</strong>) Benyt <code>cuttree</code> for at finde 5 clusters i de data, og kalde det for <code>clusters</code>. Husk at anvende <code>order_clusters_as_data = FALSE</code> så at vi har den korrekt rækkefølge for et plot (man skal indlæse pakken <code>dendextend</code>)</p>
@@ -937,7 +960,7 @@ FALSE 4       4     5</code></pre>
 <hr />
 <p><strong>Problem 4)</strong></p>
 <p>Inlæs data</p>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="clustering.html#cb547-1" aria-hidden="true" tabindex="-1"></a>wholesale <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://www.dropbox.com/s/7nb5pkruqt4fqn4/Wholesale%20customers%20data.csv?dl=1&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="clustering.html#cb548-1" aria-hidden="true" tabindex="-1"></a>wholesale <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://www.dropbox.com/s/7nb5pkruqt4fqn4/Wholesale%20customers%20data.csv?dl=1&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><strong>a</strong>) Ændre på datasættet efter følgende instruks:</p>
 <ul>
 <li>Channel - anvend <code>recode</code> for at ændre til navne
@@ -973,8 +996,8 @@ FALSE 4       4     5</code></pre>
           </div>
         </div>
       </div>
-<a href="visualisering-af-trends.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="visualisering-af-trends.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="principal-component-analysis-pca.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-21}
+\date{Last updated: 2022-05-22}
 
 \begin{document}
 \maketitle
@@ -611,11 +611,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  1.33458158 -1.07336653  1.27237304 -1.20387749 -1.79485911 -0.43590783
-##  [7] -0.40673594 -1.12755146 -1.06284172 -1.39026149 -1.23100835  0.15672579
-## [13]  1.10414243 -0.25675553  0.01269739 -0.68890050  0.60681267 -0.77352700
-## [19] -1.81313452 -0.89851942 -1.24350418 -0.30900940  1.78711044  0.02526021
-## [25] -1.03817901
+##  [1]  0.07392272  1.03112702  0.58497700 -1.08503304 -0.53257857 -0.48018709
+##  [7]  1.80036788  0.80991347  0.22013935 -0.57667321 -0.38042917 -0.50228331
+## [13] -1.76134830  0.90607049  0.08647712  1.37012244  0.57269936  0.93797477
+## [19]  0.17996833 -1.15350444 -0.26807136 -0.76741063 -1.28362572  0.54939256
+## [25] -1.66493673
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -623,13 +623,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  1.3345816 {-}1.0733665  1.2723730 {-}1.2038775 {-}1.7948591 {-}0.4359078}
+\DocumentationTok{\#\# [1]  0.07392272  1.03112702  0.58497700 {-}1.08503304 {-}0.53257857 {-}0.48018709}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.89851942 {-}1.24350418 {-}0.30900940  1.78711044  0.02526021 {-}1.03817901}
+\DocumentationTok{\#\# [1] {-}1.1535044 {-}0.2680714 {-}0.7674106 {-}1.2836257  0.5493926 {-}1.6649367}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 1.334582}
+\DocumentationTok{\#\# [1] 0.07392272}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}1.038179}
+\DocumentationTok{\#\# [1] {-}1.664937}
 \end{Highlighting}
 \end{Shaded}
 
@@ -667,7 +667,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1] -0.4179294 -0.6889005  1.7871104 -1.8131345  0.9925318  0.9962589
+## [1] -0.05331716  0.07392272  1.80036788 -1.76134830  0.89448904  0.94577431
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -680,7 +680,7 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 
 \begin{verbatim}
 ##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -1.81313 -1.12755 -0.68890 -0.41793  0.02526  1.78711
+## -1.76135 -0.57667  0.07392 -0.05332  0.58498  1.80037
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -9384,15 +9384,15 @@ Til sidste laver jeg en plot af resultaterne:
 \hypertarget{method-2-hierarchical-clustering}{%
 \section{Method 2: Hierarchical clustering}\label{method-2-hierarchical-clustering}}
 
-K-means er en meget populær måde at lave clusters i de data på, men der er mange andre metoder til at lave clusters. Jeg nævne kort hierarchical clustering. Vi skifter over til \texttt{mtcars}, og ligesom i \texttt{kmeans} skal vi bruge \texttt{scale} på de numeriske kolonner i de data.
+K-means er en meget populær metode til at lave clustering, men der er mange andre metoder, fk. hierarchical clustering. Vi skifter over til \texttt{mtcars}, og ligesom i \texttt{kmeans} skal vi første bruge \texttt{scale} på de numeriske kolonner i de data.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{mtcars\_scaled }\OtherTok{\textless{}{-}}\NormalTok{ mtcars }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ scale}
+\NormalTok{mtcars\_scaled }\OtherTok{\textless{}{-}}\NormalTok{ mtcars }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{scale}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
-I modsætning til k-means, for at lave hierarchical clustering skal man første beregne afstanden mellem alle de observationer i de data. De gøre man med funktionen \texttt{dist} (som bruger den Euclidean distance som default):
+I modsætning til k-means, for at lave hierarchical clustering skal man første beregne afstanden mellem alle de observationer i de data. Det gør man med funktionen \texttt{dist()} (som bruger den Euclidean distance som default):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9400,7 +9400,7 @@ I modsætning til k-means, for at lave hierarchical clustering skal man første 
 \end{Highlighting}
 \end{Shaded}
 
-For at lave en hierarchical clustering anvender man funktionen \texttt{hclust}. Metoden \texttt{complete} er default men man kan afprøve de andre methoder (der er ikke en fast regel over for, hvilken man skal bruge).
+For at lave en hierarchical clustering anvender man funktionen \texttt{hclust()}. Metoden \texttt{complete} er default men man kan afprøve de andre methoder (der er ikke en fast regel over for, hvilken metode man skal bruge).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9414,14 +9414,20 @@ I følgende arbejder vi lidt med \texttt{mtcars\_hc} til at få nogle clusters f
 \hypertarget{vuxe6lge-uxf8nkset-antal-clusters}{%
 \subsection{Vælge ønkset antal clusters}\label{vuxe6lge-uxf8nkset-antal-clusters}}
 
-Funktionen \texttt{cutree} anvendes til at få clusters fra de data. For eksempel, hvis man gerne vil have 4 clusters, bruger man \texttt{k\ =\ 4}. Jeg specificerer \texttt{order\_clusters\_as\_data\ =\ FALSE} for at få de clusters i de rækkefølger, som passer til plottet (dendrogram) vi lave (man skal have ovenstående pakker installeret for at få den til at fungere).
+Funktionen \texttt{cutree} anvendes til at få clusters fra resultaterne af funktionen \texttt{hclust}. For eksempel hvis man gerne vil have 4 clusters, bruger man \texttt{k\ =\ 4}. Jeg specificerer \texttt{order\_clusters\_as\_data\ =\ FALSE} for at få clusters i rækkefølgen, som passer til plottet (dendrogram) vi laver (bemærk at man skal have pakken \texttt{dendextend} installeret for at få den til at fungere).
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(dendextend)}
 
 \NormalTok{clusters }\OtherTok{\textless{}{-}} \FunctionTok{cutree}\NormalTok{(mtcars\_hc, }\AttributeTok{k =} \DecValTok{4}\NormalTok{, }\AttributeTok{order\_clusters\_as\_data =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
+Her laver jeg et overblik over, hvor mange observationerne fra \texttt{mtcars} er i hver cluster:
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{tibble}\NormalTok{(}\StringTok{"cluster"}\OtherTok{=}\NormalTok{clusters) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(cluster) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\FunctionTok{n}\NormalTok{())}
 \end{Highlighting}
 \end{Shaded}
@@ -9439,7 +9445,7 @@ FALSE 4       4     5
 \hypertarget{lav-et-puxe6nt-plot-af-dendrogram-med-ggplot2}{%
 \subsection{Lav et pænt plot af dendrogram med ggplot2}\label{lav-et-puxe6nt-plot-af-dendrogram-med-ggplot2}}
 
-Første vi anvende \texttt{dendro\_data} til at udtrække de dendrogram oplysninger fra de \texttt{hclust} resultater.
+Første anvender jeg funktionen \texttt{dendro\_data()} til at udtrække den ``dendrogram'' fra de \texttt{hclust()} resultater.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9448,7 +9454,7 @@ Første vi anvende \texttt{dendro\_data} til at udtrække de dendrogram oplysnin
 \end{Highlighting}
 \end{Shaded}
 
-Vi tilføjer vores clusters som vi beregnede ovenpå (det er derfor vi sikrede rækkefølgen af de clusters):
+Vi tilføjer vores clusters som vi beregnede ovenpå (det er derfor vi sikret rækkefølgen af de clusters):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -9472,7 +9478,11 @@ Vi benytter \texttt{dend\_data\$segments} og \texttt{dend\_data\$labels} til at 
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-526-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-527-1.pdf}
+
+Så kan man se, der er fire clusters i dengrammet, og biler der er tætest på hinanden ligner hinanden mest - fk. Merc 280C og Merc 280 må være meget éns, og er som forventet lige ved siden af hinanden i plottet.
+
+Man kan godt tilpasse ovenstående kode til et andet datasæt - se problemstillinger, men man må også gerne udvide plottet med de forskellige viden vi har om ggplot2.
 
 \hypertarget{ekstra-valgfri-afpruxf8ve-andre-metoder-puxe5-hierachical-clustering}{%
 \subsection{Ekstra (valgfri): afprøve andre metoder på hierachical clustering}\label{ekstra-valgfri-afpruxf8ve-andre-metoder-puxe5-hierachical-clustering}}
@@ -9511,7 +9521,7 @@ Vi iterate over de fire metoder og lave samme process som ovenpå med map. Deref
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-528-1.pdf}
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-529-1.pdf}
 
 \hypertarget{problemstillinger-8}{%
 \section{Problemstillinger}\label{problemstillinger-8}}
@@ -9628,6 +9638,559 @@ Inlæs data
 \textbf{g)} Tilpas koden fra 9.3.5 til at lave en analyse for ``hoerca'' og ``retail'' (variablen \texttt{Channel}) hver for sig. Angiv 4 clusters i din analyse.
 
 \textbf{h)} Lav et plot af din clustering (adskilt efter variablen \texttt{Channel}) og få ``x'' på plotterne til at vise din cluster middelværdier for \texttt{Frozen} og \texttt{Fresh}.
+
+\hypertarget{principal-component-analysis-pca}{%
+\chapter{Principal component analysis (PCA)}\label{principal-component-analysis-pca}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(broom)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{indledning-og-luxe6ringsmuxe5lene-3}{%
+\section{Indledning og læringsmålene}\label{indledning-og-luxe6ringsmuxe5lene-3}}
+
+\hypertarget{luxe6ringsmuxe5lene-5}{%
+\subsection{Læringsmålene}\label{luxe6ringsmuxe5lene-5}}
+
+Du skal være i stand til at
+
+\begin{itemize}
+\tightlist
+\item
+  Forstå koncepten bag principal component analysis (PCA)
+\item
+  Benytte PCA i R og lave et plot af et datasæt i to dimensioner
+\item
+  Vurdere den relative varians forklarede af de forskellige components
+\item
+  Anvende PCA til at vurdere variablernes bidrag til de principal components
+\end{itemize}
+
+\hypertarget{introduktion-til-chapter-1}{%
+\subsection{Introduktion til chapter}\label{introduktion-til-chapter-1}}
+
+Principal component analysis er en meget populær og benyttet statistike metode og kan anvendes til bla. at visualisere data med et højt antal dimensioner i et enkelt scatter plot med to dimensioner. Det er meget nyttigt for at se den underliggende struktur i datasættet og indenfor biologi er det meget brugt til at blandt andet visualisere hvor de forskellige samples eller replikates sidder relative til hinanden - for eksempel for at se, om de controls samples og treatment samples fremgå i samme steder på plottet (som indikere at de ligner hinanden).
+
+\hypertarget{video-ressourcer-6}{%
+\subsection{Video ressourcer}\label{video-ressourcer-6}}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 1 - hvad er PCA?
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/556581604}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 2 - hvordan man lave PCA i R og få output i tidy form
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/556581588}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 3 - hvordan man visualisere de data (principal components, rotation matrix)
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/556787141}
+
+\hypertarget{hvad-er-principal-component-analysis-pca}{%
+\section{Hvad er principal component analysis (PCA)?}\label{hvad-er-principal-component-analysis-pca}}
+
+I sidste lektion arbejdede vi med \texttt{penguins}, hvor vi så at der faktisk var fire numeriske variabler - altså fire dimensioner - som blev brugt til at lave k-means clustering.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(palmerpenguins)}
+\NormalTok{penguins }\OtherTok{\textless{}{-}}\NormalTok{ penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year=}\FunctionTok{as.factor}\NormalTok{(year))}
+
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+##   bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##            <dbl>         <dbl>             <int>       <int>
+## 1           39.1          18.7               181        3750
+## 2           39.5          17.4               186        3800
+## 3           40.3          18                 195        3250
+## 4           36.7          19.3               193        3450
+## 5           39.3          20.6               190        3650
+## 6           38.9          17.8               181        3625
+\end{verbatim}
+
+Når man laver et plot for at vise de forskellige clusters, få man et problem - hvilke to variable skal plottes? Man kan plotte hver eneste pair af variabler. For eksempel kan man prøve en pakke der hedder \texttt{GGally}, som automatiske kan plotte de forskellige pairs af numeriske variabler og beregner korrelationen mellem variablerne.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(GGally)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Indlæser krævet pakke: GGally
+\end{verbatim}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggscatmat}\NormalTok{(}\AttributeTok{columns =} \DecValTok{3}\SpecialCharTok{:}\DecValTok{6}\NormalTok{ ,}\AttributeTok{color =} \StringTok{"species"}\NormalTok{, }\AttributeTok{corMethod =} \StringTok{"pearson"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set2"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-555-1.pdf}
+
+Problemmet er, at så snart antallet af dimensioner i datasættet bliver større end 4, bliver plottet alt for kompleks og pladskrævende.
+
+En løsning til problemmet er at projektere datasættet ned indtil et mindre antal demensioner (fk. kun 2 dimensioner). Disse dimensioner fanger oplysninger fra alle variablerne i datasættet, og derfor når man lave et scatter plot, får man repræsenteret det hele datasæt i stedet for kun to udvalgte variabler. Metoden for at lave disse såkaldte `projektion' kaldes for `princial component analysis'.
+
+\hypertarget{simpel-eksempel-med-to-dimensioner}{%
+\subsection{Simpel eksempel med to dimensioner}\label{simpel-eksempel-med-to-dimensioner}}
+
+Man kan prøve at forstå hvordan PCA fungerer ved at kigge på et simpelt eksempel med 2 dimensioner:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#simulere data med en høj korrelation}
+\NormalTok{a }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{250}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\NormalTok{b }\OtherTok{\textless{}{-}}\NormalTok{ a }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{250}\NormalTok{,}\DecValTok{0}\NormalTok{,.}\DecValTok{5}\NormalTok{)}
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(a,b)}
+\FunctionTok{ggplot}\NormalTok{(df,}\FunctionTok{aes}\NormalTok{(a,b)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-556-1.pdf}
+
+Vi kan se her, at der er en meget store korrelation mellem a og b. Selvom datasættet er plottet i 2 dimensioner kan de næsten forklares af én linje - en såkaldte bedste rette linje der passer bedste gennem punkterne.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(a,b)}
+\FunctionTok{ggplot}\NormalTok{(df,}\FunctionTok{aes}\NormalTok{(a,b)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{,}\AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-557-1.pdf}
+
+Med andre ord kan vi næsten forklare datasættet i blot én dimension - punkternes afstand langt linjen. Når man tager alle punkterne og beskriver dem langt én linje som bedste beskrive variansen i datasættet, kaldes den linje for den første principal component (PC1). Man kan dernæst beskriver en anden linje som er vinkelrettet til PC1 som bedste forklarer variancen i de data som ikke var fanget af PC1 - det kaldes for den anden princal component (PC2).
+
+Vi kan se her PC1 og PC2 plottet:
+
+\includegraphics[width=0.5\linewidth]{plots/pca_dem}
+
+Når vi tager PC1 and PC2 og plotter dem som henholdvis x-aksen og y-aksen, svarer det til en drejning af akserne i plottet (vi finder PC1 og PC2 fra funktionen \texttt{prcomp} som jeg forklarer i næste sektion):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{augment}\NormalTok{(}\FunctionTok{prcomp}\NormalTok{(df),df)}
+\FunctionTok{ggplot}\NormalTok{(dat,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{.fittedPC1,}\AttributeTok{y=}\NormalTok{.fittedPC2)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{"lm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula 'y ~ x'
+\end{verbatim}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-559-1.pdf}
+
+Vi kan se her, at de data flyder de plads på plottet bedre en før (og bemærk at de askse skala er blevet meget mindre i den nye y-aksen, da de data spreder sig meget mindre langt PC2 i forhold til PC1.)
+
+Det her er kun et eksempel hvor vores oprindelige data ligger i to dimensions (to variabler), for at gøre det nemt at visualisere dem i et plot, men de fleste datasæt (fk penguins, iris osv.) har flere end to dimensioner. Vi kan godt lave samme process, hvor vi definerer PC1 som forklarer så meget af variancen i de data som muligt, og dernæst PC2 som forklarer nogle af variancen ikke fanget af PC1, og dernæst PC3 osv., efter hvor mange dimensioner de data har. I mange praktisk situationer vælger man de første to componenter, som er mest vigtige, da de forklarer mest af variancen i de data i forhold til de andre componenter.
+
+``So to sum up, the idea of PCA is simple --- reduce the number of variables of a data set, while preserving as much information as possible.'' \url{https://builtin.com/data-science/step-step-explanation-principal-component-analysis}
+
+\hypertarget{fit-pca-to-data-in-r}{%
+\section{Fit PCA to data in R}\label{fit-pca-to-data-in-r}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(broom)}
+\end{Highlighting}
+\end{Shaded}
+
+Lad os skifte tilbage til nogle virkelige data for at benytte \texttt{prcomp}: datasættet \texttt{penguins}. Med \texttt{prcomp} fokuserer vi kun på numeriske variabler, så vi bruger \texttt{select} med \texttt{where(is.numeric)} og så anvender scaling ved at specificere \texttt{scale\ =\ TRUE} indenfor funktionen \texttt{prcomp}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_fit }\OtherTok{\textless{}{-}}\NormalTok{ penguins }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{\%\textgreater{}\%} \CommentTok{\# retain only numeric columns}
+  \FunctionTok{prcomp}\NormalTok{(}\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{) }\CommentTok{\# do PCA on scaled data}
+
+\FunctionTok{summary}\NormalTok{(pca\_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Importance of components:
+##                           PC1    PC2     PC3     PC4
+## Standard deviation     1.6569 0.8821 0.60716 0.32846
+## Proportion of Variance 0.6863 0.1945 0.09216 0.02697
+## Cumulative Proportion  0.6863 0.8809 0.97303 1.00000
+\end{verbatim}
+
+\texttt{Proportion\ of\ Variance} indikerer hvor meget af variancen i de data blev forklaret af de forskellige komponenter. Vi kan se, at \texttt{PC1} forklaret omkring 69\% og de første to komponenter sammen forklarer 88\% af variancen i de data. Derfor hvis vi viser et plot af de første to komponenter ved vi, at vi har fanget rigtig meget oplysninger om de fire variabler i datasæsttet.
+
+\hypertarget{integrere-pca-resultater-med-broom-pakke}{%
+\section{Integrere PCA resultater med broom-pakke}\label{integrere-pca-resultater-med-broom-pakke}}
+
+Der er flere ting som kan være nyttige at lave med vores PCA resultater:
+
+\begin{itemize}
+\tightlist
+\item
+  Lave et plot af datasættet ud fra de første to principal components
+\item
+  Se for meget af variansen i datasættet er forklaret af de forskellige components
+\item
+  Bruge den rotation matrix til at se, hvordan variabler sidder med relative til hinanden
+\end{itemize}
+
+For at få lavet vores plot af de principal components kan vi benytte funktionen \texttt{augment()} ligesom vi gjorde i vores sidste lektion med k-means clustering. Her få vi værdierne til hver af de fire principal components sammen med den oprindelige datasæt.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_fit\_augment }\OtherTok{\textless{}{-}}\NormalTok{ pca\_fit }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{augment}\NormalTok{(penguins) }\CommentTok{\# add original dataset back in}
+
+\NormalTok{pca\_fit\_augment}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 333 x 13
+##    .rownames species island    bill_length_mm bill_depth_mm flipper_length_mm
+##    <chr>     <fct>   <fct>              <dbl>         <dbl>             <int>
+##  1 1         Adelie  Torgersen           39.1          18.7               181
+##  2 2         Adelie  Torgersen           39.5          17.4               186
+##  3 3         Adelie  Torgersen           40.3          18                 195
+##  4 4         Adelie  Torgersen           36.7          19.3               193
+##  5 5         Adelie  Torgersen           39.3          20.6               190
+##  6 6         Adelie  Torgersen           38.9          17.8               181
+##  7 7         Adelie  Torgersen           39.2          19.6               195
+##  8 8         Adelie  Torgersen           41.1          17.6               182
+##  9 9         Adelie  Torgersen           38.6          21.2               191
+## 10 10        Adelie  Torgersen           34.6          21.1               198
+## # ... with 323 more rows, and 7 more variables: body_mass_g <int>, sex <fct>,
+## #   year <fct>, .fittedPC1 <dbl>, .fittedPC2 <dbl>, .fittedPC3 <dbl>,
+## #   .fittedPC4 <dbl>
+\end{verbatim}
+
+Vi kan tage \texttt{pca\_fit\_augment} og lave et plot af de første to principal components:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_fit\_augment  }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{.fittedPC1, }\AttributeTok{y=}\NormalTok{.fittedPC2, }\AttributeTok{color =}\NormalTok{ species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-563-1.pdf}
+
+Vi kan også integrere de clusters som vi fik fra funktionen \texttt{kmeans()} i vores PCA ved at anvende funktionen \texttt{augment()} på resultaterne fra \texttt{kmeans} og vores data som allerede har resultaterne fra \texttt{pca}. Da både PCA og k-means fanger oplysninger om strukturen af de data baserede på de fire numeriske variabler, kan man forventer en bedre sammenligning mellem de to (i forhold til at sammenligne de clusters med et plot med kun to af variablerne).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_scaled }\OtherTok{\textless{}{-}}\NormalTok{ penguins }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric)) }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ scale}
+
+\NormalTok{kclust }\OtherTok{\textless{}{-}} \FunctionTok{kmeans}\NormalTok{(penguins\_scaled,}\AttributeTok{centers =} \DecValTok{3}\NormalTok{)}
+
+\NormalTok{kclust }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{augment}\NormalTok{(pca\_fit\_augment)  }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{.fittedPC1, }\AttributeTok{y=}\NormalTok{.fittedPC2, }\AttributeTok{color =}\NormalTok{ .cluster)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-564-1.pdf}
+
+\textbf{Output med tidy}
+
+Næste kigger vi på variansen i datasættet som er blevet fanget af hver af de forskellige components. Man kan udtrække oplysningerne ved at benytte funktionen \texttt{tidy()} fra pakken \texttt{broom}, og ved at angiv \texttt{matrix\ =\ "eigenvalues"} indenfor \texttt{tidy}.
+
+Det kaldes for ``eigenvalues'' fordi, hvis man kigger på matematikken bag principal component analysis, tager man udgangspunkt i en covariance matrix. En covariance matrix beskriver sammenhængen eller korrelationen mellem de forskellige variabler. Man bruger denne covariance matrix til at beregne de såkaldte eigenvalues og deres tilsvarende eigenvectors.
+
+Det er faktisk den største eigenvalue som fortæller os om den første principal component - det fortæller os hvor meget af variansen i datasættet den første principal component fanger - jo større det er relativ til de andre eigenvalues, jo mere variansen man forklarer med den første principal component. Og den næste største fortæller os om den anden prinical component og så videre.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_fit\_tidy }\OtherTok{\textless{}{-}}\NormalTok{ pca\_fit }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tidy}\NormalTok{(}\AttributeTok{matrix =} \StringTok{"eigenvalues"}\NormalTok{)}
+\NormalTok{pca\_fit\_tidy}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 4
+##      PC std.dev percent cumulative
+##   <dbl>   <dbl>   <dbl>      <dbl>
+## 1     1   1.66   0.686       0.686
+## 2     2   0.882  0.195       0.881
+## 3     3   0.607  0.0922      0.973
+## 4     4   0.328  0.0270      1
+\end{verbatim}
+
+Lad os visualisere de tal her i procenttal, med at specificere \texttt{labels\ =\ scales::percent\_format()} indenfor \texttt{scale\_y\_continuous} - så vi bare ændre på de tal som kan ses på y-aksen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_fit\_tidy }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ PC, }\AttributeTok{y =}\NormalTok{ percent)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"steelblue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}
+    \AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{percent\_format}\NormalTok{(), }\CommentTok{\#convert labels to percent format}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-566-1.pdf}
+
+På den ene side hvis der er meget variance som er forklaret af de første components tilsammen, betyder det at der er en del redundans i datasættet, på grund af, at mange af de variabler har en tæt sammenhæng med hinanden. På den anden side hvis der er en meget lille andel af variancen som er forklaret af de første components tilsammen, betyder det at det er svært at beskrive datasættet i mindre dimensioner (fordi der næsten er ingen sammenhæng mellem variablerne) - i dette tilfælde, hvor datasættet er mere kompleks, er PCA mindre effektiv.
+
+\hypertarget{rotation-matrix-for-at-udtruxe6kker-bidragen-af-de-forskellige-variabler}{%
+\subsection{Rotation matrix for at udtrækker bidragen af de forskellige variabler}\label{rotation-matrix-for-at-udtruxe6kker-bidragen-af-de-forskellige-variabler}}
+
+De eigenvalues kan anvendes til at undersøge variancen i datasættet, men deres tilsvarende eigenvectors fortæller os om, hvordan de forskellige variabler er kombineret til at få de endelige principal component værdier, som vi bruger fk. i et scatter plot. De eigenvectors bruges til at lave et matrix som hedder `rotation matrix'.
+
+Jeg anvender funktionen \texttt{pivot\_wider} for at få vores matrix mere klart at se. Vi kan se at vi har variablerne her på rækkerne og de forskellige prinicpal components i kolonnerne.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pca\_fit\_rotate }\OtherTok{\textless{}{-}}\NormalTok{ pca\_fit }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{tidy}\NormalTok{(}\AttributeTok{matrix =} \StringTok{"rotation"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =} \StringTok{"PC"}\NormalTok{, }\AttributeTok{names\_prefix =} \StringTok{"PC"}\NormalTok{, }\AttributeTok{values\_from =} \StringTok{"value"}\NormalTok{)}
+\NormalTok{pca\_fit\_rotate}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 4 x 5
+##   column               PC1      PC2    PC3    PC4
+##   <chr>              <dbl>    <dbl>  <dbl>  <dbl>
+## 1 bill_length_mm     0.454 -0.600   -0.642  0.145
+## 2 bill_depth_mm     -0.399 -0.796    0.426 -0.160
+## 3 flipper_length_mm  0.577 -0.00579  0.236 -0.782
+## 4 body_mass_g        0.550 -0.0765   0.592  0.585
+\end{verbatim}
+
+Den rotation matrix fortæller os hvordan man beregner værdierne af de principal components for alle observationer. For eksempel tager vi vores første observation, beregne 0.45 gange de bill length, og så minus 0.4 gang de bill depth, og så plus 0.58 x den flipper length og så plus 0.55 x body\_mass. Og så har vi værdien for observationen langt den første princip komponent.
+
+Vi kan andvende den rotation matrix til at se hvordan de forskellige variabler relatere til hinhanden. Variablerne som er tæt på hinanden i plottet ligner hinanden. Vi kan se at \texttt{flipper\_length\_mm} og \texttt{body\_mass\_g} ligner hinhanen ret meget i vores datasæt, mens \texttt{bill\_depth\_mm} sidder over til venstre langt den første principal component, så det måske indeholder nogle oplysninger om pingvinerne, der ikke kunne fanges i de andre variabler.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggrepel)}
+\NormalTok{pca\_fit\_rotate }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{PC1,}\AttributeTok{y=}\NormalTok{PC2,}\AttributeTok{colour=}\NormalTok{column)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size=}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_text\_repel}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label=}\NormalTok{column)) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-568-1.pdf}
+
+\hypertarget{pakken-factoextra}{%
+\subsection{\texorpdfstring{Pakken \texttt{factoextra}}{Pakken factoextra}}\label{pakken-factoextra}}
+
+R-pakken \texttt{factoextra} kan avendes til at lave et lignende plot fra de rotation matrix automatiske, og den arbejder ovenpå \texttt{ggplot2} så man kan ændret temaet osv. Man kan se hvordan de fungere i følgende kode.
+
+\begin{itemize}
+\tightlist
+\item
+  Man få det varians procenttal på akserne.
+\item
+  Lokationer af pilehovederne er fra den rotation matrix.
+\item
+  Jo mindre vinklen mellem to linjer er, og tættere på de er til hinanden
+\item
+  Jo nærmere til den cirkle pilehoveredne er, jo mere indflydelse den variable har i de principal components.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(factoextra)}
+\FunctionTok{fviz\_pca\_var}\NormalTok{(pca\_fit, }\AttributeTok{col.var=}\StringTok{"steelblue"}\NormalTok{,}\AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-569-1.pdf}
+
+\hypertarget{quiz-og-problemstillinger}{%
+\section{Quiz og problemstillinger}\label{quiz-og-problemstillinger}}
+
+\textbf{Problem 1}) Quiz på Absalon
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Download følgende datasæt ved at køre følgende kode chunk:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cancer }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\FunctionTok{url}\NormalTok{(}\StringTok{"https://www.dropbox.com/s/4qa37itw9wtwtjg/breast{-}cancer.csv?dl=1"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{id)}
+\NormalTok{cancer }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glimpse}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 569
+## Columns: 31
+## $ diagnosis               <chr> "M", "M", "M", "M", "M", "M", "M", "M", "M", "~
+## $ radius_mean             <dbl> 17.990, 20.570, 19.690, 11.420, 20.290, 12.450~
+## $ texture_mean            <dbl> 10.38, 17.77, 21.25, 20.38, 14.34, 15.70, 19.9~
+## $ perimeter_mean          <dbl> 122.80, 132.90, 130.00, 77.58, 135.10, 82.57, ~
+## $ area_mean               <dbl> 1001.0, 1326.0, 1203.0, 386.1, 1297.0, 477.1, ~
+## $ smoothness_mean         <dbl> 0.11840, 0.08474, 0.10960, 0.14250, 0.10030, 0~
+## $ compactness_mean        <dbl> 0.27760, 0.07864, 0.15990, 0.28390, 0.13280, 0~
+## $ concavity_mean          <dbl> 0.30010, 0.08690, 0.19740, 0.24140, 0.19800, 0~
+## $ concave.points_mean     <dbl> 0.14710, 0.07017, 0.12790, 0.10520, 0.10430, 0~
+## $ symmetry_mean           <dbl> 0.2419, 0.1812, 0.2069, 0.2597, 0.1809, 0.2087~
+## $ fractal_dimension_mean  <dbl> 0.07871, 0.05667, 0.05999, 0.09744, 0.05883, 0~
+## $ radius_se               <dbl> 1.0950, 0.5435, 0.7456, 0.4956, 0.7572, 0.3345~
+## $ texture_se              <dbl> 0.9053, 0.7339, 0.7869, 1.1560, 0.7813, 0.8902~
+## $ perimeter_se            <dbl> 8.589, 3.398, 4.585, 3.445, 5.438, 2.217, 3.18~
+## $ area_se                 <dbl> 153.40, 74.08, 94.03, 27.23, 94.44, 27.19, 53.~
+## $ smoothness_se           <dbl> 0.006399, 0.005225, 0.006150, 0.009110, 0.0114~
+## $ compactness_se          <dbl> 0.049040, 0.013080, 0.040060, 0.074580, 0.0246~
+## $ concavity_se            <dbl> 0.05373, 0.01860, 0.03832, 0.05661, 0.05688, 0~
+## $ concave.points_se       <dbl> 0.015870, 0.013400, 0.020580, 0.018670, 0.0188~
+## $ symmetry_se             <dbl> 0.03003, 0.01389, 0.02250, 0.05963, 0.01756, 0~
+## $ fractal_dimension_se    <dbl> 0.006193, 0.003532, 0.004571, 0.009208, 0.0051~
+## $ radius_worst            <dbl> 25.38, 24.99, 23.57, 14.91, 22.54, 15.47, 22.8~
+## $ texture_worst           <dbl> 17.33, 23.41, 25.53, 26.50, 16.67, 23.75, 27.6~
+## $ perimeter_worst         <dbl> 184.60, 158.80, 152.50, 98.87, 152.20, 103.40,~
+## $ area_worst              <dbl> 2019.0, 1956.0, 1709.0, 567.7, 1575.0, 741.6, ~
+## $ smoothness_worst        <dbl> 0.1622, 0.1238, 0.1444, 0.2098, 0.1374, 0.1791~
+## $ compactness_worst       <dbl> 0.6656, 0.1866, 0.4245, 0.8663, 0.2050, 0.5249~
+## $ concavity_worst         <dbl> 0.71190, 0.24160, 0.45040, 0.68690, 0.40000, 0~
+## $ concave.points_worst    <dbl> 0.26540, 0.18600, 0.24300, 0.25750, 0.16250, 0~
+## $ symmetry_worst          <dbl> 0.4601, 0.2750, 0.3613, 0.6638, 0.2364, 0.3985~
+## $ fractal_dimension_worst <dbl> 0.11890, 0.08902, 0.08758, 0.17300, 0.07678, 0~
+\end{verbatim}
+
+\textbf{Problem 2}) Anvend funktionen \texttt{ggscatmat} fra pakken \texttt{GGally} til at lave et plot hvor man sammenligne fem af de variabler.
+
+\begin{itemize}
+\tightlist
+\item
+  Man kan lave en tilfældig sample af fem variabler med at angive \texttt{columns\ =\ sample(2:31,5)} indenfor \texttt{ggscatmat}.
+\item
+  Give farver efter factor variablen \texttt{diagnosis} og vælger ``person'' som \texttt{corMethod}.
+\item
+  Opfatter du, at der er en del redundans i de data (altså er der høje korrelationer mellem de forskellige variabler)?
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 3}) Benyt funktionen \texttt{prcomp} til at beregne en principal component analysis af de data.
+
+\begin{itemize}
+\tightlist
+\item
+  Husk at det skal kun være numeriske variabler og angiv \texttt{scale=TRUE} indenfor selve funktion.
+\item
+  Lav et \texttt{summary} af resultaterne. Hvad er proportionen af variancen forklaret af den første principal component?
+\item
+  Hvad er proportionen af variancen forklaret af den første to principal components tilsammen?
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 4}) \emph{Augment og plot} Anvend \texttt{augment} til at tilføje de rådata til ovenstående resultater fra \texttt{prcomp}.
+
+\begin{itemize}
+\tightlist
+\item
+  Brug den til at lave et scatter plot af de første to principal components
+\item
+  Giv farver efter \texttt{diagnosis}
+\item
+  Skriv kort om man kan skelne imellem ``M'' og ``B'' fra variablen \texttt{diagnosis} ud fra de første to principal components.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 5}) \emph{Integrere kmeans clustering}. Lav et clustering med \texttt{kmeans} på de data, med to clusters.
+
+\begin{itemize}
+\tightlist
+\item
+  Augment resultaterne til din rå data (med de \texttt{prcomp} resultater allerede tilføjet).
+\item
+  Lav et plot og give farver efter \texttt{.cluster} og forme efter \texttt{diagnosis}.
+\item
+  Sammenligne de clusters med \texttt{diagnosis}.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 6}) \emph{tidy form og variansen} Anvende \texttt{tidy(matrix\ =\ "eigenvalues")} til at få bidragen af de forskellige components til variansen i ddatasættet.
+
+\begin{itemize}
+\tightlist
+\item
+  Lav et barplot som viser de components på x-aksen og \texttt{percent} på y-aksen.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 7}) \emph{tidy form og rotation matrix} Anvende \texttt{tidy(matrix\ =\ "rotation")} til at få den rotation matrix.
+
+\begin{itemize}
+\tightlist
+\item
+  Anvend \texttt{pivot\_wider} til at få den til wide form
+\item
+  Lav et scatter plot som viser de forskellige variabler relativ til hinanden
+\item
+  Anvend \texttt{geom\_text\_repel} til at give labels til de variabler (kan være en god idé at anvend \texttt{show.legend=F})
+\end{itemize}
+
+\hypertarget{ekstra-luxe6sning}{%
+\section{Ekstra læsning}\label{ekstra-luxe6sning}}
+
+Step by step explanation: \url{https://builtin.com/data-science/step-step-explanation-principal-component-analysis}
+
+PCA tidyverse style fra claus wilke: \url{https://clauswilke.com/blog/2020/09/07/pca-tidyverse-style/}
+
+More PCA in tidyverse framework: \url{https://tbradley1013.github.io/2018/02/01/pca-in-a-tidy-verse-framework/}
 
   \bibliography{book.bib,packages.bib}
 

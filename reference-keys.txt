@@ -210,3 +210,16 @@ vælge-ønkset-antal-clusters
 lav-et-pænt-plot-af-dendrogram-med-ggplot2
 ekstra-valgfri-afprøve-andre-metoder-på-hierachical-clustering
 problemstillinger-8
+principal-component-analysis-pca
+indledning-og-læringsmålene-3
+læringsmålene-5
+introduktion-til-chapter-1
+video-ressourcer-6
+hvad-er-principal-component-analysis-pca
+simpel-eksempel-med-to-dimensioner
+fit-pca-to-data-in-r
+integrere-pca-resultater-med-broom-pakke
+rotation-matrix-for-at-udtrækker-bidragen-af-de-forskellige-variabler
+pakken-factoextra
+quiz-og-problemstillinger
+ekstra-læsning
