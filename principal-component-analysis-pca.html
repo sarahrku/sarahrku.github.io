@@ -766,40 +766,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## $ fractal_dimension_worst &lt;dbl&gt; 0.11890, 0.08902, 0.08758, 0.17300, 0.07678, 0…</code></pre>
 <p><strong>Problem 2</strong>) Anvend funktionen <code>ggscatmat</code> fra pakken <code>GGally</code> til at lave et plot hvor man sammenligne fem af de variabler.</p>
 <ul>
-<li>Man kan lave en tilfældig sample af fem variabler med at angive <code>columns = sample(2:31,5)</code> indenfor <code>ggscatmat</code>.</li>
-<li>Give farver efter factor variablen <code>diagnosis</code> og vælger “person” som <code>corMethod</code>.</li>
-<li>Opfatter du, at der er en del redundans i de data (altså er der høje korrelationer mellem de forskellige variabler)?</li>
+<li>Man kan lave en tilfældig sample af fem variabler med at angive <code>columns = sample(2:31,5)</code> indenfor funktionen <code>ggscatmat</code>(husk at installere <code>GGally</code>-pakken).</li>
+<li>Give farver efter factor variablen <code>diagnosis</code> og vælger “pearson” som <code>corMethod</code>.</li>
+<li>Opfatter du, at der er en del redundans i datasættet (dvs. er der stærke korrelationer mellem de forskellige variabler)?</li>
 </ul>
 <hr />
-<p><strong>Problem 3</strong>) Benyt funktionen <code>prcomp</code> til at beregne en principal component analysis af de data.</p>
+<p><strong>Problem 3</strong>) Benyt funktionen <code>prcomp</code> til at beregne en principal component analysis af datasættet.</p>
 <ul>
 <li>Husk at det skal kun være numeriske variabler og angiv <code>scale=TRUE</code> indenfor selve funktion.</li>
-<li>Lav et <code>summary</code> af resultaterne. Hvad er proportionen af variancen forklaret af den første principal component?</li>
-<li>Hvad er proportionen af variancen forklaret af den første to principal components tilsammen?</li>
+<li>Lav et <code>summary</code> af resultaterne. Hvad er proportionen af variansen, som er forklaret af den første principal component?</li>
+<li>Hvad er proportionen af variansen, som er forklaret af de første to principal components tilsammen?</li>
 </ul>
 <hr />
-<p><strong>Problem 4</strong>) <em>Augment og plot</em> Anvend <code>augment</code> til at tilføje de rådata til ovenstående resultater fra <code>prcomp</code>.</p>
+<p><strong>Problem 4</strong>) <em>Augment og plot</em> Anvend <code>augment</code> til at tilføje dit rå datasæt til ovenstående resultater fra <code>prcomp</code>.</p>
 <ul>
 <li>Brug den til at lave et scatter plot af de første to principal components</li>
 <li>Giv farver efter <code>diagnosis</code></li>
 <li>Skriv kort om man kan skelne imellem “M” og “B” fra variablen <code>diagnosis</code> ud fra de første to principal components.</li>
 </ul>
 <hr />
-<p><strong>Problem 5</strong>) <em>Integrere kmeans clustering</em>. Lav et clustering med <code>kmeans</code> på de data, med to clusters.</p>
+<p><strong>Problem 5</strong>) <em>Integrere kmeans clustering</em>. Lav et clustering med <code>kmeans</code> på datasættet, med to clusters (husk at udvælge numeriske variabler og scale inden du anvender funktionen <code>kmeans</code>).</p>
 <ul>
-<li>Augment resultaterne til din rå data (med de <code>prcomp</code> resultater allerede tilføjet).</li>
-<li>Lav et plot og give farver efter <code>.cluster</code> og forme efter <code>diagnosis</code>.</li>
-<li>Sammenligne de clusters med <code>diagnosis</code>.</li>
+<li>Augment resultaterne af <code>kmeans</code> til dit datasæt, der allerede har <code>prcomp</code> resultater tilføjet.</li>
+<li>Lav et plot og give farver efter <code>.cluster</code> og former efter <code>diagnosis</code>.</li>
+<li>Sammenligne dine to clusters med <code>diagnosis</code>.</li>
 </ul>
 <hr />
-<p><strong>Problem 6</strong>) <em>tidy form og variansen</em> Anvende <code>tidy(matrix = "eigenvalues")</code> til at få bidragen af de forskellige components til variansen i ddatasættet.</p>
+<p><strong>Problem 6</strong>) <em>tidy form og variansen</em> Anvende <code>tidy(matrix = "eigenvalues")</code> på din PCA resultater til at få bidragen af de forskellige components til den overordnet varianse i datasættet.</p>
 <ul>
 <li>Lav et barplot som viser de components på x-aksen og <code>percent</code> på y-aksen.</li>
 </ul>
 <hr />
 <p><strong>Problem 7</strong>) <em>tidy form og rotation matrix</em> Anvende <code>tidy(matrix = "rotation")</code> til at få den rotation matrix.</p>
 <ul>
-<li>Anvend <code>pivot_wider</code> til at få den til wide form</li>
+<li>Anvend funktionen <code>pivot_wider</code> til at få den til wide form</li>
 <li>Lav et scatter plot som viser de forskellige variabler relativ til hinanden</li>
 <li>Anvend <code>geom_text_repel</code> til at give labels til de variabler (kan være en god idé at anvend <code>show.legend=F</code>)</li>
 </ul>

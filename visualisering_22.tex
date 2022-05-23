@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-22}
+\date{Last updated: 2022-05-23}
 
 \begin{document}
 \maketitle
@@ -611,11 +611,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1] -0.2932132051  0.2263219571 -0.2244142172  0.8162939952  2.2935634337
-##  [6]  1.1019684094  0.9088519403  1.1260999085 -0.9258610880  0.0836672488
-## [11]  0.6099331142 -0.8132175457 -0.9508986430 -0.0009443096  1.4736064005
-## [16] -0.4645837376  0.9816256941 -0.3349934519  0.6673714209 -2.3032027129
-## [21]  0.3930398008  0.5301290075  1.6261882469 -0.4323010774 -0.6749245750
+##  [1]  1.84159154 -1.44198542  0.03418285  0.20807226  0.80992168  2.34781778
+##  [7]  1.45579611 -1.43509603 -0.25891949  2.80433732 -0.56980836 -0.58218753
+## [13]  1.00647465 -0.07244001 -1.07573522 -0.67262304 -0.89398936  0.98320654
+## [19]  0.44435241  1.08596402  2.16377314 -0.23084830 -0.36531902  0.39794994
+## [25] -0.49334890
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -623,13 +623,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1] {-}0.2932132  0.2263220 {-}0.2244142  0.8162940  2.2935634  1.1019684}
+\DocumentationTok{\#\# [1]  1.84159154 {-}1.44198542  0.03418285  0.20807226  0.80992168  2.34781778}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}2.3032027  0.3930398  0.5301290  1.6261882 {-}0.4323011 {-}0.6749246}
+\DocumentationTok{\#\# [1]  1.0859640  2.1637731 {-}0.2308483 {-}0.3653190  0.3979499 {-}0.4933489}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] {-}0.2932132}
+\DocumentationTok{\#\# [1] 1.841592}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] {-}0.6749246}
+\DocumentationTok{\#\# [1] {-}0.4933489}
 \end{Highlighting}
 \end{Shaded}
 
@@ -667,7 +667,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.2168042  0.2263220  2.2935634 -2.3032027  0.9993810  0.9996905
+## [1]  0.29964558  0.03418285  2.80433732 -1.44198542  1.38556494  1.17710023
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -679,8 +679,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -2.3032 -0.4323  0.2263  0.2168  0.9089  2.2936
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.44199 -0.56981  0.03418  0.29965  1.00647  2.80434
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -9569,7 +9569,7 @@ Tilpas min kode fra kursusnotaterne (sektion 9.4) til at lave følgende:
 
 \textbf{a}) Benyt funktioner \texttt{dist} og dernæst \texttt{hclust} på datasættet \texttt{msleep\_scaled}.
 
-\textbf{b}) Benyt \texttt{cuttree} for at finde 5 clusters fra dine \texttt{hclust}-resultater, og kalde det for \texttt{clusters}. Husk at anvende \texttt{order\_clusters\_as\_data\ =\ FALSE} så at vi har den korrekt rækkefølge for et plot (\emph{OBS man skal installere/indlæse pakken \texttt{dendextend}})
+\textbf{b}) Benyt \texttt{cutree} for at finde 5 clusters fra dine \texttt{hclust}-resultater, og kalde det for \texttt{clusters}. Husk at anvende \texttt{order\_clusters\_as\_data\ =\ FALSE} så at vi har den korrekt rækkefølge for et plot (\emph{OBS man skal installere/indlæse pakken \texttt{dendextend}})
 
 \textbf{c}) Benyt \texttt{dendro\_data} til at udtrække de dendrogram fra resultaterne og tilføj \texttt{clusters} til \texttt{dend\_data\$labels} (kopier kode fra 9.4.2).
 
@@ -10110,30 +10110,30 @@ Download følgende datasæt ved at køre følgende kode chunk:
 \begin{itemize}
 \tightlist
 \item
-  Man kan lave en tilfældig sample af fem variabler med at angive \texttt{columns\ =\ sample(2:31,5)} indenfor \texttt{ggscatmat}.
+  Man kan lave en tilfældig sample af fem variabler med at angive \texttt{columns\ =\ sample(2:31,5)} indenfor funktionen \texttt{ggscatmat}(husk at installere \texttt{GGally}-pakken).
 \item
-  Give farver efter factor variablen \texttt{diagnosis} og vælger ``person'' som \texttt{corMethod}.
+  Give farver efter factor variablen \texttt{diagnosis} og vælger ``pearson'' som \texttt{corMethod}.
 \item
-  Opfatter du, at der er en del redundans i de data (altså er der høje korrelationer mellem de forskellige variabler)?
+  Opfatter du, at der er en del redundans i datasættet (dvs. er der stærke korrelationer mellem de forskellige variabler)?
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Problem 3}) Benyt funktionen \texttt{prcomp} til at beregne en principal component analysis af de data.
+\textbf{Problem 3}) Benyt funktionen \texttt{prcomp} til at beregne en principal component analysis af datasættet.
 
 \begin{itemize}
 \tightlist
 \item
   Husk at det skal kun være numeriske variabler og angiv \texttt{scale=TRUE} indenfor selve funktion.
 \item
-  Lav et \texttt{summary} af resultaterne. Hvad er proportionen af variancen forklaret af den første principal component?
+  Lav et \texttt{summary} af resultaterne. Hvad er proportionen af variansen, som er forklaret af den første principal component?
 \item
-  Hvad er proportionen af variancen forklaret af den første to principal components tilsammen?
+  Hvad er proportionen af variansen, som er forklaret af de første to principal components tilsammen?
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Problem 4}) \emph{Augment og plot} Anvend \texttt{augment} til at tilføje de rådata til ovenstående resultater fra \texttt{prcomp}.
+\textbf{Problem 4}) \emph{Augment og plot} Anvend \texttt{augment} til at tilføje dit rå datasæt til ovenstående resultater fra \texttt{prcomp}.
 
 \begin{itemize}
 \tightlist
@@ -10147,21 +10147,21 @@ Download følgende datasæt ved at køre følgende kode chunk:
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Problem 5}) \emph{Integrere kmeans clustering}. Lav et clustering med \texttt{kmeans} på de data, med to clusters.
+\textbf{Problem 5}) \emph{Integrere kmeans clustering}. Lav et clustering med \texttt{kmeans} på datasættet, med to clusters (husk at udvælge numeriske variabler og scale inden du anvender funktionen \texttt{kmeans}).
 
 \begin{itemize}
 \tightlist
 \item
-  Augment resultaterne til din rå data (med de \texttt{prcomp} resultater allerede tilføjet).
+  Augment resultaterne af \texttt{kmeans} til dit datasæt, der allerede har \texttt{prcomp} resultater tilføjet.
 \item
-  Lav et plot og give farver efter \texttt{.cluster} og forme efter \texttt{diagnosis}.
+  Lav et plot og give farver efter \texttt{.cluster} og former efter \texttt{diagnosis}.
 \item
-  Sammenligne de clusters med \texttt{diagnosis}.
+  Sammenligne dine to clusters med \texttt{diagnosis}.
 \end{itemize}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Problem 6}) \emph{tidy form og variansen} Anvende \texttt{tidy(matrix\ =\ "eigenvalues")} til at få bidragen af de forskellige components til variansen i ddatasættet.
+\textbf{Problem 6}) \emph{tidy form og variansen} Anvende \texttt{tidy(matrix\ =\ "eigenvalues")} på din PCA resultater til at få bidragen af de forskellige components til den overordnet varianse i datasættet.
 
 \begin{itemize}
 \tightlist
@@ -10176,7 +10176,7 @@ Download følgende datasæt ved at køre følgende kode chunk:
 \begin{itemize}
 \tightlist
 \item
-  Anvend \texttt{pivot\_wider} til at få den til wide form
+  Anvend funktionen \texttt{pivot\_wider} til at få den til wide form
 \item
   Lav et scatter plot som viser de forskellige variabler relativ til hinanden
 \item
