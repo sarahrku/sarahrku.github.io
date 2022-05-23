@@ -223,3 +223,4 @@ rotation-matrix-for-at-udtrækker-bidragen-af-de-forskellige-variabler
 pakken-factoextra
 quiz-og-problemstillinger
 ekstra-læsning
+problemstillinger-9
