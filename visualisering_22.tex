@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-28}
+\date{Last updated: 2022-05-29}
 
 \begin{document}
 \maketitle
@@ -611,11 +611,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.4099598 -1.7488603  0.3462250  0.1740694  1.2157004 -0.2130729
-##  [7] -1.0915105  0.8800032 -0.3354111 -1.1836801  1.6512277  0.8902546
-## [13]  0.3621872  0.8721847 -1.0459000 -2.0444222 -0.3703584  1.9763049
-## [19] -0.4085538 -0.7979439 -2.1910467  1.0117308  0.5988069 -0.6516209
-## [25]  1.7914371
+##  [1]  0.11061220  0.26194036 -0.74804948  0.91450709  0.34908502 -1.77144593
+##  [7] -0.94136236 -0.46445096  0.02651141 -1.00082963 -2.00938552  2.04089381
+## [13]  0.08820498  0.24437671  1.31476257  0.07886485 -0.03996859  0.30734122
+## [19]  1.28519058  1.43438077 -0.12288067 -0.85668870  1.28325074  0.86359650
+## [25]  0.77279565
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -623,13 +623,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.4099598 {-}1.7488603  0.3462250  0.1740694  1.2157004 {-}0.2130729}
+\DocumentationTok{\#\# [1]  0.1106122  0.2619404 {-}0.7480495  0.9145071  0.3490850 {-}1.7714459}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1] {-}0.7979439 {-}2.1910467  1.0117308  0.5988069 {-}0.6516209  1.7914371}
+\DocumentationTok{\#\# [1]  1.4343808 {-}0.1228807 {-}0.8566887  1.2832507  0.8635965  0.7727957}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.4099598}
+\DocumentationTok{\#\# [1] 0.1106122}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 1.791437}
+\DocumentationTok{\#\# [1] 0.7727957}
 \end{Highlighting}
 \end{Shaded}
 
@@ -667,8 +667,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.003908431  0.174069440  1.976304904 -2.191046686  1.363622751
-## [6]  1.167742588
+## [1]  0.1368501  0.1106122  2.0408938 -2.0093855  0.9967437  0.9983705
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -680,8 +679,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## -2.191047 -0.797944  0.174069  0.003908  0.880003  1.976305
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -2.0094 -0.4645  0.1106  0.1369  0.8636  2.0409
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -10881,7 +10880,7 @@ Indlæse \texttt{LungCapData} og tilføj kategorisk variabel \texttt{Age.Group}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(datasauRus)}
+\FunctionTok{library}\NormalTok{(datasauRus) }\CommentTok{\#installer denne pakke}
 \NormalTok{data\_dozen }\OtherTok{\textless{}{-}}\NormalTok{ datasauRus}\SpecialCharTok{::}\NormalTok{datasaurus\_dozen}
 \NormalTok{data\_dozen}
 \end{Highlighting}
@@ -10973,6 +10972,825 @@ Kør følgende kode til at indlæs og bearbejde følgende datasæt \texttt{airli
 Simpson's paradox og airlines: \url{http://ritsokiguess.site/docs/2018/04/07/simpson-s-paradox-log-linear-modelling-and-the-tidyverse/}
 
 Batch effekt correction: \url{https://en.wikipedia.org/wiki/Batch_effect\#Correction}
+
+\hypertarget{maskinsluxe6ring-i-tidyverse}{%
+\chapter{Maskinslæring i tidyverse}\label{maskinsluxe6ring-i-tidyverse}}
+
+\includegraphics[width=0.15\linewidth]{plots/hex-tidyverse}
+\includegraphics[width=0.15\linewidth]{plots/ggplot2_logo}
+\includegraphics[width=0.15\linewidth]{plots/purrr}
+\includegraphics[width=0.15\linewidth]{plots/pipe_logo}
+\includegraphics[width=0.15\linewidth]{plots/rsample_logo}
+\includegraphics[width=0.15\linewidth]{plots/tidymodels_logo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rsample) }\CommentTok{\#install this}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(ranger) }\CommentTok{\#install this, random forest}
+\FunctionTok{library}\NormalTok{(palmerpenguins)}
+\end{Highlighting}
+\end{Shaded}
+
+``Absorber hvad der er nyttigt, afvis det, der er ubrugeligt, tilføj det, der specifikt er dit eget.'' - Bruce Lee
+
+\hypertarget{indledning-og-luxe6ringsmuxe5lene-4}{%
+\section{Indledning og læringsmålene}\label{indledning-og-luxe6ringsmuxe5lene-4}}
+
+Her bliver en lynhurtig introduktion til maskinslæring koncepter - emnet er i virkeligheden kæmpe store og jeg springer over mange detaljer her. Men jeg håber, at det giver en god grundlag/forståelse af emnet, der moviterer én til at tage yderligere kurser i maskinslæringområdet, eller at øge forståelsen de mange artikler i biolgoiske område der benytter maskinslæring modeller.
+
+I emnet introducerer jeg den grundlæggende ramme hvor man udvikler en model på træning data og cross-fold-validation og dernæst vurderer den model på testing data, som ikke var en del af selve træningsprocessen. Derudover arbejder vi stort set kun indenfor for emnerne vi har dækket i kurset. Processen virker måske lidt indviklet i starten, men generaliseres meget og nemt kan udvides i mange kontekster og situationer, der kræver forskellige modeller. I emnet introducerer jeg også en classification metode, som vi både optimerer (``tune'') og bruger til at forudsige hvem, der overlevede tradgedien på titanic!
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Du skal være i stand til at
+
+\begin{itemize}
+\tightlist
+\item
+  Kende anvendelse af testing og training datasæt og beskrive cross-fold-validation processen
+\item
+  Anvende 5-fold-cross validation til at udvikle en model og beregner statistikker til at evaluere modellen
+\item
+  Lave en classification model for at forudsige hvem der overlevede titanic
+\item
+  Lave ``tuning'' af en parameter og bestemme om en ``final'' model
+\end{itemize}
+
+\hypertarget{video-ressourcer-8}{%
+\section{Video ressourcer}\label{video-ressourcer-8}}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 1: Data splitting and cross-fold validation i en regression kontekst
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 2: Cross-fold validation i en classifcation contekst (random forest)
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 3: Tuning af parametre i classification og variabel importance
+\end{itemize}
+
+\hypertarget{regression-models}{%
+\section{Regression models}\label{regression-models}}
+
+Vi starter med at bygge processen op i en kontekst som vi godt kender i forvejen - en lineær regression model. Til det formål benytter vi endnu engang datasættet \texttt{penguins}, og målet er: hvor godt kan man forudsige variablen \texttt{body\_mass\_g} i de forskellige pingviner?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(palmerpenguins)}
+\NormalTok{penguins }\OtherTok{\textless{}{-}}\NormalTok{ penguins }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{oprette-testing-and-training-sets}{%
+\subsection{Oprette testing and training sets}\label{oprette-testing-and-training-sets}}
+
+Hvordan kan man vide, om en model er god til at forudsige hvad der sker når der kommer nye observationer? Det vil sige, fungerer modellen godt kun i forhold til observationerne som blev brugt til at opbygge selve modellen (så kaldt ``overfitting''), eller kan modellen generalises til andre, ligenende situationer? For at vide det kan man overvejer at splitte datasættet før man lave modellen - det vil sige et datasæt som man bruger til at opbygge modellen, og et datasæt som man kan bruge som ``nye observationer'', hvor man kan teste, hvor godt modellen egentlig er (fordi i datasættet kender vi faktisk resultatet som vi kan sammenligne med vores forudsigelser fra modellen).
+
+Pakken \texttt{rsample} fra \texttt{tidymodels} har nogle nyttige funktioner som kan bruges i konteksten af maskinslæring i R, fk. funktionen \texttt{initial\_split}:
+
+\includegraphics[width=0.9\linewidth]{plots/machine_step1}
+
+Funktionen \texttt{intitial\_split} opdeler datasættet således at fk. 75\% af observationerne hører til det ``training'' sæt og 25\% hører til det ``testing'' sæt:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_split }\OtherTok{\textless{}{-}} \FunctionTok{initial\_split}\NormalTok{(penguins, }\AttributeTok{prop =} \FloatTok{0.75}\NormalTok{)}
+\NormalTok{penguins\_split}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <Analysis/Assess/Total>
+## <249/84/333>
+\end{verbatim}
+
+Det betyder, at ud af de 333 observationerne, bliver 249 brugt som ``training'' og 84 er beholdt tilbage som en ``testing'' sæt. Jeg udtrækker bagefter de to sæt til at få ``penguins\_training'' og ``penguins\_test'' som i følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{penguins\_training }\OtherTok{\textless{}{-}}\NormalTok{ penguins\_split }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{training}\NormalTok{()}
+\NormalTok{penguins\_test }\OtherTok{\textless{}{-}}\NormalTok{ penguins\_split }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{testing}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Jeg vil gerne anvende \texttt{penguins\_training} til at opbygge modellen og så kun kigge på \texttt{penguins\_test} senere for at evaluere modellens evne til at lave forudsigelser.
+
+\hypertarget{cross-fold-validation}{%
+\subsection{Cross-fold validation}\label{cross-fold-validation}}
+
+For at udvikle min model med mit træning datasæt anvender jeg en proces, der hedder ``cross-fold-validation''. I 5-fold-cross-validation splitte man et datasæt op i 5 stykker (``folds''). Man træner dernæst en model på 4 af de 5 stykker (folds), og tester på den sidste stykke (som ikke selv var en del af datasætted brugt til at fitte selve modellen). Man gentager model træning processen i alt fem gange, hvor hvert styk er brugt præcis én gang som ``valiation'' sæt.
+
+\includegraphics[width=1\linewidth]{plots/machine_step1_step2}
+
+Tilgangen har mange fordele. Hvis der var for eksempel kun én testing sæt og ved tilfældighed har den sæt observationer som er især nemme at forudsige, så får vi en fejlagtig fornemmelse at modellen er bedre end den er i virkeligheden - vi undgår det vi at bruge 5 forskellige validation sæt som dækker hele træning sæt. Vi kan således lede efter en kommination af parametre, der konsekvent giver en god model over samtlig validation sæt - vi kan være mere sikker på at få en model, der virker godt i vores testing sæt til sidste.
+
+Der er en nem funktion man kan bruge i \texttt{rsample}-pakken, der hedder \texttt{vfold\_cv} til at lave cross validation. Her angiver jeg \texttt{v=5} for at viser, jeg gerne vil have 5-fold cross validation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv\_split }\OtherTok{\textless{}{-}} \FunctionTok{vfold\_cv}\NormalTok{(penguins\_training, }\AttributeTok{v =} \DecValTok{5}\NormalTok{)}
+\NormalTok{cv\_split}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## #  5-fold cross-validation 
+## # A tibble: 5 x 2
+##   splits           id   
+##   <list>           <chr>
+## 1 <split [199/50]> Fold1
+## 2 <split [199/50]> Fold2
+## 3 <split [199/50]> Fold3
+## 4 <split [199/50]> Fold4
+## 5 <split [200/49]> Fold5
+\end{verbatim}
+
+Så kan man se, at vi får en dataframe med 5 datasæt som er lagret i kolonnen \texttt{splits}. Jeg vil gerne udtrække de forskellige træning og testing sæt ud i deres egne kolonner, som i følgende med \texttt{map} indenfor \texttt{mutate}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv\_data }\OtherTok{\textless{}{-}}\NormalTok{ cv\_split }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{train =} \FunctionTok{map}\NormalTok{(splits, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ training), }\CommentTok{\#extract training datasets}
+    \AttributeTok{validate =} \FunctionTok{map}\NormalTok{(splits, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ testing) }\CommentTok{\#extract validation datasets}
+\NormalTok{  )}
+\NormalTok{cv\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## #  5-fold cross-validation 
+## # A tibble: 5 x 4
+##   splits           id    train              validate         
+##   <list>           <chr> <list>             <list>           
+## 1 <split [199/50]> Fold1 <tibble [199 x 8]> <tibble [50 x 8]>
+## 2 <split [199/50]> Fold2 <tibble [199 x 8]> <tibble [50 x 8]>
+## 3 <split [199/50]> Fold3 <tibble [199 x 8]> <tibble [50 x 8]>
+## 4 <split [199/50]> Fold4 <tibble [199 x 8]> <tibble [50 x 8]>
+## 5 <split [200/49]> Fold5 <tibble [200 x 8]> <tibble [49 x 8]>
+\end{verbatim}
+
+\hypertarget{bygge-modellen-og-lave-forudsigelser}{%
+\subsection{Bygge modellen og lave forudsigelser}\label{bygge-modellen-og-lave-forudsigelser}}
+
+Vi vil gerne lave en model på alle vores datasæt i kolonnen \texttt{train} hver for sig, og forudgsige \texttt{body\_mass\_g} i hvert tilknyttet validation sæt. Vi kan gøre det med en custom funktion med \texttt{purrr}-pakken.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_lm\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ .x)}
+
+\NormalTok{cv\_models\_lm }\OtherTok{\textless{}{-}}\NormalTok{ cv\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model =} \FunctionTok{map}\NormalTok{(train, my\_lm\_func))}
+
+\NormalTok{cv\_models\_lm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## #  5-fold cross-validation 
+## # A tibble: 5 x 5
+##   splits           id    train              validate          model 
+##   <list>           <chr> <list>             <list>            <list>
+## 1 <split [199/50]> Fold1 <tibble [199 x 8]> <tibble [50 x 8]> <lm>  
+## 2 <split [199/50]> Fold2 <tibble [199 x 8]> <tibble [50 x 8]> <lm>  
+## 3 <split [199/50]> Fold3 <tibble [199 x 8]> <tibble [50 x 8]> <lm>  
+## 4 <split [199/50]> Fold4 <tibble [199 x 8]> <tibble [50 x 8]> <lm>  
+## 5 <split [200/49]> Fold5 <tibble [200 x 8]> <tibble [49 x 8]> <lm>
+\end{verbatim}
+
+Nu vil vi gerne bruge datasættet i kolonnen \texttt{validate} til at lave en forudsigelse til hver af vores modeller. Til det formål kan man bruge funktionen \texttt{predict()} - man tager en model samt et nye datasæt (dvs. tilsvarende datasæt i kolonne validate), og så få nogle forventede \texttt{body\_mass\_g} værdier ud fra modellen anvendte på de nye data. I følgende bliver disse forventede ``predicted'' værdier til \texttt{body\_mass\_g} lagret i kolonnen \texttt{validate\_predicted}. Da vi faktisk vide de virkelige værdier til \texttt{body\_mass\_g} i vores validation datasæt laver jeg også en kolonne \texttt{validate\_actual} som er disse virkelige værdier, som jeg kan sammenligne med mine forventede værdier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv\_prep\_lm }\OtherTok{\textless{}{-}}\NormalTok{ cv\_models\_lm }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{actual\_mass =} \FunctionTok{map}\NormalTok{(validate, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(body\_mass\_g)), }\CommentTok{\#actual body\_mass\_g values}
+    \AttributeTok{predicted\_mass =} \FunctionTok{map2}\NormalTok{(}\AttributeTok{.x =}\NormalTok{ model, }\AttributeTok{.y =}\NormalTok{ validate, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{predict}\NormalTok{(.x, .y)) }\CommentTok{\#predicted body\_mass\_g values}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{vurdere-resultater-puxe5-validation-suxe6t}{%
+\subsection{Vurdere resultater på validation sæt}\label{vurdere-resultater-puxe5-validation-suxe6t}}
+
+Jeg vil gerne sammenligne mine nye forudsigelser direkte med mine virkelige værdier til \texttt{body\_mass\_g}, hvilket kan give os en indikation på, hvor godt vores modeller egentlig er. I følgende tager jeg \texttt{id}, \texttt{actual\_mass} og \texttt{predict\_mass} ud fra dataframen \texttt{cv\_pred\_lm} og gennem dem i en ny dataframe \texttt{prediction\_df}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prediction\_df }\OtherTok{\textless{}{-}}\NormalTok{ cv\_prep\_lm }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(id,actual\_mass,predicted\_mass) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest}\NormalTok{(}\FunctionTok{c}\NormalTok{(actual\_mass,predicted\_mass))}
+\end{Highlighting}
+\end{Shaded}
+
+Til hver af de fem folds bregener jeg statisttiken ``mean absolute error'' der tager afstanden mellem de forventede værdier (\texttt{predicted\_mass}) og virkelige værdier (\texttt{actual\_mass}) og tager dernæst middelværdien (over deres absolute værdier dvs. uden minus tegn). Jo mindre ``mae'' er, jo bedre modellen ser ud.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#smaller mae = better model}
+\NormalTok{mae\_df }\OtherTok{\textless{}{-}}\NormalTok{ prediction\_df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(id) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\StringTok{"mae"} \OtherTok{=} \FunctionTok{mean}\NormalTok{(}\FunctionTok{abs}\NormalTok{(actual\_mass}\SpecialCharTok{{-}}\NormalTok{predicted\_mass)))}
+\end{Highlighting}
+\end{Shaded}
+
+Her er et plot af statistikken ``mae'' til de forskellige folds. I gennemsnit er det 233.0974471, der betyder at vores forudsigelser er ude/forkert ved knap 300 g i gennemsnit - ikke dårligt når den gennemsnits pingvin vejer 4207.06 g.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mae\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y=}\NormalTok{mae,}\AttributeTok{x=}\NormalTok{id,}\AttributeTok{fill=}\NormalTok{id)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{colour=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-648-1.pdf}
+
+\hypertarget{teste-og-evaluere-final-model}{%
+\subsection{Teste og evaluere ``final'' model}\label{teste-og-evaluere-final-model}}
+
+Vi har lavet forudsigelser over de forskellige stykker i vores træning sæt, men vi har ikke endnu lavet forudsigelser på vores testing sæt \texttt{penguins\_test}, som blev holdt ud af hele træningsprocessen. Efter den cross-validation proces skal man lave en ``final'' model, der bruger samtlige training data på én gang (dvs. ikke bare en enkel fold, der vi gerne vil opbygge den endelige model fra så meget data, som muligt. Bemærk at når det er kun et datasæt, behøver vi ikke at bruge en custom funktion.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model\_final }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ penguins\_training)}
+\end{Highlighting}
+\end{Shaded}
+
+Nu kan vi endelige anvende vores testing data: her anvender jeg min ``final model'' til at forudsige \texttt{body\_mass\_g} på pingvinerne i datasættet \texttt{penguins\_test}. Dernæst sammenligner vi vores forudsigelser med den virkelige værdier ligesom i ovenstående (men her har jeg ikke forskellige folds at tage i betragtning).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prediction\_df }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\StringTok{"actual\_mass"}\OtherTok{=}\NormalTok{penguins\_test }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(body\_mass\_g),}
+                       \StringTok{"predicted\_mass"}\OtherTok{=}\FunctionTok{predict}\NormalTok{(model\_final,penguins\_test))}
+
+\NormalTok{prediction\_df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\StringTok{"mae"} \OtherTok{=} \FunctionTok{mean}\NormalTok{(}\FunctionTok{abs}\NormalTok{(actual\_mass}\SpecialCharTok{{-}}\NormalTok{predicted\_mass)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##     mae
+##   <dbl>
+## 1  235.
+\end{verbatim}
+
+Man kan se, at vores final model lave forudsigelser som er i gennemsnit 235.5g væk fra pingvinernes virkelige vægt (det vil sige, at forudsigelsen kan være over eller under den virkelige værdi, men i gennemsnit er afstanden fra den virkelige værdi 230g).
+
+\hypertarget{classification-models}{%
+\section{Classification models}\label{classification-models}}
+
+I ovenstående proces lavede vi en regression model, hvor afhængig variabel er kontinuerly (\texttt{body\_mass\_g}). I en classification model er den afhængig variabel kategorisk (fk. ``yes'' eller ``no'' i forhold til variblen \texttt{Survived} i datasættet \texttt{titanic}). Vi viser her at det er meget nemt at skifte fra den ene type model til en anden og bruger stort set samme kode (kun små ændringer).
+
+Ovenstående ramme også giver os muligheden for at opbygge modeller, hvor der faktisk er forskellige parametre, der skal vælges. I ovenstående eksempel med penguins var der faktisk ikke meget ``tuning'' vi skulle lave for at udvikle modellen. Jeg viser her hvordan man kan ``tune'' en parameter indenfor samme ramme i vores classification model.
+
+Jeg åbner først titanic datasæt. Datasættet i \texttt{titanic}-pakken er allerede blevet adskilt efter training og testing men lad os bare ignorerer det og følger samme ramme som i ovenstående.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(titanic)}
+
+\NormalTok{titanic }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_train}
+
+\NormalTok{titanic }\OtherTok{\textless{}{-}}\NormalTok{ titanic }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+             \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Survived =} \FunctionTok{factor}\NormalTok{(}\FunctionTok{if\_else}\NormalTok{(Survived }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"yes"}\NormalTok{, }\StringTok{"no"}\NormalTok{),}\AttributeTok{levels=}\FunctionTok{c}\NormalTok{(}\StringTok{"yes"}\NormalTok{,}\StringTok{"no"}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+             \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Pclass =} \FunctionTok{recode}\NormalTok{(Pclass, }\StringTok{\textasciigrave{}}\AttributeTok{1}\StringTok{\textasciigrave{}}\OtherTok{=}\StringTok{"first"}\NormalTok{,}\StringTok{\textasciigrave{}}\AttributeTok{2}\StringTok{\textasciigrave{}}\OtherTok{=}\StringTok{"second"}\NormalTok{,}\StringTok{\textasciigrave{}}\AttributeTok{3}\StringTok{\textasciigrave{}}\OtherTok{=}\StringTok{"third"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+             \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Pclass =} \FunctionTok{as\_factor}\NormalTok{(Pclass),}
+                    \AttributeTok{Sex =} \FunctionTok{as\_factor}\NormalTok{(Sex),}
+                    \AttributeTok{Port =} \FunctionTok{as\_factor}\NormalTok{(Embarked),}
+                    \AttributeTok{Solo =} \FunctionTok{if\_else}\NormalTok{(SibSp }\SpecialCharTok{+}\NormalTok{ Parch }\SpecialCharTok{==} \DecValTok{0}\NormalTok{, }\StringTok{"yes"}\NormalTok{, }\StringTok{"no"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+ \FunctionTok{select}\NormalTok{(Survived, Pclass, Sex, Age, Solo, Port, Fare)}
+
+\NormalTok{titanic}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 714 x 7
+##    Survived Pclass Sex      Age Solo  Port   Fare
+##    <fct>    <fct>  <fct>  <dbl> <chr> <fct> <dbl>
+##  1 no       third  male      22 no    S      7.25
+##  2 yes      first  female    38 no    C     71.3 
+##  3 yes      third  female    26 yes   S      7.92
+##  4 yes      first  female    35 no    S     53.1 
+##  5 no       third  male      35 yes   S      8.05
+##  6 no       first  male      54 yes   S     51.9 
+##  7 no       third  male       2 no    S     21.1 
+##  8 yes      third  female    27 no    S     11.1 
+##  9 yes      second female    14 no    C     30.1 
+## 10 yes      third  female     4 no    S     16.7 
+## # ... with 704 more rows
+\end{verbatim}
+
+Her vil vi gerne forudsige hvem der overlevede, og hvem der ikke overlevede. Det er et eksempel på et ``classification'' problem, hvor der er to mulige svar (``yes'' eller ``no'') og man gerne vil beregne sandsynlighed for de to muligheder. Det er hvad der kaldes for et ``supervisered'' problem, fordi når vi træner modellen, ved vi faktisk hvem der overlevede i datasættet. Det er til forskel for eksempelvis kmeans clustering, hvor vi ikke har svaret i forvejen (men bare kan gætte, at de forskellige clusters relatere til noget, for eksempel hvilke species en observation hører til).
+
+Før vi går i gang, her er et overblik over processen med at opbygge modellen med titanic:
+
+\includegraphics[width=1\linewidth]{plots/machine_learning_diagram}
+
+I følgende steps forklarer jeg processen med \texttt{titanic} i flere detaljer:
+
+\hypertarget{splitte-datasuxe6ttet-og-lave-cross-validation-dataframe}{%
+\subsection{Splitte datasættet og lave cross-validation dataframe}\label{splitte-datasuxe6ttet-og-lave-cross-validation-dataframe}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{333}\NormalTok{)}
+\NormalTok{titanic\_split }\OtherTok{\textless{}{-}} \FunctionTok{initial\_split}\NormalTok{(titanic, }\AttributeTok{prop =} \FloatTok{0.75}\NormalTok{)}
+\NormalTok{titanic\_training }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_split }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{training}\NormalTok{()}
+\NormalTok{titanic\_test }\OtherTok{\textless{}{-}}\NormalTok{ titanic\_split }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{testing}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Vi anvender 5-fold cross validation på datasættet \texttt{titanic\_training} og udtrækker de træning og testing sæt til de forskellige folds (og lagrer dem i henholdvis \texttt{train} og \texttt{validate} i dataframen \texttt{cv\_data}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{333}\NormalTok{)}
+\NormalTok{cv\_split }\OtherTok{\textless{}{-}} \FunctionTok{vfold\_cv}\NormalTok{(titanic\_training, }\AttributeTok{v =} \DecValTok{5}\NormalTok{)}
+
+\NormalTok{cv\_data }\OtherTok{\textless{}{-}}\NormalTok{ cv\_split }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{train =} \FunctionTok{map}\NormalTok{(splits, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{training}\NormalTok{()), }
+    \AttributeTok{validate =} \FunctionTok{map}\NormalTok{(splits, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{testing}\NormalTok{())}
+\NormalTok{  )}
+
+\NormalTok{cv\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## #  5-fold cross-validation 
+## # A tibble: 5 x 4
+##   splits            id    train              validate          
+##   <list>            <chr> <list>             <list>            
+## 1 <split [428/107]> Fold1 <tibble [428 x 7]> <tibble [107 x 7]>
+## 2 <split [428/107]> Fold2 <tibble [428 x 7]> <tibble [107 x 7]>
+## 3 <split [428/107]> Fold3 <tibble [428 x 7]> <tibble [107 x 7]>
+## 4 <split [428/107]> Fold4 <tibble [428 x 7]> <tibble [107 x 7]>
+## 5 <split [428/107]> Fold5 <tibble [428 x 7]> <tibble [107 x 7]>
+\end{verbatim}
+
+\hypertarget{definere-classification-model}{%
+\subsection{Definere classification model}\label{definere-classification-model}}
+
+Næste vil vi gerne anvende en model over de fem training sæt. Et godt eksempel på en classifikation metode som er både nem at bruge og meget kræftig er en ``random forest''. Her er det ikke nødvendeigt at forstå al detaljer, men helt kort - man opbygger beslutningstræer baserede på tilfældigt udvalgte subsets af data. I et beslutningstræ laver man ``splits'' over de forskellige variabler, som man bruger for at bestemme, om en passagerer overlevede eller ej (se billede). Når man kan gøre samme process flere gange, over eksempelvis 100 træer, der involverer 100 tilfældige subsæt af data, kan man tage et gennemsnit, som udgør de endelige beslutninger (predictions eller forudsigelser).
+
+\includegraphics[width=0.7\linewidth]{plots/random_forest_titanic}
+
+I følgende anvender jeg funktionen \texttt{ranger()} (installer pakken \texttt{ranger}), der fitter en random forest i R på datasætet.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{333}\NormalTok{)}
+\NormalTok{ranger\_model }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{ranger}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ Survived }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . ,  }\CommentTok{\# . betyder all variabler i datasættet som uafhængig}
+                                              \AttributeTok{data =}\NormalTok{ .x,}
+                                              \AttributeTok{num.trees =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Lidt om \texttt{ranger}-modellens parametre:
+
+\begin{itemize}
+\tightlist
+\item
+  Jeg angiver en formel - variablen \texttt{Survived} er afhængig og alle andre variabler er uafhængig (betegnet ved ``.'' for at spare tid).
+\item
+  data er \texttt{.x} og referer til en træning sæt til én af vores ``folds'' i vores cross-fold validation datasæt.
+\item
+  \texttt{num.trees} fortæller, hvor mange træer jeg vil lave (jo mere jo bedre, men der er en trade-off med hensyn til tid/energi)
+\end{itemize}
+
+\hypertarget{anvende-modellen-og-lave-predictions}{%
+\subsection{Anvende modellen og lave predictions}\label{anvende-modellen-og-lave-predictions}}
+
+Jeg laver mine modeller ved at oprette en ny kolonne \texttt{model} i dataframe \texttt{cv\_data}, hvor jeg anvender min custom funktion med \texttt{map}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv\_models\_rf }\OtherTok{\textless{}{-}}\NormalTok{ cv\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model =} \FunctionTok{map}\NormalTok{(train, ranger\_model))}
+\NormalTok{cv\_models\_rf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## #  5-fold cross-validation 
+## # A tibble: 5 x 5
+##   splits            id    train              validate           model   
+##   <list>            <chr> <list>             <list>             <list>  
+## 1 <split [428/107]> Fold1 <tibble [428 x 7]> <tibble [107 x 7]> <ranger>
+## 2 <split [428/107]> Fold2 <tibble [428 x 7]> <tibble [107 x 7]> <ranger>
+## 3 <split [428/107]> Fold3 <tibble [428 x 7]> <tibble [107 x 7]> <ranger>
+## 4 <split [428/107]> Fold4 <tibble [428 x 7]> <tibble [107 x 7]> <ranger>
+## 5 <split [428/107]> Fold5 <tibble [428 x 7]> <tibble [107 x 7]> <ranger>
+\end{verbatim}
+
+Næste laver jeg forudsigelser over de fem \texttt{validate} datasæt med funktionen \texttt{predict()} - det fungere på samme måde som i ovenstående regression model, men med \texttt{ranger} er man nødt til at udtrække selve forudsigelserne ved at tilføje \texttt{\$predictions}, ligesom i følgende funktion \texttt{my\_prediction\_function}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_prediction\_function }\OtherTok{\textless{}{-}}  \ErrorTok{\textasciitilde{}}\FunctionTok{predict}\NormalTok{(.x, .y)}\SpecialCharTok{$}\NormalTok{predictions}
+
+\NormalTok{cv\_prep\_rf }\OtherTok{\textless{}{-}}\NormalTok{ cv\_models\_rf }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{actual =} \FunctionTok{map}\NormalTok{(validate, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Survived)), }\CommentTok{\#virkelig "yes" eller "no"}
+    \AttributeTok{predicted =} \FunctionTok{map2}\NormalTok{(}\AttributeTok{.x =}\NormalTok{ model, }\AttributeTok{.y =}\NormalTok{ validate,my\_prediction\_function) }\CommentTok{\#forudsigelser af "yes" eller "no"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Nu lad os kigge på vores forudsigelser (``yes'' eller ``no'') ved siden af de virkelige værdier (``yes'' eller ``no'') i variablen \texttt{Survived}, for hver af de fem validation sæt:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predictions\_df }\OtherTok{\textless{}{-}}\NormalTok{ cv\_prep\_rf }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(id, actual,predicted) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest}\NormalTok{(}\FunctionTok{c}\NormalTok{(actual,predicted)) }
+\NormalTok{predictions\_df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 535 x 3
+##    id    actual predicted
+##    <chr> <fct>  <fct>    
+##  1 Fold1 yes    yes      
+##  2 Fold1 yes    yes      
+##  3 Fold1 no     no       
+##  4 Fold1 yes    yes      
+##  5 Fold1 no     no       
+##  6 Fold1 yes    yes      
+##  7 Fold1 yes    no       
+##  8 Fold1 no     no       
+##  9 Fold1 yes    yes      
+## 10 Fold1 yes    yes      
+## # ... with 525 more rows
+\end{verbatim}
+
+\hypertarget{beregne-accuracy}{%
+\subsection{Beregne accuracy}\label{beregne-accuracy}}
+
+Hvor mange fik vi rigtige? Vi beregner ``accuracy'' som måler proportionen af ``rigtig'' forudsigelser (både \texttt{actual} og \texttt{predicted} er enige om, hvem der overlevede eller ikke overlevede). Da jeg har forudsigelser til 5 forskellige datasæt (validation sæt for hver ``fold''), anvender jeg \texttt{group\_by(id)}, og dernæst \texttt{summary} til at beregne proportionen af tilfælde variablen \texttt{actual} er den samme som \texttt{predicted}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_accuracies }\OtherTok{\textless{}{-}}\NormalTok{ predictions\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\StringTok{"accuracy"} \OtherTok{=} \FunctionTok{sum}\NormalTok{(actual}\SpecialCharTok{==}\NormalTok{predicted)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{())}
+
+\NormalTok{my\_accuracies}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+##   id    accuracy
+##   <chr>    <dbl>
+## 1 Fold1    0.738
+## 2 Fold2    0.813
+## 3 Fold3    0.841
+## 4 Fold4    0.822
+## 5 Fold5    0.813
+\end{verbatim}
+
+Jeg kan omsætte tallene til et plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_accuracies }\SpecialCharTok{\%\textgreater{}\%} 
+\FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{id,}\AttributeTok{y=}\NormalTok{accuracy,}\AttributeTok{fill=}\NormalTok{id)) }\SpecialCharTok{+}  
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{colour=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-661-1.pdf}
+
+\hypertarget{parameter-tuning}{%
+\subsection{Parameter tuning}\label{parameter-tuning}}
+
+I funktionen \texttt{ranger} var der faktisk nogle parametre som kan have indfyldelse over modellens predictions til sidste - én af dem er for eksempel \texttt{num.trees} - hvis man bruger fk. 100 træer får man sandsynligvis bedre resultater end hvis man anvender kun et træ. En anden parameter, som vi angav som ``default'' i ovenståene analyse er \texttt{mtry}. Det fortæller hvor mange variabler vi skal inddrage i en enkel beregning i træerne (det inddrager mere tilfældighed i altgoritmen og undgår, at 1-2 variabler har for meget indfyldelse på resulaterne).
+Vi vil gerne prøve de forskellige værdier til \texttt{mtry} i modellen og se, hvilken værdi giver bedste resultater. I \texttt{tidyr}-pakken er der en nyttig funktion \texttt{crossing}, der laver kopier af de forskellige folds datasæt, én til hver mulig værdie af \texttt{mtry}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prepare for tuning your cross validation folds by varying mtry}
+\NormalTok{cv\_tune }\OtherTok{\textless{}{-}}\NormalTok{ cv\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{crossing}\NormalTok{(}\AttributeTok{mtry =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\SpecialCharTok{:}\DecValTok{6}\NormalTok{))}
+
+\NormalTok{cv\_tune}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 25 x 5
+##    splits            id    train              validate            mtry
+##    <list>            <chr> <list>             <list>             <int>
+##  1 <split [428/107]> Fold1 <tibble [428 x 7]> <tibble [107 x 7]>     2
+##  2 <split [428/107]> Fold1 <tibble [428 x 7]> <tibble [107 x 7]>     3
+##  3 <split [428/107]> Fold1 <tibble [428 x 7]> <tibble [107 x 7]>     4
+##  4 <split [428/107]> Fold1 <tibble [428 x 7]> <tibble [107 x 7]>     5
+##  5 <split [428/107]> Fold1 <tibble [428 x 7]> <tibble [107 x 7]>     6
+##  6 <split [428/107]> Fold2 <tibble [428 x 7]> <tibble [107 x 7]>     2
+##  7 <split [428/107]> Fold2 <tibble [428 x 7]> <tibble [107 x 7]>     3
+##  8 <split [428/107]> Fold2 <tibble [428 x 7]> <tibble [107 x 7]>     4
+##  9 <split [428/107]> Fold2 <tibble [428 x 7]> <tibble [107 x 7]>     5
+## 10 <split [428/107]> Fold2 <tibble [428 x 7]> <tibble [107 x 7]>     6
+## # ... with 15 more rows
+\end{verbatim}
+
+Nu kan jeg bygge en model op til hver kombination af fold (variablen \texttt{id}) og mtry (variablen \texttt{mtry}). Bemærk at jeg bruger \texttt{map2} her, der jeg gerne vil bruge to kolonner af min næsted dataframe - \texttt{mtry} (betegnet som .y i funktionen) og \texttt{train} (betegnet som .x i funktionen).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Build a model for each fold \& mtry combination}
+\NormalTok{my\_ranger\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{ranger}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ Survived}\SpecialCharTok{\textasciitilde{}}\NormalTok{., }\AttributeTok{data =}\NormalTok{ .x, }
+                              \AttributeTok{mtry =}\NormalTok{ .y,}
+                              \AttributeTok{num.trees =} \DecValTok{100}\NormalTok{)}
+
+\NormalTok{cv\_models\_rf }\OtherTok{\textless{}{-}}\NormalTok{ cv\_tune }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model =} \FunctionTok{map2}\NormalTok{(train, mtry, my\_ranger\_func))}
+\end{Highlighting}
+\end{Shaded}
+
+Og utrækker predictions med \texttt{predict} ligesom i ovenstående:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv\_prep\_rf }\OtherTok{\textless{}{-}}\NormalTok{ cv\_models\_rf }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{actual =} \FunctionTok{map}\NormalTok{(validate, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x}\SpecialCharTok{$}\NormalTok{Survived),}
+    \AttributeTok{predicted =} \FunctionTok{map2}\NormalTok{(}\AttributeTok{.x =}\NormalTok{ model, }\AttributeTok{.y =}\NormalTok{ validate, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{predict}\NormalTok{(.x, .y)}\SpecialCharTok{$}\NormalTok{predictions)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Nu laver jeg en dataframe ligesom i ovenstående som viser mine predictions - men denne gange har jeg predictions over både min folds og de forskellige værdier for ``mtry'':
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predictions\_df }\OtherTok{\textless{}{-}}\NormalTok{ cv\_prep\_rf }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(id,mtry,actual,predicted) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unnest}\NormalTok{(}\AttributeTok{cols=}\FunctionTok{c}\NormalTok{(actual,predicted))}
+\NormalTok{predictions\_df}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2,675 x 4
+##    id     mtry actual predicted
+##    <chr> <int> <fct>  <fct>    
+##  1 Fold1     2 yes    yes      
+##  2 Fold1     2 yes    yes      
+##  3 Fold1     2 no     no       
+##  4 Fold1     2 yes    yes      
+##  5 Fold1     2 no     no       
+##  6 Fold1     2 yes    yes      
+##  7 Fold1     2 yes    no       
+##  8 Fold1     2 no     no       
+##  9 Fold1     2 yes    yes      
+## 10 Fold1     2 yes    yes      
+## # ... with 2,665 more rows
+\end{verbatim}
+
+Jeg anvender \texttt{group\_by} efter både \texttt{mtry} og \texttt{id} for at beregne accuracy:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_accuracies }\OtherTok{\textless{}{-}}\NormalTok{ predictions\_df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(mtry,id) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\StringTok{"accuracy"} \OtherTok{=} \FunctionTok{sum}\NormalTok{(actual}\SpecialCharTok{==}\NormalTok{predicted)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ungroup}\NormalTok{(mtry)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'mtry'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+I følgende plot visualiseres den sammenlagt accuracy over all folds, til hver mulig værdi af ``mtry''-parameteren. Man kan se, at det gør ikke meget forskel, hvilken værdie af ``mtry'' jeg vælger i min final moodel, min den højeste sammenlagt søjle hører til ``mtry=3'' - så jeg tager 3 som min ``mtry'' parameter i min ``final'' model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_accuracies }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill=}\NormalTok{id,}\AttributeTok{x=}\NormalTok{mtry,}\AttributeTok{y=}\NormalTok{accuracy)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{colour=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"total accuracy over all folds"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Total accuracy stacked up over the 5 folds"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-667-1.pdf}
+
+\hypertarget{lave-final-model-med-titanic-datasuxe6t}{%
+\subsection{Lave final model med titanic datasæt}\label{lave-final-model-med-titanic-datasuxe6t}}
+
+I min final model anvender jeg parametrene jeg valgt i min cross-validation proces, og træner jeg min model over hele \texttt{titanic\_training} datasæt på én gang.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{final\_RF }\OtherTok{\textless{}{-}} \FunctionTok{ranger}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ Survived }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . ,  }\AttributeTok{data =}\NormalTok{ titanic\_training,}
+                                              \AttributeTok{mtry =} \DecValTok{3}\NormalTok{, }
+                                              \AttributeTok{num.trees =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Nu jeg kan endelige anvende modellen til at lave forudsigelser over min \texttt{titanic\_test} datasæt. Så kan jeg får en ``final'' accuracy, som fortæller hvor god min model er at finde ud af hvem der overlevede tradgedien, baserede på de andre variabler.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predictions }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}\StringTok{"actual"}\OtherTok{=}\NormalTok{titanic\_test}\SpecialCharTok{$}\NormalTok{Survived,}
+                      \StringTok{"predicted"}\OtherTok{=}\FunctionTok{predict}\NormalTok{(final\_RF,titanic\_test)}\SpecialCharTok{$}\NormalTok{predictions)}
+
+\NormalTok{predictions }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\StringTok{"accuracy"}\OtherTok{=}\FunctionTok{sum}\NormalTok{(actual}\SpecialCharTok{==}\NormalTok{predicted)}\SpecialCharTok{/}\FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##   accuracy
+##      <dbl>
+## 1    0.821
+\end{verbatim}
+
+Så kan man se, at vi er faktisk god til at forudsige hvem, der overlevde tradgedien (se også de forskellige scores og analyser på Kaggle).
+
+\hypertarget{variable-importance}{%
+\subsection{Variable importance}\label{variable-importance}}
+
+Den allersidste, som kan være nyttig at vide, er hvilke variabler var mest vigtig for at kunne lave en nøjagtig forudsigelse af hvem, der overlevede. Man kan tilføje en indstilling, der hedder \texttt{importance\ =\ "impurity"} til kommandoen i funktion \texttt{ranger}, som i følgende:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{final\_RF }\OtherTok{\textless{}{-}} \FunctionTok{ranger}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ Survived }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . ,  }\AttributeTok{data =}\NormalTok{ titanic\_training,}
+                                              \AttributeTok{importance =} \StringTok{"impurity"}\NormalTok{,}
+                                              \AttributeTok{mtry =} \DecValTok{3}\NormalTok{, }
+                                              \AttributeTok{num.trees =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Sidste vil vil gerne vide, bidragen af de forskellige variabler i modellen:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(final\_RF}\SpecialCharTok{$}\NormalTok{variable.importance) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as\_tibble}\NormalTok{()}
+\NormalTok{mod }\OtherTok{\textless{}{-}}\NormalTok{ mod }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\FunctionTok{everything}\NormalTok{())}
+\NormalTok{mod}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   name   value
+##   <chr>  <dbl>
+## 1 Pclass 29.7 
+## 2 Sex    59.0 
+## 3 Age    62.6 
+## 4 Solo    6.10
+## 5 Port    5.78
+## 6 Fare   68.1
+\end{verbatim}
+
+Den højere værdien, jo vigtigere er variablen:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{name,}\AttributeTok{y=}\NormalTok{value,}\AttributeTok{fill=}\NormalTok{name)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat=}\StringTok{"identity"}\NormalTok{,}\AttributeTok{colour=}\StringTok{"black"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_x\_discrete}\NormalTok{(}\AttributeTok{limits=}\NormalTok{mod }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(value)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(name)) }\SpecialCharTok{+} 
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{visualisering_22_files/figure-latex/unnamed-chunk-672-1.pdf}
+
+Så kan man se, at variablen \texttt{Sex} er meget vigtig for at udgøre hvem, der overlede, hvilket er i ovenenstemmelse med vors undersøgelser med titanic fra tidligere emner!
+
+\hypertarget{problemstillinger-11}{%
+\section{Problemstillinger}\label{problemstillinger-11}}
+
+\textbf{Problem 1)}: Quiz - maskinslæring
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Classification med penguins}
+
+\emph{I datasættet ``penguins'' vil vi gerne anvende en classification model for at forudsige ``male'' og ``female'' pengvinger (variablen \texttt{sex}) ud fra de andre variabler i datasættet. Første åbne datasættet:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(palmerpenguins)}
+\NormalTok{penguins }\OtherTok{\textless{}{-}}\NormalTok{ penguins }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{drop\_na}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+OBS: \textbf{Vi tilpasser koden tæt fra ovenstående eksempel med datasættet \texttt{titanic} - i følgende spørgsmål følg med koden fra Section 12.4}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Lad os begynde med at opdele datasættet i to og brug testing data til at lave en ``nested'' dataframe som vi kan bruge til at lave 5-fold-cross-validation.}
+
+\textbf{Problem 2)} \emph{Set up cross-validation framework}
+
+\textbf{a)} Opdel datasættet ``penguins'' i to, således at 80 procent af observationerne hører til det træning datasæt (og 20 procent hører til det testing datasæt). Kald dit resultat \texttt{penguins\_split}. Hvor mange observationer er blevet allokeret til træning og testing datasæt?
+
+\textbf{b)} Udtræk de to datasæt fra \texttt{penguins\_split} og kalder dem for \texttt{penguins\_training} og \texttt{penguins\_test}.
+
+\emph{Vi lægger datasættet \texttt{penguins\_test} til siden (vi får bruge for det senere), og arbejder kun med datasættet \texttt{penguins\_training} for at udvikle vores model.}
+
+\textbf{c}) Anvend \texttt{penguins\_training} til at lave en 5-fold-cross-validation dataframe, \texttt{cv\_split}. Udtrække de fem testing og training datasæt fra kolonnen \texttt{splits} til de forskellige folds (kald deres kolonner for henholdvis \texttt{validate} og \texttt{train}) og kald din nye ``nested'' dataframe for \texttt{cv\_data}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Nu vil vi gerne lave samme model 5 gange - en gang til hvert datasæt i kolonnen \texttt{train} i vores nye \texttt{cv\_data} dataframe. Den model skal være en `classification' model, når vi gerne vil forudsige ``male'' eller ``female'' pingviner (vores afhængig variabel er \texttt{sex} som er kategorisk med to mulige værdier).}
+
+\textbf{Problem 3)} \emph{Set-up modellen}
+
+\textbf{a}) Lad os starte med det første datasæt og generaliser til en custom funktion i \textbf{b}). Anvend \texttt{pluck} for at få frem til det første datasæt i kolonnen \texttt{train}, og dernæst anvende funktionen \texttt{ranger} for at lave en classifikation of variablen \texttt{sex} som afhængig variable, med alle de andre variabler som uafhængige variabler (betegnet med \texttt{.} i modellen). Angiv \texttt{num.trees==100}.
+
+\textbf{b}) Når vi har fået \texttt{ranger} til at virke på det første datasæt laver vi en custom funktion der kan anvendes over samtlige datasæt i kolonnen \texttt{train} - tilpas din \texttt{ranger} model fra \textbf{a)} til en custom funktion og kalder den for \texttt{ranger\_function}.
+
+\textbf{c}) Anvend \texttt{ranger\_function} på samtlige datasæt i kolonne ``train'' (opret en ny kolonne i\texttt{cv\_data}, der hedder \texttt{model} hvor de fem modeller bliver lagret).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Nu har vi lavet en classification model til hvert træning sæt! Vi vil gerne vide, hvor gode modellerne er til at forudsige \texttt{sex} i de fem datasæts i kolonnen \texttt{validate} (husk at \texttt{validate} indeholder de styk der ikke var brugt i træning til den relevant \texttt{id}(fold)).}
+
+\textbf{Problem 4)} \emph{Make predictions from model}
+
+\textbf{a}) Brug \texttt{map}/\texttt{map2} til at lave to nye kolonner i \texttt{cv\_data}:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{actual} hvor du udtrækker de virkelige værdier for variablen \texttt{sex}
+\item
+  \texttt{prediction} hvor du anvender \texttt{predict} med din models (betegnet som .x) og dine validate sæt (betegnet som .y)
+\end{itemize}
+
+\textbf{b}) Udvælg \texttt{id}, \texttt{actual} og \texttt{prediction}, unnest og beregne accuracy til hvert af de 5 folds.
+
+\textbf{c}) Lav et barplot for at se din accuracies over de 5-folds.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Nu har vi lavet 5-fold-cross validation til at træne en classification model. Vi kunne godt tænke os at udvide processen lidt, fordi der er nogle parametre der kan ændres på i funktionen \texttt{ranger}. Lad os prøve at ændre på parameten \texttt{mtry} for at se, om vi kan gøre modellen endnu bedre. Igen følger vi meget tæt på ovenstående kurusnotaterne - bare med et andet datasæt.}
+
+\textbf{Problm 5)} Tune parameteren \texttt{mtry}.
+
+\textbf{a}) Anvend funktionen \texttt{crossing} til at inddrage \texttt{mtry} (fra 2 til 6 som er antal uafhængig variabler) som kolonne i \texttt{cv\_data}. Kald din nye dataframe for \texttt{cv\_tune}.
+
+\textbf{b}) Tilpas din custom ranger funktion fra \textbf{Spørgsmål 3} hvor du inddrager \texttt{mtry} (betegnet som \texttt{.y}) og anvende din model på de forskellige training sæt for hver mulige værdi af \texttt{mtry} (husk at bruge \texttt{map2} her).
+
+\textbf{c}) Lav forudsigelser over alle modeller (der er 25!) og udtrækker dine ``actual'' og ``predicted'' værdier præcis ligesom før.
+
+\textbf{d}) Beregn accuracy for alle 25 sæt, lav et stacked barplot og vælg den bedste mulige værdi for \texttt{mtry}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Nu at vi har valgt et værdi for mtry lad os går henne og lav en ``final'' model! Når vi har lavet den final model kan vi endelig kigger på vores \texttt{penguins\_test} datasæt. Husk at validate sæts var brugt til at teste modellen undervejs i udviklingsprocessen, men var stadig en del af \texttt{penguins\_training}. Man kigger på den test datasæt kun en gang til sidste for at spørge - hvor god er vores endelig model?}
+
+\textbf{Problem 6)} \emph{Lave en \texttt{final} model}
+
+\textbf{a}) Anvende funktionen \texttt{ranger} til at lave en classifcation model på datasættet \texttt{penguins\_training}. Angiv \texttt{num.trees=100} og din valgt værdie for parameteren \texttt{mtry}.
+
+\textbf{b}) Lav predictions med funktionen \texttt{predict} og angiv dit ``penguins\_test'' datasæt. Beregen accuracy fra din model baserede på din virkelige værdier for \texttt{sex} og din forventede værdier fra funktionen \texttt{predict}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\emph{Nu at vi er færdig med at lave og bedømme vores ``final'' model er vi interesseret i - hvilke variabler havde den største indfyldelse på vores forudsigelser af ``male'' og ``female'' pingviner?}
+
+\textbf{Problem 7)} \emph{Variable importance}
+
+\textbf{a}) Tag din ``final'' model og angiv indstillingen \texttt{importance\ =\ "impurity"} i funktionen. Kør modellen og udtræk din variable importance vector med \texttt{final\_RF\$variable.importance}.
+
+\textbf{b}) Omsæt til et barplot hvor du angiv rækkefølgen af søjlerne efter vigtigheden af de forskellige variabler (den meste vigtig til venstre).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 8)} Gentag samme process i et andet datasæt:
+
+\hypertarget{yderligere-kommentarer-og-pakker}{%
+\section{Yderligere kommentarer og pakker}\label{yderligere-kommentarer-og-pakker}}
+
+Jeg spang over mange nyttige pakker og funktioner, der kan bruges til at lave maskinslæring processer i R
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{Yardstick}-pakken er til metrics - fk. accuracy/precesion/recall osv. man kan også lave ROC curves osv. Jeg anvendte kun accuracy i kurset (til at vise processen/iden men begrænser overordnet læs i emnet) men man plejer at anvende forskellige metrics i virkeligheden.
+\item
+  \texttt{Tidymodels}-pakken er en generel pakke, hvor man få en ``fælles'' tilgang til at opbygge modeller der stammer fra mange forskellige pakke - man kan fk. bruge samme tilgang til at lave blandt andet regression eller bayesian modeller, random forest, support vector machines osv. - alle modeller har nu samme syntaksen i den \texttt{Tidymodels} tilgang.
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 
