@@ -673,7 +673,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Til hver af de fem folds bregener jeg statisttiken “mean absolute error” der tager afstanden mellem de forventede værdier (<code>predicted_mass</code>) og virkelige værdier (<code>actual_mass</code>) og tager dernæst middelværdien (over deres absolute værdier dvs. uden minus tegn). Jo mindre “mae” er, jo bedre modellen ser ud.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="maskinslæring-i-tidyverse.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#smaller mae = better model</span></span>
 <span id="cb14-2"><a href="maskinslæring-i-tidyverse.html#cb14-2" aria-hidden="true" tabindex="-1"></a>mae_df <span class="ot">&lt;-</span> prediction_df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="st">&quot;mae&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">abs</span>(actual_mass<span class="sc">-</span>predicted_mass)))</span></code></pre></div>
-<p>Her er et plot af statistikken “mae” til de forskellige folds. I gennemsnit er det 240.6023717, der betyder at vores forudsigelser er ude/forkert ved knap 300 g i gennemsnit - ikke dårligt når den gennemsnits pingvin vejer 4207.06 g.</p>
+<p>Her er et plot af statistikken “mae” til de forskellige folds. I gennemsnit er det 226.1695699, der betyder at vores forudsigelser er ude/forkert ved knap 300 g i gennemsnit - ikke dårligt når den gennemsnits pingvin vejer 4207.06 g.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="maskinslæring-i-tidyverse.html#cb15-1" aria-hidden="true" tabindex="-1"></a>mae_df <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="maskinslæring-i-tidyverse.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>mae,<span class="at">x=</span>id,<span class="at">fill=</span>id)) <span class="sc">+</span> </span>
 <span id="cb15-3"><a href="maskinslæring-i-tidyverse.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">colour=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
@@ -692,8 +692,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## # A tibble: 1 × 1
 ##     mae
 ##   &lt;dbl&gt;
-## 1  223.</code></pre>
-<p>Man kan se, at vores final model lave forudsigelser som er i gennemsnit 222.8g væk fra pingvinernes virkelige vægt (det vil sige, at forudsigelsen kan være over eller under den virkelige værdi, men i gennemsnit er afstanden fra den virkelige værdi 230g).</p>
+## 1  248.</code></pre>
+<p>Man kan se, at vores final model lave forudsigelser som er i gennemsnit 247.6g væk fra pingvinernes virkelige vægt (det vil sige, at forudsigelsen kan være over eller under den virkelige værdi, men i gennemsnit er afstanden fra den virkelige værdi 230g).</p>
 </div>
 </div>
 <div id="classification-models" class="section level2 hasAnchor" number="12.4">
@@ -1007,6 +1007,23 @@ Vi vil gerne prøve de forskellige værdier til <code>mtry</code> i modellen og 
 <p><strong>b</strong>) Omsæt til et barplot hvor du angiv rækkefølgen af søjlerne efter vigtigheden af de forskellige variabler (den meste vigtig til venstre).</p>
 <hr />
 <p><strong>Problem 8)</strong> Gentag samme process i et andet datasæt:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="maskinslæring-i-tidyverse.html#cb50-1" aria-hidden="true" tabindex="-1"></a>LungCapData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1&quot;</span>)</span>
+<span id="cb50-2"><a href="maskinslæring-i-tidyverse.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(LungCapData)</span></code></pre></div>
+<pre><code>## Rows: 725
+## Columns: 6
+## $ LungCap   &lt;dbl&gt; 6.475, 10.125, 9.550, 11.125, 4.800, 6.225, 4.950, 7.325, 8.…
+## $ Age       &lt;int&gt; 6, 18, 16, 14, 5, 11, 8, 11, 15, 11, 19, 17, 12, 10, 10, 13,…
+## $ Height    &lt;dbl&gt; 62.1, 74.7, 69.7, 71.0, 56.9, 58.7, 63.3, 70.4, 70.5, 59.2, …
+## $ Smoke     &lt;chr&gt; &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;,…
+## $ Gender    &lt;chr&gt; &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;, &quot;male&quot;, &quot;female&quot;, &quot;male&quot;…
+## $ Caesarean &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;…</code></pre>
+<p>Følg processen fra Sektion 12.3 igennem med datasættet <code>LungCapData</code>:</p>
+<ul>
+<li>forudsige <code>LungCap</code> som afhængig variabel og alle andre variabler som uafhængig variabler</li>
+<li>Splitte datasættet (75% training, 25% testing) og anvend 10-fold cross-validation på dit training datasæt</li>
+<li>Beregne “mean absolute error” for dine forskellige folds</li>
+<li>Lav en færdig model og beregn “mean absolute error”</li>
+</ul>
 </div>
 <div id="yderligere-kommentarer-og-pakker" class="section level2 hasAnchor" number="12.6">
 <h2><span class="header-section-number">12.6</span> Yderligere kommentarer og pakker<a href="maskinslæring-i-tidyverse.html#yderligere-kommentarer-og-pakker" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -1014,6 +1031,7 @@ Vi vil gerne prøve de forskellige værdier til <code>mtry</code> i modellen og 
 <ul>
 <li><code>Yardstick</code>-pakken er til metrics - fk. accuracy/precesion/recall osv. man kan også lave ROC curves osv. Jeg anvendte kun accuracy i kurset (til at vise processen/iden men begrænser overordnet læs i emnet) men man plejer at anvende forskellige metrics i virkeligheden.</li>
 <li><code>Tidymodels</code>-pakken er en generel pakke, hvor man få en “fælles” tilgang til at opbygge modeller der stammer fra mange forskellige pakke - man kan fk. bruge samme tilgang til at lave blandt andet regression eller bayesian modeller, random forest, support vector machines osv. - alle modeller har nu samme syntaksen i den <code>Tidymodels</code> tilgang.</li>
+<li>Der er mange bøger der handler om machine learning n the tidyverse, fk. se her <a href="https://livebook.manning.com/book/machine-learning-for-mortals-mere-and-otherwise/chapter-1/v-4/1" class="uri">https://livebook.manning.com/book/machine-learning-for-mortals-mere-and-otherwise/chapter-1/v-4/1</a></li>
 </ul>
 <!-- ```{r} -->
 <!-- data = read.csv("https://www.dropbox.com/s/1km3x2hd55eoty4/heart_cleveland_upload.csv?dl=1") -->
