@@ -260,3 +260,5 @@ variable-importance
 problemstillinger-11
 yderligere-kommentarer-og-pakker
 læringsmålene-7
+fig:unnamed-chunk-5
+fig:unnamed-chunk-11

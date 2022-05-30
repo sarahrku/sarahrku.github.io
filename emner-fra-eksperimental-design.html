@@ -483,7 +483,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12" data-path="maskinslæring-i-tidyverse.html"><a href="maskinslæring-i-tidyverse.html"><i class="fa fa-check"></i><b>12</b> Maskinslæring i tidyverse<span></span></a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="maskinslæring-i-tidyverse.html"><a href="maskinslæring-i-tidyverse.html#indledning-og-læringsmålene-4"><i class="fa fa-check"></i><b>12.1</b> Indledning og læringsmålene<span></span></a></li>
+<li class="chapter" data-level="12.1" data-path="maskinslæring-i-tidyverse.html"><a href="maskinslæring-i-tidyverse.html#indledning-og-læringsmålene-4"><i class="fa fa-check"></i><b>12.1</b> Indledning og læringsmålene<span></span></a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="maskinslæring-i-tidyverse.html"><a href="maskinslæring-i-tidyverse.html#læringsmålene-7"><i class="fa fa-check"></i><b>12.1.1</b> Læringsmålene<span></span></a></li>
+</ul></li>
 <li class="chapter" data-level="12.2" data-path="maskinslæring-i-tidyverse.html"><a href="maskinslæring-i-tidyverse.html#video-ressourcer-8"><i class="fa fa-check"></i><b>12.2</b> Video ressourcer<span></span></a></li>
 <li class="chapter" data-level="12.3" data-path="maskinslæring-i-tidyverse.html"><a href="maskinslæring-i-tidyverse.html#regression-models"><i class="fa fa-check"></i><b>12.3</b> Regression models<span></span></a>
 <ul>
@@ -528,8 +531,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="emner-fra-eksperimental-design" class="section level1 hasAnchor" number="11">
 <h1><span class="header-section-number">Chapter 11</span> Emner fra eksperimental design<a href="emner-fra-eksperimental-design.html#emner-fra-eksperimental-design" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="emner-fra-eksperimental-design.html#cb577-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb577-2"><a href="emner-fra-eksperimental-design.html#cb577-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="emner-fra-eksperimental-design.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="emner-fra-eksperimental-design.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span></code></pre></div>
 <p>“Amatører sidder og venter på inspiration, resten af os står bare op og går på arbejde.” - Stephen King</p>
 <div id="inledning-og-læringsmålene-1" class="section level2 hasAnchor" number="11.1">
 <h2><span class="header-section-number">11.1</span> Inledning og læringsmålene<a href="emner-fra-eksperimental-design.html#inledning-og-læringsmålene-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -598,7 +601,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Man vil gerne udelukke, at konklusionerne kan bare skyldes variansen pga. en faktor som ikke direkte er interessant i eksperimentet. Derfor bruger man randomisation til at få disse faktorer fordelte over de forskellige treatment grupper. Et eksempel kan være ‘double-blinding’ i kliniske eksperimenter - både lægen og patienten har ikke kenskab til, hvem der hører til de forskellige grupper, og så kan man undgår forskelsbehandling indenfor grupperne, som kan påvirker de endelige resultater.</p>
 <p><strong>Replikation</strong></p>
 <p>Når man gentager et eksperiment flere gange - for eksempel ved at have flere patienter i hver treatment gruppe. Det tillader os at kunne beregne variabiliteten i data, som er nødvendig for at konkludere om der er en forskel mellem de grupper. Man kan altså ikke generalisere resultater som er blevet målt på kun én person.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-582"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
 <img src="plots/randomisation.png" alt="randomisation og replikation" width="100%" />
 <p class="caption">
 Figure 11.1: randomisation og replikation
@@ -614,9 +617,9 @@ Figure 11.1: randomisation og replikation
 <div id="eksempel-med-datasættet-toothgrowth" class="section level3 hasAnchor" number="11.2.2">
 <h3><span class="header-section-number">11.2.2</span> Eksempel med datasættet <code>ToothGrowth</code><a href="emner-fra-eksperimental-design.html#eksempel-med-datasættet-toothgrowth" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Et god eksempel på et godt eksperimental design er datasættet <code>ToothGrowth</code>, som er baserende på marsvin - de fik forskellige kosttilskud og doser og så fik de målte længden af deres tænder.</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="emner-fra-eksperimental-design.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ToothGrowth)</span>
-<span id="cb578-2"><a href="emner-fra-eksperimental-design.html#cb578-2" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="ot">&lt;-</span> ToothGrowth <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dose =</span> <span class="fu">as.factor</span>(dose))</span>
-<span id="cb578-3"><a href="emner-fra-eksperimental-design.html#cb578-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ToothGrowth)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="emner-fra-eksperimental-design.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ToothGrowth)</span>
+<span id="cb2-2"><a href="emner-fra-eksperimental-design.html#cb2-2" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="ot">&lt;-</span> ToothGrowth <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dose =</span> <span class="fu">as.factor</span>(dose))</span>
+<span id="cb2-3"><a href="emner-fra-eksperimental-design.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ToothGrowth)</span></code></pre></div>
 <pre><code>##       len        supp     dose   
 ##  Min.   : 4.20   OJ:30   0.5:20  
 ##  1st Qu.:13.07   VC:30   1  :20  
@@ -625,14 +628,14 @@ Figure 11.1: randomisation og replikation
 ##  3rd Qu.:25.27                   
 ##  Max.   :33.90</code></pre>
 <p>Her kan man se, at for hver gruppe (efter <code>supp</code> og <code>dose</code>) er der 10 marsvin - vi har således replikation over de grupper, og hver <code>supp</code> (supplement) har hver af de tre mulige værdier for “dose.” Hvis vi for eksempel ikke var interesseret i <code>supp</code> men kun dose, så kan man ‘block’ efter <code>supp</code> for at afbøde forskelligheder i effekten af de to supplements i <code>supp</code>.</p>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="emner-fra-eksperimental-design.html#cb580-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(supp,dose) <span class="sc">%&gt;%</span> </span>
-<span id="cb580-2"><a href="emner-fra-eksperimental-design.html#cb580-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(dose),<span class="at">y=</span>n,<span class="at">fill=</span><span class="fu">factor</span>(dose))) <span class="sc">+</span> </span>
-<span id="cb580-3"><a href="emner-fra-eksperimental-design.html#cb580-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb580-4"><a href="emner-fra-eksperimental-design.html#cb580-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;Number of guinea pigs&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb580-5"><a href="emner-fra-eksperimental-design.html#cb580-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;Dosage&quot;</span>) <span class="sc">+</span></span>
-<span id="cb580-6"><a href="emner-fra-eksperimental-design.html#cb580-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span>supp) <span class="sc">+</span></span>
-<span id="cb580-7"><a href="emner-fra-eksperimental-design.html#cb580-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-585-1.png" width="432" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="emner-fra-eksperimental-design.html#cb4-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">count</span>(supp,dose) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="emner-fra-eksperimental-design.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(dose),<span class="at">y=</span>n,<span class="at">fill=</span><span class="fu">factor</span>(dose))) <span class="sc">+</span> </span>
+<span id="cb4-3"><a href="emner-fra-eksperimental-design.html#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb4-4"><a href="emner-fra-eksperimental-design.html#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;Number of guinea pigs&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb4-5"><a href="emner-fra-eksperimental-design.html#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xlab</span>(<span class="st">&quot;Dosage&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="emner-fra-eksperimental-design.html#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span>supp) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="emner-fra-eksperimental-design.html#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-8-1.png" width="432" /></p>
 <p>Man må dog passe på, fordi vi vide ikke om, hvordan de marsvin blev tilknyttet til de forskellige grupper. For eksempel, hvis male og female marsvin er ikke tilknyttet ved tilfælde, kan det opstå, at supp “OJ” og dose “0.5” har kun male guinea pigs og supp “OJ” med dose “1.0” har kun female guninea pigs. Så kunne vi ikke fortæl, om forskellen i dose “0.5” vs “1.0” er resultatet af de dose eller kønnet.</p>
 </div>
 </div>
@@ -640,10 +643,10 @@ Figure 11.1: randomisation og replikation
 <h2><span class="header-section-number">11.3</span> Case studies: Simpson’s paradox<a href="emner-fra-eksperimental-design.html#case-studies-simpsons-paradox" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>(Se også videoressourcer Part 2).</p>
 <p>Simpson’s paradox opstår når man drager to modsætte konklusioner fra det samme datasæt - på den ene side når man kigger på de data samlede, og på den anden side når man tager nogle grupper i betragtning. Vi kan visualisere Simpson’s paradox gennem eksemplet nedenfor - her har vi to variabler <code>x</code> og <code>y</code> som vi kan avende til at lave et scatter plot, samt nogle forskellige grupper indenfor variablen <code>group</code>.</p>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="emner-fra-eksperimental-design.html#cb581-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(datasauRus)</span></span>
-<span id="cb581-2"><a href="emner-fra-eksperimental-design.html#cb581-2" aria-hidden="true" tabindex="-1"></a>simpsons_paradox <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/ysh3qpc7qv0ceut/simpsons_paradox_groups.txt?dl=1&quot;</span>,<span class="at">header=</span>T)</span>
-<span id="cb581-3"><a href="emner-fra-eksperimental-design.html#cb581-3" aria-hidden="true" tabindex="-1"></a>simpsons_paradox <span class="ot">&lt;-</span> simpsons_paradox <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>(simpsons_paradox)</span>
-<span id="cb581-4"><a href="emner-fra-eksperimental-design.html#cb581-4" aria-hidden="true" tabindex="-1"></a>simpsons_paradox</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="emner-fra-eksperimental-design.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(datasauRus)</span></span>
+<span id="cb5-2"><a href="emner-fra-eksperimental-design.html#cb5-2" aria-hidden="true" tabindex="-1"></a>simpsons_paradox <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/ysh3qpc7qv0ceut/simpsons_paradox_groups.txt?dl=1&quot;</span>,<span class="at">header=</span>T)</span>
+<span id="cb5-3"><a href="emner-fra-eksperimental-design.html#cb5-3" aria-hidden="true" tabindex="-1"></a>simpsons_paradox <span class="ot">&lt;-</span> simpsons_paradox <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>(simpsons_paradox)</span>
+<span id="cb5-4"><a href="emner-fra-eksperimental-design.html#cb5-4" aria-hidden="true" tabindex="-1"></a>simpsons_paradox</span></code></pre></div>
 <pre><code>FALSE # A tibble: 222 × 3
 FALSE        x     y group
 FALSE    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
@@ -659,74 +662,74 @@ FALSE  9  60.9 92.6  E
 FALSE 10  56.6 45.8  C    
 FALSE # … with 212 more rows</code></pre>
 <p>Hvis vi bare ignorere <code>group</code> og ser på de data samlet, kan vi se at der er en stærk positiv sammenhæng mellem x og y. Men når vi opdele efter de forskellige grupper, ved at skrive <code>colour = group</code>, få vi faktisk en negativ sammenhæng indenfor hver af de grupper.</p>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="emner-fra-eksperimental-design.html#cb583-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> simpsons_paradox <span class="sc">%&gt;%</span> </span>
-<span id="cb583-2"><a href="emner-fra-eksperimental-design.html#cb583-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
-<span id="cb583-3"><a href="emner-fra-eksperimental-design.html#cb583-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb583-4"><a href="emner-fra-eksperimental-design.html#cb583-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb583-5"><a href="emner-fra-eksperimental-design.html#cb583-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
-<span id="cb583-6"><a href="emner-fra-eksperimental-design.html#cb583-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb583-7"><a href="emner-fra-eksperimental-design.html#cb583-7" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> simpsons_paradox <span class="sc">%&gt;%</span> </span>
-<span id="cb583-8"><a href="emner-fra-eksperimental-design.html#cb583-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y,<span class="at">colour=</span>group)) <span class="sc">+</span> </span>
-<span id="cb583-9"><a href="emner-fra-eksperimental-design.html#cb583-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb583-10"><a href="emner-fra-eksperimental-design.html#cb583-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,<span class="fu">aes</span>(<span class="at">group=</span>group),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb583-11"><a href="emner-fra-eksperimental-design.html#cb583-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
-<span id="cb583-12"><a href="emner-fra-eksperimental-design.html#cb583-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb583-13"><a href="emner-fra-eksperimental-design.html#cb583-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb583-14"><a href="emner-fra-eksperimental-design.html#cb583-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-587-1.png" width="864" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="emner-fra-eksperimental-design.html#cb7-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> simpsons_paradox <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="emner-fra-eksperimental-design.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y)) <span class="sc">+</span> </span>
+<span id="cb7-3"><a href="emner-fra-eksperimental-design.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-4"><a href="emner-fra-eksperimental-design.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="emner-fra-eksperimental-design.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb7-6"><a href="emner-fra-eksperimental-design.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="emner-fra-eksperimental-design.html#cb7-7" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> simpsons_paradox <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href="emner-fra-eksperimental-design.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x,y,<span class="at">colour=</span>group)) <span class="sc">+</span> </span>
+<span id="cb7-9"><a href="emner-fra-eksperimental-design.html#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-10"><a href="emner-fra-eksperimental-design.html#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>,<span class="fu">aes</span>(<span class="at">group=</span>group),<span class="at">colour=</span><span class="st">&quot;black&quot;</span>,<span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="emner-fra-eksperimental-design.html#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb7-12"><a href="emner-fra-eksperimental-design.html#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="emner-fra-eksperimental-design.html#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb7-14"><a href="emner-fra-eksperimental-design.html#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-10-1.png" width="864" /></p>
 <p>Simpson’s paradoks sker mere ofte end man skulle tror, og derfor er det vigtigt at tænke over hvad for nogen ændre variabler man også er nødt til at tage i betragtning.</p>
 <div id="berkerly-admissions" class="section level3 hasAnchor" number="11.3.1">
 <h3><span class="header-section-number">11.3.1</span> Berkerly admissions<a href="emner-fra-eksperimental-design.html#berkerly-admissions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Det meste berømte eksempel af Simpson’s Paradox drejer sig om optagelsen til universitetet i Berkely i 1973. Følgende table fra Wikipedia (<a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox" class="uri">https://en.wikipedia.org/wiki/Simpson%27s_paradox</a>) viser statistikker om antallet som ansøgt samt procenttallet som blev optaget overordnet i universitet efter kønnet.</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-588"></span>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-11"></span>
 <img src="plots/admissions.png" alt="source: wikipedia" width="85%" />
 <p class="caption">
 Figure 11.2: source: wikipedia
 </p>
 </div>
 <p>Hvis vi lave et barplot af tallerne, kan man se, at der er en højere procenttal af mænd end kvinder som var blevet optaget på universitet (sagen medførte en retsag mod universitet).</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="emner-fra-eksperimental-design.html#cb584-1" aria-hidden="true" tabindex="-1"></a>admissions_all <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">&quot;sex&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;all&quot;</span>,<span class="st">&quot;men&quot;</span>,<span class="st">&quot;woman&quot;</span>),<span class="at">admitted=</span><span class="fu">c</span>(<span class="st">&quot;41&quot;</span>,<span class="st">&quot;44&quot;</span>,<span class="st">&quot;35&quot;</span>))</span>
-<span id="cb584-2"><a href="emner-fra-eksperimental-design.html#cb584-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb584-3"><a href="emner-fra-eksperimental-design.html#cb584-3" aria-hidden="true" tabindex="-1"></a>admissions_all <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>sex,<span class="at">y=</span>admitted,<span class="at">fill=</span>sex)) <span class="sc">+</span> </span>
-<span id="cb584-4"><a href="emner-fra-eksperimental-design.html#cb584-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb584-5"><a href="emner-fra-eksperimental-design.html#cb584-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb584-6"><a href="emner-fra-eksperimental-design.html#cb584-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Percent admitted&quot;</span>) <span class="sc">+</span></span>
-<span id="cb584-7"><a href="emner-fra-eksperimental-design.html#cb584-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="st">&quot;woman&quot;</span>,<span class="st">&quot;men&quot;</span>,<span class="st">&quot;all&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb584-8"><a href="emner-fra-eksperimental-design.html#cb584-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-589-1.png" width="480" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="emner-fra-eksperimental-design.html#cb8-1" aria-hidden="true" tabindex="-1"></a>admissions_all <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">&quot;sex&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;all&quot;</span>,<span class="st">&quot;men&quot;</span>,<span class="st">&quot;woman&quot;</span>),<span class="at">admitted=</span><span class="fu">c</span>(<span class="st">&quot;41&quot;</span>,<span class="st">&quot;44&quot;</span>,<span class="st">&quot;35&quot;</span>))</span>
+<span id="cb8-2"><a href="emner-fra-eksperimental-design.html#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="emner-fra-eksperimental-design.html#cb8-3" aria-hidden="true" tabindex="-1"></a>admissions_all <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>sex,<span class="at">y=</span>admitted,<span class="at">fill=</span>sex)) <span class="sc">+</span> </span>
+<span id="cb8-4"><a href="emner-fra-eksperimental-design.html#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb8-5"><a href="emner-fra-eksperimental-design.html#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb8-6"><a href="emner-fra-eksperimental-design.html#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Percent admitted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="emner-fra-eksperimental-design.html#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="st">&quot;woman&quot;</span>,<span class="st">&quot;men&quot;</span>,<span class="st">&quot;all&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="emner-fra-eksperimental-design.html#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-12-1.png" width="480" /></p>
 <p>Da man dog kiggede lidt nærmere på de samme tal, men opdelte efter de forskellige afdelinger i universitet, fik man en anderledes billede af situationen. I følgende tabel har vi optagelsestallene for mænd og kvinder i hver af de forskellige afdelinger (A til F).</p>
 <!-- optagelses statistik efter afdeling -->
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="emner-fra-eksperimental-design.html#cb585-1" aria-hidden="true" tabindex="-1"></a>admissions_separate <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb585-2"><a href="emner-fra-eksperimental-design.html#cb585-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>department,   <span class="sc">~</span>all,   <span class="sc">~</span>men,  <span class="sc">~</span>women,</span>
-<span id="cb585-3"><a href="emner-fra-eksperimental-design.html#cb585-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#------------|-------|-------|--------#</span></span>
-<span id="cb585-4"><a href="emner-fra-eksperimental-design.html#cb585-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;A&quot;</span>,            <span class="dv">64</span>,     <span class="dv">62</span>,      <span class="dv">82</span>,</span>
-<span id="cb585-5"><a href="emner-fra-eksperimental-design.html#cb585-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;B&quot;</span>,            <span class="dv">63</span>,     <span class="dv">63</span>,      <span class="dv">68</span>,</span>
-<span id="cb585-6"><a href="emner-fra-eksperimental-design.html#cb585-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;C&quot;</span>,            <span class="dv">35</span>,     <span class="dv">37</span>,      <span class="dv">34</span>,</span>
-<span id="cb585-7"><a href="emner-fra-eksperimental-design.html#cb585-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;D&quot;</span>,            <span class="dv">34</span>,     <span class="dv">33</span>,      <span class="dv">35</span>,</span>
-<span id="cb585-8"><a href="emner-fra-eksperimental-design.html#cb585-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;E&quot;</span>,            <span class="dv">25</span>,     <span class="dv">28</span>,      <span class="dv">24</span>,</span>
-<span id="cb585-9"><a href="emner-fra-eksperimental-design.html#cb585-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;F&quot;</span>,             <span class="dv">6</span>,      <span class="dv">6</span>,       <span class="dv">7</span></span>
-<span id="cb585-10"><a href="emner-fra-eksperimental-design.html#cb585-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="emner-fra-eksperimental-design.html#cb9-1" aria-hidden="true" tabindex="-1"></a>admissions_separate <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb9-2"><a href="emner-fra-eksperimental-design.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>department,   <span class="sc">~</span>all,   <span class="sc">~</span>men,  <span class="sc">~</span>women,</span>
+<span id="cb9-3"><a href="emner-fra-eksperimental-design.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#------------|-------|-------|--------#</span></span>
+<span id="cb9-4"><a href="emner-fra-eksperimental-design.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;A&quot;</span>,            <span class="dv">64</span>,     <span class="dv">62</span>,      <span class="dv">82</span>,</span>
+<span id="cb9-5"><a href="emner-fra-eksperimental-design.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;B&quot;</span>,            <span class="dv">63</span>,     <span class="dv">63</span>,      <span class="dv">68</span>,</span>
+<span id="cb9-6"><a href="emner-fra-eksperimental-design.html#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;C&quot;</span>,            <span class="dv">35</span>,     <span class="dv">37</span>,      <span class="dv">34</span>,</span>
+<span id="cb9-7"><a href="emner-fra-eksperimental-design.html#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;D&quot;</span>,            <span class="dv">34</span>,     <span class="dv">33</span>,      <span class="dv">35</span>,</span>
+<span id="cb9-8"><a href="emner-fra-eksperimental-design.html#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;E&quot;</span>,            <span class="dv">25</span>,     <span class="dv">28</span>,      <span class="dv">24</span>,</span>
+<span id="cb9-9"><a href="emner-fra-eksperimental-design.html#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;F&quot;</span>,             <span class="dv">6</span>,      <span class="dv">6</span>,       <span class="dv">7</span></span>
+<span id="cb9-10"><a href="emner-fra-eksperimental-design.html#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Man kan man se, at for de fleste af afdelingerne, er der ikke en signifikant forskel mellem mænd og kvinder, og i nogle tilfælde havde kvinder faktisk en større chance for at blive optaget.</p>
 <!-- lave et plot af de data opdelte efter afdeling -->
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="emner-fra-eksperimental-design.html#cb586-1" aria-hidden="true" tabindex="-1"></a>admissions_separate <span class="sc">%&gt;%</span> </span>
-<span id="cb586-2"><a href="emner-fra-eksperimental-design.html#cb586-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>department,<span class="at">names_to=</span><span class="st">&quot;sex&quot;</span>,<span class="at">values_to=</span><span class="st">&quot;admitted&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb586-3"><a href="emner-fra-eksperimental-design.html#cb586-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>department,<span class="at">y=</span>admitted,<span class="at">fill=</span>sex)) <span class="sc">+</span> </span>
-<span id="cb586-4"><a href="emner-fra-eksperimental-design.html#cb586-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Percent admitted&quot;</span>) <span class="sc">+</span></span>
-<span id="cb586-5"><a href="emner-fra-eksperimental-design.html#cb586-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>,<span class="at">colour=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb586-6"><a href="emner-fra-eksperimental-design.html#cb586-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-591-1.png" width="384" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="emner-fra-eksperimental-design.html#cb10-1" aria-hidden="true" tabindex="-1"></a>admissions_separate <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="emner-fra-eksperimental-design.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>department,<span class="at">names_to=</span><span class="st">&quot;sex&quot;</span>,<span class="at">values_to=</span><span class="st">&quot;admitted&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="emner-fra-eksperimental-design.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>department,<span class="at">y=</span>admitted,<span class="at">fill=</span>sex)) <span class="sc">+</span> </span>
+<span id="cb10-4"><a href="emner-fra-eksperimental-design.html#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Percent admitted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="emner-fra-eksperimental-design.html#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>,<span class="at">colour=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb10-6"><a href="emner-fra-eksperimental-design.html#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-14-1.png" width="384" /></p>
 <p>Hvad skyldes sammenhængen? Det viste sig, at kvinder havde en tendens til, at ansøge indenfor afdelingerne, som var sværeste at komme ind i. For eksempel, kan man se her, at department E har en relativt lav optagelses procent. Den samme afdeling var dog en af dem, hvor langt flere kvinder ansøgt end mænd.</p>
 <!-- lave et plot af ansøgelse statistik for afdeling E -->
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="emner-fra-eksperimental-design.html#cb587-1" aria-hidden="true" tabindex="-1"></a>applications_E <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">&quot;sex&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;all&quot;</span>,<span class="st">&quot;men&quot;</span>,<span class="st">&quot;woman&quot;</span>),<span class="at">applications=</span><span class="fu">c</span>(<span class="st">&quot;584&quot;</span>,<span class="st">&quot;191&quot;</span>,<span class="st">&quot;393&quot;</span>))</span>
-<span id="cb587-2"><a href="emner-fra-eksperimental-design.html#cb587-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb587-3"><a href="emner-fra-eksperimental-design.html#cb587-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb587-4"><a href="emner-fra-eksperimental-design.html#cb587-4" aria-hidden="true" tabindex="-1"></a>applications_E <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>sex,<span class="at">y=</span>applications,<span class="at">fill=</span>sex)) <span class="sc">+</span> </span>
-<span id="cb587-5"><a href="emner-fra-eksperimental-design.html#cb587-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb587-6"><a href="emner-fra-eksperimental-design.html#cb587-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
-<span id="cb587-7"><a href="emner-fra-eksperimental-design.html#cb587-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Number of applications to dep. E&quot;</span>) <span class="sc">+</span></span>
-<span id="cb587-8"><a href="emner-fra-eksperimental-design.html#cb587-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="st">&quot;woman&quot;</span>,<span class="st">&quot;men&quot;</span>,<span class="st">&quot;all&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb587-9"><a href="emner-fra-eksperimental-design.html#cb587-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-592-1.png" width="480" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="emner-fra-eksperimental-design.html#cb11-1" aria-hidden="true" tabindex="-1"></a>applications_E <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">&quot;sex&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;all&quot;</span>,<span class="st">&quot;men&quot;</span>,<span class="st">&quot;woman&quot;</span>),<span class="at">applications=</span><span class="fu">c</span>(<span class="st">&quot;584&quot;</span>,<span class="st">&quot;191&quot;</span>,<span class="st">&quot;393&quot;</span>))</span>
+<span id="cb11-2"><a href="emner-fra-eksperimental-design.html#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="emner-fra-eksperimental-design.html#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="emner-fra-eksperimental-design.html#cb11-4" aria-hidden="true" tabindex="-1"></a>applications_E <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>sex,<span class="at">y=</span>applications,<span class="at">fill=</span>sex)) <span class="sc">+</span> </span>
+<span id="cb11-5"><a href="emner-fra-eksperimental-design.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb11-6"><a href="emner-fra-eksperimental-design.html#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb11-7"><a href="emner-fra-eksperimental-design.html#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Number of applications to dep. E&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-8"><a href="emner-fra-eksperimental-design.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="st">&quot;woman&quot;</span>,<span class="st">&quot;men&quot;</span>,<span class="st">&quot;all&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="emner-fra-eksperimental-design.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-15-1.png" width="480" /></p>
 <p>Derfor, selvom kvinder ikke havde en lavere sandsynlighed af at blive optaget end mænd i deres fortrukne fag, var antallet af kvinder der blev optaget i helhed over alle afdelinger faktisk lavere end antallet af mænd.</p>
 </div>
 </div>
@@ -734,9 +737,9 @@ Figure 11.2: source: wikipedia
 <h2><span class="header-section-number">11.4</span> Case studies: Anscombe’s quartet<a href="emner-fra-eksperimental-design.html#case-studies-anscombes-quartet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>(Se også videoressourcer Part 3).</p>
 <p>Anscombes quartet (se også <a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet" class="uri">https://en.wikipedia.org/wiki/Anscombe%27s_quartet</a>) er et meget nyttigt og berømt eksempel, som stammer fra 1973, og som forklarer vigtigheden af at få lavet en visualisering af datasættet. Vi kan få åbnet de data fra linket nedenfor - man har x værdier og y værdier som kan anvendes til at lave et scatter plot, og der er også <code>set</code>, det refererer til fire forskellige datasæt (derfor ‘quartet’).</p>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="emner-fra-eksperimental-design.html#cb588-1" aria-hidden="true" tabindex="-1"></a>anscombe <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/mlt7crdik3eih9a/anscombe_long_format.txt?dl=1&quot;</span>,<span class="at">header=</span>T)</span>
-<span id="cb588-2"><a href="emner-fra-eksperimental-design.html#cb588-2" aria-hidden="true" tabindex="-1"></a>anscombe <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(anscombe)</span>
-<span id="cb588-3"><a href="emner-fra-eksperimental-design.html#cb588-3" aria-hidden="true" tabindex="-1"></a>anscombe</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="emner-fra-eksperimental-design.html#cb12-1" aria-hidden="true" tabindex="-1"></a>anscombe <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/mlt7crdik3eih9a/anscombe_long_format.txt?dl=1&quot;</span>,<span class="at">header=</span>T)</span>
+<span id="cb12-2"><a href="emner-fra-eksperimental-design.html#cb12-2" aria-hidden="true" tabindex="-1"></a>anscombe <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(anscombe)</span>
+<span id="cb12-3"><a href="emner-fra-eksperimental-design.html#cb12-3" aria-hidden="true" tabindex="-1"></a>anscombe</span></code></pre></div>
 <pre><code>## # A tibble: 44 × 3
 ##      set     x     y
 ##    &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
@@ -752,16 +755,16 @@ Figure 11.2: source: wikipedia
 ## 10     1     7  4.82
 ## # … with 34 more rows</code></pre>
 <p>Formålet med datasættet er, at man gerne vil fitte en lineær regression model for at finde den forventet y afhængig om x (husk <code>lm(y ~ x)</code>). Da vi har fire datasæt, kan man således opdele datasættet efter <code>set</code> og benytter rammen <code>nest</code> og <code>map</code> (se Chapter 7) til at fitte de fire lineær regression modeller. Vi anvender også <code>tidy</code> og <code>glance</code> for at få summary statistikker fra de fire modeller:</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="emner-fra-eksperimental-design.html#cb590-1" aria-hidden="true" tabindex="-1"></a>my_func <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .x)</span>
-<span id="cb590-2"><a href="emner-fra-eksperimental-design.html#cb590-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb590-3"><a href="emner-fra-eksperimental-design.html#cb590-3" aria-hidden="true" tabindex="-1"></a>tidy_anscombe_models <span class="ot">&lt;-</span> anscombe <span class="sc">%&gt;%</span> </span>
-<span id="cb590-4"><a href="emner-fra-eksperimental-design.html#cb590-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_nest</span>(set) <span class="sc">%&gt;%</span> </span>
-<span id="cb590-5"><a href="emner-fra-eksperimental-design.html#cb590-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit =</span> <span class="fu">map</span>(data, my_func),</span>
-<span id="cb590-6"><a href="emner-fra-eksperimental-design.html#cb590-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">tidy =</span> <span class="fu">map</span>(fit, tidy),</span>
-<span id="cb590-7"><a href="emner-fra-eksperimental-design.html#cb590-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">glance =</span> <span class="fu">map</span>(fit, glance))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="emner-fra-eksperimental-design.html#cb14-1" aria-hidden="true" tabindex="-1"></a>my_func <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .x)</span>
+<span id="cb14-2"><a href="emner-fra-eksperimental-design.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="emner-fra-eksperimental-design.html#cb14-3" aria-hidden="true" tabindex="-1"></a>tidy_anscombe_models <span class="ot">&lt;-</span> anscombe <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="emner-fra-eksperimental-design.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_nest</span>(set) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-5"><a href="emner-fra-eksperimental-design.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fit =</span> <span class="fu">map</span>(data, my_func),</span>
+<span id="cb14-6"><a href="emner-fra-eksperimental-design.html#cb14-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">tidy =</span> <span class="fu">map</span>(fit, tidy),</span>
+<span id="cb14-7"><a href="emner-fra-eksperimental-design.html#cb14-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">glance =</span> <span class="fu">map</span>(fit, glance))</span></code></pre></div>
 <p>Man kan anvende <code>unnest</code> på den output fra <code>tidy</code> og kigge på den intercept og den slope af de fire modeller. Man kan se, at de to parametre er næsten identiske for de fire modeller:</p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="emner-fra-eksperimental-design.html#cb591-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe_models <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="st">&quot;tidy&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb591-2"><a href="emner-fra-eksperimental-design.html#cb591-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">&quot;set&quot;</span>,<span class="at">names_from =</span> <span class="st">&quot;term&quot;</span>,<span class="at">values_from=</span><span class="st">&quot;estimate&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="emner-fra-eksperimental-design.html#cb15-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe_models <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="st">&quot;tidy&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="emner-fra-eksperimental-design.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="st">&quot;set&quot;</span>,<span class="at">names_from =</span> <span class="st">&quot;term&quot;</span>,<span class="at">values_from=</span><span class="st">&quot;estimate&quot;</span>) </span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##     set `(Intercept)`     x
 ##   &lt;int&gt;         &lt;dbl&gt; &lt;dbl&gt;
@@ -770,9 +773,9 @@ Figure 11.2: source: wikipedia
 ## 3     3          3.00 0.500
 ## 4     4          3.00 0.500</code></pre>
 <p>Hvad med de andre parametre fra modellen - lad os kigge for eksempel på <code>r.squared</code> og <code>p.value</code> fra modellerne, som kan findes i output fra <code>glance</code>. Her kan vi igen se, at de er næsten identiske.</p>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="emner-fra-eksperimental-design.html#cb593-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe_models <span class="sc">%&gt;%</span> </span>
-<span id="cb593-2"><a href="emner-fra-eksperimental-design.html#cb593-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(glance)) <span class="sc">%&gt;%</span> </span>
-<span id="cb593-3"><a href="emner-fra-eksperimental-design.html#cb593-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(set, r.squared,p.value)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="emner-fra-eksperimental-design.html#cb17-1" aria-hidden="true" tabindex="-1"></a>tidy_anscombe_models <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="emner-fra-eksperimental-design.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(glance)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="emner-fra-eksperimental-design.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(set, r.squared,p.value)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ##     set r.squared p.value
 ##   &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;
@@ -781,13 +784,13 @@ Figure 11.2: source: wikipedia
 ## 3     3     0.666 0.00218
 ## 4     4     0.667 0.00216</code></pre>
 <p>Hvad med korrelation? Også næsten den samme:</p>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="emner-fra-eksperimental-design.html#cb595-1" aria-hidden="true" tabindex="-1"></a>my_func <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">cor</span>(.x<span class="sc">$</span>x,.x<span class="sc">$</span>y)</span>
-<span id="cb595-2"><a href="emner-fra-eksperimental-design.html#cb595-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb595-3"><a href="emner-fra-eksperimental-design.html#cb595-3" aria-hidden="true" tabindex="-1"></a>anscombe <span class="sc">%&gt;%</span> </span>
-<span id="cb595-4"><a href="emner-fra-eksperimental-design.html#cb595-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_nest</span>(set) <span class="sc">%&gt;%</span> </span>
-<span id="cb595-5"><a href="emner-fra-eksperimental-design.html#cb595-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cor =</span> <span class="fu">map</span>(data, my_func)) <span class="sc">%&gt;%</span> </span>
-<span id="cb595-6"><a href="emner-fra-eksperimental-design.html#cb595-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(cor) <span class="sc">%&gt;%</span> </span>
-<span id="cb595-7"><a href="emner-fra-eksperimental-design.html#cb595-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>data)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="emner-fra-eksperimental-design.html#cb19-1" aria-hidden="true" tabindex="-1"></a>my_func <span class="ot">&lt;-</span> <span class="er">~</span><span class="fu">cor</span>(.x<span class="sc">$</span>x,.x<span class="sc">$</span>y)</span>
+<span id="cb19-2"><a href="emner-fra-eksperimental-design.html#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="emner-fra-eksperimental-design.html#cb19-3" aria-hidden="true" tabindex="-1"></a>anscombe <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="emner-fra-eksperimental-design.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_nest</span>(set) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="emner-fra-eksperimental-design.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cor =</span> <span class="fu">map</span>(data, my_func)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-6"><a href="emner-fra-eksperimental-design.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(cor) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-7"><a href="emner-fra-eksperimental-design.html#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>data)</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 2
 ##     set   cor
 ##   &lt;int&gt; &lt;dbl&gt;
@@ -796,13 +799,13 @@ Figure 11.2: source: wikipedia
 ## 3     3 0.816
 ## 4     4 0.817</code></pre>
 <p>Kan man så konkludere, at de fire datasæt som underligger de forskellige modeller, er identiske? Vi laver et scatter plot af de fire datasæt (som vi faktisk skulle have gjort i starten af vores analyse).</p>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="emner-fra-eksperimental-design.html#cb597-1" aria-hidden="true" tabindex="-1"></a>anscombe <span class="sc">%&gt;%</span> </span>
-<span id="cb597-2"><a href="emner-fra-eksperimental-design.html#cb597-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y,<span class="at">colour=</span><span class="fu">factor</span>(set))) <span class="sc">+</span></span>
-<span id="cb597-3"><a href="emner-fra-eksperimental-design.html#cb597-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb597-4"><a href="emner-fra-eksperimental-design.html#cb597-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>set) <span class="sc">+</span></span>
-<span id="cb597-5"><a href="emner-fra-eksperimental-design.html#cb597-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb597-6"><a href="emner-fra-eksperimental-design.html#cb597-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-598-1.png" width="768" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="emner-fra-eksperimental-design.html#cb21-1" aria-hidden="true" tabindex="-1"></a>anscombe <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="emner-fra-eksperimental-design.html#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y,<span class="at">colour=</span><span class="fu">factor</span>(set))) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="emner-fra-eksperimental-design.html#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb21-4"><a href="emner-fra-eksperimental-design.html#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>set) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="emner-fra-eksperimental-design.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb21-6"><a href="emner-fra-eksperimental-design.html#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-21-1.png" width="768" /></p>
 <p>De fire datasæt er meget forskellige. Vi ved, at de har alle samme de samme beste rette linjer, men underliggende data er slet ikke de samme. Den første datasæt ser egnet til en lineær regression analyse men vi kan se i datasæt nummer to, at der ikke engang er en linæer sammenhæng. Og de andre to har outlier værdier, som gør, at den bedste rette linje passer ikke særlig god til punkterne.</p>
 </div>
 <div id="undersøgelse-af-batch-effects" class="section level2 hasAnchor" number="11.5">
@@ -815,18 +818,18 @@ Figure 11.2: source: wikipedia
 <li>Sekvensering maskiner - samples sekvenserne på forskellige maskiner eller ‘lanes.’</li>
 </ul>
 <p>Lad os tage udgangspunkt i nogle genekspression sekvensering data lavet i mus (vi så også samme datasæt når vi lært <code>pivot_longer</code> kombineret med <code>left_join</code>).</p>
-<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="emner-fra-eksperimental-design.html#cb598-1" aria-hidden="true" tabindex="-1"></a>norm.cts <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/3vhwnsnhzsy35nd/bottomly_count_table_normalised.txt?dl=1&quot;</span>)</span>
-<span id="cb598-2"><a href="emner-fra-eksperimental-design.html#cb598-2" aria-hidden="true" tabindex="-1"></a>coldata <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/el3sm9ncvzbq6xf/bottomly_phenodata.txt?dl=1&quot;</span>)</span>
-<span id="cb598-3"><a href="emner-fra-eksperimental-design.html#cb598-3" aria-hidden="true" tabindex="-1"></a>coldata <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(coldata)</span>
-<span id="cb598-4"><a href="emner-fra-eksperimental-design.html#cb598-4" aria-hidden="true" tabindex="-1"></a>norm.cts <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(norm.cts,<span class="at">rownames=</span><span class="st">&quot;gene&quot;</span>)</span>
-<span id="cb598-5"><a href="emner-fra-eksperimental-design.html#cb598-5" aria-hidden="true" tabindex="-1"></a>coldata <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(coldata)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="emner-fra-eksperimental-design.html#cb22-1" aria-hidden="true" tabindex="-1"></a>norm.cts <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/3vhwnsnhzsy35nd/bottomly_count_table_normalised.txt?dl=1&quot;</span>)</span>
+<span id="cb22-2"><a href="emner-fra-eksperimental-design.html#cb22-2" aria-hidden="true" tabindex="-1"></a>coldata <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/el3sm9ncvzbq6xf/bottomly_phenodata.txt?dl=1&quot;</span>)</span>
+<span id="cb22-3"><a href="emner-fra-eksperimental-design.html#cb22-3" aria-hidden="true" tabindex="-1"></a>coldata <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(coldata)</span>
+<span id="cb22-4"><a href="emner-fra-eksperimental-design.html#cb22-4" aria-hidden="true" tabindex="-1"></a>norm.cts <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(norm.cts,<span class="at">rownames=</span><span class="st">&quot;gene&quot;</span>)</span>
+<span id="cb22-5"><a href="emner-fra-eksperimental-design.html#cb22-5" aria-hidden="true" tabindex="-1"></a>coldata <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(coldata)</span></code></pre></div>
 <p>Jeg begynder ved at vælge kun rækker som har mindst 50 counts, for at undgå gener med lave ekspressionsniveauer. Det næste jeg gør er at transformere de data til log form (funktion <code>map_if()</code>) for at opnå en bedre fordeling i datasættet.</p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="emner-fra-eksperimental-design.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="co">#normalise and filter the data</span></span>
-<span id="cb599-2"><a href="emner-fra-eksperimental-design.html#cb599-2" aria-hidden="true" tabindex="-1"></a>norm.cts <span class="ot">&lt;-</span> norm.cts <span class="sc">%&gt;%</span> </span>
-<span id="cb599-3"><a href="emner-fra-eksperimental-design.html#cb599-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">rowSums</span>(norm.cts <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>gene))<span class="sc">&gt;</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb599-4"><a href="emner-fra-eksperimental-design.html#cb599-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_if</span>(is.numeric,<span class="sc">~</span><span class="fu">log</span>(.x<span class="sc">+</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span>
-<span id="cb599-5"><a href="emner-fra-eksperimental-design.html#cb599-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb599-6"><a href="emner-fra-eksperimental-design.html#cb599-6" aria-hidden="true" tabindex="-1"></a>norm.cts</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="emner-fra-eksperimental-design.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#normalise and filter the data</span></span>
+<span id="cb23-2"><a href="emner-fra-eksperimental-design.html#cb23-2" aria-hidden="true" tabindex="-1"></a>norm.cts <span class="ot">&lt;-</span> norm.cts <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="emner-fra-eksperimental-design.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">rowSums</span>(norm.cts <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>gene))<span class="sc">&gt;</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="emner-fra-eksperimental-design.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map_if</span>(is.numeric,<span class="sc">~</span><span class="fu">log</span>(.x<span class="sc">+</span><span class="dv">1</span>)) <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span>
+<span id="cb23-5"><a href="emner-fra-eksperimental-design.html#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="emner-fra-eksperimental-design.html#cb23-6" aria-hidden="true" tabindex="-1"></a>norm.cts</span></code></pre></div>
 <pre><code>## # A tibble: 10,193 × 22
 ##    gene    SRX033480 SRX033488 SRX033481 SRX033489 SRX033482 SRX033490 SRX033483
 ##    &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
@@ -846,7 +849,7 @@ Figure 11.2: source: wikipedia
 ## #   SRX033492 &lt;dbl&gt;, SRX033485 &lt;dbl&gt;, SRX033493 &lt;dbl&gt;, SRX033486 &lt;dbl&gt;,
 ## #   SRX033494 &lt;dbl&gt;</code></pre>
 <p>Så der er omkring 10,000 genes i rækkerne og så 21 forskellige samples som spreder sig over kolonnerne. Vi har også nogle sample oplysninger - der er to foskellige strains af mus og også forskellige batches, som vi gerne vil kigge nærme på.</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="emner-fra-eksperimental-design.html#cb601-1" aria-hidden="true" tabindex="-1"></a>coldata</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="emner-fra-eksperimental-design.html#cb25-1" aria-hidden="true" tabindex="-1"></a>coldata</span></code></pre></div>
 <pre><code>## # A tibble: 21 × 5
 ##    column    num.tech.reps strain   batch lane.number
 ##    &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;    &lt;int&gt;       &lt;int&gt;
@@ -862,7 +865,7 @@ Figure 11.2: source: wikipedia
 ## 10 SRX033479             1 C57BL.6J     4           8
 ## # … with 11 more rows</code></pre>
 <p>Vi kan kigger på hvor mange samples efter hver kombination af stain og batch vi har i datasættet:</p>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="emner-fra-eksperimental-design.html#cb603-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(coldata<span class="sc">$</span>strain, coldata<span class="sc">$</span>batch)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="emner-fra-eksperimental-design.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(coldata<span class="sc">$</span>strain, coldata<span class="sc">$</span>batch)</span></code></pre></div>
 <pre><code>##           
 ##            4 6 7
 ##   C57BL.6J 3 4 3
@@ -871,19 +874,19 @@ Figure 11.2: source: wikipedia
 <div id="principal-component-tilgang" class="section level3 hasAnchor" number="11.5.1">
 <h3><span class="header-section-number">11.5.1</span> Principal component tilgang<a href="emner-fra-eksperimental-design.html#principal-component-tilgang" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Man kan undersøge mulige batch effekter via prinicpal component analysis.</p>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="emner-fra-eksperimental-design.html#cb605-1" aria-hidden="true" tabindex="-1"></a>pca_fit <span class="ot">&lt;-</span> norm.cts <span class="sc">%&gt;%</span></span>
-<span id="cb605-2"><a href="emner-fra-eksperimental-design.html#cb605-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> <span class="co"># retain only numeric columns</span></span>
-<span id="cb605-3"><a href="emner-fra-eksperimental-design.html#cb605-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prcomp</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>) <span class="co"># do PCA on scaled data</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="emner-fra-eksperimental-design.html#cb29-1" aria-hidden="true" tabindex="-1"></a>pca_fit <span class="ot">&lt;-</span> norm.cts <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="emner-fra-eksperimental-design.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric)) <span class="sc">%&gt;%</span> <span class="co"># retain only numeric columns</span></span>
+<span id="cb29-3"><a href="emner-fra-eksperimental-design.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prcomp</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>) <span class="co"># do PCA on scaled data</span></span></code></pre></div>
 <p>Husk at når man lave en principal compononent analysis, kan man får den rotation matrix, der anvendes til at se hvor de forskellige samples ligger relative til hinanden over de forskellige principal components - dvs. at samples der ligner hinanden vises på samme sted på plottet. Den rotation matrix udtrækkes med funktionen <code>tidy()</code>:</p>
-<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="emner-fra-eksperimental-design.html#cb606-1" aria-hidden="true" tabindex="-1"></a>rot_matrix <span class="ot">&lt;-</span> pca_fit <span class="sc">%&gt;%</span></span>
-<span id="cb606-2"><a href="emner-fra-eksperimental-design.html#cb606-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">&quot;rotation&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="emner-fra-eksperimental-design.html#cb30-1" aria-hidden="true" tabindex="-1"></a>rot_matrix <span class="ot">&lt;-</span> pca_fit <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="emner-fra-eksperimental-design.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>(<span class="at">matrix =</span> <span class="st">&quot;rotation&quot;</span>) </span></code></pre></div>
 <p>Vi vil gerne lave et plot af de rotation matrix, men første vil vi gerne tilføje de sample oplysninger med <code>left_join</code>, så at vi kan se de forskellige batches eller strains. Både dataframes har en kolon som hedder <code>column</code>, der refereres til de sample navne, så jeg forbinde efter <code>column</code> her.</p>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="emner-fra-eksperimental-design.html#cb607-1" aria-hidden="true" tabindex="-1"></a>rot_matrix <span class="ot">&lt;-</span> rot_matrix  <span class="sc">%&gt;%</span> </span>
-<span id="cb607-2"><a href="emner-fra-eksperimental-design.html#cb607-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(coldata,<span class="at">by=</span><span class="st">&quot;column&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="emner-fra-eksperimental-design.html#cb31-1" aria-hidden="true" tabindex="-1"></a>rot_matrix <span class="ot">&lt;-</span> rot_matrix  <span class="sc">%&gt;%</span> </span>
+<span id="cb31-2"><a href="emner-fra-eksperimental-design.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(coldata,<span class="at">by=</span><span class="st">&quot;column&quot;</span>)</span></code></pre></div>
 <p>Anvende <code>pivot_wider()</code> til at få den i wide form, så vi kan plotte “PC1” og “PC2” i et scatter plot:</p>
-<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="emner-fra-eksperimental-design.html#cb608-1" aria-hidden="true" tabindex="-1"></a>rot_matrix_wide <span class="ot">&lt;-</span> rot_matrix <span class="sc">%&gt;%</span> </span>
-<span id="cb608-2"><a href="emner-fra-eksperimental-design.html#cb608-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;PC&quot;</span>, <span class="at">names_prefix =</span> <span class="st">&quot;PC&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;value&quot;</span>)</span>
-<span id="cb608-3"><a href="emner-fra-eksperimental-design.html#cb608-3" aria-hidden="true" tabindex="-1"></a>rot_matrix_wide</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="emner-fra-eksperimental-design.html#cb32-1" aria-hidden="true" tabindex="-1"></a>rot_matrix_wide <span class="ot">&lt;-</span> rot_matrix <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="emner-fra-eksperimental-design.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;PC&quot;</span>, <span class="at">names_prefix =</span> <span class="st">&quot;PC&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb32-3"><a href="emner-fra-eksperimental-design.html#cb32-3" aria-hidden="true" tabindex="-1"></a>rot_matrix_wide</span></code></pre></div>
 <pre><code>## # A tibble: 21 × 26
 ##    column num.tech.reps strain batch lane.number    PC1      PC2     PC3     PC4
 ##    &lt;chr&gt;          &lt;int&gt; &lt;chr&gt;  &lt;int&gt;       &lt;int&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
@@ -902,28 +905,28 @@ Figure 11.2: source: wikipedia
 ## #   PC14 &lt;dbl&gt;, PC15 &lt;dbl&gt;, PC16 &lt;dbl&gt;, PC17 &lt;dbl&gt;, PC18 &lt;dbl&gt;, PC19 &lt;dbl&gt;,
 ## #   PC20 &lt;dbl&gt;, PC21 &lt;dbl&gt;</code></pre>
 <p>Jeg giver farver og former efter de tre batches. Man kan se, at jeg har fået alle samples fra batch nummer 2 på samme sted i plottet.</p>
-<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="emner-fra-eksperimental-design.html#cb610-1" aria-hidden="true" tabindex="-1"></a>rot_matrix_wide <span class="sc">%&gt;%</span></span>
-<span id="cb610-2"><a href="emner-fra-eksperimental-design.html#cb610-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PC1,PC2,<span class="at">shape=</span><span class="fu">factor</span>(batch),<span class="at">colour=</span><span class="fu">factor</span>(batch))) <span class="sc">+</span> </span>
-<span id="cb610-3"><a href="emner-fra-eksperimental-design.html#cb610-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb610-4"><a href="emner-fra-eksperimental-design.html#cb610-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-607-1.png" width="576" /></p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="emner-fra-eksperimental-design.html#cb34-1" aria-hidden="true" tabindex="-1"></a>rot_matrix_wide <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="emner-fra-eksperimental-design.html#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PC1,PC2,<span class="at">shape=</span><span class="fu">factor</span>(batch),<span class="at">colour=</span><span class="fu">factor</span>(batch))) <span class="sc">+</span> </span>
+<span id="cb34-3"><a href="emner-fra-eksperimental-design.html#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb34-4"><a href="emner-fra-eksperimental-design.html#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-30-1.png" width="576" /></p>
 <p>Jeg kan også give farver efter strain, hvor man kan se at der nok er en forskellen mellem de to strains her.</p>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="emner-fra-eksperimental-design.html#cb611-1" aria-hidden="true" tabindex="-1"></a>rot_matrix_wide <span class="sc">%&gt;%</span></span>
-<span id="cb611-2"><a href="emner-fra-eksperimental-design.html#cb611-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PC1,PC2,<span class="at">shape=</span><span class="fu">factor</span>(strain),<span class="at">colour=</span><span class="fu">factor</span>(strain))) <span class="sc">+</span> </span>
-<span id="cb611-3"><a href="emner-fra-eksperimental-design.html#cb611-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb611-4"><a href="emner-fra-eksperimental-design.html#cb611-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-608-1.png" width="576" /></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="emner-fra-eksperimental-design.html#cb35-1" aria-hidden="true" tabindex="-1"></a>rot_matrix_wide <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="emner-fra-eksperimental-design.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PC1,PC2,<span class="at">shape=</span><span class="fu">factor</span>(strain),<span class="at">colour=</span><span class="fu">factor</span>(strain))) <span class="sc">+</span> </span>
+<span id="cb35-3"><a href="emner-fra-eksperimental-design.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="emner-fra-eksperimental-design.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-31-1.png" width="576" /></p>
 <p>Man kan også se de data på en anden måde ved at lave boxplots for to første to principal comonponets opdelte efter batch. Vi få bekræftet vores observation at der er en stærk forskel mellem match 7 og de andre to batches langt den første principal component, og det er et problem som muligvis skal korrigeres før man laver yderligere analyser på de data.</p>
 <!-- lave boxplot af PC1 og PC2 opdelt efter batch-->
-<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="emner-fra-eksperimental-design.html#cb612-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> rot_matrix_wide <span class="sc">%&gt;%</span> </span>
-<span id="cb612-2"><a href="emner-fra-eksperimental-design.html#cb612-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(batch),<span class="at">y=</span>PC1,<span class="at">fill=</span><span class="fu">factor</span>(batch))) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span>
-<span id="cb612-3"><a href="emner-fra-eksperimental-design.html#cb612-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb612-4"><a href="emner-fra-eksperimental-design.html#cb612-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> rot_matrix_wide <span class="sc">%&gt;%</span> </span>
-<span id="cb612-5"><a href="emner-fra-eksperimental-design.html#cb612-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(batch),<span class="at">y=</span>PC2,<span class="at">fill=</span><span class="fu">factor</span>(batch))) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span>
-<span id="cb612-6"><a href="emner-fra-eksperimental-design.html#cb612-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb612-7"><a href="emner-fra-eksperimental-design.html#cb612-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
-<span id="cb612-8"><a href="emner-fra-eksperimental-design.html#cb612-8" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="visualisering_22_files/figure-html/unnamed-chunk-609-1.png" width="480" /></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="emner-fra-eksperimental-design.html#cb36-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> rot_matrix_wide <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="emner-fra-eksperimental-design.html#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(batch),<span class="at">y=</span>PC1,<span class="at">fill=</span><span class="fu">factor</span>(batch))) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span>
+<span id="cb36-3"><a href="emner-fra-eksperimental-design.html#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="emner-fra-eksperimental-design.html#cb36-4" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> rot_matrix_wide <span class="sc">%&gt;%</span> </span>
+<span id="cb36-5"><a href="emner-fra-eksperimental-design.html#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">factor</span>(batch),<span class="at">y=</span>PC2,<span class="at">fill=</span><span class="fu">factor</span>(batch))) <span class="sc">+</span> <span class="fu">geom_boxplot</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">show.legend =</span> F) <span class="sc">+</span> <span class="fu">theme_minimal</span>()</span>
+<span id="cb36-6"><a href="emner-fra-eksperimental-design.html#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="emner-fra-eksperimental-design.html#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb36-8"><a href="emner-fra-eksperimental-design.html#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1,p2,<span class="at">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="visualisering_22_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
 <!-- ### Ekstra: Pheatmap tilgang! -->
 <!-- Det er også meget almindeligt at se "heatmaps" indenfor biologi fag. I en heatmap kan man visualisere korrelationerne i ekspressionen mellem de forskellige samples. Samples som har tætteste sammenhænge fremstå ved siden af hinanden på heatmappen ( ligesom i en dendrogram i hierarchical clustering, men med korrelation i stedet for afstand). -->
 <!-- I følgende beregner jeg korrelationkoffeficient mellem de forskellige variabler: -->
@@ -967,27 +970,25 @@ Figure 11.2: source: wikipedia
 <p>Gruppe 1: 18, 23, 31, 25, 19</p>
 <p>Gruppe 2: 24, 29, 35, 21, 30</p>
 <p>Gruppe 3: 43, 52, 33, 39, 40</p>
-<ul>
-<li>Hvad er problemet her med det eksperimental design? Lav boxplots for at viser fordelingen af alderne for hver af de tre grupper.</li>
-<li>Hvis man finder en signifikant forskel mellem de tre kosttilskud, kan man stoler på resultaterne?</li>
-<li>Hvad andre variabler end alder kunne skyldes en eventuelle forskel mellem de tre kosttilskud, og som måske skulle tages i betragtning?</li>
-<li>Hvad kan man gøre med den ovenstående eksperiment design for at løse problemet?</li>
-</ul>
+<p><strong>a</strong>) Hvad er problemet her med det eksperimental design? Lav boxplots for at viser fordelingen af alderne for hver af de tre grupper.</p>
+<p><strong>b</strong>) Hvis man finder en signifikant forskel mellem de tre kosttilskud, kan man stoler på resultaterne?</p>
+<p><strong>c</strong>) Hvad andre variabler end alder kunne skyldes en eventuelle forskel mellem de tre kosttilskud, og som måske skulle tages i betragtning?</p>
+<p><strong>d</strong>) Hvad kan man gøre med den ovenstående eksperiment design for at løse problemet?</p>
 <hr />
 <p><strong>Problem 3</strong>) <em>Simpson’s paradoks</em> <strong>Lung Cap data revisited</strong></p>
 <p>Indlæse <code>LungCapData</code> og tilføj kategorisk variabel <code>Age.Group</code>:</p>
-<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="emner-fra-eksperimental-design.html#cb613-1" aria-hidden="true" tabindex="-1"></a>LungCapData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1&quot;</span>)</span>
-<span id="cb613-2"><a href="emner-fra-eksperimental-design.html#cb613-2" aria-hidden="true" tabindex="-1"></a>LungCapData<span class="sc">$</span>Age.Group <span class="ot">&lt;-</span> <span class="fu">cut</span>(LungCapData<span class="sc">$</span>Age,<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">13</span>,<span class="dv">15</span>,<span class="dv">17</span>,<span class="dv">19</span>),<span class="at">right=</span><span class="cn">FALSE</span>,<span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb613-3"><a href="emner-fra-eksperimental-design.html#cb613-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(LungCapData<span class="sc">$</span>Age.Group) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt;13&quot;</span>,<span class="st">&quot;13-14&quot;</span>,<span class="st">&quot;15-16&quot;</span>,<span class="st">&quot;17+&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="emner-fra-eksperimental-design.html#cb37-1" aria-hidden="true" tabindex="-1"></a>LungCapData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1&quot;</span>)</span>
+<span id="cb37-2"><a href="emner-fra-eksperimental-design.html#cb37-2" aria-hidden="true" tabindex="-1"></a>LungCapData<span class="sc">$</span>Age.Group <span class="ot">&lt;-</span> <span class="fu">cut</span>(LungCapData<span class="sc">$</span>Age,<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">13</span>,<span class="dv">15</span>,<span class="dv">17</span>,<span class="dv">19</span>),<span class="at">right=</span><span class="cn">FALSE</span>,<span class="at">include.lowest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-3"><a href="emner-fra-eksperimental-design.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(LungCapData<span class="sc">$</span>Age.Group) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;&lt;13&quot;</span>,<span class="st">&quot;13-14&quot;</span>,<span class="st">&quot;15-16&quot;</span>,<span class="st">&quot;17+&quot;</span>)</span></code></pre></div>
 <p><strong>a</strong>) Lav boxplots med <code>smoke</code> på x-aksen og <code>LungCap</code> på y-aksen.
 + Notere hvilke gruppe har den højeste lungkapacitet.</p>
 <p><strong>b</strong>) Lav samme plot men adskilte efter <code>Age.Group</code> og beskriv, hvordan det er et eksempel på Simpson’s Paradoks.</p>
 <p><strong>c)</strong> Lav et boxplot med <code>Age</code> på y-aksen og <code>Smoke</code> på x-aksen for at støtte hvorfor man ser Simpson’s Paradoks i datasættet.</p>
 <hr />
 <p><strong>Problem 4</strong>) <em>Anscombes analyse</em> Gentage Anscombes analyse med dinosaurus datasæt:</p>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="emner-fra-eksperimental-design.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasauRus) <span class="co">#installer denne pakke</span></span>
-<span id="cb614-2"><a href="emner-fra-eksperimental-design.html#cb614-2" aria-hidden="true" tabindex="-1"></a>data_dozen <span class="ot">&lt;-</span> datasauRus<span class="sc">::</span>datasaurus_dozen</span>
-<span id="cb614-3"><a href="emner-fra-eksperimental-design.html#cb614-3" aria-hidden="true" tabindex="-1"></a>data_dozen</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="emner-fra-eksperimental-design.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datasauRus) <span class="co">#installer denne pakke</span></span>
+<span id="cb38-2"><a href="emner-fra-eksperimental-design.html#cb38-2" aria-hidden="true" tabindex="-1"></a>data_dozen <span class="ot">&lt;-</span> datasauRus<span class="sc">::</span>datasaurus_dozen</span>
+<span id="cb38-3"><a href="emner-fra-eksperimental-design.html#cb38-3" aria-hidden="true" tabindex="-1"></a>data_dozen</span></code></pre></div>
 <pre><code>FALSE # A tibble: 1,846 × 3
 FALSE    dataset     x     y
 FALSE    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
@@ -1008,10 +1009,10 @@ FALSE # … with 1,836 more rows</code></pre>
 <p><strong>d</strong>) Er de alle det samme datasæt? Lav et scatter plot adskilte efter de forskellige datasæt. Hvordan ser de bedste rette linjer ud på plotterne?</p>
 <hr />
 <p><strong>Problem 5</strong>) Vi vil gerne undersøge eventuelle batch effects i følgende datasæt. Det er simuleret “single cell” sekvensering count data (dataframen <code>cse50</code>) samt dataframen <code>batches</code>, som angiver hvilken batch hver af de 500 cells tilhører.</p>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="emner-fra-eksperimental-design.html#cb616-1" aria-hidden="true" tabindex="-1"></a>cse50 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/o0wzojpcsekeg6z/cell_mix_50_counts.txt?dl=1&quot;</span>)</span>
-<span id="cb616-2"><a href="emner-fra-eksperimental-design.html#cb616-2" aria-hidden="true" tabindex="-1"></a>batches <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/4t382bfgro46ka5/cell_mix_50_batches.txt?dl=1&quot;</span>)</span>
-<span id="cb616-3"><a href="emner-fra-eksperimental-design.html#cb616-3" aria-hidden="true" tabindex="-1"></a>batches <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(batches)</span>
-<span id="cb616-4"><a href="emner-fra-eksperimental-design.html#cb616-4" aria-hidden="true" tabindex="-1"></a>cse50 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(cse50)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="emner-fra-eksperimental-design.html#cb40-1" aria-hidden="true" tabindex="-1"></a>cse50 <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/o0wzojpcsekeg6z/cell_mix_50_counts.txt?dl=1&quot;</span>)</span>
+<span id="cb40-2"><a href="emner-fra-eksperimental-design.html#cb40-2" aria-hidden="true" tabindex="-1"></a>batches <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://www.dropbox.com/s/4t382bfgro46ka5/cell_mix_50_batches.txt?dl=1&quot;</span>)</span>
+<span id="cb40-3"><a href="emner-fra-eksperimental-design.html#cb40-3" aria-hidden="true" tabindex="-1"></a>batches <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(batches)</span>
+<span id="cb40-4"><a href="emner-fra-eksperimental-design.html#cb40-4" aria-hidden="true" tabindex="-1"></a>cse50 <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(cse50)</span></code></pre></div>
 <p><strong>a</strong>) Anvend <code>map_df</code> til at få transformeret de data til log scale (plus 1 først og tag log bagefter).</p>
 <p><strong>b</strong>) Lav PCA på det transformeret datasæt.</p>
 <p><strong>c</strong>) Anvend din PCA resultater til at få den rotation matrix</p>
@@ -1021,18 +1022,18 @@ FALSE # … with 1,836 more rows</code></pre>
 <hr />
 <p><strong>Problem 6</strong> <em>Mere Simpson’s Paradox</em></p>
 <p>Kør følgende kode til at indlæs og bearbejde følgende datasæt <code>airlines</code>.</p>
-<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="emner-fra-eksperimental-design.html#cb617-1" aria-hidden="true" tabindex="-1"></a>airlines <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;http://www.utsc.utoronto.ca/~butler/d29/airlines.txt&quot;</span>,<span class="at">header=</span>T)</span>
-<span id="cb617-2"><a href="emner-fra-eksperimental-design.html#cb617-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb617-3"><a href="emner-fra-eksperimental-design.html#cb617-3" aria-hidden="true" tabindex="-1"></a>airlines <span class="ot">&lt;-</span> airlines <span class="sc">%&gt;%</span> </span>
-<span id="cb617-4"><a href="emner-fra-eksperimental-design.html#cb617-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>airport) <span class="sc">%&gt;%</span> </span>
-<span id="cb617-5"><a href="emner-fra-eksperimental-design.html#cb617-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;airline&quot;</span>,<span class="st">&quot;status&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb617-6"><a href="emner-fra-eksperimental-design.html#cb617-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">airline =</span> <span class="fu">recode</span>(airline, <span class="at">aa =</span> <span class="st">&quot;Alaska&quot;</span>, <span class="at">aw =</span> <span class="st">&quot;American&quot;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb617-7"><a href="emner-fra-eksperimental-design.html#cb617-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>status,<span class="at">values_from=</span>value) <span class="sc">%&gt;%</span> </span>
-<span id="cb617-8"><a href="emner-fra-eksperimental-design.html#cb617-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;ontime&quot;</span> <span class="ot">=</span> ontime <span class="sc">+</span> delayed) <span class="sc">%&gt;%</span> </span>
-<span id="cb617-9"><a href="emner-fra-eksperimental-design.html#cb617-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">flights =</span> ontime)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="emner-fra-eksperimental-design.html#cb41-1" aria-hidden="true" tabindex="-1"></a>airlines <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;http://www.utsc.utoronto.ca/~butler/d29/airlines.txt&quot;</span>,<span class="at">header=</span>T)</span>
+<span id="cb41-2"><a href="emner-fra-eksperimental-design.html#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="emner-fra-eksperimental-design.html#cb41-3" aria-hidden="true" tabindex="-1"></a>airlines <span class="ot">&lt;-</span> airlines <span class="sc">%&gt;%</span> </span>
+<span id="cb41-4"><a href="emner-fra-eksperimental-design.html#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>airport) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-5"><a href="emner-fra-eksperimental-design.html#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(name,<span class="at">sep=</span><span class="st">&quot;_&quot;</span>,<span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;airline&quot;</span>,<span class="st">&quot;status&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb41-6"><a href="emner-fra-eksperimental-design.html#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">airline =</span> <span class="fu">recode</span>(airline, <span class="at">aa =</span> <span class="st">&quot;Alaska&quot;</span>, <span class="at">aw =</span> <span class="st">&quot;American&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-7"><a href="emner-fra-eksperimental-design.html#cb41-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>status,<span class="at">values_from=</span>value) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-8"><a href="emner-fra-eksperimental-design.html#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">&quot;ontime&quot;</span> <span class="ot">=</span> ontime <span class="sc">+</span> delayed) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-9"><a href="emner-fra-eksperimental-design.html#cb41-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">flights =</span> ontime)</span></code></pre></div>
 <p><strong>a</strong>) Opsummer antal <code>flights</code> og antal <code>delayed</code> over de forskellige airports for at få et samlet tal til hver airline.</p>
 <p><strong>b</strong>) Beregn også proportionen af flights som er delayed i hver airline (igen samlede over alle airports). Lav et barplot til at vise proportionerne.</p>
-<p><strong>c</strong>) Denne gange opsummer over de to airlines for at få et samlet tal til hvert airline. Beregen også proportionen af flights som er delayed og lave et plot.</p>
+<p><strong>c</strong>) Denne gange opsummer over de to airlines for at få et samlet tal til hvert airport. Beregn også proportionen af flights som er delayed og lave et plot.</p>
 <p><strong>d</strong>) Denne gange beregne proportionen af flights som er delayed til hver kombination af både airport og airline. Igen omsæt til et plot.</p>
 <p><strong>e</strong>) Kan du forklare? Hint: tag for eksempel en kig på de rå data og bla. airport “Phoenix.”</p>
 </div>
@@ -1103,20 +1104,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
