@@ -672,7 +672,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Til hver af de fem folds bregener jeg statisttiken “mean absolute error” der tager afstanden mellem de forventede værdier (<code>predicted_mass</code>) og virkelige værdier (<code>actual_mass</code>) og tager dernæst middelværdien (over deres absolute værdier dvs. uden minus tegn). Jo mindre “mae” er, jo bedre modellen ser ud.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="maskinslæring-i-tidyverse.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#smaller mae = better model</span></span>
 <span id="cb14-2"><a href="maskinslæring-i-tidyverse.html#cb14-2" aria-hidden="true" tabindex="-1"></a>mae_df <span class="ot">&lt;-</span> prediction_df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="st">&quot;mae&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">abs</span>(actual_mass<span class="sc">-</span>predicted_mass)))</span></code></pre></div>
-<p>Her er et plot af statistikken “mae” til de forskellige folds. I gennemsnit er det 236.8296021, der betyder at vores forudsigelser er ude/forkert ved knap 300 g i gennemsnit - ikke dårligt når den gennemsnits pingvin vejer 4207.06 g.</p>
+<p>Her er et plot af statistikken “mae” til de forskellige folds. I gennemsnit er det 232.8982158, der betyder at vores forudsigelser er ude/forkert ved knap 300 g i gennemsnit - ikke dårligt når den gennemsnits pingvin vejer 4207.06 g.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="maskinslæring-i-tidyverse.html#cb15-1" aria-hidden="true" tabindex="-1"></a>mae_df <span class="sc">%&gt;%</span> </span>
 <span id="cb15-2"><a href="maskinslæring-i-tidyverse.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>mae,<span class="at">x=</span>id,<span class="at">fill=</span>id)) <span class="sc">+</span> </span>
 <span id="cb15-3"><a href="maskinslæring-i-tidyverse.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>,<span class="at">colour=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span> </span>
@@ -691,8 +691,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## # A tibble: 1 × 1
 ##     mae
 ##   &lt;dbl&gt;
-## 1  225.</code></pre>
-<p>Man kan se, at vores final model lave forudsigelser som er i gennemsnit 224.7g væk fra pingvinernes virkelige vægt (det vil sige, at forudsigelsen kan være over eller under den virkelige værdi, men i gennemsnit er afstanden fra den virkelige værdi 230g).</p>
+## 1  241.</code></pre>
+<p>Man kan se, at vores final model lave forudsigelser som er i gennemsnit 241.4g væk fra pingvinernes virkelige vægt (det vil sige, at forudsigelsen kan være over eller under den virkelige værdi, men i gennemsnit er afstanden fra den virkelige værdi 230g).</p>
 </div>
 </div>
 <div id="classification-models" class="section level2 hasAnchor" number="12.4">
@@ -970,42 +970,43 @@ Vi vil gerne prøve de forskellige værdier til <code>mtry</code> i modellen og 
 <p><strong>a)</strong> Opdel datasættet “penguins” i to, således at 80 procent af observationerne hører til det træning datasæt (og 20 procent hører til det testing datasæt). Kald dit resultat <code>penguins_split</code>. Hvor mange observationer er blevet allokeret til træning og testing datasæt?</p>
 <p><strong>b)</strong> Udtræk de to datasæt fra <code>penguins_split</code> og kalder dem for <code>penguins_training</code> og <code>penguins_test</code>.</p>
 <p><em>Vi lægger datasættet <code>penguins_test</code> til siden (vi får bruge for det senere), og arbejder kun med datasættet <code>penguins_training</code> for at udvikle vores model.</em></p>
-<p><strong>c</strong>) Anvend <code>penguins_training</code> til at lave en 5-fold-cross-validation dataframe, <code>cv_split</code>. Udtrække de fem testing og training datasæt fra kolonnen <code>splits</code> til de forskellige folds (kald deres kolonner for henholdvis <code>validate</code> og <code>train</code>) og kald din nye “nested” dataframe for <code>cv_data</code>.</p>
+<p><strong>c</strong>) Anvend <code>penguins_training</code> til at lave en 5-fold-cross-validation dataframe, der hedder <code>cv_split</code>.</p>
+<p><strong>d</strong>) Udtræk de fem testing og training datasæt fra kolonnen <code>splits</code> og lagr dem i egne kolonner (kald deres kolonner for henholdvis <code>validate</code> og <code>train</code>). Kald din nye “nested” dataframe for <code>cv_data</code>.</p>
 <hr />
 <p><em>Nu vil vi gerne lave samme model 5 gange - en gang til hvert datasæt i kolonnen <code>train</code> i vores nye <code>cv_data</code> dataframe. Den model skal være en ‘classification’ model, når vi gerne vil forudsige “male” eller “female” pingviner (vores afhængig variabel er <code>sex</code> som er kategorisk med to mulige værdier).</em></p>
 <p><strong>Problem 3)</strong> <em>Set-up modellen</em></p>
-<p><strong>a</strong>) Lad os starte med det første datasæt og generaliser til en custom funktion i <strong>b</strong>). Anvend <code>pluck</code> for at få frem til det første datasæt i kolonnen <code>train</code>, og dernæst anvende funktionen <code>ranger</code> for at lave en classifikation of variablen <code>sex</code> som afhængig variable, med alle de andre variabler som uafhængige variabler (betegnet med <code>.</code> i modellen). Angiv <code>num.trees==100</code>.</p>
-<p><strong>b</strong>) Når vi har fået <code>ranger</code> til at virke på det første datasæt laver vi en custom funktion der kan anvendes over samtlige datasæt i kolonnen <code>train</code> - tilpas din <code>ranger</code> model fra <strong>a)</strong> til en custom funktion og kalder den for <code>ranger_function</code>.</p>
-<p><strong>c</strong>) Anvend <code>ranger_function</code> på samtlige datasæt i kolonne “train” (opret en ny kolonne i<code>cv_data</code>, der hedder <code>model</code> hvor de fem modeller bliver lagret).</p>
+<p><strong>a</strong>) Lad os starte med det første datasæt og generaliser bagefter til en custom funktion i <strong>b</strong>). Anvend <code>pluck</code> for at få frem til det første datasæt i kolonnen <code>train</code>, og dernæst anvende funktionen <code>ranger</code> for at lave en classifikation model med variablen <code>sex</code> som afhængig variable, og med alle de andre variabler som uafhængige variabler (betegnet med <code>~ .</code> i modellen). Angiv <code>num.trees==100</code> (vi ignorerer andre mulige parametre indtil videre).</p>
+<p><strong>b</strong>) Når vi har fået modellen med <code>ranger</code> til at virke på det første datasæt laver vi en custom funktion der kan anvendes over samtlige datasæt i kolonnen <code>train</code> - tilpas din <code>ranger</code> model fra <strong>a)</strong> til en custom funktion og kalder den for <code>ranger_function</code>.</p>
+<p><strong>c</strong>) Anvend <code>ranger_function</code> på samtlige datasæt i kolonne “train” (opret en ny kolonne i<code>cv_data</code>, der hedder <code>model</code> hvor dine fem modeller bliver lagret).</p>
 <hr />
-<p><em>Nu har vi lavet en classification model til hvert træning sæt! Vi vil gerne vide, hvor gode modellerne er til at forudsige <code>sex</code> i de fem datasæts i kolonnen <code>validate</code> (husk at <code>validate</code> indeholder de styk der ikke var brugt i træning til den relevant <code>id</code>(fold)).</em></p>
+<p><em>Nu har vi lavet en classification model til hvert træning sæt! Vi vil gerne vide, hvor gode modellerne er til at forudsige <code>sex</code> i de fem datasæts i kolonnen <code>validate</code> (husk at <code>validate</code> indeholder det styk, der ikke var brugt i training til den relevant <code>id</code>(fold)). Vi skal sammenligne to ting fra vores validate sæt - hvad er vores forudsigelser ud fra modellerne (“male” eller “female” til hver pingvin), og hvad er de virkelige værdier for variablen <code>sex</code> (igen “male” eller “female”).</em></p>
 <p><strong>Problem 4)</strong> <em>Make predictions from model</em></p>
 <p><strong>a</strong>) Brug <code>map</code>/<code>map2</code> til at lave to nye kolonner i <code>cv_data</code>:</p>
 <ul>
 <li><code>actual</code> hvor du udtrækker de virkelige værdier for variablen <code>sex</code></li>
 <li><code>prediction</code> hvor du anvender <code>predict</code> med din models (betegnet som .x) og dine validate sæt (betegnet som .y)</li>
 </ul>
-<p><strong>b</strong>) Udvælg <code>id</code>, <code>actual</code> og <code>prediction</code>, unnest og beregne accuracy til hvert af de 5 folds.</p>
+<p><strong>b</strong>) Udvælg <code>id</code>, <code>actual</code> og <code>prediction</code>, unnest og beregn “accuracy” (proportionen svar, der er rigtige) til hvert af de 5 folds.</p>
 <p><strong>c</strong>) Lav et barplot for at se din accuracies over de 5-folds.</p>
 <hr />
-<p><em>Nu har vi lavet 5-fold-cross validation til at træne en classification model. Vi kunne godt tænke os at udvide processen lidt, fordi der er nogle parametre der kan ændres på i funktionen <code>ranger</code>. Lad os prøve at ændre på parameten <code>mtry</code> for at se, om vi kan gøre modellen endnu bedre. Igen følger vi meget tæt på ovenstående kurusnotaterne - bare med et andet datasæt.</em></p>
+<p><em>Nu har vi lavet 5-fold-cross validation til at træne en classification model. Vi kunne godt tænke os at udvide processen lidt, fordi der er nogle parametre der kan ændres på i funktionen <code>ranger</code>. Det er gennem den her ‘udviklingsproces’ hvor vi begynder at forstå fordelen af at bruge cross-fold-validation. Lad os prøve at ændre på parameten <code>mtry</code> for at se, om vi kan gøre modellen bedre. Igen følger vi meget tæt på ovenstående kurusnotaterne.</em></p>
 <p><strong>Problm 5)</strong> Tune parameteren <code>mtry</code>.</p>
-<p><strong>a</strong>) Anvend funktionen <code>crossing</code> til at inddrage <code>mtry</code> (fra 2 til 6 som er antal uafhængig variabler) som kolonne i <code>cv_data</code>. Kald din nye dataframe for <code>cv_tune</code>.</p>
-<p><strong>b</strong>) Tilpas din custom ranger funktion fra <strong>Spørgsmål 3</strong> hvor du inddrager <code>mtry</code> (betegnet som <code>.y</code>) og anvende din model på de forskellige training sæt for hver mulige værdi af <code>mtry</code> (husk at bruge <code>map2</code> her).</p>
-<p><strong>c</strong>) Lav forudsigelser over alle modeller (der er 25!) og udtrækker dine “actual” og “predicted” værdier præcis ligesom før.</p>
-<p><strong>d</strong>) Beregn accuracy for alle 25 sæt, lav et stacked barplot og vælg den bedste mulige værdi for <code>mtry</code>.</p>
+<p><strong>a</strong>) Anvend funktionen <code>crossing</code> til at inddrage <code>mtry</code> (fra 2 til 6 som er antal uafhængig variabler) som kolonne i <code>cv_data</code>. Kald din nye dataframe for <code>cv_tune</code>. Hvor mange datasæt er der nu i kolonnen <code>train</code>?</p>
+<p><strong>b</strong>) Tilpas din custom ranger funktion fra <strong>Spørgsmål 3</strong> hvor du nu inddrager parameteren <code>mtry</code> (med værdi betegnet som <code>.y</code>) og anvende din model på de forskellige training sæt i kolonnen <code>train</code> for hver mulig værdi af <code>mtry</code> (husk at bruge <code>map2</code> her).</p>
+<p><strong>c</strong>) Lav forudsigelser ud fra samtlige modeller og dine validation sæt (kolonnen <code>validate</code>) og udtræk både dine “actual” og “predicted” værdier præcis ligesom før.</p>
+<p><strong>d</strong>) Beregn accuracy for samtlige sæt (alle kombinationer af <code>id</code> og <code>mtry</code>), lav et stacked barplot og vælg den bedste mulige værdi for <code>mtry</code>.</p>
 <hr />
-<p><em>Nu at vi har valgt et værdi for mtry lad os går henne og lav en “final” model! Når vi har lavet den final model kan vi endelig kigger på vores <code>penguins_test</code> datasæt. Husk at validate sæts var brugt til at teste modellen undervejs i udviklingsprocessen, men var stadig en del af <code>penguins_training</code>. Man kigger på den test datasæt kun en gang til sidste for at spørge - hvor god er vores endelig model?</em></p>
+<p><em>Nu at vi har valgt en værdi for parameteren <code>mtry</code>, lad os går henne og lav en “final” model! Når vi har lavet den final model kan vi endelig kigge på vores <code>penguins_test</code> datasæt, som vi lagt tidligere til siden. Husk at validate sæts var brugt til at teste modellen undervejs i udviklingsprocessen, men de var stadig en del af <code>penguins_training</code>. Man kigger på den testing datasæt kun én gang til sidste for at spørge - hvor god er vores endelige model?</em></p>
 <p><strong>Problem 6)</strong> <em>Lave en <code>final</code> model</em></p>
-<p><strong>a</strong>) Anvende funktionen <code>ranger</code> til at lave en classifcation model på datasættet <code>penguins_training</code>. Angiv <code>num.trees=100</code> og din valgt værdie for parameteren <code>mtry</code>.</p>
-<p><strong>b</strong>) Lav predictions med funktionen <code>predict</code> og angiv dit “penguins_test” datasæt. Beregen accuracy fra din model baserede på din virkelige værdier for <code>sex</code> og din forventede værdier fra funktionen <code>predict</code>.</p>
+<p><strong>a</strong>) Anvende funktionen <code>ranger</code> til at lave en classifcation model på datasættet <code>penguins_training</code>. Angiv <code>num.trees=100</code> og din valgt værdi for parameteren <code>mtry</code>.</p>
+<p><strong>b</strong>) Lav predictions med funktionen <code>predict</code> hvor du angiv din “final” model samt dit “penguins_test” datasæt. Beregen accuracy fra din model ved at sammenligne de virkelige værdier for variablen <code>sex</code> i dit testing sæt med din beregnede værdier fra <code>predict()</code>.</p>
 <hr />
-<p><em>Nu at vi er færdig med at lave og bedømme vores “final” model er vi interesseret i - hvilke variabler havde den største indfyldelse på vores forudsigelser af “male” og “female” pingviner?</em></p>
+<p><em>Nu at vi er færdig med at lave og bedømme vores “final” model er vi interesseret i - hvilke variabler havde den største indflydelse på vores forudsigelser af “male” og “female” pingviner?</em></p>
 <p><strong>Problem 7)</strong> <em>Variable importance</em></p>
-<p><strong>a</strong>) Tag din “final” model og angiv indstillingen <code>importance = "impurity"</code> i funktionen. Kør modellen og udtræk din variable importance vector med <code>final_RF$variable.importance</code>.</p>
-<p><strong>b</strong>) Omsæt til et barplot hvor du angiv rækkefølgen af søjlerne efter vigtigheden af de forskellige variabler (den meste vigtig til venstre).</p>
+<p><strong>a</strong>) Tag din funktion til din “final” model og angiv indstillingen <code>importance = "impurity"</code> i funktionen. Kør modellen og udtræk din variable importance vector med <code>final_RF$variable.importance</code>.</p>
+<p><strong>b</strong>) Omsæt din importance scores til et barplot hvor du angiv rækkefølgen af søjlerne efter vigtigheden af de forskellige variabler (den meste vigtig til venstre).</p>
 <hr />
-<p><strong>Problem 8)</strong> Gentag samme process i et andet datasæt:</p>
+<p><strong>Problem 8)</strong> Gentag samme process i et andet datasæt men i en regression contekst:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="maskinslæring-i-tidyverse.html#cb50-1" aria-hidden="true" tabindex="-1"></a>LungCapData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1&quot;</span>)</span>
 <span id="cb50-2"><a href="maskinslæring-i-tidyverse.html#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(LungCapData)</span></code></pre></div>
 <pre><code>## Rows: 725
@@ -1020,7 +1021,7 @@ Vi vil gerne prøve de forskellige værdier til <code>mtry</code> i modellen og 
 <ul>
 <li>forudsige <code>LungCap</code> som afhængig variabel og alle andre variabler som uafhængig variabler</li>
 <li>Splitte datasættet (75% training, 25% testing) og anvend 10-fold cross-validation på dit training datasæt</li>
-<li>Beregne “mean absolute error” for dine forskellige folds</li>
+<li>Beregn “mean absolute error” for dine forskellige folds</li>
 <li>Lav en færdig model og beregn “mean absolute error”</li>
 </ul>
 </div>
