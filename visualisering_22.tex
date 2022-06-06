@@ -6,8 +6,8 @@
 ]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -109,7 +109,7 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 \usepackage{booktabs}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
@@ -117,7 +117,7 @@
 
 \title{Analyse og visualisering af biologiske datasæt - 2022}
 \author{Sarah Rennie}
-\date{Last updated: 2022-05-29}
+\date{Last updated: 2022-06-06}
 
 \begin{document}
 \maketitle
@@ -352,11 +352,17 @@ Nar vi kommer til at arbejde med visualiseringer og data beardejdning er det vig
 Her er en list overfor nogle af de vigtigste datatyper:
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.33}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.42}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.25}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4167}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2500}}@{}}
 \toprule
-Datatype & Navn & Beskrivelse \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Datatype
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Navn
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Beskrivelse
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{int} & integer & kun hel tal \texttt{c(-1,0,1,2,3)} \\
@@ -611,11 +617,11 @@ Man kan nemt lave sin egne `fake' data ved at simulere det fra en fordeling, der
 \end{Shaded}
 
 \begin{verbatim}
-##  [1]  0.11061220  0.26194036 -0.74804948  0.91450709  0.34908502 -1.77144593
-##  [7] -0.94136236 -0.46445096  0.02651141 -1.00082963 -2.00938552  2.04089381
-## [13]  0.08820498  0.24437671  1.31476257  0.07886485 -0.03996859  0.30734122
-## [19]  1.28519058  1.43438077 -0.12288067 -0.85668870  1.28325074  0.86359650
-## [25]  0.77279565
+##  [1] -0.52837649  0.79843643  1.14192444 -0.46556969 -0.40089532  1.55902720
+##  [7]  0.47185870 -0.24809674 -0.77502350 -0.83167020  0.73920923  1.77431069
+## [13] -0.07201322  0.03774235 -0.72058719 -0.21855253  0.46830286  1.51760384
+## [19] -0.96203129  0.82478436 -0.80974046 -1.36916331  0.78732663 -0.52478057
+## [25]  0.22516414
 \end{verbatim}
 
 I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigge kun på de første (eller sidste) værdier:
@@ -623,13 +629,13 @@ I stedet for at kigge på alle værdier på én gang, vil vi måske hellere kigg
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(x) }\CommentTok{\#første 6}
-\DocumentationTok{\#\# [1]  0.1106122  0.2619404 {-}0.7480495  0.9145071  0.3490850 {-}1.7714459}
+\DocumentationTok{\#\# [1] {-}0.5283765  0.7984364  1.1419244 {-}0.4655697 {-}0.4008953  1.5590272}
 \FunctionTok{tail}\NormalTok{(x) }\CommentTok{\#sidste 6}
-\DocumentationTok{\#\# [1]  1.4343808 {-}0.1228807 {-}0.8566887  1.2832507  0.8635965  0.7727957}
+\DocumentationTok{\#\# [1]  0.8247844 {-}0.8097405 {-}1.3691633  0.7873266 {-}0.5247806  0.2251641}
 \NormalTok{x[}\DecValTok{1}\NormalTok{] }\CommentTok{\#første værdi}
-\DocumentationTok{\#\# [1] 0.1106122}
+\DocumentationTok{\#\# [1] {-}0.5283765}
 \NormalTok{x[}\FunctionTok{length}\NormalTok{(x)] }\CommentTok{\#sidste data point}
-\DocumentationTok{\#\# [1] 0.7727957}
+\DocumentationTok{\#\# [1] 0.2251641}
 \end{Highlighting}
 \end{Shaded}
 
@@ -638,9 +644,15 @@ Bemærk, at til forskellen af Python og mange andre programmering sprog, R bruge
 \hypertarget{measures-of-central-tendency}{%
 \subsection{Measures of central tendency}\label{measures-of-central-tendency}}
 
-\begin{longtable}[]{@{}ll@{}}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \toprule
-function & Description \\
+\begin{minipage}[b]{\linewidth}\raggedright
+function
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Description
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{mean()} & mean \(\bar{x}_{i} = \frac{1}{n}\sum_{i=1}^{n} x_{i}\) \\
@@ -667,7 +679,7 @@ Lad os afprøve dem på vores simulerede data:
 \end{Shaded}
 
 \begin{verbatim}
-## [1]  0.1368501  0.1106122  2.0408938 -2.0093855  0.9967437  0.9983705
+## [1]  0.09676761 -0.07201322  1.77431069 -1.36916331  0.76016038  0.87187177
 \end{verbatim}
 
 Man kan også lave et summary af dataen, som bestå af mange af de statistiker navnt ovenpå:
@@ -679,8 +691,8 @@ Man kan også lave et summary af dataen, som bestå af mange af de statistiker n
 \end{Shaded}
 
 \begin{verbatim}
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## -2.0094 -0.4645  0.1106  0.1369  0.8636  2.0409
+##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+## -1.36916 -0.52838 -0.07201  0.09677  0.78733  1.77431
 \end{verbatim}
 
 \hypertarget{tapply}{%
@@ -2847,7 +2859,7 @@ Her er en lille list over nogle ting, der forårsager en fejl når man kører ko
 \begin{itemize}
 \tightlist
 \item
-  \emph{Lav et nyt R Markdown dokument og fjern de eksempel koder. Husk at oprette en ny chunk ved at trykke på ``Insert'' new chunk", eller bruge shortcut-kommandoen CMD+ALT+I eller CTRL+ALT+I. Jeg anbefaler, at I oprette en ny chunk for hver plot, I laver}.
+  \emph{Lav et nyt R Markdown dokument og fjern de eksempel koder. Husk at oprette en ny chunk ved at trykke på ``Insert'' new chunk'', eller bruge shortcut-kommandoen CMD+ALT+I eller CTRL+ALT+I. Jeg anbefaler, at I oprette en ny chunk for hver plot, I laver}.
 \end{itemize}
 
 Vi bruger datasættet der hedder \texttt{diamonds}. Huske at først indlæse de data:*
@@ -3321,10 +3333,14 @@ Bemærk at både \texttt{scale\_color\_maual()} og \texttt{scale\_color\_brewer(
 Her er en oversigt over de fire funktioner.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \toprule
-fuktion & beskrivelse \\
+\begin{minipage}[b]{\linewidth}\raggedright
+fuktion
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+beskrivelse
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{scale\_fill\_manual(values=c("firebrick3","blue"))} & manuelle farver til boxplots og barplots osv. \\
@@ -4022,10 +4038,14 @@ Lad os starte med at indlæse pakken \textbf{tidyverse}. Vær opmærksom på, at
 Du kan se, at det faktisk er ikke kun én, men otte pakke som er blevet indlæst. Man kan godt indlæse alle pakke individuelt ved at bruge fk. \texttt{library(dplyr)}, men det er meget bekvemt at indlæse alle på samme tid med brugen af \texttt{library(tidyverse)}. Her er nogle beskrivelser af de pakker:
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \toprule
-pakke & korte beskrivelse \\
+\begin{minipage}[b]{\linewidth}\raggedright
+pakke
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+korte beskrivelse
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{readr} & indlæse data \\
@@ -4391,9 +4411,15 @@ På sammen måde i vores titanic oprydning kan man både pakke funktionen \textt
 
 Pakken \texttt{dplyr} er nok den meste brugbare pakke til at bearbejde dataframes. Jeg gennemgår nogle af de meste almindelige muligheder med pakken, og der er også en ``cheatsheet'' som du kan downloade som reference: \url{https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf}. Jeg tager afsæt i følgende funktioner, og dækker flere gennem de forskellige øvelese og øvrige emner.
 
-\begin{longtable}[]{@{}ll@{}}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \toprule
-dplyr verbs & beskrivelse \\
+\begin{minipage}[b]{\linewidth}\raggedright
+dplyr verbs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+beskrivelse
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{select()} & udvælge kolonner (\emph{variabler}) \\
@@ -4459,10 +4485,14 @@ Hvis vi gerne vil fjerne en variabel fra en dataframe, kan vi bruge et minustegn
 Hjælper funktioner til funktionen \texttt{select()} kan være brugbare hvis du gerne vil udvælge bestemte variabler efter nogle kriterier. Jeg har samlet nogle (men ikke alle mulige!) funktioner nedenfor og inddrager eksempler i problemstillingerne.
 
 \begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.50}}@{}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \toprule
-select helper & beskrivelse \\
+\begin{minipage}[b]{\linewidth}\raggedright
+select helper
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+beskrivelse
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{starts\_with()} & starts with a prefix \\
@@ -5445,9 +5475,15 @@ Lad os tage resultatet fra ovenpå og visualiserer det i et barplot, som i neden
 
 Nogle fuktioner man ofte bruge med \texttt{summarise()} (der er mange andre muligheder).
 
-\begin{longtable}[]{@{}ll@{}}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
 \toprule
-fuktion & beskrivelse \\
+\begin{minipage}[b]{\linewidth}\raggedright
+fuktion
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+beskrivelse
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{mean()} & to give us the mean value of a variable. \\
@@ -6084,11 +6120,9 @@ funktion & Beskrivelse (kopiret \\
 \bottomrule
 \end{longtable}
 
-Vi fokuserer her på funktionen \texttt{left\_join()} fordi den er den meste brugbart i biologiske data analyser, men vi kigger også på de øvrige funktioner gennem problemstillingerne nedenunder. Her er en grafiske demonstration af \texttt{left\_join()}:
+Vi fokuserer her på funktionen \texttt{left\_join()} fordi den er den meste brugbart i biologiske data analyser, men vi kigger også på de øvrige funktioner gennem problemstillingerne nedenunder. Her er en grafiske demonstration af \texttt{left\_join()} (source \url{https://mgimond.github.io/ES218/Week03c.html}):
 
-\textbackslash begin\{figure\}
-\includegraphics[width=0.6\linewidth]{plots/left_join} \textbackslash caption\{left\_join graphical demonstration (source \url{https://mgimond.github.io/ES218/Week03c.html})\}\label{fig:unnamed-chunk-320}
-\textbackslash end\{figure\}
+\includegraphics[width=0.6\linewidth]{plots/left_join}
 
 Det særligt med \texttt{left\_join} i forhold til de andre funktioner, er at \texttt{left\_join} bevarer samtlige data i dataframen man tager udgangspunkt i - det vil sige \texttt{df} i ovenstående billede, selvom \texttt{d} matchet ikke med en frugt i \texttt{dj}. I ovenstående genekspression eksempel betyder det, at man bevarer alle målinger i \texttt{gene\_table}, uanset om der er oplysninger om deres pågældende samples.
 
@@ -6718,9 +6752,15 @@ Vi starter med en simpel funktion fra base-R og så forklare den i den table bag
 \end{Highlighting}
 \end{Shaded}
 
-\begin{longtable}[]{@{}ll@{}}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4082}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5918}}@{}}
 \toprule
-Kode & Beskrivelse \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Kode
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Beskrivelse
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{my\_function\_name} & funktion navn \\
@@ -8571,7 +8611,7 @@ I følgende tilføjer jeg funktionen \texttt{geom\_signif} til plottet - det til
 \item
   Når jeg sammenligne modellerne ``model\_sex'' og ``model\_sex\_bill'' i ``Chinstrap'', er p-værdien over 0.05, så tilføjelsen af \texttt{bill\_length\_mm} i modellen var ikke signifikant - jeg giver ingen stjerner men skriver ``.'' til at matcher outputtet i \texttt{lm}.
 \item
-  Når jeg sammenligne modellerne ``model\_sex'' og ``model\_sex\_bill\_flipper'' kan jeg se at p-værdien er under 0.05, så der er en signifikant effekt - \texttt{bill\_length\_mm} og \texttt{flipper\_length\_mm} forklarer den afhængige variabel \texttt{body\_mass\_g}, ud over variablen \texttt{sex}. Jeg angiver "***" fordi p-værdien er under 0.001 (Se signif. codes i \texttt{lm} summary).
+  Når jeg sammenligne modellerne ``model\_sex'' og ``model\_sex\_bill\_flipper'' kan jeg se at p-værdien er under 0.05, så der er en signifikant effekt - \texttt{bill\_length\_mm} og \texttt{flipper\_length\_mm} forklarer den afhængige variabel \texttt{body\_mass\_g}, ud over variablen \texttt{sex}. Jeg angiver ``***'' fordi p-værdien er under 0.001 (Se signif. codes i \texttt{lm} summary).
 \item
   Indstillingen \texttt{y\_position} fortæller hvor jeg vil placerer linjerne.
 \end{itemize}
@@ -9003,9 +9043,15 @@ Man få forskellige ting frem, for eksempel:
 
 Fra pakken \texttt{broom} har vi mest beskæftiget os med \texttt{glance()} indstil videre. Med \texttt{glance()} få man enkel-linje baserede summary statistikker fra én eller flere modeller sammen i én dataramme, for at facilitete et plot/labels osv. Der er også to andre funktioner vi tager i bruge her. Her er en beskrivelse af de tre.
 
-\begin{longtable}[]{@{}ll@{}}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3929}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6071}}@{}}
 \toprule
-Broom verb & Beskrivelse \\
+\begin{minipage}[b]{\linewidth}\raggedright
+Broom verb
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Beskrivelse
+\end{minipage} \\
 \midrule
 \endhead
 \texttt{glance()} & single line summary - make elbow plot \\
@@ -10841,17 +10887,13 @@ Gruppe 2: 24, 29, 35, 21, 30
 
 Gruppe 3: 43, 52, 33, 39, 40
 
-\begin{itemize}
-\tightlist
-\item
-  Hvad er problemet her med det eksperimental design? Lav boxplots for at viser fordelingen af alderne for hver af de tre grupper.
-\item
-  Hvis man finder en signifikant forskel mellem de tre kosttilskud, kan man stoler på resultaterne?
-\item
-  Hvad andre variabler end alder kunne skyldes en eventuelle forskel mellem de tre kosttilskud, og som måske skulle tages i betragtning?
-\item
-  Hvad kan man gøre med den ovenstående eksperiment design for at løse problemet?
-\end{itemize}
+\textbf{a}) Hvad er problemet her med det eksperimental design? Lav boxplots for at viser fordelingen af alderne for hver af de tre grupper.
+
+\textbf{b}) Hvis man finder en signifikant forskel mellem de tre kosttilskud, kan man stoler på resultaterne?
+
+\textbf{c}) Hvad andre variabler end alder kunne skyldes en eventuelle forskel mellem de tre kosttilskud, og som måske skulle tages i betragtning?
+
+\textbf{d}) Hvad kan man gøre med den ovenstående eksperiment design for at løse problemet?
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -10960,7 +11002,7 @@ Kør følgende kode til at indlæs og bearbejde følgende datasæt \texttt{airli
 
 \textbf{b}) Beregn også proportionen af flights som er delayed i hver airline (igen samlede over alle airports). Lav et barplot til at vise proportionerne.
 
-\textbf{c}) Denne gange opsummer over de to airlines for at få et samlet tal til hvert airline. Beregen også proportionen af flights som er delayed og lave et plot.
+\textbf{c}) Denne gange opsummer over de to airlines for at få et samlet tal til hvert airport. Beregn også proportionen af flights som er delayed og lave et plot.
 
 \textbf{d}) Denne gange beregne proportionen af flights som er delayed til hver kombination af både airport og airline. Igen omsæt til et plot.
 
@@ -10997,11 +11039,14 @@ Batch effekt correction: \url{https://en.wikipedia.org/wiki/Batch_effect\#Correc
 \hypertarget{indledning-og-luxe6ringsmuxe5lene-4}{%
 \section{Indledning og læringsmålene}\label{indledning-og-luxe6ringsmuxe5lene-4}}
 
-Her bliver en lynhurtig introduktion til maskinslæring koncepter - emnet er i virkeligheden kæmpe store og jeg springer over mange detaljer her. Men jeg håber, at det giver en god grundlag/forståelse af emnet, der moviterer én til at tage yderligere kurser i maskinslæringområdet, eller at øge forståelsen de mange artikler i biolgoiske område der benytter maskinslæring modeller.
+Her bliver en lynhurtig introduktion til maskinslæring koncepter - emnet er i virkelighed kæmpe stort og jeg springer over mange detaljer her. Men jeg håber, at det giver en god grundlag/forståelse af den overordnet ramme, og at det kan være med til at øge forståelsen af de mange artikler i biologiske område der benytter maskinslæring modeller, samt motivere dig til at eventuelle tage yderligere kurser i området.
 
-I emnet introducerer jeg den grundlæggende ramme hvor man udvikler en model på træning data og cross-fold-validation og dernæst vurderer den model på testing data, som ikke var en del af selve træningsprocessen. Derudover arbejder vi stort set kun indenfor for emnerne vi har dækket i kurset. Processen virker måske lidt indviklet i starten, men generaliseres meget og nemt kan udvides i mange kontekster og situationer, der kræver forskellige modeller. I emnet introducerer jeg også en classification metode, som vi både optimerer (``tune'') og bruger til at forudsige hvem, der overlevede tradgedien på titanic!
+I emnet i dag introducerer jeg den grundlæggende ramme hvor man udvikler en model på træning data med cross-fold-validation og dernæst vurderer den model på testing data, som ikke var en del af selve træningsprocessen. Jeg inddrager også en classification model, som vi både optimerer (``tune'') og bruger til at forudsige hvem, der overlevede tradgedien på titanic!
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+Jeg har bestræbt på at arbejde så vidt som muligt kun indenfor for den tidyverse ramme og sæt funktioner vi allerede har dækket i kurset, som gør det nemmere at forstå mæskingslæring processen uden at blive distraheret af mange nye pakker og funktioner. Processen virker måske lidt indviklet i starten, men generaliseres meget og nemt kan udvides i mange kontekster og situationer - du kan nærmest tage eget data og bare tilpasse min kode fra enten den regression eller classification scenarie nedenunder.
+
+\hypertarget{luxe6ringsmuxe5lene-7}{%
+\subsection{Læringsmålene}\label{luxe6ringsmuxe5lene-7}}
 
 Du skal være i stand til at
 
@@ -11057,13 +11102,11 @@ Vi starter med at bygge processen op i en kontekst som vi godt kender i forvejen
 \hypertarget{oprette-testing-and-training-sets}{%
 \subsection{Oprette testing and training sets}\label{oprette-testing-and-training-sets}}
 
-Hvordan kan man vide, om en model er god til at forudsige hvad der sker når der kommer nye observationer? Det vil sige, fungerer modellen godt kun i forhold til observationerne som blev brugt til at opbygge selve modellen (så kaldt ``overfitting''), eller kan modellen generalises til andre, ligenende situationer? For at vide det kan man overvejer at splitte datasættet før man lave modellen - det vil sige et datasæt som man bruger til at opbygge modellen, og et datasæt som man kan bruge som ``nye observationer'', hvor man kan teste, hvor godt modellen egentlig er (fordi i datasættet kender vi faktisk resultatet som vi kan sammenligne med vores forudsigelser fra modellen).
-
-Pakken \texttt{rsample} fra \texttt{tidymodels} har nogle nyttige funktioner som kan bruges i konteksten af maskinslæring i R, fk. funktionen \texttt{initial\_split}:
+Hvordan kan man vide, om en model er god til at forudsige hvad der sker når der kommer nye observationer? Det vil sige, fungerer modellen godt kun i forhold til observationerne som blev brugt til at opbygge selve modellen (så kaldt ``overfitting''), eller kan modellen generalises til andre, ligenende situationer? For at vide det kan man overvejer at splitte datasættet før man lave modellen - det vil sige et datasæt som man bruger til at opbygge modellen, og et datasæt som man kan bruge som ``nye observationer'', hvor man kan teste, hvor godt modellen egentlig er (fordi i datasættet kender vi faktisk de virkelige værdier som vi kan sammenligne med vores forudsigelser fra modellen).
 
 \includegraphics[width=0.9\linewidth]{plots/machine_step1}
 
-Funktionen \texttt{intitial\_split} opdeler datasættet således at fk. 75\% af observationerne hører til det ``training'' sæt og 25\% hører til det ``testing'' sæt:
+Pakken \texttt{rsample} fra \texttt{tidymodels} har funktionen \texttt{initial\_split}, der opdeler datasættet således at fk. 75\% af observationerne hører til det ``training'' sæt og 25\% hører til det ``testing'' sæt:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11091,13 +11134,13 @@ Jeg vil gerne anvende \texttt{penguins\_training} til at opbygge modellen og så
 \hypertarget{cross-fold-validation}{%
 \subsection{Cross-fold validation}\label{cross-fold-validation}}
 
-For at udvikle min model med mit træning datasæt anvender jeg en proces, der hedder ``cross-fold-validation''. I 5-fold-cross-validation splitte man et datasæt op i 5 stykker (``folds''). Man træner dernæst en model på 4 af de 5 stykker (folds), og tester på den sidste stykke (som ikke selv var en del af datasætted brugt til at fitte selve modellen). Man gentager model træning processen i alt fem gange, hvor hvert styk er brugt præcis én gang som ``valiation'' sæt.
+For at udvikle min model med mit træning datasæt anvender jeg ``5-cross-fold-validation''. I 5-fold-cross-validation splitte man et datasæt op i 5 stykker (``folds''). Man træner dernæst en model på 4 af de 5 stykker (folds), og tester på den sidste stykke (der ofte kaldes for ``validation'' sæt, og som ikke selv var en del af datasættet brugte til at fitte selve modellen). Man gentager model ``training'' processen i alt fem gange, hvor hvert styk er brugt præcis én gang som ``valiation'' sæt.
 
 \includegraphics[width=1\linewidth]{plots/machine_step1_step2}
 
 Tilgangen har mange fordele. Hvis der var for eksempel kun én testing sæt og ved tilfældighed har den sæt observationer som er især nemme at forudsige, så får vi en fejlagtig fornemmelse at modellen er bedre end den er i virkeligheden - vi undgår det vi at bruge 5 forskellige validation sæt som dækker hele træning sæt. Vi kan således lede efter en kommination af parametre, der konsekvent giver en god model over samtlig validation sæt - vi kan være mere sikker på at få en model, der virker godt i vores testing sæt til sidste.
 
-Der er en nem funktion man kan bruge i \texttt{rsample}-pakken, der hedder \texttt{vfold\_cv} til at lave cross validation. Her angiver jeg \texttt{v=5} for at viser, jeg gerne vil have 5-fold cross validation.
+Der er en nem funktion man kan bruge i \texttt{rsample}-pakken, der hedder \texttt{vfold\_cv} til at lave cross validation. Her angiver jeg \texttt{v=5} for at vise, at jeg gerne vil have 5-folds.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11118,7 +11161,7 @@ Der er en nem funktion man kan bruge i \texttt{rsample}-pakken, der hedder \text
 ## 5 <split [200/49]> Fold5
 \end{verbatim}
 
-Så kan man se, at vi får en dataframe med 5 datasæt som er lagret i kolonnen \texttt{splits}. Jeg vil gerne udtrække de forskellige træning og testing sæt ud i deres egne kolonner, som i følgende med \texttt{map} indenfor \texttt{mutate}:
+Så kan man se, at vi får en dataframe med 5 datasæt som er lagret i kolonnen \texttt{splits}. Jeg vil gerne udtrække de forskellige ``training'' og ``testing''(/``validate'') sæt ud i deres egne kolonner, som i følgende med \texttt{map} indenfor \texttt{mutate}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11146,11 +11189,11 @@ Så kan man se, at vi får en dataframe med 5 datasæt som er lagret i kolonnen 
 \hypertarget{bygge-modellen-og-lave-forudsigelser}{%
 \subsection{Bygge modellen og lave forudsigelser}\label{bygge-modellen-og-lave-forudsigelser}}
 
-Vi vil gerne lave en model på alle vores datasæt i kolonnen \texttt{train} hver for sig, og forudgsige \texttt{body\_mass\_g} i hvert tilknyttet validation sæt. Vi kan gøre det med en custom funktion med \texttt{purrr}-pakken.
+Vi vil gerne lave en model på alle vores datasæt i kolonnen \texttt{train} hver for sig, og forudgsige \texttt{body\_mass\_g} i hvert tilknyttet validation sæt. Vi kan gøre det med en custom funktion som i følgende:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{my\_lm\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ .x)}
+\NormalTok{my\_lm\_func }\OtherTok{\textless{}{-}} \ErrorTok{\textasciitilde{}}\FunctionTok{lm}\NormalTok{(body\_mass\_g }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ .x) }\CommentTok{\# . betyder alle variabler i .x er uafhængige untaget body\_mass\_g}
 
 \NormalTok{cv\_models\_lm }\OtherTok{\textless{}{-}}\NormalTok{ cv\_data }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}\AttributeTok{model =} \FunctionTok{map}\NormalTok{(train, my\_lm\_func))}
@@ -11177,8 +11220,8 @@ Nu vil vi gerne bruge datasættet i kolonnen \texttt{validate} til at lave en fo
 \begin{Highlighting}[]
 \NormalTok{cv\_prep\_lm }\OtherTok{\textless{}{-}}\NormalTok{ cv\_models\_lm }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{mutate}\NormalTok{(}
-    \AttributeTok{actual\_mass =} \FunctionTok{map}\NormalTok{(validate, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(body\_mass\_g)), }\CommentTok{\#actual body\_mass\_g values}
-    \AttributeTok{predicted\_mass =} \FunctionTok{map2}\NormalTok{(}\AttributeTok{.x =}\NormalTok{ model, }\AttributeTok{.y =}\NormalTok{ validate, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{predict}\NormalTok{(.x, .y)) }\CommentTok{\#predicted body\_mass\_g values}
+    \AttributeTok{actual\_mass =} \FunctionTok{map}\NormalTok{(validate, }\SpecialCharTok{\textasciitilde{}}\NormalTok{.x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(body\_mass\_g)), }\CommentTok{\#actual body\_mass\_g values for validation set}
+    \AttributeTok{predicted\_mass =} \FunctionTok{map2}\NormalTok{(}\AttributeTok{.x =}\NormalTok{ model, }\AttributeTok{.y =}\NormalTok{ validate, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{predict}\NormalTok{(.x, .y)) }\CommentTok{\#predicted body\_mass\_g values for validation set}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -11227,7 +11270,7 @@ Vi har lavet forudsigelser over de forskellige stykker i vores træning sæt, me
 \end{Highlighting}
 \end{Shaded}
 
-Nu kan vi endelige anvende vores testing data: her anvender jeg min ``final model'' til at forudsige \texttt{body\_mass\_g} på pingvinerne i datasættet \texttt{penguins\_test}. Dernæst sammenligner vi vores forudsigelser med den virkelige værdier ligesom i ovenstående (men her har jeg ikke forskellige folds at tage i betragtning).
+Nu kan vi endelige anvende vores testing data (som vi holdt ud før cross-validaiton processen): her anvender jeg min ``final model'' til at forudsige \texttt{body\_mass\_g} på pingvinerne i datasættet \texttt{penguins\_test}. Dernæst sammenligner vi vores forudsigelser med den virkelige værdier ligesom i ovenstående (men her har jeg ikke forskellige folds at tage i betragtning).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -11707,7 +11750,9 @@ OBS: \textbf{Vi tilpasser koden tæt fra ovenstående eksempel med datasættet \
 
 \emph{Vi lægger datasættet \texttt{penguins\_test} til siden (vi får bruge for det senere), og arbejder kun med datasættet \texttt{penguins\_training} for at udvikle vores model.}
 
-\textbf{c}) Anvend \texttt{penguins\_training} til at lave en 5-fold-cross-validation dataframe, \texttt{cv\_split}. Udtrække de fem testing og training datasæt fra kolonnen \texttt{splits} til de forskellige folds (kald deres kolonner for henholdvis \texttt{validate} og \texttt{train}) og kald din nye ``nested'' dataframe for \texttt{cv\_data}.
+\textbf{c}) Anvend \texttt{penguins\_training} til at lave en 5-fold-cross-validation dataframe, der hedder \texttt{cv\_split}.
+
+\textbf{d}) Udtræk de fem testing og training datasæt fra kolonnen \texttt{splits} og lagr dem i egne kolonner (kald deres kolonner for henholdvis \texttt{validate} og \texttt{train}). Kald din nye ``nested'' dataframe for \texttt{cv\_data}.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -11715,15 +11760,15 @@ OBS: \textbf{Vi tilpasser koden tæt fra ovenstående eksempel med datasættet \
 
 \textbf{Problem 3)} \emph{Set-up modellen}
 
-\textbf{a}) Lad os starte med det første datasæt og generaliser til en custom funktion i \textbf{b}). Anvend \texttt{pluck} for at få frem til det første datasæt i kolonnen \texttt{train}, og dernæst anvende funktionen \texttt{ranger} for at lave en classifikation of variablen \texttt{sex} som afhængig variable, med alle de andre variabler som uafhængige variabler (betegnet med \texttt{.} i modellen). Angiv \texttt{num.trees==100}.
+\textbf{a}) Lad os starte med det første datasæt og generaliser bagefter til en custom funktion i \textbf{b}). Anvend \texttt{pluck} for at få frem til det første datasæt i kolonnen \texttt{train}, og dernæst anvende funktionen \texttt{ranger} for at lave en classifikation model med variablen \texttt{sex} som afhængig variable, og med alle de andre variabler som uafhængige variabler (betegnet med \texttt{\textasciitilde{}\ .} i modellen). Angiv \texttt{num.trees=100} (vi ignorerer andre mulige parametre indtil videre).
 
-\textbf{b}) Når vi har fået \texttt{ranger} til at virke på det første datasæt laver vi en custom funktion der kan anvendes over samtlige datasæt i kolonnen \texttt{train} - tilpas din \texttt{ranger} model fra \textbf{a)} til en custom funktion og kalder den for \texttt{ranger\_function}.
+\textbf{b}) Når vi har fået modellen med \texttt{ranger} til at virke på det første datasæt laver vi en custom funktion der kan anvendes over samtlige datasæt i kolonnen \texttt{train} - tilpas din \texttt{ranger} model fra \textbf{a)} til en custom funktion og kalder den for \texttt{ranger\_function}.
 
-\textbf{c}) Anvend \texttt{ranger\_function} på samtlige datasæt i kolonne ``train'' (opret en ny kolonne i\texttt{cv\_data}, der hedder \texttt{model} hvor de fem modeller bliver lagret).
+\textbf{c}) Anvend \texttt{ranger\_function} på samtlige datasæt i kolonne ``train'' (opret en ny kolonne i\texttt{cv\_data}, der hedder \texttt{model} hvor dine fem modeller bliver lagret).
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\emph{Nu har vi lavet en classification model til hvert træning sæt! Vi vil gerne vide, hvor gode modellerne er til at forudsige \texttt{sex} i de fem datasæts i kolonnen \texttt{validate} (husk at \texttt{validate} indeholder de styk der ikke var brugt i træning til den relevant \texttt{id}(fold)).}
+\emph{Nu har vi lavet en classification model til hvert træning sæt! Vi vil gerne vide, hvor gode modellerne er til at forudsige \texttt{sex} i de fem datasæts i kolonnen \texttt{validate} (husk at \texttt{validate} indeholder det styk, der ikke var brugt i training til den relevant \texttt{id}(fold)). Vi skal sammenligne to ting fra vores validate sæt - hvad er vores forudsigelser ud fra modellerne (``male'' eller ``female'' til hver pingvin), og hvad er de virkelige værdier for variablen \texttt{sex} (igen ``male'' eller ``female'').}
 
 \textbf{Problem 4)} \emph{Make predictions from model}
 
@@ -11737,47 +11782,79 @@ OBS: \textbf{Vi tilpasser koden tæt fra ovenstående eksempel med datasættet \
   \texttt{prediction} hvor du anvender \texttt{predict} med din models (betegnet som .x) og dine validate sæt (betegnet som .y)
 \end{itemize}
 
-\textbf{b}) Udvælg \texttt{id}, \texttt{actual} og \texttt{prediction}, unnest og beregne accuracy til hvert af de 5 folds.
+\textbf{b}) Udvælg \texttt{id}, \texttt{actual} og \texttt{prediction}, unnest og beregn ``accuracy'' (proportionen svar, der er rigtige) til hvert af de 5 folds.
 
 \textbf{c}) Lav et barplot for at se din accuracies over de 5-folds.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\emph{Nu har vi lavet 5-fold-cross validation til at træne en classification model. Vi kunne godt tænke os at udvide processen lidt, fordi der er nogle parametre der kan ændres på i funktionen \texttt{ranger}. Lad os prøve at ændre på parameten \texttt{mtry} for at se, om vi kan gøre modellen endnu bedre. Igen følger vi meget tæt på ovenstående kurusnotaterne - bare med et andet datasæt.}
+\emph{Nu har vi lavet 5-fold-cross validation til at træne en classification model. Vi kunne godt tænke os at udvide processen lidt, fordi der er nogle parametre der kan ændres på i funktionen \texttt{ranger}. Det er gennem den her `udviklingsproces' hvor vi begynder at forstå fordelen af at bruge cross-fold-validation. Lad os prøve at ændre på parameten \texttt{mtry} for at se, om vi kan gøre modellen bedre. Igen følger vi meget tæt på ovenstående kurusnotaterne.}
 
 \textbf{Problm 5)} Tune parameteren \texttt{mtry}.
 
-\textbf{a}) Anvend funktionen \texttt{crossing} til at inddrage \texttt{mtry} (fra 2 til 6 som er antal uafhængig variabler) som kolonne i \texttt{cv\_data}. Kald din nye dataframe for \texttt{cv\_tune}.
+\textbf{a}) Anvend funktionen \texttt{crossing} til at inddrage \texttt{mtry} (fra 2 til 6 som er antal uafhængig variabler) som kolonne i \texttt{cv\_data}. Kald din nye dataframe for \texttt{cv\_tune}. Hvor mange datasæt er der nu i kolonnen \texttt{train}?
 
-\textbf{b}) Tilpas din custom ranger funktion fra \textbf{Spørgsmål 3} hvor du inddrager \texttt{mtry} (betegnet som \texttt{.y}) og anvende din model på de forskellige training sæt for hver mulige værdi af \texttt{mtry} (husk at bruge \texttt{map2} her).
+\textbf{b}) Tilpas din custom ranger funktion fra \textbf{Spørgsmål 3} hvor du nu inddrager parameteren \texttt{mtry} (med værdi betegnet som \texttt{.y}) og anvende din model på de forskellige training sæt i kolonnen \texttt{train} for hver mulig værdi af \texttt{mtry} (husk at bruge \texttt{map2} her).
 
-\textbf{c}) Lav forudsigelser over alle modeller (der er 25!) og udtrækker dine ``actual'' og ``predicted'' værdier præcis ligesom før.
+\textbf{c}) Lav forudsigelser ud fra samtlige modeller og dine validation sæt (kolonnen \texttt{validate}) og udtræk både dine ``actual'' og ``predicted'' værdier præcis ligesom før.
 
-\textbf{d}) Beregn accuracy for alle 25 sæt, lav et stacked barplot og vælg den bedste mulige værdi for \texttt{mtry}.
+\textbf{d}) Beregn accuracy for samtlige sæt (alle kombinationer af \texttt{id} og \texttt{mtry}), lav et stacked barplot og vælg den bedste mulige værdi for \texttt{mtry}.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\emph{Nu at vi har valgt et værdi for mtry lad os går henne og lav en ``final'' model! Når vi har lavet den final model kan vi endelig kigger på vores \texttt{penguins\_test} datasæt. Husk at validate sæts var brugt til at teste modellen undervejs i udviklingsprocessen, men var stadig en del af \texttt{penguins\_training}. Man kigger på den test datasæt kun en gang til sidste for at spørge - hvor god er vores endelig model?}
+\emph{Nu at vi har valgt en værdi for parameteren \texttt{mtry}, lad os går henne og lav en ``final'' model! Når vi har lavet den final model kan vi endelig kigge på vores \texttt{penguins\_test} datasæt, som vi lagt tidligere til siden. Husk at validate sæts var brugt til at teste modellen undervejs i udviklingsprocessen, men de var stadig en del af \texttt{penguins\_training}. Man kigger på den testing datasæt kun én gang til sidste for at spørge - hvor god er vores endelige model?}
 
 \textbf{Problem 6)} \emph{Lave en \texttt{final} model}
 
-\textbf{a}) Anvende funktionen \texttt{ranger} til at lave en classifcation model på datasættet \texttt{penguins\_training}. Angiv \texttt{num.trees=100} og din valgt værdie for parameteren \texttt{mtry}.
+\textbf{a}) Anvende funktionen \texttt{ranger} til at lave en classifcation model på datasættet \texttt{penguins\_training}. Angiv \texttt{num.trees=100} og din valgt værdi for parameteren \texttt{mtry}.
 
-\textbf{b}) Lav predictions med funktionen \texttt{predict} og angiv dit ``penguins\_test'' datasæt. Beregen accuracy fra din model baserede på din virkelige værdier for \texttt{sex} og din forventede værdier fra funktionen \texttt{predict}.
+\textbf{b}) Lav predictions med funktionen \texttt{predict} hvor du angiv din ``final'' model samt dit ``penguins\_test'' datasæt. Beregen accuracy fra din model ved at sammenligne de virkelige værdier for variablen \texttt{sex} i dit testing sæt med din beregnede værdier fra \texttt{predict()}.
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\emph{Nu at vi er færdig med at lave og bedømme vores ``final'' model er vi interesseret i - hvilke variabler havde den største indfyldelse på vores forudsigelser af ``male'' og ``female'' pingviner?}
+\emph{Nu at vi er færdig med at lave og bedømme vores ``final'' model er vi interesseret i - hvilke variabler havde den største indflydelse på vores forudsigelser af ``male'' og ``female'' pingviner?}
 
 \textbf{Problem 7)} \emph{Variable importance}
 
-\textbf{a}) Tag din ``final'' model og angiv indstillingen \texttt{importance\ =\ "impurity"} i funktionen. Kør modellen og udtræk din variable importance vector med \texttt{final\_RF\$variable.importance}.
+\textbf{a}) Tag din funktion til din ``final'' model og angiv indstillingen \texttt{importance\ =\ "impurity"} i funktionen. Kør modellen og udtræk din variable importance vector med \texttt{final\_RF\$variable.importance}.
 
-\textbf{b}) Omsæt til et barplot hvor du angiv rækkefølgen af søjlerne efter vigtigheden af de forskellige variabler (den meste vigtig til venstre).
+\textbf{b}) Omsæt din importance scores til et barplot hvor du angiv rækkefølgen af søjlerne efter vigtigheden af de forskellige variabler (den meste vigtig til venstre).
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\textbf{Problem 8)} Gentag samme process i et andet datasæt:
+\textbf{Problem 8)} Gentag samme process i et andet datasæt men i en regression contekst:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LungCapData }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://www.dropbox.com/s/ke27fs5d37ks1hm/LungCapData.csv?dl=1"}\NormalTok{)}
+\FunctionTok{glimpse}\NormalTok{(LungCapData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 725
+## Columns: 6
+## $ LungCap   <dbl> 6.475, 10.125, 9.550, 11.125, 4.800, 6.225, 4.950, 7.325, 8.~
+## $ Age       <int> 6, 18, 16, 14, 5, 11, 8, 11, 15, 11, 19, 17, 12, 10, 10, 13,~
+## $ Height    <dbl> 62.1, 74.7, 69.7, 71.0, 56.9, 58.7, 63.3, 70.4, 70.5, 59.2, ~
+## $ Smoke     <chr> "no", "yes", "no", "no", "no", "no", "no", "no", "no", "no",~
+## $ Gender    <chr> "male", "female", "female", "male", "male", "female", "male"~
+## $ Caesarean <chr> "no", "no", "yes", "no", "no", "no", "yes", "no", "no", "no"~
+\end{verbatim}
+
+Følg processen fra Sektion 12.3 igennem med datasættet \texttt{LungCapData}:
+
+\begin{itemize}
+\tightlist
+\item
+  forudsige \texttt{LungCap} som afhængig variabel og alle andre variabler som uafhængig variabler
+\item
+  Splitte datasættet (75\% training, 25\% testing) og anvend 10-fold cross-validation på dit training datasæt
+\item
+  Beregn ``mean absolute error'' for dine forskellige folds
+\item
+  Lav en færdig model og beregn ``mean absolute error''
+\end{itemize}
 
 \hypertarget{yderligere-kommentarer-og-pakker}{%
 \section{Yderligere kommentarer og pakker}\label{yderligere-kommentarer-og-pakker}}
@@ -11790,7 +11867,845 @@ Jeg spang over mange nyttige pakker og funktioner, der kan bruges til at lave ma
   \texttt{Yardstick}-pakken er til metrics - fk. accuracy/precesion/recall osv. man kan også lave ROC curves osv. Jeg anvendte kun accuracy i kurset (til at vise processen/iden men begrænser overordnet læs i emnet) men man plejer at anvende forskellige metrics i virkeligheden.
 \item
   \texttt{Tidymodels}-pakken er en generel pakke, hvor man få en ``fælles'' tilgang til at opbygge modeller der stammer fra mange forskellige pakke - man kan fk. bruge samme tilgang til at lave blandt andet regression eller bayesian modeller, random forest, support vector machines osv. - alle modeller har nu samme syntaksen i den \texttt{Tidymodels} tilgang.
+\item
+  Der er mange bøger der handler om machine learning n the tidyverse, fk. se her \url{https://livebook.manning.com/book/machine-learning-for-mortals-mere-and-otherwise/chapter-1/v-4/1}
 \end{itemize}
+
+\hypertarget{presuxe6ntering-af-datasuxe6t-over-for-andre}{%
+\chapter{Presæntering af datasæt over for andre}\label{presuxe6ntering-af-datasuxe6t-over-for-andre}}
+
+\includegraphics[width=0.35\linewidth]{plots/shiny_logo}
+
+\hypertarget{introduktion-til-chapter-og-luxe6ringsmuxe5lene}{%
+\section{Introduktion til chapter og læringsmålene}\label{introduktion-til-chapter-og-luxe6ringsmuxe5lene}}
+
+I dette chapter beskæftiger vi os med at lave interaktive visualiseringer, som vi kan vise overfor andre, fk. som en del af en presæntation. Til sidste vil der være generalt råd til at lave plots fk. i en powerpoint præsentation.
+
+\hypertarget{luxe6ringsmuxe5lene-8}{%
+\subsection{Læringsmålene}\label{luxe6ringsmuxe5lene-8}}
+
+\begin{itemize}
+\tightlist
+\item
+  Interactive plotter med pakken \texttt{plot\_ly}.
+\item
+  R pakken \texttt{Shiny} - lave en simpel app og gør den interactiv
+\item
+  Bygger op på appen i \texttt{Shiny} - tilføj forskellige inputs, plot typer og panels.
+\item
+  Generelle råd om presentering af data gennem visualiseringer
+\end{itemize}
+
+Husk evaluering i kurset!
+
+\hypertarget{video-ressourcer-9}{%
+\section{Video ressourcer}\label{video-ressourcer-9}}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 1 - Introduktion til Shiny
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/559363250}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 2 - Introduktion til Shiny - interaktiv plots
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/559558820}
+
+\begin{itemize}
+\tightlist
+\item
+  Video 3 - Introduktion til Shiny - ui layout
+\end{itemize}
+
+Link her hvis det ikke virker nedenunder: \url{https://player.vimeo.com/video/559562153}
+
+\hypertarget{interactiv-plots}{%
+\section{Interactiv plots}\label{interactiv-plots}}
+
+Der er en nyttig pakke, der hedder \texttt{plot\_ly}, som man kan anvende til at lave interactive plotter. Kig for eksempel på følgende plot og afprøve de forskellige interaktiv muligheder.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(plotly)}
+\FunctionTok{data}\NormalTok{(diamonds)}
+\FunctionTok{plot\_ly}\NormalTok{(diamonds, }
+        \AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\NormalTok{cut)}
+\end{Highlighting}
+\end{Shaded}
+
+Her er et scatter plot lavet med \texttt{plot\_ly}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{plot\_ly}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ carat, }
+          \AttributeTok{y =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ price) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_markers}\NormalTok{(}\AttributeTok{color =} \SpecialCharTok{\textasciitilde{}}\NormalTok{ color)}
+\end{Highlighting}
+\end{Shaded}
+
+Bemærk at vi har specificeret \texttt{slice\_sample} her, som vælger 1000 tilfældige rækker fra datasættet. Det er fordi \texttt{diamonds} er en meget stor datasæt og hvis man forsøger at plotte alle observeationer på en gang med \texttt{plot\_ly} kan det være at den crasher eller kører for langsom.
+
+Der er faktisk en nyttig funktion indenfor \texttt{plot\_ly} som hedder \texttt{ggplotly}- man kan tage et plot som var lavet i \texttt{ggplot2} og så anvende \texttt{ggplotly} til at gøre den interaktiv. Her er samme plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my\_plot }\OtherTok{\textless{}{-}}\NormalTok{ diamonds }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{1000}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{carat,}\AttributeTok{y=}\NormalTok{price,}\AttributeTok{colour=}\NormalTok{color)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+
+\FunctionTok{ggplotly}\NormalTok{(my\_plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{shiny}{%
+\section{Shiny}\label{shiny}}
+
+Man kan anvende Shiny til at lave en interaktiv program. Det er nemt at få din første app op at køre. Her laver jeg en simpel app, som inddrager et plot af noget af data, vi har arbejdet med i kurset.
+
+\hypertarget{eksempeler-som-viser-shiny}{%
+\subsection{Eksempeler som viser Shiny}\label{eksempeler-som-viser-shiny}}
+
+Indenfor pakken \texttt{shiny} er der nogle eksempler som viser nogle forskellige Shiny apps. Prøve at køre nogle af følgende kode linjer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"01\_hello"}\NormalTok{)      }\CommentTok{\# a histogram}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"02\_text"}\NormalTok{)       }\CommentTok{\# tables and data frames}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"03\_reactivity"}\NormalTok{) }\CommentTok{\# a reactive expression}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"04\_mpg"}\NormalTok{)        }\CommentTok{\# global variables}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"05\_sliders"}\NormalTok{)    }\CommentTok{\# slider bars}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"06\_tabsets"}\NormalTok{)    }\CommentTok{\# tabbed panels}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"07\_widgets"}\NormalTok{)    }\CommentTok{\# help text and submit buttons}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"08\_html"}\NormalTok{)       }\CommentTok{\# Shiny app built from HTML}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"09\_upload"}\NormalTok{)     }\CommentTok{\# file upload wizard}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"10\_download"}\NormalTok{)   }\CommentTok{\# file download wizard}
+\FunctionTok{runExample}\NormalTok{(}\StringTok{"11\_timer"}\NormalTok{)      }\CommentTok{\# an automated timer}
+\end{Highlighting}
+\end{Shaded}
+
+I eksempel 1 er der en histogram som viser nogle waiting times, med en slider hvor man kan specificere antallet af bins i det histogram. Man kan således ændre nogle parametre, og så plottet bliver ændret automatiske. Eksempel 2 har en table hvor man kan specificere hvor mange række man gerne vil have, og så kan man også vælger imellem forskellige datasæt.
+
+Disse eksempeler har fordelen af, at man bare kan kopiere koden og så lave egen app og ændre den efter sin egne data.
+
+\hypertarget{create-new-app}{%
+\subsection{Create new app}\label{create-new-app}}
+
+\includegraphics[width=0.4\linewidth]{plots/shiny_new}
+
+\begin{itemize}
+\tightlist
+\item
+  Man vælger en mappe, og ``Single File''. Indenfor mappen skal ligge en skript der hedder ``app.R'' (det er vigtigt at man ikke ændre navnet af ``app.R'').
+\end{itemize}
+
+\includegraphics[width=0.65\linewidth]{plots/shiny_directory}
+
+\begin{itemize}
+\tightlist
+\item
+  Man kan trykke på ``Run App'' indenfor R Studio for at få den at køre
+\end{itemize}
+
+\includegraphics[width=0.65\linewidth]{plots/shiny_run}
+
+\hypertarget{struktur-af-en-shiny-app}{%
+\subsection{Struktur af en Shiny App}\label{struktur-af-en-shiny-app}}
+
+Her er den grundlæggende struktur af en Shiny app:
+
+\includegraphics[width=0.55\linewidth]{plots/shiny_structure}
+
+Indenfor ``app.R'' er der tre komponenter som kan skal være opmærksom på. Vi ændrer kun to af de tre komponenter.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+Dele
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Beskrivelse
+\end{minipage} \\
+\midrule
+\endhead
+\texttt{ui\ \textless{}-\ fluidPage()} & ``user interface'' object: det fortæller \textbf{Shiny} hvordan appen ser ud. \\
+\texttt{server\ \textless{}-\ function(input,output)\{\}} & her skrives R kode, fk til et plot, som skal være en del af den R objekt som hedder \texttt{output}. \texttt{input} er for eksempel antallet af bins som man specificerer med en slider som i det histogram eksempel. \\
+\texttt{shinyApp(ui\ =\ ui,\ server\ =\ server)} & er altid den sidste linje - den ændre vi ikke. Den få appen til at køre. \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{minimal-example-men-ikke-interaktiv}{%
+\subsection{Minimal example (men ikke interaktiv)}\label{minimal-example-men-ikke-interaktiv}}
+
+Jeg starter med at lave et meget simpelt ``minimal'' eksempel af hvordan man kan lave et program med \textbf{Shiny}:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{ui komponent}: Vi vil gerne viser et plot som hedder ``my\_plot'' - så skriver jeg \texttt{plotOutput("my\_plot")}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ui }\OtherTok{\textless{}{-}} \FunctionTok{fluidPage}\NormalTok{(}
+    \FunctionTok{plotOutput}\NormalTok{(}\StringTok{"my\_plot"}\NormalTok{) }\CommentTok{\#fortælle, at vi vil fremvise "my\_plot".}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\texttt{server} komponent}: angiver vi koden til \texttt{my\_plot}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Plottet skal være en del af vores \texttt{output}, så vi skriver \texttt{output\$my\_plot\ \textless{}-}.
+  \item
+    \texttt{renderPlot(\{\ \#plot\ kode\ \})} fortæl den at det vi lave er et plot og vi skriver koden indenfor.
+  \end{itemize}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output) \{}
+    \CommentTok{\#definere "my\_plot"}
+\NormalTok{    output}\SpecialCharTok{$}\NormalTok{my\_plot }\OtherTok{\textless{}{-}} \FunctionTok{renderPlot}\NormalTok{(\{}
+        \CommentTok{\#Skriv plot kode her}
+\NormalTok{  \})}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Her er appen med ovenstående kode sæt ind: man godt kan køre den men når vi ikke har nogle data eller plot kode er den meget kedelig.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{ui }\OtherTok{\textless{}{-}} \FunctionTok{fluidPage}\NormalTok{(}
+    \FunctionTok{plotOutput}\NormalTok{(}\StringTok{"my\_plot"}\NormalTok{) }\CommentTok{\#fortælle, at vi vil fremvise "my\_plot".}
+\NormalTok{)}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output) \{}
+    \CommentTok{\#definere "my\_plot"}
+\NormalTok{    output}\SpecialCharTok{$}\NormalTok{my\_plot }\OtherTok{\textless{}{-}} \FunctionTok{renderPlot}\NormalTok{(\{}
+        \CommentTok{\#Skriv plot kode her}
+\NormalTok{  \})}
+\NormalTok{\}}
+\CommentTok{\# Run the application }
+\FunctionTok{shinyApp}\NormalTok{(}\AttributeTok{ui =}\NormalTok{ ui, }\AttributeTok{server =}\NormalTok{ server)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Tilføje dataseættet \texttt{iris} og lave et plot}
+
+Lad os tilføje nogle data til vores plot i formen af \texttt{iris}, og skriv nogle kode til et scatter plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{data}\NormalTok{(iris)}
+
+\CommentTok{\#ui: output plottet \textquotesingle{}my\_plot\textquotesingle{}}
+\NormalTok{ui }\OtherTok{\textless{}{-}} \FunctionTok{fluidPage}\NormalTok{(}
+    \FunctionTok{plotOutput}\NormalTok{(}\StringTok{"my\_plot"}\NormalTok{)}
+\NormalTok{)}
+
+\CommentTok{\#server: lav plot og kalde den for output$my\_plot}
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output) \{}
+\NormalTok{    output}\SpecialCharTok{$}\NormalTok{my\_plot }\OtherTok{\textless{}{-}} \FunctionTok{renderPlot}\NormalTok{(\{}
+\NormalTok{        iris }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width,}\AttributeTok{y=}\NormalTok{Petal.Length)) }\SpecialCharTok{+} 
+            \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+            \FunctionTok{theme\_classic}\NormalTok{()}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\CommentTok{\# køre appen}
+\FunctionTok{shinyApp}\NormalTok{(}\AttributeTok{ui =}\NormalTok{ ui, }\AttributeTok{server =}\NormalTok{ server)}
+\end{Highlighting}
+\end{Shaded}
+
+Hvis vi køre koden kan man se at vi har et plot frem. Appen er dog ikke interaktiv.
+
+\includegraphics[width=0.75\linewidth]{plots/shiny_01}
+
+\hypertarget{minimal-example---interactiv.}{%
+\subsection{Minimal example - interactiv.}\label{minimal-example---interactiv.}}
+
+Vi vil gerne gøre vores app mere fleksibelt - lad os gøre det interaktiv ved at plotte et subset af Iris for en af de tre species, som vælges fra en ``drop-down'' box - vi kan anvende en funktion som hedder \texttt{selectInput}:
+
+\includegraphics[width=0.4\linewidth]{plots/selectInput}
+
+Her er koden for vores \texttt{selectInput}, som skal tilføjes indenfor \texttt{fluidPage}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \FunctionTok{selectInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Species"}\NormalTok{, }\CommentTok{\#giv en id}
+                \AttributeTok{choices =}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Species), }\CommentTok{\#setosa, virginica eller versicola}
+                \AttributeTok{selected =} \StringTok{"setosa"}\NormalTok{, }\CommentTok{\#default species}
+                \AttributeTok{label =} \StringTok{"Choose species"}\NormalTok{) }\CommentTok{\#label på plottet}
+\end{Highlighting}
+\end{Shaded}
+
+Vi skal også ændre koden på plottet så at det reagerer på vores \texttt{selectInput}:
+
+\begin{itemize}
+\tightlist
+\item
+  Vi laver en subset \texttt{iris\_subset} af de data efter ``Species'' vi valgt i vores ``drop-down box'' ved at angiv \texttt{Species==input\$Species} indenfor funktionen \texttt{filter}.
+\item
+  Vi laver et scatter plot med \texttt{iris\_subset}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+        
+\NormalTok{        iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width,}\AttributeTok{y=}\NormalTok{Petal.Length)) }\SpecialCharTok{+} 
+            \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+            \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Her tilføjer jeg de kode chunks fra ovenpå til vores program:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{data}\NormalTok{(iris)}
+
+\NormalTok{ui }\OtherTok{\textless{}{-}} \FunctionTok{fluidPage}\NormalTok{(}
+    \FunctionTok{selectInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Species"}\NormalTok{,}
+                \AttributeTok{choices =}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Species),}
+                \AttributeTok{selected =} \StringTok{"setosa"}\NormalTok{,}
+                \AttributeTok{label =} \StringTok{"Choose species"}\NormalTok{),}
+    
+    \FunctionTok{plotOutput}\NormalTok{(}\StringTok{"my\_plot"}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output) \{}
+\NormalTok{    output}\SpecialCharTok{$}\NormalTok{my\_plot }\OtherTok{\textless{}{-}} \FunctionTok{renderPlot}\NormalTok{(\{}
+        
+\NormalTok{        iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+        
+\NormalTok{        iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width,}\AttributeTok{y=}\NormalTok{Petal.Length)) }\SpecialCharTok{+} 
+            \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+            \FunctionTok{theme\_classic}\NormalTok{()}
+        
+\NormalTok{    \})}
+\NormalTok{\}}
+
+\CommentTok{\# Run the application }
+\FunctionTok{shinyApp}\NormalTok{(}\AttributeTok{ui =}\NormalTok{ ui, }\AttributeTok{server =}\NormalTok{ server)}
+\end{Highlighting}
+\end{Shaded}
+
+Som man kan se i screenshot nedenunder, har vi en ``drop-down box'' hvor vi kan vælge imellem de tre \texttt{Species}.
+
+\includegraphics[width=0.75\linewidth]{plots/shiny_02}
+
+\hypertarget{flere-plots-puxe5-samme-shiny-app}{%
+\subsection{Flere plots på samme Shiny app}\label{flere-plots-puxe5-samme-shiny-app}}
+
+\begin{itemize}
+\tightlist
+\item
+  Vi laver to plotter, et scatter plot og et histogram, som reagere på \texttt{selectInput} som fortæller de subset af de data efter \texttt{Species} som skal plottes.
+\item
+  Vi kalder dem for \texttt{p1} og \texttt{p2} og plotte dem ved siden af hinanden med \texttt{grid.arrange}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{grid.arrange}\NormalTok{(p1,p2,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\FunctionTok{data}\NormalTok{(iris)}
+
+\NormalTok{ui }\OtherTok{\textless{}{-}} \FunctionTok{fluidPage}\NormalTok{(}
+    \FunctionTok{selectInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Species"}\NormalTok{,}
+                \AttributeTok{choices =}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Species),}
+                \AttributeTok{selected =} \StringTok{"setosa"}\NormalTok{,}
+                \AttributeTok{label =} \StringTok{"Choose species"}\NormalTok{),}
+    
+    \FunctionTok{plotOutput}\NormalTok{(}\StringTok{"my\_plot"}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output) \{}
+  
+\NormalTok{    output}\SpecialCharTok{$}\NormalTok{my\_plot }\OtherTok{\textless{}{-}} \FunctionTok{renderPlot}\NormalTok{(\{}
+        
+\NormalTok{        iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+        
+\NormalTok{     p1 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width,}\AttributeTok{y=}\NormalTok{Petal.Length)) }\SpecialCharTok{+} 
+            \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{colour=}\StringTok{"steel blue"}\NormalTok{) }\SpecialCharTok{+} 
+            \FunctionTok{ggtitle}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{Species) }\SpecialCharTok{+}
+            \FunctionTok{theme\_classic}\NormalTok{()}
+        
+\NormalTok{        p2 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+            \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+} 
+            \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{colour=}\StringTok{"firebrick3"}\NormalTok{) }\SpecialCharTok{+} 
+            \FunctionTok{ggtitle}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{Species) }\SpecialCharTok{+}
+            \FunctionTok{theme\_classic}\NormalTok{()}
+        
+        \FunctionTok{grid.arrange}\NormalTok{(p1,p2,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+        
+\NormalTok{    \})}
+\NormalTok{\}}
+
+\CommentTok{\# Run the application }
+\FunctionTok{shinyApp}\NormalTok{(}\AttributeTok{ui =}\NormalTok{ ui, }\AttributeTok{server =}\NormalTok{ server)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.75\linewidth]{plots/shiny_two}
+
+\hypertarget{involvere-en-table}{%
+\subsection{Involvere en table}\label{involvere-en-table}}
+
+Vi vil gerne tilføj en table så vi kan se vores data i appen. Jeg vil gerne specificere hvor mange rækker jeg skal vise frem i appen - vi kan gøre den interaktiv ved at giv en \texttt{numericInput} funktion:
+
+\includegraphics[width=0.4\linewidth]{plots/numericInput}
+
+Her er koden for vores \texttt{numericInput}. Bemærk, at man skriver \texttt{tableOutput("my\_table")} for at fortælle at vi vil viser ``my\_table'' i appen.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{numericInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"num\_rows"}\NormalTok{,                           }\CommentTok{\#giv id num\_rows}
+                 \AttributeTok{label =} \StringTok{"Number of observations to view:"}\NormalTok{,  }\CommentTok{\#label på selve plottet}
+                 \AttributeTok{value =} \DecValTok{5}\NormalTok{),                                 }\CommentTok{\#default værdi}
+
+\FunctionTok{tableOutput}\NormalTok{(}\StringTok{"my\_table"}\NormalTok{)                                      }\CommentTok{\#fortæl, at vi vil output "my\_table"}
+\end{Highlighting}
+\end{Shaded}
+
+Her er koden for \texttt{my\_table}. Bemærk at vi anvender funktion \texttt{renderTable} i stedet for \texttt{renderPlot}, og der er en indstilling indenfor \texttt{head} hvor vi kan specificere hvor mange række vi skal have (med \texttt{n\ =\ input\$num\_rows} - altså tallet som vi skriver i appen).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    output}\SpecialCharTok{$}\NormalTok{my\_table }\OtherTok{\textless{}{-}} \FunctionTok{renderTable}\NormalTok{(\{}
+\NormalTok{        iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+        \FunctionTok{head}\NormalTok{(iris\_subset, }\AttributeTok{n =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{num\_rows)}
+\NormalTok{    \})}
+\end{Highlighting}
+\end{Shaded}
+
+Jeg tilføjer de to kode chunks til vores app i følgende (som kan kopireres og blive kørte):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\FunctionTok{data}\NormalTok{(iris)}
+
+\NormalTok{ui }\OtherTok{\textless{}{-}} \FunctionTok{fluidPage}\NormalTok{(}
+  \FunctionTok{selectInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Species"}\NormalTok{,}
+              \AttributeTok{choices =}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Species),}
+              \AttributeTok{selected =} \StringTok{"setosa"}\NormalTok{,}
+              \AttributeTok{label =} \StringTok{"Choose species"}\NormalTok{),}
+  
+  \FunctionTok{numericInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"num\_rows"}\NormalTok{,}
+               \AttributeTok{label =} \StringTok{"Number of observations to view:"}\NormalTok{,}
+               \AttributeTok{value =} \DecValTok{5}\NormalTok{),}
+  
+  \FunctionTok{plotOutput}\NormalTok{(}\StringTok{"my\_plot"}\NormalTok{),}
+  \FunctionTok{tableOutput}\NormalTok{(}\StringTok{"my\_table"}\NormalTok{)}
+  
+\NormalTok{)}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output) \{}
+  
+\NormalTok{  output}\SpecialCharTok{$}\NormalTok{my\_plot }\OtherTok{\textless{}{-}} \FunctionTok{renderPlot}\NormalTok{(\{}
+    
+\NormalTok{    iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+    
+\NormalTok{    p1 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width,}\AttributeTok{y=}\NormalTok{Petal.Length)) }\SpecialCharTok{+} 
+      \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{colour=}\StringTok{"steel blue"}\NormalTok{) }\SpecialCharTok{+} 
+      \FunctionTok{ggtitle}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{Species) }\SpecialCharTok{+}
+      \FunctionTok{theme\_classic}\NormalTok{()}
+    
+\NormalTok{    p2 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+} 
+      \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{colour=}\StringTok{"firebrick3"}\NormalTok{) }\SpecialCharTok{+} 
+      \FunctionTok{ggtitle}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{Species) }\SpecialCharTok{+}
+      \FunctionTok{theme\_classic}\NormalTok{()}
+    
+    \FunctionTok{grid.arrange}\NormalTok{(p1,p2,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+    
+\NormalTok{  \})}
+  
+\NormalTok{  output}\SpecialCharTok{$}\NormalTok{my\_table }\OtherTok{\textless{}{-}} \FunctionTok{renderTable}\NormalTok{(\{}
+\NormalTok{    iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+    \FunctionTok{head}\NormalTok{(iris\_subset, }\AttributeTok{n =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{num\_rows)}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\CommentTok{\# Run the application }
+\FunctionTok{shinyApp}\NormalTok{(}\AttributeTok{ui =}\NormalTok{ ui, }\AttributeTok{server =}\NormalTok{ server)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.75\linewidth]{plots/shiny_two_table}
+
+\hypertarget{add-a-slider}{%
+\subsection{Add a slider}\label{add-a-slider}}
+
+\begin{itemize}
+\tightlist
+\item
+  Lad os tilføj en \texttt{sliderInput} for at styr punkt eller linje størrelse i plottet. Den ser sådan ud:
+\end{itemize}
+
+\includegraphics[width=0.4\linewidth]{plots/sliderInput}
+
+\begin{itemize}
+\tightlist
+\item
+  Vores kode ser sådan ud. Vi lave en slider af integer fra 1 til 10.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \FunctionTok{sliderInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Point"}\NormalTok{,    }\CommentTok{\#giv den id Point}
+                \AttributeTok{label =} \StringTok{"Point size"}\NormalTok{, }\CommentTok{\#label på selve plottet}
+                \AttributeTok{min =} \DecValTok{1}\NormalTok{,              }\CommentTok{\#min værdi}
+                \AttributeTok{max =} \DecValTok{10}\NormalTok{,             }\CommentTok{\#max værdi}
+                \AttributeTok{step =} \DecValTok{1}\NormalTok{,             }\CommentTok{\#step size}
+                \AttributeTok{value =} \DecValTok{1}\NormalTok{),           }\CommentTok{\#default værdi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Vi referer vores point størrelse ind i plottet med \texttt{input\$Point}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{         ....}\SpecialCharTok{+}   \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{Point, }\AttributeTok{colour=}\StringTok{"steel blue"}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ ....}
+\NormalTok{         ....}\SpecialCharTok{+}   \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{colour=}\StringTok{"firebrick3"}\NormalTok{,}\AttributeTok{lwd=}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Point) }\SpecialCharTok{+}\NormalTok{ ......}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Vi tilføj ovenstående kode til vores plot:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\FunctionTok{data}\NormalTok{(iris)}
+
+\NormalTok{ui }\OtherTok{\textless{}{-}} \FunctionTok{fluidPage}\NormalTok{(}
+  \FunctionTok{selectInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Species"}\NormalTok{,}
+              \AttributeTok{choices =}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Species),}
+              \AttributeTok{selected =} \StringTok{"setosa"}\NormalTok{,}
+              \AttributeTok{label =} \StringTok{"Choose species"}\NormalTok{),}
+  
+  \FunctionTok{numericInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"num\_rows"}\NormalTok{,}
+               \AttributeTok{label =} \StringTok{"Number of observations to view:"}\NormalTok{,}
+               \AttributeTok{value =} \DecValTok{5}\NormalTok{),}
+  
+  \FunctionTok{sliderInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Point"}\NormalTok{,}
+              \AttributeTok{label =} \StringTok{"Point size"}\NormalTok{,}
+              \AttributeTok{min =} \DecValTok{1}\NormalTok{,}
+              \AttributeTok{max =} \DecValTok{10}\NormalTok{,}
+              \AttributeTok{step =} \DecValTok{1}\NormalTok{,}
+              \AttributeTok{value =} \DecValTok{1}\NormalTok{),}
+  
+  \FunctionTok{plotOutput}\NormalTok{(}\StringTok{"my\_plot"}\NormalTok{),}
+  \FunctionTok{tableOutput}\NormalTok{(}\StringTok{"my\_table"}\NormalTok{)}
+  
+\NormalTok{)}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output) \{}
+  
+\NormalTok{  output}\SpecialCharTok{$}\NormalTok{my\_plot }\OtherTok{\textless{}{-}} \FunctionTok{renderPlot}\NormalTok{(\{}
+    
+\NormalTok{    iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+    
+\NormalTok{    p1 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width,}\AttributeTok{y=}\NormalTok{Petal.Length)) }\SpecialCharTok{+} 
+      \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{Point, }\AttributeTok{colour=}\StringTok{"steel blue"}\NormalTok{) }\SpecialCharTok{+} 
+      \FunctionTok{ggtitle}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{Species) }\SpecialCharTok{+}
+      \FunctionTok{theme\_classic}\NormalTok{()}
+    
+\NormalTok{    p2 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+} 
+      \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{size =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{Point,}\AttributeTok{colour=}\StringTok{"firebrick3"}\NormalTok{) }\SpecialCharTok{+} 
+      \FunctionTok{ggtitle}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{Species) }\SpecialCharTok{+}
+      \FunctionTok{theme\_classic}\NormalTok{()}
+    
+    \FunctionTok{grid.arrange}\NormalTok{(p1,p2,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+    
+\NormalTok{  \})}
+  
+\NormalTok{  output}\SpecialCharTok{$}\NormalTok{my\_table }\OtherTok{\textless{}{-}} \FunctionTok{renderTable}\NormalTok{(\{}
+\NormalTok{    iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+    \FunctionTok{head}\NormalTok{(iris\_subset, }\AttributeTok{n =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{num\_rows)}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\CommentTok{\# Run the application }
+\FunctionTok{shinyApp}\NormalTok{(}\AttributeTok{ui =}\NormalTok{ ui, }\AttributeTok{server =}\NormalTok{ server)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics[width=0.75\linewidth]{plots/shiny_slider2}
+
+\hypertarget{ekstras-som-man-kan-tilfuxf8je-til-ui}{%
+\subsection{\texorpdfstring{Ekstras som man kan tilføje til \texttt{ui}}{Ekstras som man kan tilføje til ui}}\label{ekstras-som-man-kan-tilfuxf8je-til-ui}}
+
+Her er nogle ekstra tekst som vi kan tilføj - for eksempel en title. Vi kan også lave nogle forskellige panels for at fremvise de forskellige dele af vores app - for eksempel en side panel og en main panel.
+
+\textbf{Title}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{titlePanel}\NormalTok{(}\StringTok{"Shiny Text"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Specificier sidebarLayout}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{sidebarLayout}\NormalTok{(}
+    \FunctionTok{sidebarPanel}\NormalTok{(),}
+    \FunctionTok{mainPanel}\NormalTok{()}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Her er hvordan appen ser ud med titlen samt en \texttt{sidebarPanel} og \texttt{mainPanel}
+
+\includegraphics[width=0.75\linewidth]{plots/shiny_panel3}
+
+Her er fuld kode som man kan copy/paste ind i \texttt{app.R}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(shiny)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(gridExtra)}
+\FunctionTok{data}\NormalTok{(iris)}
+
+\NormalTok{ui }\OtherTok{\textless{}{-}} \FunctionTok{fluidPage}\NormalTok{(}
+
+  \FunctionTok{titlePanel}\NormalTok{(}\StringTok{"My Iris app!"}\NormalTok{),}
+  
+  \FunctionTok{sidebarPanel}\NormalTok{(}
+    \FunctionTok{selectInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Species"}\NormalTok{,}
+                \AttributeTok{choices =}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{distinct}\NormalTok{(Species) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{pull}\NormalTok{(Species),}
+                \AttributeTok{selected =} \StringTok{"setosa"}\NormalTok{,}
+                \AttributeTok{label =} \StringTok{"Choose species"}\NormalTok{),}
+    
+    \FunctionTok{numericInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"num\_rows"}\NormalTok{,}
+                 \AttributeTok{label =} \StringTok{"Number of observations to view:"}\NormalTok{,}
+                 \AttributeTok{value =} \DecValTok{5}\NormalTok{),}
+    
+    \FunctionTok{sliderInput}\NormalTok{(}\AttributeTok{inputId =} \StringTok{"Point"}\NormalTok{,}
+                \AttributeTok{label =} \StringTok{"Point size"}\NormalTok{,}
+                \AttributeTok{min =} \DecValTok{1}\NormalTok{,}
+                \AttributeTok{max =} \DecValTok{10}\NormalTok{,}
+                \AttributeTok{step =} \DecValTok{1}\NormalTok{,}
+                \AttributeTok{value =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  ),}
+  \FunctionTok{mainPanel}\NormalTok{(}
+    \FunctionTok{plotOutput}\NormalTok{(}\StringTok{"my\_plot"}\NormalTok{),}
+    \FunctionTok{tableOutput}\NormalTok{(}\StringTok{"my\_table"}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{)}
+
+\NormalTok{server }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(input, output) \{}
+  
+\NormalTok{  output}\SpecialCharTok{$}\NormalTok{my\_plot }\OtherTok{\textless{}{-}} \FunctionTok{renderPlot}\NormalTok{(\{}
+    
+\NormalTok{    iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+    
+\NormalTok{    p1 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width,}\AttributeTok{y=}\NormalTok{Petal.Length)) }\SpecialCharTok{+} 
+      \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{Point, }\AttributeTok{colour=}\StringTok{"steel blue"}\NormalTok{) }\SpecialCharTok{+} 
+      \FunctionTok{ggtitle}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{Species) }\SpecialCharTok{+}
+      \FunctionTok{theme\_classic}\NormalTok{()}
+    
+\NormalTok{    p2 }\OtherTok{\textless{}{-}}\NormalTok{ iris\_subset }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Sepal.Width)) }\SpecialCharTok{+} 
+      \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{size =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{Point,}\AttributeTok{colour=}\StringTok{"firebrick3"}\NormalTok{) }\SpecialCharTok{+} 
+      \FunctionTok{ggtitle}\NormalTok{(input}\SpecialCharTok{$}\NormalTok{Species) }\SpecialCharTok{+}
+      \FunctionTok{theme\_classic}\NormalTok{()}
+    
+    \FunctionTok{grid.arrange}\NormalTok{(p1,p2,}\AttributeTok{ncol=}\DecValTok{2}\NormalTok{)}
+    
+\NormalTok{  \})}
+  
+\NormalTok{  output}\SpecialCharTok{$}\NormalTok{my\_table }\OtherTok{\textless{}{-}} \FunctionTok{renderTable}\NormalTok{(\{}
+\NormalTok{    iris\_subset }\OtherTok{\textless{}{-}}\NormalTok{ iris }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{filter}\NormalTok{(Species}\SpecialCharTok{==}\NormalTok{input}\SpecialCharTok{$}\NormalTok{Species)}
+    \FunctionTok{head}\NormalTok{(iris\_subset, }\AttributeTok{n =}\NormalTok{ input}\SpecialCharTok{$}\NormalTok{num\_rows)}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\CommentTok{\# Run the application }
+\FunctionTok{shinyApp}\NormalTok{(}\AttributeTok{ui =}\NormalTok{ ui, }\AttributeTok{server =}\NormalTok{ server)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ekstra-generelle-ruxe5d}{%
+\section{Ekstra generelle råd}\label{ekstra-generelle-ruxe5d}}
+
+\begin{itemize}
+\tightlist
+\item
+  Tilføje hensigtsmæssige title/akse labels etc. og gøre dem til en størrelse som er nem at læse (tænk i PowerPoint - personer bagest i rummet skal kunne læse teksten).
+\item
+  Fjerne unødvendige legends.
+\item
+  Anvende colour palettes som er designet til at fungere godt for de fleste (for eksempel undgå grøn og rød ved siden af hinanden).
+\item
+  Viser kun hvad er nødvendige for at fortælle den historie, du gerne vil videregive til andre. For eksempel undgår ekstra tekst som ikke tilføjer noget til beskeden.
+\item
+  En historie på en slide hvis man laver en PowerPoint præsentation.
+\item
+  Andvende hensigtsmæssige akse transformeringer som giver mest mening til de data
+\item
+  Undgå piecharts, 3D plots osv. medmindre de absolut tilføj noget ekstra til visualisering (meget sjældent).
+\item
+  Hvis man tilføjer et plot til en PowerPoint, anbefaler jeg at bruge PDFs og ikke PNG/JPG, når en PDF har en højere kvalitet.
+\item
+  Interaktiv plots kan være sjovt og interessant (men igen sikre at de tilføj nogle ekstra til din præsentation/rapport).
+\end{itemize}
+
+\hypertarget{andre-mulighederadvanceret-topics}{%
+\section{Andre muligheder/advanceret topics}\label{andre-mulighederadvanceret-topics}}
+
+\begin{itemize}
+\item
+  Lave præsentations i PowerPoint direkte fra RStudio: \url{https://support.rstudio.com/hc/en-us/articles/360004672913-Rendering-PowerPoint-Presentations-with-RStudio}
+\item
+  Shiny cheatsheet: \url{https://github.com/rstudio/cheatsheets/raw/master/shiny.pdf}
+\item
+  Debugging with RStudio: \url{https://support.rstudio.com/hc/en-us/articles/200713843-Debugging-with-RStudio}
+\item
+  Advanced R: \url{https://adv-r.hadley.nz/index.html}
+\end{itemize}
+
+\hypertarget{problemstillinger-12}{%
+\section{Problemstillinger}\label{problemstillinger-12}}
+
+\textbf{Problem 1}) Lav interactiv plots
+
+Anvend funktionen \texttt{ggplotly} fra pakken \texttt{plotly} til at lave følgende interkative plots:
+
+\begin{itemize}
+\tightlist
+\item
+  Et barplot som viser antallet af biler for de forskellige antal cylinders i variablen \texttt{cyl} i datasættet \texttt{mtcars}.
+\item
+  Et scatter plot som viser \texttt{wt} på x-aksen og \texttt{qsec} på y-aksen og med farver efter variablen \texttt{gear}.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    tilføj lineær trend linjer til plottet.
+  \end{itemize}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 2}) \emph{Shiny}
+
+\begin{itemize}
+\tightlist
+\item
+  Indlæs pakken og se på de forskellige eksempler fk. \texttt{runExample("05\_sliders")}.
+\item
+  Lav et nyt app, køre den default app.
+\end{itemize}
+
+\textbf{Problem 3}) \emph{Shiny}
+
+\begin{itemize}
+\tightlist
+\item
+  Slet default tekst og kopi koden fra ovenpå (med slider og to plotte) - køre appen.
+\item
+  Tilpas koden til at andre datasættet fra \texttt{Iris} til \texttt{Penguins}.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 4}) \emph{Shiny}
+
+\begin{itemize}
+\tightlist
+\item
+  Lav et app som viser den første n rækker af datarammen \texttt{mtcars} (\texttt{numericInput})
+\item
+  Tilføj også en drop-down box med funktion \texttt{selectInput} for at vise en subset af datarammen efter de forskellige mulige værdier i variablen \texttt{gear}.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Problem 5}) \emph{Shiny}
+
+\begin{itemize}
+\tightlist
+\item
+  Lav et app med en \texttt{sliderInput} som styr antallet af clusters med funktionen \texttt{kmeans} i datasættet \texttt{penguins}.
+\item
+  Vis clusters som forskellige farver indenfor et scatter plot (det kan være fk. to variabler eller den første to principal components).
+\item
+  Tilføj også en \texttt{selectInput} for at visualisere dine clusterings i de data subset efter variablen \texttt{island}.
+\item
+  Anvend \texttt{sidebarPanel} og \texttt{mainPanel} til at separere de inputs fra de plots.
+\item
+  Tilføj en app title samt plot title/akse labels osv. for at bedste viser din app over for andre.
+\end{itemize}
+
+\textbf{Problem 6}) \emph{Shiny}
+
+Lav egen app og inddrager forskellige datasæt og koncepter fra kurset!
 
   \bibliography{book.bib,packages.bib}
 
